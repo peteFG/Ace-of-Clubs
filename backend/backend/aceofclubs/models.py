@@ -7,6 +7,7 @@ class Permission(models.Model):
     def __str__(self):
         return self.description
 
+
 class Group(models.Model):
     name = models.TextField()
     description = models.TextField()
@@ -21,6 +22,20 @@ class EventType(models.Model):
     def __str__(self):
         return self.description
 
+
+class User(models.Model):
+    email = models.TextField()
+    first_name = models.TextField()
+    last_name = models.TextField()
+    pwhash = models.TextField()
+    active = models.BooleanField()
+    permission = models.ForeignKey(Permission, null=False, on_delete=models.CASCADE)
+    group = models.ForeignKey(Group, null=True, on_delete=models.SET_NULL)
+
+    def __str__(self):
+        return self.first_name + ' ' + self.last_name
+
+
 class Event(models.Model):
     name = models.TextField()
     description = models.TextField()
@@ -31,23 +46,10 @@ class Event(models.Model):
     active = models.BooleanField()
     group = models.ManyToManyField(Group, blank=False)
     eventType = models.ManyToManyField(EventType, blank=False)
+    participants = models.ManyToManyField(User, blank=True)
 
     def __str__(self):
         return self.name
-
-class User(models.Model):
-    email = models.TextField()
-    first_name = models.TextField()
-    last_name = models.TextField()
-    pwhash = models.TextField()
-    active = models.BooleanField()
-    permission = models.ForeignKey(Permission, null=False, on_delete=models.CASCADE)
-    group = models.ForeignKey(Group, null=True, on_delete=models.SET_NULL)
-    event = models.ManyToManyField(Event, blank=True)
-
-    def __str__(self):
-        return self.email
-
 
 
 class State(models.Model):
@@ -55,6 +57,4 @@ class State(models.Model):
 
     def __str__(self):
         return self.description
-
-
-
+#TODO: Foreign key with state
