@@ -38,3 +38,16 @@ class StateViewSet(viewsets.ModelViewSet):
     queryset = models.State.objects.all()
 
     serializer_class = serializers.StateSerializer
+
+
+class UserEventViewSet(viewsets.ModelViewSet):
+    queryset = models.UserEvent.objects.all()
+
+    serializer_class = serializers.UserEventSerializer
+
+
+
+class UserGroupViewSet(viewsets.ModelViewSet):
+    queryset = models.UserGroup.objects.all()
+
+    serializer_class = serializers.UserGroupSerializer
