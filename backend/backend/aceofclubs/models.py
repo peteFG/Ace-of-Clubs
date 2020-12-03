@@ -69,5 +69,6 @@ class UserEvent(models.Model):
     event = models.ForeignKey(Event, null=False, on_delete=models.CASCADE)
     state = models.ForeignKey(State, null=False, on_delete=models.CASCADE)
 
+
     def __str__(self):
         return self.state
