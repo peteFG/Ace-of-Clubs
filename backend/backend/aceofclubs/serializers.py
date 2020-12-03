@@ -10,6 +10,11 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class EventSerializer(serializers.ModelSerializer):
+    def validate(self, value):
+        if (value['start_date'] > value['end_date']) | (value['start_time'] > value['end_time']):
+            raise serializers.ValidationError("Start date/time can not be larger than end date/time.")
+        return value
+
     class Meta:
         model = models.Event
         fields = ['pk', 'name', 'start_date', 'start_time',
