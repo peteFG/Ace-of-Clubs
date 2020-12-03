@@ -5,7 +5,7 @@
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/backend/venv" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.8 (AceOfClubs)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.8 (Ace-of-Clubs)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>
