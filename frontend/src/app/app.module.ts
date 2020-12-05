@@ -19,15 +19,19 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatNativeDateModule } from '@angular/material/core';
-//import { EventFormComponent } from './event-form/event-form.component';
+import { EventFormComponent } from './event-form/event-form.component';
+import { UserListComponent } from './user-list/user-list.component';
+import { UserFormComponent } from './user-form/user-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     EventListComponent,
     DateComponent,
-    HomeComponent//,
-    //EventFormComponent
+    HomeComponent,
+    EventFormComponent,
+    UserListComponent,
+    UserFormComponent
   ],
   imports: [
     BrowserModule,

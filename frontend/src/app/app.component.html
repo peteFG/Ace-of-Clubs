@@ -3,6 +3,11 @@
   <mat-menu #eventMenu="matMenu">
     <button mat-menu-item routerLink="event-list">List Events</button>
   </mat-menu>
+
+  <button mat-button [matMenuTriggerFor]="userMenu">Users</button>
+  <mat-menu #userMenu="matMenu">
+    <button mat-menu-item routerLink="user-list">List Users</button>
+  </mat-menu>
 </mat-toolbar>
 
 <router-outlet></router-outlet>

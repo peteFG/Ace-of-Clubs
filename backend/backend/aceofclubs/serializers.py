@@ -5,7 +5,7 @@ from . import models
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.User
-        fields = ['pk', 'email', 'first_name', 'last_name', 'is_active', 'is_staff']
+        fields = ['pk', 'username', 'email', 'first_name', 'last_name', 'is_active', 'is_staff']
 
 
 class MediaSerializer(serializers.ModelSerializer):

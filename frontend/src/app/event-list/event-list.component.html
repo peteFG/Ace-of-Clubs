@@ -13,9 +13,9 @@
   <tr *ngFor="let event of events">
     <td>{{event.name}}</td>
     <td>{{event.start_date | date: 'dd.MM.yyyy'}}</td>
-    <td>{{event.start_time | date: 'HH:mm'}}</td>
+    <td>{{event.start_time }}</td>
     <td>{{event.end_date | date: 'dd.MM.yyyy'}}</td>
-    <td>{{event.end_time | date: 'HH:mm'}}</td>
+    <td>{{event.end_time}}</td>
     <td>{{event.ev_type}}</td>
     <td>{{event.active}}</td>
     <td>{{event.group}}</td>

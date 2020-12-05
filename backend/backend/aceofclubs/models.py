@@ -41,6 +41,7 @@ class Media(models.Model):
 
 class User(AbstractUser):
     profile_picture = models.ForeignKey(Media, null=True, on_delete=models.SET_NULL)
+    email = models.EmailField(unique=True)
 
     def __str__(self):
         return self.email
