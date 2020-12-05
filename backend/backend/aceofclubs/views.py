@@ -1,3 +1,7 @@
+import os
+
+from django.http import HttpResponse
+from django.views import View
 from rest_framework import viewsets
 from rest_framework.response import Response
 from . import serializers
@@ -10,16 +14,29 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.UserSerializer
 
 
+class MediaViewSet(viewsets.ModelViewSet):
+    queryset = models.Media.objects.all()
+
+    serializer_class = serializers.MediaSerializer
+
+    def pre_save(self, obj):
+        obj.file = self.request.FILES.get('file')
+
+
+class MediaDownloadView(View):
+    def get(self, request, pk):
+        media = models.Media.objects.get(pk=pk)
+        content_type = media.content_type
+        response = HttpResponse(media.file.file, content_type=content_type)
+        original_file_name = os.path.basename(media.file.name)
+        response['Content-Disposition'] = 'inline;filename=' + original_file_name
+        return response
+
+
 class EventViewSet(viewsets.ModelViewSet):
     queryset = models.Event.objects.all().order_by('pk')
 
     serializer_class = serializers.EventSerializer
-
-
-class PermissionViewSet(viewsets.ModelViewSet):
-    queryset = models.Permission.objects.all()
-
-    serializer_class = serializers.PermissionSerializer
 
 
 class GroupViewSet(viewsets.ModelViewSet):
@@ -44,7 +61,6 @@ class UserEventViewSet(viewsets.ModelViewSet):
     queryset = models.UserEvent.objects.all()
 
     serializer_class = serializers.UserEventSerializer
-
 
 
 class UserGroupViewSet(viewsets.ModelViewSet):

@@ -1,11 +1,5 @@
+from django.contrib.auth.models import AbstractUser
 from django.db import models
-
-
-class Permission(models.Model):
-    description = models.TextField()
-
-    def __str__(self):
-        return self.description
 
 
 class Group(models.Model):
@@ -36,13 +30,17 @@ class Event(models.Model):
         return self.name
 
 
-class User(models.Model):
-    email = models.TextField()
-    first_name = models.TextField()
-    last_name = models.TextField()
-    pwhash = models.TextField()
-    active = models.BooleanField()
-    permission = models.ForeignKey(Permission, null=False, on_delete=models.CASCADE)
+class Media(models.Model):
+    file = models.FileField(upload_to='uploads/%Y-%m-%d-%H-%M-%S/')
+    content_type = models.CharField(null=True, blank=True, max_length=100)
+
+    def save(self, *args, **kwargs):
+        self.content_type = self.file.file.content_type
+        super().save(*args, **kwargs)
+
+
+class User(AbstractUser):
+    profile_picture = models.ForeignKey(Media, null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
         return self.email
@@ -52,6 +50,9 @@ class UserGroup(models.Model):
     user = models.ForeignKey(User, null=False, on_delete=models.CASCADE)
     group = models.ForeignKey(Group, null=False, on_delete=models.CASCADE)
     is_leader = models.BooleanField()
+
+    class Meta:
+        unique_together = (("user", "group"),)
 
     def __str__(self):
         return self.user + '/' + self.group
@@ -69,6 +70,8 @@ class UserEvent(models.Model):
     event = models.ForeignKey(Event, null=False, on_delete=models.CASCADE)
     state = models.ForeignKey(State, null=False, on_delete=models.CASCADE)
 
+    class Meta:
+        unique_together = (("user", "event"),)
 
     def __str__(self):
         return self.state

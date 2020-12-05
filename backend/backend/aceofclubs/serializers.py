@@ -5,8 +5,13 @@ from . import models
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.User
-        fields = ['pk', 'email', 'first_name', 'last_name', 'active',
-                  'permission']
+        fields = ['pk', 'email', 'first_name', 'last_name', 'is_active', 'is_staff']
+
+
+class MediaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Media
+        fields = ['id', 'file', 'content_type']
 
 
 class EventSerializer(serializers.ModelSerializer):
@@ -19,12 +24,6 @@ class EventSerializer(serializers.ModelSerializer):
         model = models.Event
         fields = ['pk', 'name', 'start_date', 'start_time',
                   'end_date', 'end_time', 'active', 'group', 'ev_type']
-
-
-class PermissionSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = models.Permission
-        fields = ['pk', 'description']
 
 
 class GroupSerializer(serializers.ModelSerializer):
