@@ -23,7 +23,7 @@ class Event(models.Model):
     end_time = models.TimeField()
     start_date = models.DateField()
     end_date = models.DateField()
-    active = models.BooleanField()
+    active = models.BooleanField(default=True)
     group = models.ManyToManyField(Group, blank=True)
 
     def __str__(self):
@@ -49,8 +49,8 @@ class User(AbstractUser):
 
 class UserGroup(models.Model):
     user = models.ForeignKey(User, null=False, on_delete=models.CASCADE)
-    group = models.ForeignKey(Group, null=False, on_delete=models.CASCADE)
-    is_leader = models.BooleanField()
+    group = models.ForeignKey(Group, null=False, on_delete=models.CASCADE, default=1)
+    is_leader = models.BooleanField(default=False)
 
     class Meta:
         unique_together = (("user", "group"),)

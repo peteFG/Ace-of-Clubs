@@ -27,10 +27,23 @@
       "is_active": true
     }
   },
+  {"model": "aceofclubs.group",
+    "pk": 1,
+    "fields": {
+      "name": "alle"
+    }
+  },
   {"model": "aceofclubs.eventtype",
     "pk": 1,
     "fields": {
       "description": "Saufen"
+    }
+  },
+  {"model": "aceofclubs.usergroup",
+    "pk": 1,
+    "fields": {
+      "user": 1,
+      "is_leader": false
     }
   }
 ]
