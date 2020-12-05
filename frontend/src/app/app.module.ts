@@ -27,7 +27,7 @@ import { EventFormComponent } from './event-form/event-form.component';
     AppComponent,
     EventListComponent,
     DateComponent,
-    TimeComponent,
+    //TimeComponent,
     HomeComponent,
     EventFormComponent
   ],

@@ -1,0 +1,11 @@
+<form [formGroup]="eventFormGroup" (ngSubmit)="createEvent()">
+  <label>Event Type: <input formControlName="ev_type"></label>
+  <label>Name: <input formControlName="name"></label>
+  <label>Start Date: <input type="date" formControlName="start_date"></label>
+  <label>Start Time: <input  type="time" formControlName="start_time"></label>
+  <label>End Date: <input type="date" formControlName="end_date"></label>
+  <label>End Time: <input  type="time" formControlName="end_time"></label>
+  <label>Active: <input type="checkbox" formControlName="active"></label>
+  <label>Group: <input formControlName="group"></label>
+  <button>Create</button>
+</form>

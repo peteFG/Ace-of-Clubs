@@ -7,8 +7,8 @@ interface Event {
   pk?: number;
   ev_type: string;
   name: string;
-  start_time: Time;
-  end_time: Time;
+  start_time: Date;
+  end_time: Date;
   start_date: Date;
   end_date: Date;
   active: boolean;

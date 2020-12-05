@@ -9,6 +9,7 @@ const routes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: 'event-list', component: EventListComponent},
   {path: 'event-form', component: EventFormComponent},
+  {path: 'event-form/:pk', component: EventFormComponent}
 ];
 
 @NgModule({
