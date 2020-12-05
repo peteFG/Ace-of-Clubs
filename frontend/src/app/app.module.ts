@@ -22,6 +22,12 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { EventFormComponent } from './event-form/event-form.component';
 import { UserListComponent } from './user-list/user-list.component';
 import { UserFormComponent } from './user-form/user-form.component';
+import { GroupListComponent } from './group-list/group-list.component';
+import { GroupFormComponent } from './group-form/group-form.component';
+import { StateListComponent } from './state-list/state-list.component';
+import { StateFormComponent } from './state-form/state-form.component';
+import { EventTypeListComponent } from './event-type-list/event-type-list.component';
+import { EventTypeFormComponent } from './event-type-form/event-type-form.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +37,13 @@ import { UserFormComponent } from './user-form/user-form.component';
     HomeComponent,
     EventFormComponent,
     UserListComponent,
-    UserFormComponent
+    UserFormComponent,
+    GroupListComponent,
+    GroupFormComponent,
+    StateListComponent,
+    StateFormComponent,
+    EventTypeListComponent,
+    EventTypeFormComponent
   ],
   imports: [
     BrowserModule,

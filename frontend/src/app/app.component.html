@@ -8,6 +8,22 @@
   <mat-menu #userMenu="matMenu">
     <button mat-menu-item routerLink="user-list">List Users</button>
   </mat-menu>
+
+  <button mat-button [matMenuTriggerFor]="groupMenu">Group</button>
+  <mat-menu #groupMenu="matMenu">
+    <button mat-menu-item routerLink="group-list">List Groups</button>
+  </mat-menu>
+
+  <button mat-button [matMenuTriggerFor]="stateMenu">States</button>
+  <mat-menu #stateMenu="matMenu">
+    <button mat-menu-item routerLink="state-list">List States</button>
+  </mat-menu>
+
+  <button mat-button [matMenuTriggerFor]="eventTypeMenu">Event Types</button>
+  <mat-menu #eventTypeMenu="matMenu">
+    <button mat-menu-item routerLink="event-type-list">List Event Types</button>
+  </mat-menu>
+
 </mat-toolbar>
 
 <router-outlet></router-outlet>
