@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
-import {EventService} from '../services/event.service';
+//import {UserService} from '../services/event.service';
 import {ActivatedRoute} from '@angular/router';
-import {Group, GroupService} from '../services/group.service';
+//import {Group, GroupService} from '../services/group.service';
 import {HttpClient} from '@angular/common/http';
 
 @Component({
@@ -20,12 +20,12 @@ export class UserFormComponent implements OnInit {
   ngOnInit(): void {
     this.userFormGroup = new FormGroup({
       pk: new FormControl(null),
-      username: new FormControl(0),
-      first_name: new FormControl(0),
+      username: new FormControl(''),
+      first_name: new FormControl(''),
       last_name: new FormControl(''),
-      email: new FormControl(new Date().getTime()),
-      is_active: new FormControl(new Date().getTime()),
-      is_staff: new FormControl(new Date())
+      email: new FormControl(''),
+      is_active: new FormControl(true),
+      is_staff: new FormControl(false)
     });
 
     const pk = this.route.snapshot.paramMap.get('pk');

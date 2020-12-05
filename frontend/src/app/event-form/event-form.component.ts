@@ -20,7 +20,7 @@ export class EventFormComponent implements OnInit {
   ngOnInit(): void {
     this.eventFormGroup = new FormGroup({
       pk: new FormControl(null),
-      ev_type: new FormControl(0),
+      ev_type: new FormControl(),
       name: new FormControl(''),
       start_time: new FormControl(new Date().getTime()),
       end_time: new FormControl(new Date().getTime()),
