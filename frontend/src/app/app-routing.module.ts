@@ -11,6 +11,8 @@ import {StateListComponent} from "./state-list/state-list.component";
 import {StateFormComponent} from "./state-form/state-form.component";
 import {EventTypeListComponent} from "./event-type-list/event-type-list.component";
 import {EventTypeFormComponent} from "./event-type-form/event-type-form.component";
+import {UserEventListComponent} from "./user-event-list/user-event-list.component";
+import {UserEventFormComponent} from "./user-event-form/user-event-form.component";
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -29,7 +31,10 @@ const routes: Routes = [
   {path: 'state-form/:pk', component: StateFormComponent},
   {path: 'event-type-list', component: EventTypeListComponent},
   {path: 'event-type-form', component: EventTypeFormComponent},
-  {path: 'event-type-form/:pk', component: EventTypeFormComponent}
+  {path: 'event-type-form/:pk', component: EventTypeFormComponent},
+  {path: 'user-event-list', component: UserEventListComponent},
+  {path: 'user-event-form', component: UserEventFormComponent},
+  {path: 'user-event-form/:pk', component: UserEventFormComponent}
 ];
 
 @NgModule({

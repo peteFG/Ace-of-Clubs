@@ -24,6 +24,11 @@
     <button mat-menu-item routerLink="event-type-list">List Event Types</button>
   </mat-menu>
 
+  <button mat-button [matMenuTriggerFor]="userEventMenu">Event Entries</button>
+  <mat-menu #userEventMenu="matMenu">
+    <button mat-menu-item routerLink="user-event-list">List Event Entries</button>
+  </mat-menu>
+
 </mat-toolbar>
 
 <router-outlet></router-outlet>

@@ -28,6 +28,8 @@ import { StateListComponent } from './state-list/state-list.component';
 import { StateFormComponent } from './state-form/state-form.component';
 import { EventTypeListComponent } from './event-type-list/event-type-list.component';
 import { EventTypeFormComponent } from './event-type-form/event-type-form.component';
+import { UserEventListComponent } from './user-event-list/user-event-list.component';
+import { UserEventFormComponent } from './user-event-form/user-event-form.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +45,9 @@ import { EventTypeFormComponent } from './event-type-form/event-type-form.compon
     StateListComponent,
     StateFormComponent,
     EventTypeListComponent,
-    EventTypeFormComponent
+    EventTypeFormComponent,
+    UserEventListComponent,
+    UserEventFormComponent
   ],
   imports: [
     BrowserModule,

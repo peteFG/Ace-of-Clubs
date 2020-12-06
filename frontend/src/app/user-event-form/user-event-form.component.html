@@ -1,0 +1,16 @@
+<form [formGroup]="userEventFormGroup" (ngSubmit)="createEventEntry()">
+  <!-- <mat-form-field>
+     <input readonly matInput type="text"  formControlName="ev_type">
+     <mat-hint align="end"> Event Type </mat-hint>
+     <mat-error *ngIf="eventFormGroup.controls.ev_type.hasError('required')"> Event Type is required</mat-error>
+   </mat-form-field> -->
+
+  <label>User: <input formControlName="user"></label>
+
+  <label>Event: <input formControlName="event"></label>
+
+  <label>State: <input formControlName="state"></label>
+
+  <button>Create</button>
+
+</form>
