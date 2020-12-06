@@ -15,9 +15,8 @@ class MediaSerializer(serializers.ModelSerializer):
 
 
 class EventSerializer(serializers.ModelSerializer):
-    #TODO: wenn startzeit vor endzeit und endtag kleiner gleich anfangstag
     def validate(self, value):
-        if (value['start_date'] > value['end_date']) | (value['start_time'] > value['end_time']):
+        if (value['start_date'] > value['end_date']) | ((value['start_date'] == value['end_date']) & (value['start_time'] > value['end_time'])):
             raise serializers.ValidationError("Start date/time can not be larger than end date/time.")
         return value
 
