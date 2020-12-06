@@ -9,9 +9,9 @@
   </tr>
 </table>
 
-<!--
-<table mat-table [dataSource]="events" matSort class="mat-elevation-z8">
--->
+
+<table mat-table [dataSource]="groups" matSort class="mat-elevation-z8">
+
 <!-- Event Type -->
 <!--
 <ng-container matColumnDef="ev_type">
@@ -52,24 +52,24 @@
       {{element.end_date | date : 'dd.MM.yyyy'}} </td>
   </ng-container>
 -->
-<!-- Edit Column --> <!--
+<!-- Edit Column -->
   <ng-container matColumnDef="edit">
     <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
     <td mat-cell *matCellDef="let element">
       <button mat-button color="primary" [routerLink]="'/movie-form/' + element.pk">Edit</button>
     </td>
   </ng-container>
--->
+
 <!-- Delete Column -->
-<!--
+
   <ng-container matColumnDef="delete">
     <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
     <td mat-cell *matCellDef="let element">
-      <button mat-button color="warn" (click)="deleteMovie(element)">Delete</button>
+      <button mat-button color="warn" (click)="deleteEvent(element.pk)">Delete</button>
   </ng-container>
-
+<!--
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
--->
+</table>-->
+
 

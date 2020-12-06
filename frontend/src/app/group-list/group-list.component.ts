@@ -1,12 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {EventService} from "../services/event.service";
-import {Time} from "@angular/common";
-import {HttpClient} from "@angular/common/http";
+import {Group, GroupService} from '../services/group.service';
+import {HttpClient} from '@angular/common/http';
 
-interface Group {
-  pk?: number;
-  name: string
-}
+
 
 @Component({
   selector: 'app-group-list',
@@ -16,33 +12,33 @@ interface Group {
 export class GroupListComponent implements OnInit {
 
   groups: Group[];
-  //displayedColumns = ['ev_type', 'name', 'start_time', 'end_time', 'start_date', 'end_date', 'active', 'group']
+  groupService: GroupService;
+  // displayedColumns = ['ev_type', 'name', 'start_time', 'end_time', 'start_date', 'end_date', 'active', 'group']
 
   constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
     this.http.get('/api/group/')
-      .subscribe((groups:Group[]) => {
+      .subscribe((groups: Group[]) => {
         this.groups = groups;
-      })
-    /*
-    this.retrieveEvents()
-    */
+      });
+
+    this.retrieveGroups();
+
   }
 
-  /*
-  private retrieveEvents(): void {
-    this.eventService.getEvents()
-      .subscribe((events) => {
-        this.events = events;
-    })
+  private retrieveGroups(): void {
+    this.groupService.retrieveGroups()
+      .subscribe((groups) => {
+        this.groups = groups;
+    });
   }
 
-  deleteEvent(event: Event): void {
-    this.eventService.deleteEvent(event)
+  deleteEvent(group: Group): void {
+    this.groupService.deleteGroup(group)
       .subscribe(() => {
-        this.retrieveEvents();
+        this.retrieveGroups();
         alert('deleted successfully!');
       });
-  } */
+  }
 }

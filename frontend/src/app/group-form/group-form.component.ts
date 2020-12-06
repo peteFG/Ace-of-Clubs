@@ -4,6 +4,7 @@ import {EventService} from '../services/event.service';
 import {ActivatedRoute} from '@angular/router';
 import {Group, GroupService} from '../services/group.service';
 import {HttpClient} from '@angular/common/http';
+import {any} from "codelyzer/util/function";
 
 @Component({
   selector: 'app-group-form',
@@ -13,6 +14,7 @@ import {HttpClient} from '@angular/common/http';
 export class GroupFormComponent implements OnInit {
 
   groupFormGroup: FormGroup;
+
 
   constructor(private http: HttpClient, private route: ActivatedRoute) {
   }
@@ -24,13 +26,14 @@ export class GroupFormComponent implements OnInit {
     });
 
     const pk = this.route.snapshot.paramMap.get('pk');
-    if(pk) {
+    if (pk) {
       this.http.get('/api/group/' + pk + '/')
         .subscribe((group) => {
           this.groupFormGroup.patchValue(group);
         });
     }
   }
+
 
   createGroup(): void {
     const pk = this.groupFormGroup.value.pk;
@@ -46,5 +49,13 @@ export class GroupFormComponent implements OnInit {
         });
     }
   }
+
+  deleteGroup(group: Group): void {
+    this.http.delete('/api/group/' + group.pk + '/')
+      .subscribe(() => {
+        alert('created successfully!');
+      });
+  }
+
 
 }
