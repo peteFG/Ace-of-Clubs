@@ -12,17 +12,11 @@ import {HttpClient} from '@angular/common/http';
 export class GroupListComponent implements OnInit {
 
   groups: Group[];
-  groupService: GroupService;
-  displayedColumns = ['name', 'edit', 'delete']
+  displayedColumns = ['name', 'edit', 'delete'];
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private groupService: GroupService) { }
 
   ngOnInit(): void {
-    this.http.get('/api/groups/')
-      .subscribe((groups: Group[]) => {
-        this.groups = groups;
-      });
-
     this.retrieveGroups();
 
   }

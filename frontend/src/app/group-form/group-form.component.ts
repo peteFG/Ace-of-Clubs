@@ -1,10 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
-import {EventService} from '../services/event.service';
 import {ActivatedRoute} from '@angular/router';
-import {Group, GroupService} from '../services/group.service';
-import {HttpClient} from '@angular/common/http';
-import {any} from "codelyzer/util/function";
+import {GroupService} from '../services/group.service';
 
 @Component({
   selector: 'app-group-form',
@@ -16,7 +13,7 @@ export class GroupFormComponent implements OnInit {
   groupFormGroup: FormGroup;
 
 
-  constructor(private http: HttpClient, private route: ActivatedRoute) {
+  constructor(private groupService: GroupService, private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
@@ -27,7 +24,8 @@ export class GroupFormComponent implements OnInit {
 
     const pk = this.route.snapshot.paramMap.get('pk');
     if (pk) {
-      this.http.get('/api/groups/' + pk + '/')
+      // tslint:disable-next-line:radix
+      this.groupService.getGroup(parseInt(pk))
         .subscribe((group) => {
           this.groupFormGroup.patchValue(group);
         });
@@ -38,24 +36,15 @@ export class GroupFormComponent implements OnInit {
   createGroup(): void {
     const pk = this.groupFormGroup.value.pk;
     if (pk) {
-      this.http.put('/api/groups/' + pk + '/', this.groupFormGroup.value)
+      this.groupService.updateGroup(this.groupFormGroup.value)
         .subscribe(() => {
           alert('updated successfully!');
         });
     } else {
-      this.http.post('/api/groups/', this.groupFormGroup.value)
+      this.groupService.createGroup(this.groupFormGroup.value)
         .subscribe(() => {
           alert('created successfully!');
         });
     }
   }
-
-  deleteGroup(group: Group): void {
-    this.http.delete('/api/groups/' + group.pk + '/')
-      .subscribe(() => {
-        alert('created successfully!');
-      });
-  }
-
-
 }

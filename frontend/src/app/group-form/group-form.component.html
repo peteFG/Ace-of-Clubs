@@ -1,4 +1,18 @@
-<form [formGroup]="groupFormGroup" (ngSubmit)="createGroup()">
-  <label>Group Name: <input formControlName="name"></label>
-  <button>Create</button>
+<form [formGroup]="groupFormGroup" (ngSubmit)="createGroup()" class="group-form__form">
+  <!--<label>Group Name: <input formControlName="name"></label>
+  <button>Create</button>-->
+
+  <mat-form-field>
+    <input matInput type="text" placeholder="Group Name" formControlName="name">
+    <mat-hint align="end">Name of the Group</mat-hint>
+    <mat-error *ngIf="groupFormGroup.controls.name.hasError('required')">State is required</mat-error>
+  </mat-form-field>
+
+  <mat-card-actions align="center">
+    <button mat-raised-button color="primary" [disabled]="!groupFormGroup.valid">
+      <span *ngIf="!groupFormGroup.controls.pk.value">Create</span>
+      <span *ngIf="groupFormGroup.controls.pk.value">Update</span>
+    </button>
+  </mat-card-actions>
+
 </form>
