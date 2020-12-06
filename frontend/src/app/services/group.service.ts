@@ -14,7 +14,8 @@ export class GroupService {
 
   constructor(private http: HttpClient) { }
 
-  createGroup(group:Group): Observable<Group> {
+  createGroup(group: Group): Observable<Group> {
+
     return this.http.post<Group>('/api/groups/', group);
   }
 
@@ -35,3 +36,4 @@ export class GroupService {
   }
 
 }
+
