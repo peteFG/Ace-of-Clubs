@@ -1,26 +1,60 @@
-<form [formGroup]="eventFormGroup" (ngSubmit)="createEvent()">
-  <!-- <mat-form-field>
-     <input readonly matInput type="text"  formControlName="ev_type">
-     <mat-hint align="end"> Event Type </mat-hint>
-     <mat-error *ngIf="eventFormGroup.controls.ev_type.hasError('required')"> Event Type is required</mat-error>
-   </mat-form-field> -->
+<h2>Create or Update an Event</h2>
+<form [formGroup]="eventFormGroup" (ngSubmit)="createOrUpdateEvent()" class="event-form__form">
 
-    <label>Event Type: <input formControlName="ev_type"></label>
+  <!-- Name -->
+  <mat-form-field>
+    <input matInput type="text" placeholder="Name" formControlName="name">
+    <mat-hint align="end">The name of the event</mat-hint>
+    <mat-error *ngIf="eventFormGroup.controls.name.hasError('required')">Name is required</mat-error>
+  </mat-form-field>
 
-    <label>Name: <input formControlName="name"></label>
+  <!-- Event Type -->
+  <mat-form-field>
+    <mat-select placeholder="Event Type" formControlName="ev_type">
+      <mat-option [value]="null">Unknown</mat-option>
+      <mat-option [value]="eventTypeOption.pk"
+                  *ngFor="let eventTypeOption of eventTypeOptions">{{eventTypeOption.description}}</mat-option>
+    </mat-select>
+    <mat-hint align="end">The event's type</mat-hint>
+  </mat-form-field>
 
-    <label>Start Date: <input type="date" formControlName="start_date"></label>
+  <!-- Start Date -->
+  <app-date placeholder="Start Date" formControlName="start_date" hint="The start date of this event"
+            [required]="true"></app-date>
 
-    <label>Start Time: <input  type="time" formControlName="start_time"></label>
+  <!-- Start Time -->
+  <mat-form-field>
+    <input matInput type="time" placeholder="Start Time" formControlName="start_time">
+    <mat-hint align="end">Start Time</mat-hint>
+  </mat-form-field>
 
-    <label>End Date: <input type="date" formControlName="end_date"></label>
+  <!-- End Date -->
+  <app-date placeholder="End Date" formControlName="end_date" hint="The end date of this event"
+            [required]="true"></app-date>
 
-    <label>End Time: <input  type="time" formControlName="end_time"></label>
+  <!-- End Time -->
+  <mat-form-field>
+    <input matInput type="time" placeholder="End Time" formControlName="end_time">
+    <mat-hint align="end">End Time</mat-hint>
+  </mat-form-field>
 
-    <label>Active: <input type="checkbox" formControlName="active"></label>
+  <!-- Active -->
+  <mat-checkbox formControlName="active">Active</mat-checkbox>
 
-    <label>Group: <input formControlName="group"></label>
+  <!-- Groups -->
+  <mat-form-field>
+    <mat-select placeholder="Groups" formControlName="group" multiple>
+      <mat-option [value]="groupOption.pk"
+                  *ngFor="let groupOption of groupOptions">{{groupOption.name}}</mat-option>
+    </mat-select>
+    <mat-hint align="end">The groups involved in this event</mat-hint>
+  </mat-form-field>
 
-    <button>Create</button>
-
+  <br/>
+  <mat-card-actions align="center">
+    <button mat-raised-button color="primary" [disabled]="!eventFormGroup.valid">
+      <span *ngIf="!eventFormGroup.controls.pk.value">Create</span>
+      <span *ngIf="eventFormGroup.controls.pk.value">Update</span>
+    </button>
+  </mat-card-actions>
 </form>

@@ -1,55 +1,40 @@
-import { Component, OnInit } from '@angular/core';
-import {EventService} from "../services/event.service";
-import {Time} from "@angular/common";
+import {Component, OnInit} from '@angular/core';
+import {Event, EventService} from "../services/event.service";
 import {HttpClient} from "@angular/common/http";
-
-interface Event {
-  pk?: number;
-  ev_type: string;
-  name: string;
-  start_time: Date;
-  end_time: Date;
-  start_date: Date;
-  end_date: Date;
-  active: boolean;
-  group: number[];
-}
+import {EventType, EventTypeService} from "../services/event-type.service";
 
 @Component({
   selector: 'app-event-list',
   templateUrl: './event-list.component.html',
   styleUrls: ['./event-list.component.scss']
 })
+
 export class EventListComponent implements OnInit {
 
   events: Event[];
-  //displayedColumns = ['ev_type', 'name', 'start_time', 'end_time', 'start_date', 'end_date', 'active', 'group']
+  ev_types: EventType[];
 
-  constructor(private http: HttpClient) { }
+  displayedColumns = ['name', 'start_date', 'start_time', 'end_date', 'end_time', 'active', 'actions']
 
-  ngOnInit(): void {
-    this.http.get('/api/events/')
-      .subscribe((events:Event[]) => {
-      this.events = events;
-    })
-    /*
-    this.retrieveEvents()
-    */
+  constructor(private http: HttpClient, private eventService: EventService,
+              public eventTypeService: EventTypeService) {
   }
 
-  /*
+  ngOnInit(): void {
+    this.retrieveEvents();
+  }
+
   private retrieveEvents(): void {
     this.eventService.getEvents()
       .subscribe((events) => {
         this.events = events;
-    })
+      });
   }
 
   deleteEvent(event: Event): void {
-    this.eventService.deleteEvent(event)
-      .subscribe(() => {
-        this.retrieveEvents();
-        alert('deleted successfully!');
-      });
-  } */
+    this.eventService.deleteEvent(event).subscribe(() => {
+      this.retrieveEvents();
+      alert('deleted successfully!')
+    });
+  }
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import {Interface} from "readline";
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import {Event} from "./event.service";
 
 export interface EventType {
   pk: number;
@@ -18,5 +18,9 @@ export class EventTypeService {
 
   retrieveEventTypeOptions(): Observable<EventType[]> {
     return this.http.get<EventType[]>('/api/eventTypes/');
+  }
+
+  getEventType(pk: number): Observable<EventType> {
+    return this.http.get<EventType>('/api/eventTypes/' + pk + '/');
   }
 }

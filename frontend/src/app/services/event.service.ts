@@ -7,8 +7,8 @@ export interface Event {
   pk?: number;
   ev_type: string;
   name: string;
-  start_time: Time;
-  end_time: Time;
+  start_time: string;
+  end_time: string;
   start_date: Date;
   end_date: Date;
   active: boolean;
@@ -38,7 +38,7 @@ export class EventService {
     return this.http.patch('/api/events/' + event.pk + '/', event);
   }
 
-  createMovie(event: Event): Observable<Event> {
+  createEvent(event: Event): Observable<Event> {
     return this.http.post<Event>('/api/events/', event);
   }
 }
