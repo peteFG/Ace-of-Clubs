@@ -29,6 +29,11 @@
     <button mat-menu-item routerLink="user-event-list">List Event Entries</button>
   </mat-menu>
 
+  <button mat-button [matMenuTriggerFor]="userGroupMenu">Group Entries</button>
+  <mat-menu #userGroupMenu="matMenu">
+    <button mat-menu-item routerLink="user-group-list">List Group Entries</button>
+  </mat-menu>
+
 </mat-toolbar>
 
 <router-outlet></router-outlet>

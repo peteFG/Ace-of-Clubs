@@ -13,6 +13,8 @@ import {EventTypeListComponent} from "./event-type-list/event-type-list.componen
 import {EventTypeFormComponent} from "./event-type-form/event-type-form.component";
 import {UserEventListComponent} from "./user-event-list/user-event-list.component";
 import {UserEventFormComponent} from "./user-event-form/user-event-form.component";
+import {UserGroupListComponent} from "./user-group-list/user-group-list.component";
+import {UserGroupFormComponent} from "./user-group-form/user-group-form.component";
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -34,7 +36,10 @@ const routes: Routes = [
   {path: 'event-type-form/:pk', component: EventTypeFormComponent},
   {path: 'user-event-list', component: UserEventListComponent},
   {path: 'user-event-form', component: UserEventFormComponent},
-  {path: 'user-event-form/:pk', component: UserEventFormComponent}
+  {path: 'user-event-form/:pk', component: UserEventFormComponent},
+  {path: 'user-group-list', component: UserGroupListComponent},
+  {path: 'user-group-form', component: UserGroupFormComponent},
+  {path: 'user-group-form/:pk', component: UserGroupFormComponent}
 ];
 
 @NgModule({
