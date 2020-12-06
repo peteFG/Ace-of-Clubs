@@ -32,6 +32,7 @@ import { UserEventListComponent } from './user-event-list/user-event-list.compon
 import { UserEventFormComponent } from './user-event-form/user-event-form.component';
 import { UserGroupListComponent } from './user-group-list/user-group-list.component';
 import { UserGroupFormComponent } from './user-group-form/user-group-form.component';
+import {MatInputModule} from "@angular/material/input";
 
 @NgModule({
   declarations: [
@@ -65,11 +66,11 @@ import { UserGroupFormComponent } from './user-group-form/user-group-form.compon
     MatMenuModule,
     MatFormFieldModule,
     MatSelectModule,
-    //MatInputModule,
+    MatInputModule,
     MatCardModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatCheckboxModule,
+    MatCheckboxModule
   ],
   providers: [],
   bootstrap: [AppComponent]

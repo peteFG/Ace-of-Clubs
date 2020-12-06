@@ -4,6 +4,7 @@ import {EventService} from '../services/event.service';
 import {ActivatedRoute} from '@angular/router';
 import {Group, GroupService} from '../services/group.service';
 import {HttpClient} from '@angular/common/http';
+import {StateService} from "../services/state.service";
 
 @Component({
   selector: 'app-state-form',
@@ -14,7 +15,7 @@ export class StateFormComponent implements OnInit {
 
   stateFormGroup: FormGroup;
 
-  constructor(private http: HttpClient, private route: ActivatedRoute) {
+  constructor(private stateService: StateService, private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
@@ -23,24 +24,25 @@ export class StateFormComponent implements OnInit {
       description: new FormControl()
     });
 
-    const pk = this.route.snapshot.paramMap.get('pk');
-    if(pk) {
-      this.http.get('/api/states/' + pk + '/')
-        .subscribe((group) => {
-          this.stateFormGroup.patchValue(group);
+    const pkFromUrl = this.route.snapshot.paramMap.get('pk');
+    if(pkFromUrl) {
+      this.stateService.getState(parseInt(pkFromUrl,10))
+        .subscribe((state) => {
+          this.stateFormGroup.patchValue(state);
         });
     }
   }
 
-  createState(): void {
-    const pk = this.stateFormGroup.value.pk;
-    if (pk) {
-      this.http.put('/api/states/' + pk + '/', this.stateFormGroup.value)
+
+  createOrUpdateState(): void {
+    const pkFromFormGroup = this.stateFormGroup.value.pk;
+    if (pkFromFormGroup) {
+      this.stateService.updateState(this.stateFormGroup.value)
         .subscribe(() => {
           alert('updated successfully!');
         });
     } else {
-      this.http.post('/api/states/', this.stateFormGroup.value)
+      this.stateService.createState(this.stateFormGroup.value)
         .subscribe(() => {
           alert('created successfully!');
         });

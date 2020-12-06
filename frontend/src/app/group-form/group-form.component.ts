@@ -27,7 +27,7 @@ export class GroupFormComponent implements OnInit {
 
     const pk = this.route.snapshot.paramMap.get('pk');
     if (pk) {
-      this.http.get('/api/group/' + pk + '/')
+      this.http.get('/api/groups/' + pk + '/')
         .subscribe((group) => {
           this.groupFormGroup.patchValue(group);
         });
@@ -38,12 +38,12 @@ export class GroupFormComponent implements OnInit {
   createGroup(): void {
     const pk = this.groupFormGroup.value.pk;
     if (pk) {
-      this.http.put('/api/group/' + pk + '/', this.groupFormGroup.value)
+      this.http.put('/api/groups/' + pk + '/', this.groupFormGroup.value)
         .subscribe(() => {
           alert('updated successfully!');
         });
     } else {
-      this.http.post('/api/group/', this.groupFormGroup.value)
+      this.http.post('/api/groups/', this.groupFormGroup.value)
         .subscribe(() => {
           alert('created successfully!');
         });
@@ -51,7 +51,7 @@ export class GroupFormComponent implements OnInit {
   }
 
   deleteGroup(group: Group): void {
-    this.http.delete('/api/group/' + group.pk + '/')
+    this.http.delete('/api/groups/' + group.pk + '/')
       .subscribe(() => {
         alert('created successfully!');
       });

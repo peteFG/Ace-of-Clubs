@@ -1,12 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {EventService} from "../services/event.service";
 import {Time} from "@angular/common";
 import {HttpClient} from "@angular/common/http";
-
-interface State {
-  pk?: number;
-  description: string
-}
+import {State, StateService} from "../services/state.service";
 
 @Component({
   selector: 'app-state-list',
@@ -16,33 +11,28 @@ interface State {
 export class StateListComponent implements OnInit {
 
   states: State[];
-  //displayedColumns = ['ev_type', 'name', 'start_time', 'end_time', 'start_date', 'end_date', 'active', 'group']
+  displayedColumns = ['description','edit','delete']
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private stateService: StateService) { }
 
   ngOnInit(): void {
-    this.http.get('/api/states/')
-      .subscribe((states:State[]) => {
-        this.states = states;
-      })
-    /*
-    this.retrieveEvents()
-    */
+    this.retrieveStates()
   }
 
-  /*
-  private retrieveEvents(): void {
-    this.eventService.getEvents()
-      .subscribe((events) => {
-        this.events = events;
+
+  private retrieveStates(): void {
+    this.stateService.getStates()
+      .subscribe((states) => {
+        this.states = states;
     })
   }
 
-  deleteEvent(event: Event): void {
-    this.eventService.deleteEvent(event)
-      .subscribe(() => {
-        this.retrieveEvents();
-        alert('deleted successfully!');
-      });
-  } */
+  deleteState(state:State):void{
+    this.stateService.deleteState(state)
+      .subscribe(()=>{
+        this.retrieveStates();
+        alert('deleted successfully!')
+      })
+
+  }
 }

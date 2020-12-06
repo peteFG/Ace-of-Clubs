@@ -1,4 +1,4 @@
-<table>
+<!--<table>
   <tr>
     <th>State</th>
     <th>Actions</th>
@@ -6,7 +6,37 @@
   <tr *ngFor="let state of states">
     <td>{{state.description}}</td>
     <td><a [routerLink]="'/state-form/'+state.pk">Edit</a> </td>
+    <button type="button" (click)="deleteState(state)">Delete</button>
   </tr>
+</table>
+-->
+
+<table mat-table [dataSource]="states" matSort class="mat-elevation-z8">
+
+  <!-- Genre -->
+  <ng-container matColumnDef="description" class="state_column">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>States</th>
+    <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+  </ng-container>
+
+  <!-- Edit Column -->
+  <ng-container matColumnDef="edit">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-button color="primary" [routerLink]="'/state-form/' + element.pk">Edit</button>
+    </td>
+  </ng-container>
+
+  <!-- Delete Column -->
+  <ng-container matColumnDef="delete">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-button color="warn" (click)="deleteState(element)">Delete</button>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
 </table>
 
 <!--

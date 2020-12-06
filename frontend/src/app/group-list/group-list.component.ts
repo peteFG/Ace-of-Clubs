@@ -13,12 +13,12 @@ export class GroupListComponent implements OnInit {
 
   groups: Group[];
   groupService: GroupService;
-  // displayedColumns = ['ev_type', 'name', 'start_time', 'end_time', 'start_date', 'end_date', 'active', 'group']
+  displayedColumns = ['name', 'edit', 'delete']
 
   constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
-    this.http.get('/api/group/')
+    this.http.get('/api/groups/')
       .subscribe((groups: Group[]) => {
         this.groups = groups;
       });
