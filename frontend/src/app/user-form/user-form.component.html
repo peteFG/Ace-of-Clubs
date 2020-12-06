@@ -1,9 +1,36 @@
-<form [formGroup]="userFormGroup" (ngSubmit)="createUser()">
-  <label>Username:. <input formControlName="username"></label>
-  <label>Firstname: <input formControlName="first_name"></label>
-  <label>Lastname: <input formControlName="last_name"></label>
-  <label>Email: <input  type="email" formControlName="email"></label>
-  <label>Active: <input type="checkbox" formControlName="is_active"></label>
-  <label>Admin: <input  type="checkbox" formControlName="is_admin"></label>
-  <button>Create</button>
+<form [formGroup]="userFormGroup" (ngSubmit)="createOrUpdateUser()" class="user-form__form">
+
+  <mat-form-field>
+    <input matInput type="text" placeholder="Username" formControlName="username">
+    <mat-hint align="end">Username</mat-hint>
+    <mat-error *ngIf="userFormGroup.controls.username.hasError('required')">Username is required</mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput type="text" placeholder="firstname" formControlName="first_name">
+    <mat-hint align="end">First Name</mat-hint>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput type="text" placeholder="lastname" formControlName="last_name">
+    <mat-hint align="end">Last Name</mat-hint>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput type="email" placeholder="email" formControlName="email">
+    <mat-hint align="end">E-Mail</mat-hint>
+  </mat-form-field>
+
+
+  <mat-checkbox formControlName="is_active">Is active?</mat-checkbox>
+
+
+  <mat-checkbox formControlName="is_staff">Is Admin?</mat-checkbox>
+
+  <mat-card-actions align="center">
+    <button mat-raised-button color="primary" [disabled]="!userFormGroup.valid">
+      <span *ngIf="!userFormGroup.controls.pk.value">Create</span>
+      <span *ngIf="userFormGroup.controls.pk.value">Update</span>
+    </button>
+  </mat-card-actions>
 </form>

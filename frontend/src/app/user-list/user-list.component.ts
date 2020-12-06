@@ -1,18 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {EventService} from "../services/event.service";
-import {Time} from "@angular/common";
-import {HttpClient} from "@angular/common/http";
-
-interface User {
-  pk?: number;
-  username: string;
-  first_name: string;
-  last_name: string;
-  email: string;
-  is_staff: boolean;
-  is_active: boolean;
-  profile_picture: unknown;
-}
+import {Component, OnInit} from '@angular/core';
+import {User, UserService} from "../services/user.service";
 
 @Component({
   selector: 'app-user-list',
@@ -22,33 +9,27 @@ interface User {
 export class UserListComponent implements OnInit {
 
   users: User[];
-  //displayedColumns = ['ev_type', 'name', 'start_time', 'end_time', 'start_date', 'end_date', 'active', 'group']
+  displayedColumns = ['username', 'email', 'first_name', 'last_name', 'is_active', 'is_staff', 'date_joined', 'edit', 'delete']
 
-  constructor(private http: HttpClient) { }
+  constructor(private userService: UserService) {
+  }
 
   ngOnInit(): void {
-    this.http.get('/api/users/')
-      .subscribe((users:User[]) => {
+    this.retrieveUsers();
+  }
+
+  private retrieveUsers(): void {
+    this.userService.getUsers()
+      .subscribe((users) => {
         this.users = users;
-      })
-    /*
-    this.retrieveEvents()
-    */
-  }
-
-  /*
-  private retrieveEvents(): void {
-    this.eventService.getEvents()
-      .subscribe((events) => {
-        this.events = events;
-    })
-  }
-
-  deleteEvent(event: Event): void {
-    this.eventService.deleteEvent(event)
-      .subscribe(() => {
-        this.retrieveEvents();
-        alert('deleted successfully!');
       });
-  } */
+  }
+
+  deleteUser(user: User): void {
+    this.userService.deleteUser(user)
+      .subscribe(() => {
+      this.retrieveUsers();
+      alert('User deleted successfully!');
+    });
+  }
 }
