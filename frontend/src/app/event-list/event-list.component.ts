@@ -14,7 +14,7 @@ export class EventListComponent implements OnInit {
   events: Event[];
   ev_types: EventType[];
 
-  displayedColumns = ['name', 'start_date', 'start_time', 'end_date', 'end_time', 'active', 'actions']
+  displayedColumns = ['name', 'start_date', 'start_time', 'end_date', 'end_time', 'active', 'angenommene_user','actions']
 
   constructor(private http: HttpClient, private eventService: EventService,
               public eventTypeService: EventTypeService) {

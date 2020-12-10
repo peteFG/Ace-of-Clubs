@@ -67,8 +67,8 @@ class State(models.Model):
 
 
 class UserEvent(models.Model):
-    user = models.ForeignKey(User, null=False, on_delete=models.CASCADE)
-    event = models.ForeignKey(Event, null=False, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, null=False, on_delete=models.CASCADE, related_name="event_relations")
+    event = models.ForeignKey(Event, null=False, on_delete=models.CASCADE, related_name="user_relations")
     state = models.ForeignKey(State, null=False, on_delete=models.CASCADE)
 
     class Meta:

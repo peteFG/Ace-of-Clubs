@@ -2,7 +2,7 @@ import os
 
 from django.http import HttpResponse
 from django.views import View
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from rest_framework.response import Response
 from . import serializers
 from . import models
@@ -61,6 +61,13 @@ class UserEventViewSet(viewsets.ModelViewSet):
     queryset = models.UserEvent.objects.all()
 
     serializer_class = serializers.UserEventSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 
 class UserGroupViewSet(viewsets.ModelViewSet):

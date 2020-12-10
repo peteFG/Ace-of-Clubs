@@ -15,6 +15,13 @@ class MediaSerializer(serializers.ModelSerializer):
 
 
 class EventSerializer(serializers.ModelSerializer):
+    angenommene_user = serializers.SerializerMethodField()
+
+    def get_angenommene_user(self, obj):
+        #ACHTUNG!! falls kein Status mit "Teilnehmen" existiert, wird diees nicht funktionieren!!!
+        #  .all()  verwenden um alle anzeigen zu lassen
+        return ", ".join([str(i["user__username"]) for i in obj.user_relations.filter(state__description="Teilnehmen").values("user__username")])
+
     def validate(self, value):
         if (value['start_date'] > value['end_date']) | ((value['start_date'] == value['end_date']) & (value['start_time'] > value['end_time'])):
             raise serializers.ValidationError("Start date/time can not be larger than end date/time.")
@@ -23,7 +30,7 @@ class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Event
         fields = ['pk', 'name', 'start_date', 'start_time',
-                  'end_date', 'end_time', 'active', 'group', 'ev_type']
+                  'end_date', 'end_time', 'active', 'group', 'ev_type', 'angenommene_user']
 
 
 class GroupSerializer(serializers.ModelSerializer):

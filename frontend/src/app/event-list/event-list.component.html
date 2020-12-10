@@ -50,6 +50,12 @@
       <td mat-cell *matCellDef="let element"> {{element.active}} </td>
     </ng-container>
 
+    <!-- angenommene User Column -->
+    <ng-container matColumnDef="angenommene_user">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Teilnahmen</th>
+      <td mat-cell *matCellDef="let element"> {{element.angenommene_user}} </td>
+    </ng-container>
+
     <!-- Edit Column -->
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Actions</th>
