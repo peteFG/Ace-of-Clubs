@@ -1,9 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
-import {EventService} from '../services/event.service';
+import {Event, EventService} from '../services/event.service';
 import {ActivatedRoute} from '@angular/router';
 import {Group, GroupService} from '../services/group.service';
 import {HttpClient} from '@angular/common/http';
+import {User, UserService} from "../services/user.service";
+import {State, StateService} from "../services/state.service";
 
 @Component({
   selector: 'app-user-event-form',
@@ -13,8 +15,15 @@ import {HttpClient} from '@angular/common/http';
 export class UserEventFormComponent implements OnInit {
 
   userEventFormGroup: FormGroup;
+  userOptions: User[];
+  eventOptions: Event[];
+  stateOptions: State[];
 
-  constructor(private http: HttpClient, private route: ActivatedRoute) {
+  constructor(private http: HttpClient,
+              private route: ActivatedRoute,
+              private userService: UserService,
+              private eventService: EventService,
+              private stateService: StateService) {
   }
 
   ngOnInit(): void {
@@ -24,6 +33,21 @@ export class UserEventFormComponent implements OnInit {
       event: new FormControl(),
       state: new FormControl()
     });
+
+    this.userService.getUsers()
+      .subscribe((userOptions)=>{
+        this.userOptions = userOptions
+      })
+
+    this.eventService.getEvents()
+      .subscribe((eventOptions)=>{
+        this.eventOptions = eventOptions
+      })
+
+    this.stateService.getStates()
+      .subscribe((stateOptions)=>{
+        this.stateOptions = stateOptions
+      })
 
     const pk = this.route.snapshot.paramMap.get('pk');
     if(pk) {
@@ -48,5 +72,6 @@ export class UserEventFormComponent implements OnInit {
         });
     }
   }
+
 
 }

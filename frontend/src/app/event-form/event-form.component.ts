@@ -5,6 +5,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Group, GroupService} from '../services/group.service';
 import {HttpClient} from '@angular/common/http';
 import {EventType, EventTypeService} from "../services/event-type.service";
+/*import {User, UserService} from "../services/user.service";*/
 
 @Component({
   selector: 'app-event-form',
@@ -16,12 +17,14 @@ export class EventFormComponent implements OnInit {
   eventFormGroup: FormGroup;
   eventTypeOptions: EventType[];
   groupOptions: Group[];
+  /*personOptions: User[];*/
 
   constructor(private eventService: EventService,
               private route: ActivatedRoute,
               public eventTypeService: EventTypeService,
               private router: Router,
-              private groupService: GroupService) {
+              private groupService: GroupService/*,
+              private userService: UserService*/) {
   }
 
   ngOnInit(): void {
@@ -49,6 +52,11 @@ export class EventFormComponent implements OnInit {
     this.groupService.retrieveGroups().subscribe((groupOptions) => {
       this.groupOptions = groupOptions;
     });
+
+    /*this.userService.getUsers()
+      .subscribe((personOptions)=>{
+        this.personOptions =personOptions
+      })*/
 
     const pkFromUrl = this.route.snapshot.paramMap.get('pk');
     if (pkFromUrl) {
