@@ -59,9 +59,9 @@ export class UserService {
     this.http.post('/api/api-token-auth/', userData)
       .subscribe((res: any) => {
         this.isLoggedIn.next(true);
+        localStorage.setItem('currentUser', userData.username);
         localStorage.setItem('access_token', res.token);
-        this.router.navigate(['movie-list']);
-        alert('you are logged in!');
+        this.router.navigate(['event-list']);
       }, () => {
         alert('wrong username or password');
       });
@@ -69,6 +69,7 @@ export class UserService {
 
   logout(): void {
     localStorage.removeItem(this.accessTokenLocalStorageKey);
+    localStorage.removeItem('currentUser');
     this.isLoggedIn.next(false);
     this.router.navigate(['/login']);
   }
