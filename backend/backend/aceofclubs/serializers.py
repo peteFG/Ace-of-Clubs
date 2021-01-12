@@ -18,7 +18,7 @@ class EventSerializer(serializers.ModelSerializer):
     angenommene_user = serializers.SerializerMethodField()
 
     def get_angenommene_user(self, obj):
-        #ACHTUNG!! falls kein Status mit "Teilnehmen" existiert, wird diees nicht funktionieren!!!
+        #ACHTUNG!! falls kein Status mit "Teilnehmen" existiert, wird dies nicht funktionieren!!!
         #  .all()  verwenden um alle anzeigen zu lassen
         return ", ".join([str(i["user__username"]) for i in obj.user_relations.filter(state__description="Teilnehmen").values("user__username")])
 
@@ -39,9 +39,15 @@ class GroupSerializer(serializers.ModelSerializer):
     def get_leader(self, obj):
         return ", ".join([str(i["user__username"]) for i in obj.user_relations.filter(is_leader=True).values("user__username")])
 
+
+    users_in_group = serializers.SerializerMethodField()
+
+    def get_users_in_group(self, obj):
+        return ", ".join([str(i["user__username"]) for i in obj.user_relations.values("user__username")])
+
     class Meta:
         model = models.Group
-        fields = ['pk', 'name', 'leader']
+        fields = ['pk', 'name', 'leader', 'users_in_group']
 
 
 class EventTypeSerializer(serializers.ModelSerializer):
