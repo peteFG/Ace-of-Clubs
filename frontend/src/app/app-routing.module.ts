@@ -15,31 +15,34 @@ import {UserEventListComponent} from "./user-event-list/user-event-list.componen
 import {UserEventFormComponent} from "./user-event-form/user-event-form.component";
 import {UserGroupListComponent} from "./user-group-list/user-group-list.component";
 import {UserGroupFormComponent} from "./user-group-form/user-group-form.component";
+import {LoginComponent} from "./login/login.component";
+import {AuthGuard} from "./guards/auth.guard";
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
+  {path: 'login', component: LoginComponent},
   {path: 'home', component: HomeComponent},
-  {path: 'user-list', component: UserListComponent},
-  {path: 'user-form', component: UserFormComponent},
-  {path: 'user-form/:pk', component: UserFormComponent},
-  {path: 'event-list', component: EventListComponent},
-  {path: 'event-form', component: EventFormComponent},
-  {path: 'event-form/:pk', component: EventFormComponent},
-  {path: 'group-list', component: GroupListComponent},
-  {path: 'group-form', component: GroupFormComponent},
-  {path: 'group-form/:pk', component: GroupFormComponent},
-  {path: 'state-list', component: StateListComponent},
-  {path: 'state-form', component: StateFormComponent},
-  {path: 'state-form/:pk', component: StateFormComponent},
-  {path: 'event-type-list', component: EventTypeListComponent},
-  {path: 'event-type-form', component: EventTypeFormComponent},
-  {path: 'event-type-form/:pk', component: EventTypeFormComponent},
-  {path: 'user-event-list', component: UserEventListComponent},
-  {path: 'user-event-form', component: UserEventFormComponent},
-  {path: 'user-event-form/:pk', component: UserEventFormComponent},
-  {path: 'user-group-list', component: UserGroupListComponent},
-  {path: 'user-group-form', component: UserGroupFormComponent},
-  {path: 'user-group-form/:pk', component: UserGroupFormComponent}
+  {path: 'user-list', component: UserListComponent, canActivate: [AuthGuard]},
+  {path: 'user-form', component: UserFormComponent, canActivate: [AuthGuard]},
+  {path: 'user-form/:pk', component: UserFormComponent, canActivate: [AuthGuard]},
+  {path: 'event-list', component: EventListComponent, canActivate: [AuthGuard]},
+  {path: 'event-form', component: EventFormComponent, canActivate: [AuthGuard]},
+  {path: 'event-form/:pk', component: EventFormComponent, canActivate: [AuthGuard]},
+  {path: 'group-list', component: GroupListComponent, canActivate: [AuthGuard]},
+  {path: 'group-form', component: GroupFormComponent, canActivate: [AuthGuard]},
+  {path: 'group-form/:pk', component: GroupFormComponent, canActivate: [AuthGuard]},
+  {path: 'state-list', component: StateListComponent, canActivate: [AuthGuard]},
+  {path: 'state-form', component: StateFormComponent, canActivate: [AuthGuard]},
+  {path: 'state-form/:pk', component: StateFormComponent, canActivate: [AuthGuard]},
+  {path: 'event-type-list', component: EventTypeListComponent, canActivate: [AuthGuard]},
+  {path: 'event-type-form', component: EventTypeFormComponent, canActivate: [AuthGuard]},
+  {path: 'event-type-form/:pk', component: EventTypeFormComponent, canActivate: [AuthGuard]},
+  {path: 'user-event-list', component: UserEventListComponent, canActivate: [AuthGuard]},
+  {path: 'user-event-form', component: UserEventFormComponent, canActivate: [AuthGuard]},
+  {path: 'user-event-form/:pk', component: UserEventFormComponent, canActivate: [AuthGuard]},
+  {path: 'user-group-list', component: UserGroupListComponent, canActivate: [AuthGuard]},
+  {path: 'user-group-form', component: UserGroupFormComponent, canActivate: [AuthGuard]},
+  {path: 'user-group-form/:pk', component: UserGroupFormComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({

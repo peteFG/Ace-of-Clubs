@@ -33,6 +33,9 @@ import { UserEventFormComponent } from './user-event-form/user-event-form.compon
 import { UserGroupListComponent } from './user-group-list/user-group-list.component';
 import { UserGroupFormComponent } from './user-group-form/user-group-form.component';
 import {MatInputModule} from "@angular/material/input";
+import { LoginComponent } from './login/login.component';
+import { LogoutComponent } from './logout/logout.component';
+import {JwtModule} from "@auth0/angular-jwt";
 
 
 @NgModule({
@@ -53,7 +56,9 @@ import {MatInputModule} from "@angular/material/input";
     UserEventListComponent,
     UserEventFormComponent,
     UserGroupListComponent,
-    UserGroupFormComponent
+    UserGroupFormComponent,
+    LoginComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,
@@ -71,7 +76,15 @@ import {MatInputModule} from "@angular/material/input";
     MatCardModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => {
+          return localStorage.getItem('access_token');
+        },
+        allowedDomains: ['localhost:4200']
+      }
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]

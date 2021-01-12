@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {BehaviorSubject, Observable} from "rxjs";
 import {Router} from "@angular/router";
-//import {JwtHelperService} from '@auth0/angular-jwt'
+import {JwtHelperService} from '@auth0/angular-jwt';
 
 export interface User {
   pk?: number;
@@ -21,9 +21,17 @@ export interface User {
 })
 export class UserService {
 
+  readonly accessTokenLocalStorageKey = 'access_token';
+  isLoggedIn = new BehaviorSubject(false);
 
-  constructor(private http: HttpClient){
 
+  constructor(private http: HttpClient, private router: Router, private jwtHelperService: JwtHelperService) {
+    const token = localStorage.getItem(this.accessTokenLocalStorageKey);
+    if (token) {
+      console.log('Token expiration date: ' + this.jwtHelperService.getTokenExpirationDate(token));
+      const tokenValid = !this.jwtHelperService.isTokenExpired(token);
+      this.isLoggedIn.next(tokenValid);
+    }
   }
 
 
@@ -33,7 +41,7 @@ export class UserService {
 
   deleteUser(user: User): Observable<any> {
     return this.http.delete('/api/users/' + user.pk + '/');
-  }
+  };
 
   getUser(pk: number): Observable<User> {
     return this.http.get<User>('/api/users/' + pk + '/');
@@ -46,4 +54,23 @@ export class UserService {
   createUser(user: User): Observable<User> {
     return this.http.post<User>('/api/users/', user);
   }
+
+  login(userData: { username: string, password: string }): void {
+    this.http.post('/api/api-token-auth/', userData)
+      .subscribe((res: any) => {
+        this.isLoggedIn.next(true);
+        localStorage.setItem('access_token', res.token);
+        this.router.navigate(['movie-list']);
+        alert('you are logged in!');
+      }, () => {
+        alert('wrong username or password');
+      });
+  }
+
+  logout(): void {
+    localStorage.removeItem(this.accessTokenLocalStorageKey);
+    this.isLoggedIn.next(false);
+    this.router.navigate(['/login']);
+  }
+
 }
