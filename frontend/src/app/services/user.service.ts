@@ -69,6 +69,7 @@ export class UserService {
 
   logout(): void {
     localStorage.removeItem(this.accessTokenLocalStorageKey);
+    localStorage.removeItem('currentUser');
     this.isLoggedIn.next(false);
     this.router.navigate(['/login']);
   }
