@@ -34,9 +34,14 @@ class EventSerializer(serializers.ModelSerializer):
 
 
 class GroupSerializer(serializers.ModelSerializer):
+    leader = serializers.SerializerMethodField()
+
+    def get_leader(self, obj):
+        return ", ".join([str(i["user__username"]) for i in obj.user_relations.filter(is_leader=True).values("user__username")])
+
     class Meta:
         model = models.Group
-        fields = ['pk', 'name']
+        fields = ['pk', 'name', 'leader']
 
 
 class EventTypeSerializer(serializers.ModelSerializer):

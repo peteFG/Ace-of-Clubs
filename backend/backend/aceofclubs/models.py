@@ -48,8 +48,8 @@ class User(AbstractUser):
 
 
 class UserGroup(models.Model):
-    user = models.ForeignKey(User, null=False, on_delete=models.CASCADE)
-    group = models.ForeignKey(Group, null=False, on_delete=models.CASCADE, default=1)
+    user = models.ForeignKey(User, null=False, on_delete=models.CASCADE, related_name="group_relations")
+    group = models.ForeignKey(Group, null=False, on_delete=models.CASCADE, default=1, related_name="user_relations")
     is_leader = models.BooleanField(default=False)
 
     class Meta:
