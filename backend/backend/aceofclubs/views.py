@@ -16,7 +16,7 @@ class UserViewSet(viewsets.ModelViewSet):
     def list(self, request):
         username = request.GET.get("username")
         if username is None:
-            serializer = self.serializer_class(self.queryset, many=True)
+            serializer = self.serializer_class(self.queryset.all(), many=True)
         else:
             serializer = self.serializer_class(self.queryset.filter(username=username), many=True)
         return Response(serializer.data)
