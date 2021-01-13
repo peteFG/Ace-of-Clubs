@@ -9,6 +9,7 @@ import {User, UserService} from "../services/user.service";
 export class UserListComponent implements OnInit {
 
   users: User[];
+  currentUserPK: number;
   displayedColumns = ['username', 'email', 'first_name', 'last_name', 'is_active', 'is_staff', 'date_joined', 'edit', 'delete']
 
   constructor(private userService: UserService) {
@@ -32,4 +33,6 @@ export class UserListComponent implements OnInit {
       alert('User deleted successfully!');
     });
   }
+
+
 }

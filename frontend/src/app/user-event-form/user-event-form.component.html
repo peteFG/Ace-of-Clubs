@@ -9,7 +9,8 @@
   <mat-form-field>
 
     <mat-select placeholder="Username" formControlName="user">
-      <mat-option [value]="userOption.pk" *ngFor="let userOption of userOptions">{{userOption.username}}</mat-option>
+      <!-- <mat-option [value]="userOption.pk" *ngFor="let userOption of userOptions">{{userOption.username}}</mat-option> -->
+      <mat-option [value]="currentUser.username"></mat-option>
     </mat-select>
     <mat-hint align="end">Username</mat-hint>
 

@@ -13,6 +13,14 @@ class UserViewSet(viewsets.ModelViewSet):
 
     serializer_class = serializers.UserSerializer
 
+    def list(self, request):
+        username = request.GET.get("username")
+        if username is None:
+            serializer = self.serializer_class(self.queryset, many=True)
+        else:
+            serializer = self.serializer_class(self.queryset.filter(username=username), many=True)
+        return Response(serializer.data)
+
 
 class MediaViewSet(viewsets.ModelViewSet):
     queryset = models.Media.objects.all()

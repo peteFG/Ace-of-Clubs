@@ -15,6 +15,7 @@ import {State, StateService} from "../services/state.service";
 export class UserEventFormComponent implements OnInit {
 
   userEventFormGroup: FormGroup;
+  currentUser:User;
   userOptions: User[];
   eventOptions: Event[];
   stateOptions: State[];
@@ -38,6 +39,10 @@ export class UserEventFormComponent implements OnInit {
       .subscribe((userOptions)=>{
         this.userOptions = userOptions
       })
+
+    //this.currentUser = this.userService.getCurrentUser()
+
+
 
     this.eventService.getEvents()
       .subscribe((eventOptions)=>{
