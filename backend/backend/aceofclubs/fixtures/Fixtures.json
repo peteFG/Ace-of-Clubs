@@ -19,30 +19,519 @@
     "pk": 2,
     "fields": {
       "password": "",
-      "username": "JohnDoe",
-      "first_name": "John",
-      "last_name": "Doe",
-      "email": "John.Doe@aceofclubs.com",
-      "is_staff": false,
-      "is_active": true
+      "username": "musik1",
+      "email": "andreas.reiter@musik.at",
+      "first_name": "Andreas",
+      "last_name": "Reiter",
+      "is_active": true,
+      "is_staff": false
+    }
+  },
+  {
+    "model": "aceofclubs.user",
+    "pk": 3,
+    "fields": {
+      "password": "",
+      "username": "musik2",
+      "email": "lukas.huber@musik.at",
+      "first_name": "Lukas",
+      "last_name": "Huber",
+      "is_active": true,
+      "is_staff": false
+    }
+  },
+  {
+    "model": "aceofclubs.user",
+    "pk": 4,
+    "fields": {
+      "password": "",
+      "username": "musik3",
+      "email": "anna.maier@musik.at",
+      "first_name": "Anna",
+      "last_name": "Maier",
+      "is_active": true,
+      "is_staff": false
+    }
+  },
+  {
+    "model": "aceofclubs.user",
+    "pk": 5,
+    "fields": {
+      "password": "",
+      "username": "musik4",
+      "email": "thomas.pichler@musik.at",
+      "first_name": "Thomas",
+      "last_name": "Pichler",
+      "is_active": true,
+      "is_staff": false
+    }
+  },
+  {
+    "model": "aceofclubs.user",
+    "pk": 6,
+    "fields": {
+      "password": "",
+      "username": "musik5",
+      "email": "lisa.winkler@musik.at",
+      "first_name": "Lisa",
+      "last_name": "Winkler",
+      "is_active": true,
+      "is_staff": false
+    }
+  },
+  {
+    "model": "aceofclubs.user",
+    "pk": 7,
+    "fields": {
+      "password": "",
+      "username": "musik6",
+      "email": "sarah.leitner@musik.at",
+      "first_name": "Sarah",
+      "last_name": "Leitner",
+      "is_active": true,
+      "is_staff": false
+    }
+  },
+  {
+    "model": "aceofclubs.user",
+    "pk": 8,
+    "fields": {
+      "password": "",
+      "username": "musik7",
+      "email": "peter.keller@musik.at",
+      "first_name": "Peter",
+      "last_name": "Keller",
+      "is_active": true,
+      "is_staff": false
+    }
+  },
+  {
+    "model": "aceofclubs.user",
+    "pk": 9,
+    "fields": {
+      "password": "",
+      "username": "musik8",
+      "email": "bettina.thaler@musik.at",
+      "first_name": "Bettina",
+      "last_name": "Thaler",
+      "is_active": true,
+      "is_staff": false
+    }
+  },
+  {
+    "model": "aceofclubs.user",
+    "pk": 10,
+    "fields": {
+      "password": "",
+      "username": "musik9",
+      "email": "richard.radler@musik.at",
+      "first_name": "Richard",
+      "last_name": "Radler",
+      "is_active": true,
+      "is_staff": false
+    }
+  },
+  {
+    "model": "aceofclubs.user",
+    "pk": 11,
+    "fields": {
+      "password": "",
+      "username": "musik10",
+      "email": "melanie.bauer@musik.at",
+      "first_name": "Melanie",
+      "last_name": "Bauer",
+      "is_active": true,
+      "is_staff": false
+    }
+  },
+  {
+    "model": "aceofclubs.user",
+    "pk": 12,
+    "fields": {
+      "password": "",
+      "username": "musik11",
+      "email": "katharina.lackner@musik.at",
+      "first_name": "Katharina",
+      "last_name": "Lackner",
+      "is_active": true,
+      "is_staff": false
+    }
+  },
+  {
+    "model": "aceofclubs.user",
+    "pk": 13,
+    "fields": {
+      "password": "",
+      "username": "musik12",
+      "email": "hans.lorenz@musik.at",
+      "first_name": "Hans",
+      "last_name": "Lorenz",
+      "is_active": true,
+      "is_staff": false
+    }
+  },
+  {
+    "model": "aceofclubs.user",
+    "pk": 14,
+    "fields": {
+      "password": "",
+      "username": "musik13",
+      "email": "gerhard.ecker@musik.at",
+      "first_name": "Gerhard",
+      "last_name": "Ecker",
+      "is_active": true,
+      "is_staff": false
+    }
+  },
+  {
+    "model": "aceofclubs.user",
+    "pk": 15,
+    "fields": {
+      "password": "",
+      "username": "musik14",
+      "email": "reinhard.grabner@musik.at",
+      "first_name": "Reinhard",
+      "last_name": "Grabner",
+      "is_active": true,
+      "is_staff": false
+    }
+  },
+  {
+    "model": "aceofclubs.user",
+    "pk": 16,
+    "fields": {
+      "password": "",
+      "username": "musik15",
+      "email": "andrea.haider@musik.at",
+      "first_name": "Andrea",
+      "last_name": "Haider",
+      "is_active": true,
+      "is_staff": false
     }
   },
   {"model": "aceofclubs.group",
     "pk": 1,
     "fields": {
-      "name": "alle"
+      "name": "ALLE"
+    }
+  },
+  {"model": "aceofclubs.group",
+    "pk": 2,
+    "fields": {
+      "name": "Posaune"
+    }
+  },
+  {"model": "aceofclubs.group",
+    "pk": 3,
+    "fields": {
+      "name": "Trompete"
+    }
+  },
+  {"model": "aceofclubs.group",
+    "pk": 4,
+    "fields": {
+      "name": "Klarinette"
+    }
+  },
+  {"model": "aceofclubs.group",
+    "pk": 5,
+    "fields": {
+      "name": "Tuba"
+    }
+  },
+  {"model": "aceofclubs.group",
+    "pk": 6,
+    "fields": {
+      "name": "Querflöte"
     }
   },
   {"model": "aceofclubs.eventtype",
     "pk": 1,
     "fields": {
-      "description": "Saufen"
+      "description": "Probe"
+    }
+  },
+  {"model": "aceofclubs.eventtype",
+    "pk": 2,
+    "fields": {
+      "description": "Auftritt"
+    }
+  },
+  {"model": "aceofclubs.eventtype",
+    "pk": 3,
+    "fields": {
+      "description": "Wettbewerb"
+    }
+  },
+  {"model": "aceofclubs.eventtype",
+    "pk": 4,
+    "fields": {
+      "description": "Besprechung"
+    }
+  },
+  {"model": "aceofclubs.state",
+    "pk": 1,
+    "fields": {
+      "description": "keine Antwort"
+    }
+  },
+  {"model": "aceofclubs.state",
+    "pk": 2,
+    "fields": {
+      "description": "Teilnahme"
+    }
+  },
+  {"model": "aceofclubs.state",
+    "pk": 3,
+    "fields": {
+      "description": "Absage"
     }
   },
   {"model": "aceofclubs.usergroup",
     "pk": 1,
     "fields": {
       "user": 1,
+      "group": 1,
+      "is_leader": true
+    }
+  },
+  {"model": "aceofclubs.usergroup",
+    "pk": 2,
+    "fields": {
+      "user": 2,
+      "group": 1,
+      "is_leader": false
+    }
+  },
+  {"model": "aceofclubs.usergroup",
+    "pk": 3,
+    "fields": {
+      "user": 3,
+      "group": 1,
+      "is_leader": false
+    }
+  },
+  {"model": "aceofclubs.usergroup",
+    "pk": 4,
+    "fields": {
+      "user": 4,
+      "group": 1,
+      "is_leader": false
+    }
+  },
+  {"model": "aceofclubs.usergroup",
+    "pk": 5,
+    "fields": {
+      "user": 5,
+      "group": 1,
+      "is_leader": false
+    }
+  },
+  {"model": "aceofclubs.usergroup",
+    "pk": 6,
+    "fields": {
+      "user": 6,
+      "group": 1,
+      "is_leader": false
+    }
+  },
+  {"model": "aceofclubs.usergroup",
+    "pk": 7,
+    "fields": {
+      "user": 7,
+      "group": 1,
+      "is_leader": false
+    }
+  },
+  {"model": "aceofclubs.usergroup",
+    "pk": 8,
+    "fields": {
+      "user": 8,
+      "group": 1,
+      "is_leader": false
+    }
+  },
+  {"model": "aceofclubs.usergroup",
+    "pk": 9,
+    "fields": {
+      "user": 9,
+      "group": 1,
+      "is_leader": false
+    }
+  },
+  {"model": "aceofclubs.usergroup",
+    "pk": 10,
+    "fields": {
+      "user": 10,
+      "group": 1,
+      "is_leader": false
+    }
+  },
+  {"model": "aceofclubs.usergroup",
+    "pk": 11,
+    "fields": {
+      "user": 11,
+      "group": 1,
+      "is_leader": false
+    }
+  },
+  {"model": "aceofclubs.usergroup",
+    "pk": 12,
+    "fields": {
+      "user": 12,
+      "group": 1,
+      "is_leader": false
+    }
+  },
+  {"model": "aceofclubs.usergroup",
+    "pk": 13,
+    "fields": {
+      "user": 13,
+      "group": 1,
+      "is_leader": false
+    }
+  },
+  {"model": "aceofclubs.usergroup",
+    "pk": 14,
+    "fields": {
+      "user": 14,
+      "group": 1,
+      "is_leader": false
+    }
+  },
+  {"model": "aceofclubs.usergroup",
+    "pk": 15,
+    "fields": {
+      "user": 15,
+      "group": 1,
+      "is_leader": false
+    }
+  },
+  {"model": "aceofclubs.usergroup",
+    "pk": 16,
+    "fields": {
+      "user": 16,
+      "group": 1,
+      "is_leader": false
+    }
+  },
+  {"model": "aceofclubs.usergroup",
+    "pk": 17,
+    "fields": {
+      "user": 2,
+      "group": 2,
+      "is_leader": true
+    }
+  },
+  {"model": "aceofclubs.usergroup",
+    "pk": 18,
+    "fields": {
+      "user": 3,
+      "group": 2,
+      "is_leader": false
+    }
+  },
+  {"model": "aceofclubs.usergroup",
+    "pk": 19,
+    "fields": {
+      "user": 4,
+      "group": 2,
+      "is_leader": false
+    }
+  },
+  {"model": "aceofclubs.usergroup",
+    "pk": 20,
+    "fields": {
+      "user": 5,
+      "group": 3,
+      "is_leader": true
+    }
+  },
+  {"model": "aceofclubs.usergroup",
+    "pk": 21,
+    "fields": {
+      "user": 6,
+      "group": 3,
+      "is_leader": false
+    }
+  },
+  {"model": "aceofclubs.usergroup",
+    "pk": 22,
+    "fields": {
+      "user": 7,
+      "group": 3,
+      "is_leader": false
+    }
+  },
+  {"model": "aceofclubs.usergroup",
+    "pk": 23,
+    "fields": {
+      "user": 8,
+      "group": 4,
+      "is_leader": true
+    }
+  },
+  {"model": "aceofclubs.usergroup",
+    "pk": 24,
+    "fields": {
+      "user": 9,
+      "group": 4,
+      "is_leader": false
+    }
+  },
+  {"model": "aceofclubs.usergroup",
+    "pk": 25,
+    "fields": {
+      "user": 10,
+      "group": 4,
+      "is_leader": false
+    }
+  },
+  {"model": "aceofclubs.usergroup",
+    "pk": 26,
+    "fields": {
+      "user": 11,
+      "group": 5,
+      "is_leader": true
+    }
+  },
+  {"model": "aceofclubs.usergroup",
+    "pk": 27,
+    "fields": {
+      "user": 12,
+      "group": 5,
+      "is_leader": false
+    }
+  },
+  {"model": "aceofclubs.usergroup",
+    "pk": 28,
+    "fields": {
+      "user": 13,
+      "group": 5,
+      "is_leader": false
+    }
+  },
+  {"model": "aceofclubs.usergroup",
+    "pk": 29,
+    "fields": {
+      "user": 14,
+      "group": 6,
+      "is_leader": true
+    }
+  },
+  {"model": "aceofclubs.usergroup",
+    "pk": 30,
+    "fields": {
+      "user": 15,
+      "group": 6,
+      "is_leader": false
+    }
+  },
+  {"model": "aceofclubs.usergroup",
+    "pk": 31,
+    "fields": {
+      "user": 16,
+      "group": 6,
       "is_leader": false
     }
   }
