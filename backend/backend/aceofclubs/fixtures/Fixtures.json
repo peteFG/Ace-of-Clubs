@@ -19,7 +19,7 @@
     "model": "aceofclubs.user",
     "pk": 2,
     "fields": {
-      "password": "",
+      "password": "pbkdf2_sha256$216000$CRsyKxCGtvZW$bMxOoVgU9fkFc8cXcNTEnERq/b2XiPgvykAmxrIv4DE=",
       "username": "musik1",
       "email": "andreas.reiter@musik.at",
       "first_name": "Andreas",

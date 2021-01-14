@@ -36,6 +36,7 @@ import {MatInputModule} from "@angular/material/input";
 import { LoginComponent } from './login/login.component';
 import { LogoutComponent } from './logout/logout.component';
 import {JwtModule} from "@auth0/angular-jwt";
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 
 @NgModule({
@@ -58,7 +59,8 @@ import {JwtModule} from "@auth0/angular-jwt";
     UserGroupListComponent,
     UserGroupFormComponent,
     LoginComponent,
-    LogoutComponent
+    LogoutComponent,
+    UserProfileComponent
   ],
   imports: [
     BrowserModule,
