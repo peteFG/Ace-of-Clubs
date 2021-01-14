@@ -48,6 +48,15 @@ class EventViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.EventSerializer
 
 
+    def list(self, request):
+        group = request.GET.get("group")
+        if group is None:
+            serializer = self.serializer_class(self.queryset.all(), many=True)
+        else:
+            serializer = self.serializer_class(self.queryset.filter(group=group), many=True)
+        return Response(serializer.data)
+
+
 class GroupViewSet(viewsets.ModelViewSet):
     queryset = models.Group.objects.all()
 
@@ -90,3 +99,11 @@ class UserGroupViewSet(viewsets.ModelViewSet):
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+    def list(self, request):
+        user = request.GET.get("user")
+        if user is None:
+            serializer = self.serializer_class(self.queryset.all(), many=True)
+        else:
+            serializer = self.serializer_class(self.queryset.filter(user=user), many=True)
+        return Response(serializer.data)

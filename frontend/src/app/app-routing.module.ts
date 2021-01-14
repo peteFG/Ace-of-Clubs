@@ -17,6 +17,7 @@ import {UserGroupListComponent} from "./user-group-list/user-group-list.componen
 import {UserGroupFormComponent} from "./user-group-form/user-group-form.component";
 import {LoginComponent} from "./login/login.component";
 import {AuthGuard} from "./guards/auth.guard";
+import {UserProfileComponent} from "./user-profile/user-profile.component";
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -42,7 +43,8 @@ const routes: Routes = [
   {path: 'user-event-form/:pk', component: UserEventFormComponent, canActivate: [AuthGuard]},
   {path: 'user-group-list', component: UserGroupListComponent, canActivate: [AuthGuard]},
   {path: 'user-group-form', component: UserGroupFormComponent, canActivate: [AuthGuard]},
-  {path: 'user-group-form/:pk', component: UserGroupFormComponent, canActivate: [AuthGuard]}
+  {path: 'user-group-form/:pk', component: UserGroupFormComponent, canActivate: [AuthGuard]},
+  {path: 'user-profile', component: UserProfileComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({
