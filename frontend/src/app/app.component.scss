@@ -1,0 +1,74 @@
+@media only screen and (max-width: 450px) {
+  .toolbar {
+    height: 12vh;
+    display: inline-table;
+  }
+
+  .user-settings{
+    float: left;
+    text-align: left;
+  }
+
+  .grow {
+    margin-right: 20px;
+  }
+}
+
+@media only screen and (min-width: 450px) {
+  .toolbar {
+    height: 8vh;
+  }
+
+  .user-settings {
+    float: right;
+    text-align: end;
+  }
+
+  .grow {
+    margin-left: 20px;
+  }
+}
+
+.toolbar {
+  padding: 0 5vw;
+}
+
+.user-settings {
+  width: 100%;
+}
+
+.mat-drawer {
+  min-width: 15vw;
+  width: auto;
+}
+
+.button-size {
+  font-size: xx-large;
+}
+
+.grow {
+  transform: scale(1.3);
+  transition: all .2s ease-in-out;
+}
+
+.grow:hover {
+  transform: scale(1.6);
+}
+
+.logo {
+  min-width: auto;
+  padding: 5px 10px !important;
+  border-radius: 5px !important;
+  font-size: x-large;
+}
+
+.logo:hover span {
+  display: none;
+}
+
+.logo:hover:after {
+  content: " DASHBOARD ";
+  margin-right: 25px;
+  margin-left: 25px;
+  text-align: center;
+}

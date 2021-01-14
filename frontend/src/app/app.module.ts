@@ -32,11 +32,12 @@ import { UserEventListComponent } from './user-event-list/user-event-list.compon
 import { UserEventFormComponent } from './user-event-form/user-event-form.component';
 import { UserGroupListComponent } from './user-group-list/user-group-list.component';
 import { UserGroupFormComponent } from './user-group-form/user-group-form.component';
-import {MatInputModule} from "@angular/material/input";
+import { MatInputModule } from '@angular/material/input';
 import { LoginComponent } from './login/login.component';
 import { LogoutComponent } from './logout/logout.component';
-import {JwtModule} from "@auth0/angular-jwt";
+import { JwtModule } from '@auth0/angular-jwt';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { MatDividerModule } from '@angular/material/divider';
 
 
 @NgModule({
@@ -79,6 +80,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     MatDatepickerModule,
     MatNativeDateModule,
     MatCheckboxModule,
+    MatDividerModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: () => {

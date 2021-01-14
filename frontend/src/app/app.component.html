@@ -1,3 +1,5 @@
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0"/>
+
 <mat-toolbar>
   <button mat-button [matMenuTriggerFor]="eventMenu" *ngIf="userService.hasPermission('aceofclubs.view_event')">Event</button>
   <mat-menu #eventMenu="matMenu">

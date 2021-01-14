@@ -1,7 +1,7 @@
 .container {
-  display:block;
-  width:100%;
-  height:93%;
+  display: block;
+  width: 100%;
+  height: 93.4vh;
   background: url('../../assets/image/mountain-range.jpg') no-repeat center center fixed;
 }
 
@@ -14,10 +14,45 @@
 }
 
 .card-bg {
-  padding-top: 30vh;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   vertical-align: center;
 }
 
+.card-bg {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.mat-card-title {
+  padding: 10px;
+  font-size: 200%;
+  font-weight: lighter;
+}
+
+.btn-btn-link {
+  font-size: 18px;
+}
+
+
+@media only screen and (max-width: 450px) {
+  .mat-form-field {
+    width: 70vw;
+  }
+}
+
+@media only screen and (min-width: 450px) and (max-width: 1280px) {
+  .mat-form-field {
+    width: 25vw;
+  }
+}
+
+@media only screen and (min-width: 1280px) {
+  .mat-form-field {
+    width: 15vw;
+  }
+}
