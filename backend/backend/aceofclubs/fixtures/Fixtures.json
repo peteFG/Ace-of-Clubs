@@ -25,21 +25,21 @@
       "last_name": "Reiter",
       "is_active": true,
       "is_staff": false,
-      "groups": [8]
+      "groups": [1]
     }
   },
   {
     "model": "aceofclubs.user",
     "pk": 3,
     "fields": {
-      "password": "",
+      "password": "pbkdf2_sha256$216000$CRsyKxCGtvZW$bMxOoVgU9fkFc8cXcNTEnERq/b2XiPgvykAmxrIv4DE=",
       "username": "musik2",
       "email": "lukas.huber@musik.at",
       "first_name": "Lukas",
       "last_name": "Huber",
       "is_active": true,
       "is_staff": false,
-      "groups": [9]
+      "groups": [2]
     }
   },
   {
@@ -269,6 +269,12 @@
     "pk": 4,
     "fields": {
       "description": "Besprechung"
+    }
+  },
+  {"model": "aceofclubs.eventtype",
+    "pk": 5,
+    "fields": {
+      "description": "Sitzung"
     }
   },
   {"model": "aceofclubs.state",
@@ -2672,7 +2678,7 @@
     "id": 1,
     "fields": {
       "name": "groupleader",
-      "permissions": [21, 22, 24, 32, 44]
+      "permissions": [44,37,38,40]
     }
   },
   {
@@ -2680,7 +2686,7 @@
     "id": 2,
     "fields": {
       "name": "user",
-      "permissions": [24, 32, 44]
+      "permissions": [40]
     }
   }
 ]

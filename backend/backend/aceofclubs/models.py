@@ -31,7 +31,7 @@ class Event(models.Model):
 
 
 class Media(models.Model):
-    file = models.FileField(upload_to='uploads/%Y-%m-%d-%H-%M-%S/')
+    #file = models.FileField(upload_to='uploads/%Y-%m-%d-%H-%M-%S/')
     content_type = models.CharField(null=True, blank=True, max_length=100)
 
     def save(self, *args, **kwargs):

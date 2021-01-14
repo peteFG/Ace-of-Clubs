@@ -28,9 +28,9 @@
     <button mat-menu-item routerLink="event-type-list" *ngIf="userService.hasPermission('aceofclubs.view_eventtype')">List Event Types</button>
   </mat-menu>
 
-  <button mat-button [matMenuTriggerFor]="userEventMenu" *ngIf="userService.hasPermission('aceofclubs.add_event')">Event Entries</button>
+  <button mat-button [matMenuTriggerFor]="userEventMenu" *ngIf="userService.hasPermission('aceofclubs.add_eventtype')">Event Entries</button>
   <mat-menu #userEventMenu="matMenu">
-    <button mat-menu-item routerLink="user-event-list" *ngIf="userService.hasPermission('aceofclubs.add_event')">List Event Entries</button>
+    <button mat-menu-item routerLink="user-event-list" *ngIf="userService.hasPermission('aceofclubs.add_eventtype')">List Event Entries</button>
   </mat-menu>
 
   <button mat-button [matMenuTriggerFor]="userGroupMenu" *ngIf="userService.hasPermission('aceofclubs.view_usergroup')">Group Entries</button>

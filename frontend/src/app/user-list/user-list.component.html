@@ -56,7 +56,7 @@
   <ng-container matColumnDef="delete">
     <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
     <td mat-cell *matCellDef="let element">
-      <button mat-button color="warn" (click)="deleteUser(element)">Delete</button>
+      <button mat-button color="warn" (click)="deleteUser(element)" *ngIf="userService.hasPermission('aceofclubs.delete_user')">Delete</button>
       <!--<button mat-button color="warn" (click)="deleteUser(element)" *ngIf="element.is_staff">Delete</button>-->
     </td>
   </ng-container>
