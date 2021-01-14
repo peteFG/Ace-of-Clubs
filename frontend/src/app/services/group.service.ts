@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import {UserService} from "./user.service";
 
 export interface Group {
   pk?: number;
@@ -13,7 +14,10 @@ export interface Group {
 })
 export class GroupService {
 
-  constructor(private http: HttpClient) { }
+
+
+  constructor(private http: HttpClient,
+              userService: UserService) { }
 
   createGroup(group: Group): Observable<Group> {
 

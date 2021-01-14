@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Group, GroupService} from '../services/group.service';
 import {User, UserService} from '../services/user.service';
 import {HttpClient} from '@angular/common/http';
+import {EventService} from "../services/event.service";
 
 
 
@@ -15,11 +16,15 @@ export class GroupListComponent implements OnInit {
   groups: Group[];
   displayedColumns = ['name', 'leader', 'edit', 'delete'];
 
-  constructor(private http: HttpClient, private groupService: GroupService, private userService: UserService) { }
+  constructor(private http: HttpClient,
+              private groupService: GroupService,
+              private eventService: EventService,
+              private userService: UserService) { }
+
 
   ngOnInit(): void {
     this.retrieveGroups();
-
+    this.eventService.personalEventsFunction();
   }
 
   private retrieveGroups(): void {

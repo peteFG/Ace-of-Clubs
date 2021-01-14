@@ -3,6 +3,8 @@ import {HttpClient} from "@angular/common/http";
 import {BehaviorSubject, Observable} from "rxjs";
 import {Router} from "@angular/router";
 import {JwtHelperService} from '@auth0/angular-jwt';
+import {Group} from "./group.service";
+import {UserGroupService} from "./user-group.service";
 
 
 
@@ -94,10 +96,11 @@ export class UserService {
   }
 
 
+  // Aktuell angemeldeten User mittels username ermitteln
   getCurrentUser(): Observable<User> {
     return this.http.get<User>('/api/users/?username=' + localStorage.getItem('currentUser'));
   }
-
+  // PK des aktuell angemeldeten User in Variable speichern
   getCurrentUserId():void{
     this.getCurrentUser().
     subscribe((user)=>{
