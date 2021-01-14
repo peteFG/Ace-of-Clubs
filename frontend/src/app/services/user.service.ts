@@ -27,6 +27,7 @@ export class UserService {
   readonly accessTokenLocalStorageKey = 'access_token';
   isLoggedIn = new BehaviorSubject(false);
   currentUserPK:number;
+  currentUserName:string;
 
 
   constructor(private http: HttpClient, private router: Router, private jwtHelperService: JwtHelperService) {
@@ -44,8 +45,19 @@ export class UserService {
   }
 
   deleteUser(user: User): Observable<any> {
-    return this.http.delete('/api/users/' + user.pk + '/');
+    if (this.currentUserPK != 1) {
+      return this.http.delete('/api/users/' + user.pk + '/');
+    }
+    else {
+      alert('Users may only be deleted by Administrators!');
+      /** TO DO: SONST ACCOUNT DEACTIVATEN UND
+       * MIT HAS_PERMISSION ABFRAGEN OB DERJENIGE ADMIN IST!**/
+    }
   };
+
+  /*deactivateUser(user: User): Observable<any> {
+    return this.http.delete('/api/users/' + user.pk + '/');
+  };*/
 
   getUser(pk: number): Observable<User> {
     return this.http.get<User>('/api/users/' + pk + '/');
@@ -66,7 +78,7 @@ export class UserService {
         localStorage.setItem('currentUser', userData.username);
         localStorage.setItem('access_token', res.token);
         this.router.navigate(['event-list']);
-        this.cUID();
+        this.getCurrentUserId();
         alert('Logged in as: ' + localStorage.getItem('currentUser'))
       }, () => {
         alert('wrong username or password');
@@ -86,10 +98,17 @@ export class UserService {
     return this.http.get<User>('/api/users/?username=' + localStorage.getItem('currentUser'));
   }
 
-  cUID():void{
+  getCurrentUserId():void{
     this.getCurrentUser().
     subscribe((user)=>{
       this.currentUserPK = user[0].pk
+    })
+  }
+
+  currentUsername():void{
+    this.getCurrentUser().
+    subscribe((user)=>{
+      this.currentUserName = user[0].username
     })
   }
 

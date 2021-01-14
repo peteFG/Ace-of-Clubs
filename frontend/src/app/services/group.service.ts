@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 export interface Group {
   pk?: number;
   name: string;
+  leader: string;
 }
 
 @Injectable({
