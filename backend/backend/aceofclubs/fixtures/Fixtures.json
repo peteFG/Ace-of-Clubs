@@ -18,13 +18,14 @@
     "model": "aceofclubs.user",
     "pk": 2,
     "fields": {
-      "password": "",
+      "password": "pbkdf2_sha256$216000$CRsyKxCGtvZW$bMxOoVgU9fkFc8cXcNTEnERq/b2XiPgvykAmxrIv4DE=",
       "username": "musik1",
       "email": "andreas.reiter@musik.at",
       "first_name": "Andreas",
       "last_name": "Reiter",
       "is_active": true,
-      "is_staff": false
+      "is_staff": false,
+      "groups": [8]
     }
   },
   {
@@ -37,7 +38,8 @@
       "first_name": "Lukas",
       "last_name": "Huber",
       "is_active": true,
-      "is_staff": false
+      "is_staff": false,
+      "groups": [9]
     }
   },
   {
@@ -533,6 +535,22 @@
       "user": 16,
       "group": 6,
       "is_leader": false
+    }
+  },
+  {
+    "model": "auth.Group",
+    "id": 1,
+    "fields": {
+      "name": "groupleader",
+      "permissions": [21, 22, 24, 32, 44]
+    }
+  },
+  {
+    "model": "auth.Group",
+    "id": 2,
+    "fields": {
+      "name": "user",
+      "permissions": [24, 32, 44]
     }
   }
 ]

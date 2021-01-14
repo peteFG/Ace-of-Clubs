@@ -5,8 +5,6 @@ import {Router} from "@angular/router";
 import {JwtHelperService} from '@auth0/angular-jwt';
 
 
-
-
 export interface User {
   pk?: number;
   username: string;
@@ -26,7 +24,7 @@ export class UserService {
 
   readonly accessTokenLocalStorageKey = 'access_token';
   isLoggedIn = new BehaviorSubject(false);
-  currentUserPK:number;
+  currentUserPK: number;
 
 
   constructor(private http: HttpClient, private router: Router, private jwtHelperService: JwtHelperService) {
@@ -86,12 +84,19 @@ export class UserService {
     return this.http.get<User>('/api/users/?username=' + localStorage.getItem('currentUser'));
   }
 
-  cUID():void{
-    this.getCurrentUser().
-    subscribe((user)=>{
+  cUID(): void {
+    this.getCurrentUser().subscribe((user) => {
       this.currentUserPK = user[0].pk
     })
   }
 
-
+  hasPermission(permission: string): boolean {
+    const token = localStorage.getItem(this.accessTokenLocalStorageKey);
+    if (token) {
+      const decodedToken = this.jwtHelperService.decodeToken(token);
+      const permissions = decodedToken.permissions;
+      return permission in permissions;
+    }
+    return false;
+  }
 }

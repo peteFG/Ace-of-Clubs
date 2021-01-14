@@ -4,13 +4,14 @@ from django.http import HttpResponse
 from django.views import View
 from rest_framework import viewsets, status
 from rest_framework.response import Response
+from rest_framework.permissions import DjangoModelPermissions
 from . import serializers
 from . import models
 
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = models.User.objects.all().order_by('pk')
-
+    permission_classes = (DjangoModelPermissions,)
     serializer_class = serializers.UserSerializer
 
     def list(self, request):

@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {EventService} from "../services/event.service";
 import {Time} from "@angular/common";
 import {HttpClient} from "@angular/common/http";
+import {UserService} from "../services/user.service";
 
 interface UserEvent {
   pk?: number;
@@ -18,13 +19,15 @@ interface UserEvent {
 export class UserEventListComponent implements OnInit {
 
   userEvents: UserEvent[];
+
   //displayedColumns = ['ev_type', 'name', 'start_time', 'end_time', 'start_date', 'end_date', 'active', 'group']
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private userService: UserService) {
+  }
 
   ngOnInit(): void {
     this.http.get('/api/userEvent/')
-      .subscribe((userEvents:UserEvent[]) => {
+      .subscribe((userEvents: UserEvent[]) => {
         this.userEvents = userEvents;
       })
     /*

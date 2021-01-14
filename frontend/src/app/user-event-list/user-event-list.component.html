@@ -10,7 +10,7 @@
     <td>{{eventEntry.event}}</td>
     <td>{{eventEntry.state }}</td>
 
-    <td><a [routerLink]="'/user-event-form/'+eventEntry.pk">Edit</a> </td>
+    <td><a [routerLink]="'/user-event-form/'+eventEntry.pk" *ngIf="userService.hasPermission('aceofclubs.add_event')">Edit</a> </td>
   </tr>
 </table>
 

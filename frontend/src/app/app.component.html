@@ -1,41 +1,41 @@
 <mat-toolbar>
-  <button mat-button [matMenuTriggerFor]="eventMenu">Event</button>
+  <button mat-button [matMenuTriggerFor]="eventMenu" *ngIf="userService.hasPermission('aceofclubs.view_event')">Event</button>
   <mat-menu #eventMenu="matMenu">
-    <button mat-menu-item routerLink="event-list">List Events</button>
-    <button mat-menu-item routerLink="event-form">Create Event</button>
+    <button mat-menu-item routerLink="event-list" *ngIf="userService.hasPermission('aceofclubs.view_event')">List Events</button>
+    <button mat-menu-item routerLink="event-form"*ngIf="userService.hasPermission('aceofclubs.add_event')">Create Event</button>
   </mat-menu>
 
-  <button mat-button [matMenuTriggerFor]="userMenu">Users</button>
+  <button mat-button [matMenuTriggerFor]="userMenu" *ngIf="userService.hasPermission('aceofclubs.view_user')">Users</button>
   <mat-menu #userMenu="matMenu">
-    <button mat-menu-item routerLink="user-list">List Users</button>
-    <button mat-menu-item routerLink="user-form">Create User</button>
+    <button mat-menu-item routerLink="user-list" *ngIf="userService.hasPermission('aceofclubs.view_user')">List Users</button>
+    <button mat-menu-item routerLink="user-form" *ngIf="userService.hasPermission('aceofclubs.add_user')">Create User</button>
   </mat-menu>
 
-  <button mat-button [matMenuTriggerFor]="groupMenu">Group</button>
+  <button mat-button [matMenuTriggerFor]="groupMenu" *ngIf="userService.hasPermission('aceofclubs.view_group')">Group</button>
   <mat-menu #groupMenu="matMenu">
-    <button mat-menu-item routerLink="group-list">List Groups</button>
-    <button mat-menu-item routerLink="group-form">Create Groups</button>
+    <button mat-menu-item routerLink="group-list" *ngIf="userService.hasPermission('aceofclubs.view_group')">List Groups</button>
+    <button mat-menu-item routerLink="group-form" *ngIf="userService.hasPermission('aceofclubs.add_group')">Create Groups</button>
   </mat-menu>
 
-  <button mat-button [matMenuTriggerFor]="stateMenu">States</button>
+  <button mat-button [matMenuTriggerFor]="stateMenu" *ngIf="userService.hasPermission('aceofclubs.view_state')">States</button>
   <mat-menu #stateMenu="matMenu">
-    <button mat-menu-item routerLink="state-list">List States</button>
-    <button mat-menu-item routerLink="state-form">Create State</button>
+    <button mat-menu-item routerLink="state-list" *ngIf="userService.hasPermission('aceofclubs.view_state')">List States</button>
+    <button mat-menu-item routerLink="state-form" *ngIf="userService.hasPermission('aceofclubs.add_state')">Create State</button>
   </mat-menu>
 
-  <button mat-button [matMenuTriggerFor]="eventTypeMenu">Event Types</button>
+  <button mat-button [matMenuTriggerFor]="eventTypeMenu" *ngIf="userService.hasPermission('aceofclubs.view_eventtype')">Event Types</button>
   <mat-menu #eventTypeMenu="matMenu">
-    <button mat-menu-item routerLink="event-type-list">List Event Types</button>
+    <button mat-menu-item routerLink="event-type-list" *ngIf="userService.hasPermission('aceofclubs.view_eventtype')">List Event Types</button>
   </mat-menu>
 
-  <button mat-button [matMenuTriggerFor]="userEventMenu">Event Entries</button>
+  <button mat-button [matMenuTriggerFor]="userEventMenu" *ngIf="userService.hasPermission('aceofclubs.add_event')">Event Entries</button>
   <mat-menu #userEventMenu="matMenu">
-    <button mat-menu-item routerLink="user-event-list">List Event Entries</button>
+    <button mat-menu-item routerLink="user-event-list" *ngIf="userService.hasPermission('aceofclubs.add_event')">List Event Entries</button>
   </mat-menu>
 
-  <button mat-button [matMenuTriggerFor]="userGroupMenu">Group Entries</button>
+  <button mat-button [matMenuTriggerFor]="userGroupMenu" *ngIf="userService.hasPermission('aceofclubs.view_usergroup')">Group Entries</button>
   <mat-menu #userGroupMenu="matMenu">
-    <button mat-menu-item routerLink="user-group-list">List Group Entries</button>
+    <button mat-menu-item routerLink="user-group-list" *ngIf="userService.hasPermission('aceofclubs.view_usergroup')">List Group Entries</button>
   </mat-menu>
 
   <app-logout></app-logout>
