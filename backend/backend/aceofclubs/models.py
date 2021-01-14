@@ -24,7 +24,7 @@ class Event(models.Model):
     start_date = models.DateField()
     end_date = models.DateField()
     active = models.BooleanField(default=True)
-    group = models.ManyToManyField(Group, blank=True)
+    group = models.ManyToManyField(Group, blank=True, default=1)
 
     def __str__(self):
         return self.name
@@ -69,7 +69,7 @@ class State(models.Model):
 class UserEvent(models.Model):
     user = models.ForeignKey(User, null=False, on_delete=models.CASCADE, related_name="event_relations")
     event = models.ForeignKey(Event, null=False, on_delete=models.CASCADE, related_name="user_relations")
-    state = models.ForeignKey(State, null=False, on_delete=models.CASCADE)
+    state = models.ForeignKey(State, null=False, on_delete=models.CASCADE, default=1)
 
     class Meta:
         unique_together = (("user", "event"),)
