@@ -3,6 +3,9 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {UserService} from "./user.service";
 import {Group} from "./group.service";
+import {map} from "rxjs/operators";
+import {flatMap} from "rxjs/internal/operators";
+import {group} from "@angular/animations";
 
 export interface UserGroup{
   pk?: number;
@@ -16,8 +19,7 @@ export interface UserGroup{
 })
 export class UserGroupService {
 
-  userGroupsByUserID: UserGroup[];
-  groupsPKByUserID:number[];
+  //userGroupsByUserID: UserGroup[];
 
   constructor(private http: HttpClient, private userService: UserService) { }
 
@@ -26,14 +28,23 @@ export class UserGroupService {
     return this.http.get<UserGroup[]>('/api/userGroup/?user=' + userID);
   }
 
-  gGBUID():void{
-    this.groupsPKByUserID = [];
-    this.getUserGroupsByUserID(this.userService.currentUserPK).
-    subscribe((userGroups)=>{
-      userGroups.forEach((userGroup)=>{
-        this.groupsPKByUserID.push(userGroup.group)
-      })
+ /*
 
-    })
+
+gGBUID(): Observable<UserGroup[]>{
+    return this.userService.getCurrentUser()
+      .pipe(flatMap((currentUser)=>{
+        return this.getUserGroupsByUserID(currentUser.pk)
+    }));
   }
+
+  */
+
+  gGBUID(): Observable<UserGroup[]>{
+    return this.userService.getCurrentUser()
+      .pipe(flatMap((currentUser)=>{
+        return this.getUserGroupsByUserID(currentUser.pk)
+      }));
+  }
+
 }

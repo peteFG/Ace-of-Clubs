@@ -15,8 +15,10 @@ import {State, StateService} from "../services/state.service";
 export class UserEventFormComponent implements OnInit {
 
   userEventFormGroup: FormGroup;
-  currentUser:User;
-  userOptions: User[];
+  //currentUser:number = this.userService.currentUserPK;
+  currentUser:number;
+  currentUserName:string;
+  currentEvent:number;
   eventOptions: Event[];
   stateOptions: State[];
 
@@ -30,19 +32,19 @@ export class UserEventFormComponent implements OnInit {
   ngOnInit(): void {
     this.userEventFormGroup = new FormGroup({
       pk: new FormControl(null),
-      user: new FormControl(),
-      event: new FormControl(),
-      state: new FormControl()
+      user: new FormControl(this.userService.currentUserPK),
+      event: new FormControl(this.userService.clickedEvent),
+      state: new FormControl(2)
     });
 
-    this.userService.getUsers()
+    /*this.userService.getUsers()
       .subscribe((userOptions)=>{
         this.userOptions = userOptions
-      })
+      })*/
 
-    //this.currentUser = this.userService.getCurrentUser()
-
-
+    //this.currentUser = this.userService.currentUserPK;
+    //this.currentUserName =  this.userService.currentUserName;
+    this.currentEvent = this.userService.clickedEvent;
 
     this.eventService.getEvents()
       .subscribe((eventOptions)=>{
@@ -63,7 +65,7 @@ export class UserEventFormComponent implements OnInit {
     }
   }
 
-  createEventEntry(): void {
+  createUserEventEntry(): void {
     const pk = this.userEventFormGroup.value.pk;
     if (pk) {
       this.http.put('/api/userEvent/' + pk + '/', this.userEventFormGroup.value)

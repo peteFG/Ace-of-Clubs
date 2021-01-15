@@ -24,7 +24,11 @@ export class GroupListComponent implements OnInit {
 
   ngOnInit(): void {
     this.retrieveGroups();
-    this.eventService.personalEventsFunction();
+    /*this.eventService.personalEventsFunction().subscribe((result)=>{
+      console.log(result);
+
+    });*/
+    //this.eventService.personalEventsFunction().subscribe();
   }
 
   private retrieveGroups(): void {

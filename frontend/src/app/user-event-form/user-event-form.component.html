@@ -1,4 +1,4 @@
-<form [formGroup]="userEventFormGroup" (ngSubmit)="createEventEntry()" class="user_event_form">
+<form [formGroup]="userEventFormGroup" (ngSubmit)="createUserEventEntry()" class="user_event_form">
   <!-- <mat-form-field>
      <input readonly matInput type="text"  formControlName="ev_type">
      <mat-hint align="end"> Event Type </mat-hint>
@@ -10,7 +10,7 @@
 
     <mat-select placeholder="Username" formControlName="user">
       <!-- <mat-option [value]="userOption.pk" *ngFor="let userOption of userOptions">{{userOption.username}}</mat-option> -->
-      <mat-option [value]="currentUser.username"></mat-option>
+      <mat-option [value]="currentUser" >{{currentUserName}}</mat-option>
     </mat-select>
     <mat-hint align="end">Username</mat-hint>
 
@@ -20,7 +20,7 @@
   <mat-form-field>
 
     <mat-select placeholder="Event" formControlName="event">
-      <mat-option [value]="eventOption.pk" *ngFor="let eventOption of eventOptions">{{eventOption.name}}</mat-option>
+      <mat-option [value]="currentEvent" >{{currentEvent}}</mat-option>
     </mat-select>
     <mat-hint align="end">Event</mat-hint>
 

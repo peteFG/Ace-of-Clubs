@@ -30,8 +30,8 @@ export class UserGroupListComponent implements OnInit {
         this.userGroups = userGroups;
       })
 
-    alert(this.userGroupService.groupsPKByUserID)
-    alert(this.eventService.personalEvents)
+    //alert(this.userGroupService.groupsPKByUserID)
+    //alert(this.eventService.personalEvents)
   }
 
 

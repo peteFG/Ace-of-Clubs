@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
 import {Time} from "@angular/common";
 import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {forkJoin, Observable, zip} from "rxjs";
 import {UserGroupService} from "./user-group.service";
 import {empty} from "rxjs/internal/Observer";
 import set = Reflect.set;
+import {UserService} from "./user.service";
+import {combineAll, flatMap} from "rxjs/internal/operators";
+import {map} from "rxjs/operators";
 
 export interface Event {
   pk?: number;
@@ -16,6 +19,9 @@ export interface Event {
   end_date: Date;
   active: boolean;
   group: number[];
+
+  // not from API
+  //personalEntry?:number;
 }
 
 @Injectable({
@@ -25,7 +31,9 @@ export class EventService {
 
   personalEvents:Event[];
 
-  constructor(private http: HttpClient, private userGroupService: UserGroupService) { }
+  constructor(private http: HttpClient,
+              private userGroupService: UserGroupService,
+              private userService: UserService) { }
 
   getEvents(): Observable<Event[]> {
     return this.http.get<Event[]>('/api/events/');
@@ -53,29 +61,94 @@ export class EventService {
     return this.http.get<Event[]>('api/events/?group=' + groupID)
   }
 
-  personalEventsFunction():void {
-    var groupIDs = this.userGroupService.groupsPKByUserID;
-    this.personalEvents = [];
+  personalEventsFunction():Observable<Event[]> {
+
+    //this.personalEvents = [];
     var personalEventsPK = [];
+    //const personalEvents: Event[] = [];
 
+    return this.userGroupService.gGBUID().pipe(flatMap((userGroups)=>{
 
-    groupIDs.forEach((groupPK) => {
+      const observables = [] as Observable<Event[]>[];
 
-      this.filtEvents(groupPK).subscribe((events) => {
-        events.forEach((event) => {
+      userGroups.forEach((group) => {
 
-          if (personalEventsPK.includes(event.pk)) {
-            alert('Event already in List');
+        observables.push(this.filtEvents(group.group));
+      })
 
-          } else {
-            personalEventsPK = personalEventsPK.concat(event.pk); //  Sicherstellung, dass keine Duplikate vorhanden sind
-            this.personalEvents = this.personalEvents.concat(event);
-          }
+      return forkJoin(observables).pipe(map((results)=>{
+
+        const personalEvents = [] as Event[]
+
+        results.forEach((persEv)=>{
+
+          persEv.forEach((event)=>{
+
+            if(!personalEventsPK.includes(event.pk))
+            personalEvents.push(event)
+            personalEventsPK.push(event.pk)
+          })
 
         })
-      })
-    })
+
+        return personalEvents;
+
+
+
+
+        /*return results.forEach((persEventLists)=>{
+          return personalEvents.concat(persEventLists);
+        });*/
+
+
+
+
+     /*   results.forEach((events)=>{
+
+          //const events2 = <any>events1
+          //const events = <Event[]>events2;
+          events.forEach((event) => {
+
+            if (personalEventsPK.includes(event.pk)) {
+              alert('Event already in List');
+
+            } else {
+              //event.personalEntry = this.userService.setPersonalEntry(event.pk)
+              personalEventsPK = personalEventsPK.concat(event.pk); //  Sicherstellung, dass keine Duplikate vorhanden sind
+              this.personalEvents = this.personalEvents.concat(event);
+            }
+
+          })
+        })*/
+
+
+      }));
+
+    }));
+
   }
 
 
 }
+
+
+/*
+
+
+.subscribe((events) => {
+          events.forEach((event) => {
+
+            if (personalEventsPK.includes(event.pk)) {
+              alert('Event already in List');
+
+            } else {
+              //event.personalEntry = this.userService.setPersonalEntry(event.pk)
+              personalEventsPK = personalEventsPK.concat(event.pk); //  Sicherstellung, dass keine Duplikate vorhanden sind
+              this.personalEvents = this.personalEvents.concat(event);
+            }
+
+          })
+        })
+
+
+ */

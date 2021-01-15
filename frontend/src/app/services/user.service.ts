@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, Observable} from 'rxjs';
-import {Router} from '@angular/router';
+import {HttpClient} from "@angular/common/http";
+import {BehaviorSubject, Observable} from "rxjs";
+import { Router } from "@angular/router";
 import {JwtHelperService} from '@auth0/angular-jwt';
-import {Group} from './group.service';
-import {UserGroupService} from './user-group.service';
+import {Group} from "./group.service";
+import {UserGroupService} from "./user-group.service";
+import {map} from "rxjs/operators";
 
 
 
@@ -21,6 +22,14 @@ export interface User {
   // profile_picture: Media;
 }
 
+export interface UserEvent {
+  pk?: number;
+  user: number;
+  event: number;
+  state: number;
+  //profile_picture: Media;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -28,8 +37,11 @@ export class UserService {
 
   readonly accessTokenLocalStorageKey = 'access_token';
   isLoggedIn = new BehaviorSubject(false);
-  currentUserPK: number;
-  currentUserName: string;
+  currentUserPK:number;
+  currentUserName:string;
+  clickedEvent:number;
+  existingUserEntry:number;
+  goahead:boolean;
 
 
   constructor(private http: HttpClient, private router: Router, private jwtHelperService: JwtHelperService) {
@@ -40,6 +52,8 @@ export class UserService {
       this.isLoggedIn.next(tokenValid);
     }
   }
+
+
 
 
   getUsers(): Observable<User[]> {
@@ -98,23 +112,75 @@ export class UserService {
 
   // Aktuell angemeldeten User mittels username ermitteln
   getCurrentUser(): Observable<User> {
-    return this.http.get<User>('/api/users/?username=' + localStorage.getItem('currentUser'));
+    return this.http.get<User[]>('/api/users/?username=' + localStorage.getItem('currentUser'))
+      .pipe(map((users)=>{
+        return users[0];
+      }));
   }
   // PK des aktuell angemeldeten User in Variable speichern
   getCurrentUserId(): void {
     this.getCurrentUser().
-    subscribe((user) => {
-      this.currentUserPK = user[0].pk;
-    });
+    subscribe((user)=>{
+      this.currentUserPK = user.pk
+    })
   }
 
-  currentUsername(): void {
-    this.getCurrentUser().
-    subscribe((user) => {
-      this.currentUserName = user[0].username;
-    });
+  //alle UserEvents des aktuellen Users
+
+  getUserEventsOfCurrentUser(): Observable<UserEvent[]>{
+    return this.http.get<UserEvent[]>('/api/userEvent/?user=');
   }
 
+  setUserEventEntry(eventPK:number) {
+    this.clickedEvent =  eventPK
+    this.existingUserEntry = 0
+    //alert('Object was pressed - ID of Event =' + eventPK)
+    var entriesOfActualUser = this.getUserEventsOfCurrentUser()
+
+    entriesOfActualUser.subscribe((userEvents)=>{
+
+      userEvents.forEach((eventEntry)=>{
+
+        if(eventEntry.event == eventPK){
+
+          this.existingUserEntry = eventEntry.pk;
+
+         this.router.navigateByUrl('/user-event-form/'+this.existingUserEntry)
+
+        }
+        if (this.existingUserEntry ==0){
+          this.router.navigateByUrl('/user-event-form/')
+        }
+
+      })
+
+    })
+
+  }
+
+  /*setPersonalEntry(eventPK:number):number{
+
+    var entriesOfActualUser = this.getUserEventsOfCurrentUser()
+    var personalEntryPK=0
+    entriesOfActualUser.subscribe((userEvents)=>{
+
+      userEvents.forEach((eventEntry)=>{
+
+        if(eventEntry.event == eventPK){
+
+          personalEntryPK = eventEntry.pk;
+          //this.goahead = true;
+
+        } else {
+
+        }
+
+      })
+
+    })
+    return personalEntryPK
+
+  }*/
 
   hasPermission(permission: string): boolean {
     const token = localStorage.getItem(this.accessTokenLocalStorageKey);
@@ -125,4 +191,5 @@ export class UserService {
     }
     return false;
   }
+
 }

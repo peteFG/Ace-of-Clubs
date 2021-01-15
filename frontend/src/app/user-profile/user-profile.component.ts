@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {User, UserService} from '../services/user.service';
+import {HttpClient} from "@angular/common/http";
+import {User, UserService} from "../services/user.service";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-user-profile',
@@ -9,8 +10,8 @@ import {User, UserService} from '../services/user.service';
 })
 export class UserProfileComponent implements OnInit {
 
-  userProfile: User;
-  displayedColumns = ['username', 'email', 'first_name', 'last_name', 'edit', 'delete'];
+  userProfile: User[];
+  displayedColumns = ['username', 'email', 'first_name', 'last_name', 'edit','delete']
 
   constructor(private http: HttpClient, private userService: UserService) { }
 
@@ -20,10 +21,11 @@ export class UserProfileComponent implements OnInit {
 
 
   private retrieveUser(): void {
-    this.userService.getCurrentUser()
-      .subscribe((users) => {
-        this.userProfile = users;
-      });
+
+    this.userService.getCurrentUser().subscribe((user)=>{
+      this.userProfile=[]
+      this.userProfile.push(user);
+    });
   }
 
   deleteUser(user: User): void {
