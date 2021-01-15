@@ -4,33 +4,42 @@
       <h1 class="title">ACE OF CLUBS</h1>
       <p class="subtitle">Manage and Keep on Top of Your Club with one simple Tool.</p>
     </div>
-    <p class="subtitle2">JOIN US TODAY</p>
+    <p *ngIf="!isLoggedIn" class="subtitle2">JOIN US TODAY</p>
     <mat-divider [inset]="true"></mat-divider>
     <div class="card-actions">
-      <button style="margin-left: 10px" mat-stroked-button class="btn-transparent" routerLink="/login">Login</button>
-      <mat-divider [vertical]="true"></mat-divider>
-      <button style="margin-right: 10px" mat-stroked-button class="btn-transparent" routerLink="/register">Sign Up
-      </button>
+
+      <div class="notloggedin" *ngIf="!isLoggedIn">
+        <button style="margin-left: 15px" mat-stroked-button class="btn-transparent" routerLink="/login">Login</button>
+        <mat-divider [vertical]="true"></mat-divider>
+        <button style="margin-right: 15px" mat-stroked-button class="btn-transparent" routerLink="/register">Sign Up
+        </button>
+      </div>
+      <div style="margin-top: 15px" *ngIf="isLoggedIn">
+        <button mat-stroked-button class="btn-transparent" routerLink="/overview">Visit your Personalized Page</button>
+      </div>
     </div>
 
   </mat-card>
 
 
-  <div class="container">
+  <div style="margin-bottom: 20px" class="container">
     <p class="subheading">What we are Offering</p>
     <mat-divider style="padding: 5px"></mat-divider>
     <div class="elem-container">
       <mat-card class="elements">
-        <span class="material-icons">event_available</span>
+        <img class="icon" src="./assets/image/event_available-48dp.png" alt="Events">
+        <p class="small-heading">ORANIZE EVENTS SUCCESSFULLY</p>
+        <p class="regular-text">123</p>
       </mat-card>
       <mat-card class="elements">
-        <span class="material-icons">groups</span>
+        <img class="icon" src="./assets/image/groups-48dp.png" alt="Members">
+        <p class="small-heading">COORDINATE ALL CLUB MEMBERS</p>
+        <p class="regular-text">123</p>
       </mat-card>
       <mat-card class="elements">
-        <span class="material-icons">leaderboard</span>
-      </mat-card>
-      <mat-card class="elements">
-        <span class="material-icons">alarm</span>
+        <img class="icon" src="./assets/image/leaderboard-48dp.png" alt="Statistics">
+        <p class="small-heading">KEEP TRACK OF YOUR CLUB</p>
+        <p class="regular-text">123</p>
       </mat-card>
     </div>
   </div>

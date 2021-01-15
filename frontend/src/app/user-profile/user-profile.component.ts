@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {User, UserService} from "../services/user.service";
+import {HttpClient} from '@angular/common/http';
+import {User, UserService} from '../services/user.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -9,29 +9,29 @@ import {User, UserService} from "../services/user.service";
 })
 export class UserProfileComponent implements OnInit {
 
-  user_profile: User;
-  displayedColumns = ['username', 'email', 'first_name', 'last_name', 'edit','delete']
+  userProfile: User;
+  displayedColumns = ['username', 'email', 'first_name', 'last_name', 'edit', 'delete'];
 
   constructor(private http: HttpClient, private userService: UserService) { }
 
   ngOnInit(): void {
-    this.retrieveUser()
+    this.retrieveUser();
   }
 
 
   private retrieveUser(): void {
     this.userService.getCurrentUser()
       .subscribe((users) => {
-        this.user_profile = users;
-      })
+        this.userProfile = users;
+      });
   }
 
-  deleteUser(user:User):void{
+  deleteUser(user: User): void {
     this.userService.deleteUser(user)
-      .subscribe(()=>{
+      .subscribe(() => {
         this.retrieveUser();
-        alert('deleted successfully!')
-      })
+        alert('deleted successfully!');
+      });
   }
 }
 

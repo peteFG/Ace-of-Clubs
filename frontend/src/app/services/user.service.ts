@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {BehaviorSubject, Observable} from "rxjs";
-import {Router} from "@angular/router";
+import {HttpClient} from '@angular/common/http';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {Router} from '@angular/router';
 import {JwtHelperService} from '@auth0/angular-jwt';
-import {Group} from "./group.service";
-import {UserGroupService} from "./user-group.service";
+import {Group} from './group.service';
+import {UserGroupService} from './user-group.service';
 
 
 
@@ -18,7 +18,7 @@ export interface User {
   is_staff: boolean;
   is_active: boolean;
   date_joined: Date;
-  //profile_picture: Media;
+  // profile_picture: Media;
 }
 
 @Injectable({
@@ -28,8 +28,8 @@ export class UserService {
 
   readonly accessTokenLocalStorageKey = 'access_token';
   isLoggedIn = new BehaviorSubject(false);
-  currentUserPK:number;
-  currentUserName:string;
+  currentUserPK: number;
+  currentUserName: string;
 
 
   constructor(private http: HttpClient, private router: Router, private jwtHelperService: JwtHelperService) {
@@ -53,9 +53,9 @@ export class UserService {
     else {
       alert('Users may only be deleted by Administrators!');
       /** TO DO: SONST ACCOUNT DEACTIVATEN UND
-       * MIT HAS_PERMISSION ABFRAGEN OB DERJENIGE ADMIN IST!**/
+      * MIT HAS_PERMISSION ABFRAGEN OB DERJENIGE ADMIN IST!**/
     }
-  };
+  }
 
   /*deactivateUser(user: User): Observable<any> {
     return this.http.delete('/api/users/' + user.pk + '/');
@@ -81,7 +81,7 @@ export class UserService {
         localStorage.setItem('access_token', res.token);
         this.router.navigate(['event-list']);
         this.getCurrentUserId();
-        alert('Logged in as: ' + localStorage.getItem('currentUser'))
+        alert('Logged in as: ' + localStorage.getItem('currentUser'));
       }, () => {
         alert('wrong username or password');
       });
@@ -101,18 +101,18 @@ export class UserService {
     return this.http.get<User>('/api/users/?username=' + localStorage.getItem('currentUser'));
   }
   // PK des aktuell angemeldeten User in Variable speichern
-  getCurrentUserId():void{
+  getCurrentUserId(): void {
     this.getCurrentUser().
-    subscribe((user)=>{
-      this.currentUserPK = user[0].pk
-    })
+    subscribe((user) => {
+      this.currentUserPK = user[0].pk;
+    });
   }
 
-  currentUsername():void{
+  currentUsername(): void {
     this.getCurrentUser().
-    subscribe((user)=>{
-      this.currentUserName = user[0].username
-    })
+    subscribe((user) => {
+      this.currentUserName = user[0].username;
+    });
   }
 
 

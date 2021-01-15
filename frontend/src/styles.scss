@@ -45,3 +45,29 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   font-size: 18px;
 }
 
+.small-heading {
+  font-size: 28px;
+  font-weight: lighter;
+  color: rgba(26,63,143,1);
+}
+
+.regular-text {
+  font-size: 20px;
+  font-weight: lighter;
+}
+
+.title {
+  font-size: 600%;
+  color: white;
+  text-align: -webkit-center;
+}
+
+.title-bg {
+  font-size: 500%;
+  color: white;
+  font-weight: bold;
+  background-image: url("./assets/image/mountain-range.jpg");
+  background-size: 50% 100%;
+  color: transparent;
+  -webkit-background-clip: text;
+}

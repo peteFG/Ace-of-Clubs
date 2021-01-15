@@ -17,7 +17,6 @@
 
 
 .title {
-  color: white;
   margin-bottom: 0;
 }
 
@@ -45,9 +44,17 @@
 }
 
 .elements {
-
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
   background-color: rgba(255, 255, 255, 0.7);
   box-shadow: 0 3px 1px -1px rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12)
+}
+
+.icon {
+  padding: 7px;
+  width: 150px;
+  height: 150px;
 }
 
 .subtitle2 {
@@ -68,6 +75,11 @@
   font-weight: lighter;
 }
 
+.notloggedin {
+  display: flex;
+  flex-direction: row;
+}
+
 @media only screen and (max-width: 450px) {
 
   .home-card {
@@ -78,10 +90,10 @@
     padding-bottom: 20px;
   }
   .title {
-    padding-left: 35px;
+    padding-left: 20px;
     padding-right: 20px;
     margin-top: 5vh;
-    font-size: 400%;
+    font-size: 500%;
   }
 
   .card-container {
@@ -100,7 +112,7 @@
   }
 
   .btn-transparent {
-    font-size: larger;
+    font-size: 22px;
   }
 
   .subheading {
@@ -113,8 +125,15 @@
   }
 
   .elements {
-    width: 100%;
+    width: 92%;
   }
+
+  .icon {
+    padding: 7px;
+    width: 100px;
+    height: 100px;
+  }
+
 }
 
 @media only screen and (min-width: 450px) {
@@ -125,7 +144,6 @@
 
   .title {
     margin-top: 15vh;
-    font-size: 600%;
   }
 
   .card-actions {
@@ -134,11 +152,6 @@
 
   .btn-transparent {
     font-size: 22px;
-  }
-
-  .material-icons {
-    width: 60px;
-    height: 50px;
   }
 
   .subheading {
@@ -151,7 +164,13 @@
 
   .elements {
     height: 20vw;
-    width: 24%;
+    width: 32%;
     margin: 10px;
+  }
+
+  .icon {
+    padding: 7px;
+    width: 150px;
+    height: 150px;
   }
 }

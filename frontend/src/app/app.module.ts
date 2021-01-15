@@ -38,6 +38,7 @@ import { LogoutComponent } from './logout/logout.component';
 import { JwtModule } from '@auth0/angular-jwt';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { MatDividerModule } from '@angular/material/divider';
+import { OverviewComponent } from './overview/overview.component';
 
 
 @NgModule({
@@ -61,7 +62,8 @@ import { MatDividerModule } from '@angular/material/divider';
     UserGroupFormComponent,
     LoginComponent,
     LogoutComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    OverviewComponent
   ],
   imports: [
     BrowserModule,
