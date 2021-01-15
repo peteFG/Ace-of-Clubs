@@ -3,9 +3,8 @@ import {HttpClient} from "@angular/common/http";
 import {BehaviorSubject, Observable} from "rxjs";
 import { Router } from "@angular/router";
 import {JwtHelperService} from '@auth0/angular-jwt';
-import {Group} from "./group.service";
-import {UserGroupService} from "./user-group.service";
 import {map} from "rxjs/operators";
+import {flatMap} from "rxjs/internal/operators";
 
 
 
@@ -28,6 +27,13 @@ export interface UserEvent {
   event: number;
   state: number;
   //profile_picture: Media;
+}
+
+export interface UserGroup{
+  pk?: number;
+  user: number;
+  group: number;
+  is_leader: boolean;
 }
 
 @Injectable({
@@ -94,7 +100,6 @@ export class UserService {
         localStorage.setItem('currentUser', userData.username);
         localStorage.setItem('access_token', res.token);
         this.router.navigate(['event-list']);
-        this.getCurrentUserId();
         alert('Logged in as: ' + localStorage.getItem('currentUser'));
       }, () => {
         alert('wrong username or password');
@@ -167,6 +172,20 @@ export class UserService {
       return permission in permissions;
     }
     return false;
+  }
+
+
+  // --------------------------------------  USER GROUP SERVICES -------------------------------------------
+
+  getUserGroupsByUserID(userID: number): Observable<UserGroup[]> {
+    return this.http.get<UserGroup[]>('/api/userGroup/?user=' + userID);
+  }
+
+  gGBUID(): Observable<UserGroup[]>{
+    return this.getCurrentUser()
+      .pipe(flatMap((currentUser)=>{
+        return this.getUserGroupsByUserID(currentUser.pk)
+      }));
   }
 
 }

@@ -1,7 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {User, UserService} from '../services/user.service';
-import {UserGroupService} from '../services/user-group.service';
-import {EventService} from '../services/event.service';
 
 @Component({
   selector: 'app-user-list',
@@ -13,12 +11,10 @@ export class UserListComponent implements OnInit {
   users: User[];
   displayedColumns = ['username', 'email', 'first_name', 'last_name', 'is_active', 'is_staff', 'date_joined', 'edit', 'delete'];
 
-  constructor(private userService: UserService, private userGroupService: UserGroupService) {
+  constructor(public userService: UserService) {
   }
 
   ngOnInit(): void {
-    this.userService.getCurrentUserId();
-    this.userGroupService.gGBUID();
     this.retrieveUsers();
   }
 

@@ -15,7 +15,6 @@ import {State, StateService} from "../services/state.service";
 export class UserEventFormComponent implements OnInit {
 
   userEventFormGroup: FormGroup;
-  //currentUser:number = this.userService.currentUserPK;
   currentUser:number;
   currentUserName:string;
   currentEvent:number;
@@ -30,6 +29,7 @@ export class UserEventFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.userService.getCurrentUserId();
     this.userEventFormGroup = new FormGroup({
       pk: new FormControl(null),
       user: new FormControl(this.userService.currentUserPK),
@@ -37,14 +37,8 @@ export class UserEventFormComponent implements OnInit {
       state: new FormControl(2)
     });
 
-    /*this.userService.getUsers()
-      .subscribe((userOptions)=>{
-        this.userOptions = userOptions
-      })*/
-
-    //this.currentUser = this.userService.currentUserPK;
-    //this.currentUserName =  this.userService.currentUserName;
     this.currentEvent = this.userService.clickedEvent;
+    //this.currentUser = this.userService.getCurrentUser().subscribe()
 
     this.eventService.getEvents()
       .subscribe((eventOptions)=>{

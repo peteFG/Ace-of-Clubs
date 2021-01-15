@@ -1,12 +1,8 @@
 import { Injectable } from '@angular/core';
-import {Time} from "@angular/common";
 import {HttpClient} from "@angular/common/http";
-import {forkJoin, Observable, zip} from "rxjs";
-import {UserGroupService} from "./user-group.service";
-import {empty} from "rxjs/internal/Observer";
-import set = Reflect.set;
+import {forkJoin, Observable} from "rxjs";
 import {UserService} from "./user.service";
-import {combineAll, flatMap} from "rxjs/internal/operators";
+import {flatMap} from "rxjs/internal/operators";
 import {map} from "rxjs/operators";
 
 export interface Event {
@@ -32,7 +28,6 @@ export class EventService {
   personalEvents:Event[];
 
   constructor(private http: HttpClient,
-              private userGroupService: UserGroupService,
               private userService: UserService) { }
 
   getEvents(): Observable<Event[]> {
@@ -63,11 +58,10 @@ export class EventService {
 
   personalEventsFunction():Observable<Event[]> {
 
-    //this.personalEvents = [];
     var personalEventsPK = [];
-    //const personalEvents: Event[] = [];
 
-    return this.userGroupService.gGBUID().pipe(flatMap((userGroups)=>{
+
+    return this.userService.gGBUID().pipe(flatMap((userGroups)=>{
 
       const observables = [] as Observable<Event[]>[];
 
@@ -85,8 +79,8 @@ export class EventService {
           persEv.forEach((event)=>{
 
             if(!personalEventsPK.includes(event.pk))
-            personalEvents.push(event)
-            personalEventsPK.push(event.pk)
+            personalEvents.push(event);
+            personalEventsPK.push(event.pk);
           })
 
         })
