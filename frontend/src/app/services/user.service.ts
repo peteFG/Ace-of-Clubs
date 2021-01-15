@@ -124,8 +124,10 @@ export class UserService {
   }
   // PK des aktuell angemeldeten User in Variable speichern
   getCurrentUserId(): void {
+
     this.getCurrentUser().
     subscribe((user)=>{
+      this.currentUserPK=0
       this.currentUserPK = user.pk
     })
   }
@@ -138,6 +140,7 @@ export class UserService {
 
   setUserEventEntry(eventPK:number) {
     this.clickedEvent =  eventPK;
+    this.getCurrentUserId();
     this.existingUserEntry = 0
     //alert('Object was pressed - ID of Event =' + eventPK)
     var entriesOfActualUser = this.getUserEventsOfCurrentUser()
