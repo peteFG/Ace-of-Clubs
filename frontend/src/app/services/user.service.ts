@@ -132,7 +132,7 @@ export class UserService {
   }
 
   setUserEventEntry(eventPK:number) {
-    this.clickedEvent =  eventPK
+    this.clickedEvent =  eventPK;
     this.existingUserEntry = 0
     //alert('Object was pressed - ID of Event =' + eventPK)
     var entriesOfActualUser = this.getUserEventsOfCurrentUser()
@@ -158,29 +158,6 @@ export class UserService {
 
   }
 
-  /*setPersonalEntry(eventPK:number):number{
-
-    var entriesOfActualUser = this.getUserEventsOfCurrentUser()
-    var personalEntryPK=0
-    entriesOfActualUser.subscribe((userEvents)=>{
-
-      userEvents.forEach((eventEntry)=>{
-
-        if(eventEntry.event == eventPK){
-
-          personalEntryPK = eventEntry.pk;
-          //this.goahead = true;
-
-        } else {
-
-        }
-
-      })
-
-    })
-    return personalEntryPK
-
-  }*/
 
   hasPermission(permission: string): boolean {
     const token = localStorage.getItem(this.accessTokenLocalStorageKey);
