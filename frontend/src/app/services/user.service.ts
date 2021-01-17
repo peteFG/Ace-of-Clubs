@@ -3,7 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {BehaviorSubject, Observable} from "rxjs";
 import { Router } from "@angular/router";
 import {JwtHelperService} from '@auth0/angular-jwt';
-import {map} from "rxjs/operators";
+import {isEmpty, map} from "rxjs/operators";
 import {flatMap} from "rxjs/internal/operators";
 
 
@@ -145,24 +145,35 @@ export class UserService {
     //alert('Object was pressed - ID of Event =' + eventPK)
     var entriesOfActualUser = this.getUserEventsOfCurrentUser()
 
-    entriesOfActualUser.subscribe((userEvents)=>{
+    if (entriesOfActualUser.pipe(isEmpty())){
 
-      userEvents.forEach((eventEntry)=>{
+      this.router.navigateByUrl('/user-event-form/')
 
-        if(eventEntry.event == eventPK){
+    } else {
 
-          this.existingUserEntry = eventEntry.pk;
+      entriesOfActualUser.subscribe((userEvents)=>{
 
-         this.router.navigateByUrl('/user-event-form/'+this.existingUserEntry)
 
-        }
-        if (this.existingUserEntry ==0){
-          this.router.navigateByUrl('/user-event-form/')
-        }
+        userEvents.forEach((eventEntry)=>{
+
+          if(eventEntry.event == eventPK){
+
+            this.existingUserEntry = eventEntry.pk;
+
+            this.router.navigateByUrl('/user-event-form/'+this.existingUserEntry)
+
+          }
+          if (this.existingUserEntry ==0){
+            this.router.navigateByUrl('/user-event-form/')
+          }
+
+        })
 
       })
 
-    })
+    }
+
+
 
   }
 
