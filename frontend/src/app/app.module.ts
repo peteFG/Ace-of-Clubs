@@ -39,7 +39,8 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { MatDividerModule } from '@angular/material/divider';
 import { OverviewComponent } from './overview/overview.component';
-
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatIconModule} from '@angular/material/icon';
 
 /*export function initializeApp(appInitService: AppInitService){
   return (): Promise<any> =>{
@@ -89,6 +90,8 @@ import { OverviewComponent } from './overview/overview.component';
     MatNativeDateModule,
     MatCheckboxModule,
     MatDividerModule,
+    MatExpansionModule,
+    MatIconModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: () => {

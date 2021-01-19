@@ -195,6 +195,30 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   flex: 0 0 auto;
 }
 
+.m-acc-actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.acc-m-description {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: -webkit-right;
+}
+
+.acc-m-title {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.acc-m-header {
+  height: fit-content;
+}
+
 /* Animation */
 @keyframes m-areaSlide300InFromRight {
   0% {

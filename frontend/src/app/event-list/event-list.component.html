@@ -98,15 +98,15 @@
 
   <mat-accordion class="event-view-acc">
     <mat-expansion-panel *ngFor="let event of events" (opened)="panelOpen = true" (closed)="panelOpen = false">
-      <mat-expansion-panel-header class="ev-m-header">
-        <mat-panel-title class="ev-m-title">
+      <mat-expansion-panel-header class="acc-m-header">
+        <mat-panel-title class="acc-m-title">
           <div class="event-name"> {{event.name}} </div>
           <br>
           <div *ngIf="!panelOpen" class="event-date">
             {{event.start_date | date: 'dd MMM yyyy'}} - {{event.start_time.substring(0, 5)}}
           </div>
         </mat-panel-title>
-        <mat-panel-description class="ev-m-description">
+        <mat-panel-description class="acc-m-description">
           {{event.ev_type}}
         </mat-panel-description>
       </mat-expansion-panel-header>
@@ -139,7 +139,7 @@
           <!--<div class="content-m-data">{{event.active}}</div>-->
         </div>
       </div>
-      <mat-action-row class="m-event-actions">
+      <mat-action-row class="m-acc-actions">
         <div class="m-event-btn">
           <button mat-icon-button color="standard">
             <mat-icon>sms_failed</mat-icon>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {User, UserService} from "../services/user.service";
-import {Observable} from "rxjs";
+import {HttpClient} from '@angular/common/http';
+import {User, UserService} from '../services/user.service';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-user-profile',
@@ -11,7 +11,7 @@ import {Observable} from "rxjs";
 export class UserProfileComponent implements OnInit {
 
   userProfile: User[];
-  displayedColumns = ['username', 'email', 'first_name', 'last_name', 'edit','delete']
+  displayedColumns = ['username', 'email', 'first_name', 'last_name', 'edit', 'delete'];
 
   constructor(private http: HttpClient, private userService: UserService) { }
 
@@ -22,8 +22,8 @@ export class UserProfileComponent implements OnInit {
 
   private retrieveUser(): void {
 
-    this.userService.getCurrentUser().subscribe((user)=>{
-      this.userProfile=[]
+    this.userService.getCurrentUser().subscribe((user) => {
+      this.userProfile = [];
       this.userProfile.push(user);
     });
 

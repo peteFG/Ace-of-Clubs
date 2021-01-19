@@ -19,28 +19,9 @@
   cursor: pointer;
 }
 
-.ev-m-header {
-  height: fit-content;
-}
-
-.ev-m-title {
-  padding: 5px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  display: flex;
-  flex-direction: column;
-}
-
 .event-name {
   font-size: larger;
   font-weight: bold;
-}
-
-.ev-m-description {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-align: -webkit-right;
 }
 
 .btn-standard {
@@ -52,8 +33,4 @@
   margin-right: 15px;
 }
 
-.m-event-actions {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
+

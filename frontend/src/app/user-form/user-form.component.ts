@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
-//import {Group, GroupService} from '../services/group.service';
+// import {Group, GroupService} from '../services/group.service';
 import {HttpClient} from '@angular/common/http';
-import {UserService} from "../services/user.service";
+import {UserService} from '../services/user.service';
 
 @Component({
   selector: 'app-user-form',
@@ -29,7 +29,7 @@ export class UserFormComponent implements OnInit {
     });
 
     const pk = this.route.snapshot.paramMap.get('pk');
-    if(pk) {
+    if (pk) {
       this.userService.getUser(parseInt(pk, 10))
         .subscribe((user) => {
           this.userFormGroup.patchValue(user);
