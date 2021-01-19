@@ -5,12 +5,12 @@
       <p class="subtitle">Manage and Keep on Top of Your Club with one simple Tool.</p>
     </div>
     <p *ngIf="!isLoggedIn" class="subtitle2">JOIN US TODAY</p>
-    <mat-divider [inset]="true"></mat-divider>
+    <mat-divider class="main-divider" [inset]="true"></mat-divider>
     <div class="card-actions">
 
       <div class="notloggedin" *ngIf="!isLoggedIn">
         <button style="margin-left: 15px" mat-stroked-button class="btn-transparent" routerLink="/login">Login</button>
-        <mat-divider [vertical]="true"></mat-divider>
+        <mat-divider class="main-divider" [vertical]="true"></mat-divider>
         <button style="margin-right: 15px" mat-stroked-button class="btn-transparent" routerLink="/register">Sign Up
         </button>
       </div>
@@ -27,19 +27,34 @@
     <mat-divider style="padding: 5px"></mat-divider>
     <div class="elem-container">
       <mat-card class="elements">
-        <img class="icon" src="./assets/image/event_available-48dp.png" alt="Events">
-        <p class="small-heading">ORANIZE EVENTS SUCCESSFULLY</p>
-        <p class="regular-text">123</p>
+        <div class="header-elements">
+          <img class="icon" src="./assets/image/event_available-48dp.png" alt="Events">
+          <p class="small-heading">ORANIZE EVENTS SUCCESSFULLY</p>
+        </div>
+        <div class="footer-elements">
+          <mat-divider></mat-divider>
+          <p class="regular-text">123</p>
+        </div>
       </mat-card>
       <mat-card class="elements">
-        <img class="icon" src="./assets/image/groups-48dp.png" alt="Members">
-        <p class="small-heading">COORDINATE ALL CLUB MEMBERS</p>
-        <p class="regular-text">123</p>
+        <div class="header-elements">
+          <img class="icon" src="./assets/image/groups-48dp.png" alt="Members">
+          <p class="small-heading">COORDINATE ALL CLUB MEMBERS</p>
+        </div>
+        <div class="footer-elements">
+          <mat-divider></mat-divider>
+          <p class="regular-text">123</p>
+        </div>
       </mat-card>
       <mat-card class="elements">
-        <img class="icon" src="./assets/image/leaderboard-48dp.png" alt="Statistics">
-        <p class="small-heading">KEEP TRACK OF YOUR CLUB</p>
-        <p class="regular-text">123</p>
+        <div class="header-elements">
+          <img class="icon" src="./assets/image/leaderboard-48dp.png" alt="Statistics">
+          <p class="small-heading">KEEP TRACK OF YOUR CLUB</p>
+        </div>
+        <div class="footer-elements">
+          <mat-divider></mat-divider>
+          <p class="regular-text">123</p>
+        </div>
       </mat-card>
     </div>
   </div>

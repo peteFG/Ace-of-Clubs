@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {forkJoin, Observable} from "rxjs";
-import {UserService} from "./user.service";
-import {flatMap} from "rxjs/internal/operators";
-import {map} from "rxjs/operators";
+import {HttpClient} from '@angular/common/http';
+import {forkJoin, Observable} from 'rxjs';
+import {UserService} from './user.service';
+import {flatMap} from 'rxjs/internal/operators';
+import {map} from 'rxjs/operators';
 
 export interface Event {
   pk?: number;
@@ -17,7 +17,7 @@ export interface Event {
   group: number[];
 
   // not from API
-  //personalEntry?:number;
+  // personalEntry?: number;
 }
 
 @Injectable({
@@ -25,7 +25,7 @@ export interface Event {
 })
 export class EventService {
 
-  personalEvents:Event[];
+  personalEvents: Event[];
 
   constructor(private http: HttpClient,
               private userService: UserService) { }
@@ -53,37 +53,38 @@ export class EventService {
 
   // Filter Events nach Gruppen des aktuellen User
   filtEvents(groupID: number): Observable<Event[]> {
-    return this.http.get<Event[]>('api/events/?group=' + groupID)
+    return this.http.get<Event[]>('api/events/?group=' + groupID);
   }
 
-  personalEventsFunction():Observable<Event[]> {
+  personalEventsFunction(): Observable<Event[]> {
 
     var personalEventsPK = [];
 
 
-    return this.userService.gGBUID().pipe(flatMap((userGroups)=>{
+    return this.userService.gGBUID().pipe(flatMap((userGroups) => {
 
       const observables = [] as Observable<Event[]>[];
 
       userGroups.forEach((group) => {
 
         observables.push(this.filtEvents(group.group));
-      })
+      });
 
-      return forkJoin(observables).pipe(map((results)=>{
+      return forkJoin(observables).pipe(map((results) => {
 
-        const personalEvents = [] as Event[]
+        const personalEvents = [] as Event[];
 
-        results.forEach((persEv)=>{
+        results.forEach((persEv) => {
 
-          persEv.forEach((event)=>{
+          persEv.forEach((event) => {
 
-            if(!personalEventsPK.includes(event.pk))
+            if (!personalEventsPK.includes(event.pk)) {
             personalEvents.push(event);
+            }
             personalEventsPK.push(event.pk);
-          })
+          });
 
-        })
+        });
 
         return personalEvents;
 

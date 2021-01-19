@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {Event, EventService} from "../services/event.service";
-import {HttpClient} from "@angular/common/http";
-import {EventType, EventTypeService} from "../services/event-type.service";
-import {UserService} from "../services/user.service";
+import {Event, EventService} from '../services/event.service';
+import {HttpClient} from '@angular/common/http';
+import {EventType, EventTypeService} from '../services/event-type.service';
+import {UserService} from '../services/user.service';
 
 
 @Component({
@@ -14,10 +14,12 @@ import {UserService} from "../services/user.service";
 export class EventListComponent implements OnInit {
 
   events: Event[];
-  currentUserID:number;
-  clickedEvent:number;
+  currentUserID: number;
+  clickedEvent: number;
+  isActive: boolean;
+  panelOpen = false;
 
-  displayedColumns = ['pk','name', 'start_date', 'start_time', 'end_date', 'end_time', 'active', 'angenommene_user','actions']
+  displayedColumns = ['pk', 'name', 'start_date', 'start_time', 'end_date', 'end_time', 'active', 'angenommene_user', 'actions'];
 
   constructor(private http: HttpClient, private eventService: EventService,
               public eventTypeService: EventTypeService,
@@ -30,15 +32,15 @@ export class EventListComponent implements OnInit {
 
 
   private retrieveEvents(): void {
-    this.eventService.personalEventsFunction().subscribe((events)=>{
-      this.events= events
-    })
+    this.eventService.personalEventsFunction().subscribe((events) => {
+      this.events = events;
+    });
   }
 
   deleteEvent(event: Event): void {
     this.eventService.deleteEvent(event).subscribe(() => {
       this.retrieveEvents();
-      alert('deleted successfully!')
+      alert('deleted successfully!');
     });
   }
 

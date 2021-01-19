@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {Time} from "@angular/common";
-import {HttpClient} from "@angular/common/http";
-import {State, StateService} from "../services/state.service";
+import {Time} from '@angular/common';
+import {HttpClient} from '@angular/common/http';
+import {State, StateService} from '../services/state.service';
 
 @Component({
   selector: 'app-state-list',
@@ -11,12 +11,12 @@ import {State, StateService} from "../services/state.service";
 export class StateListComponent implements OnInit {
 
   states: State[];
-  displayedColumns = ['description','edit','delete']
+  displayedColumns = ['description', 'edit', 'delete'];
 
   constructor(private http: HttpClient, private stateService: StateService) { }
 
   ngOnInit(): void {
-    this.retrieveStates()
+    this.retrieveStates();
   }
 
 
@@ -24,15 +24,15 @@ export class StateListComponent implements OnInit {
     this.stateService.getStates()
       .subscribe((states) => {
         this.states = states;
-    })
+    });
   }
 
-  deleteState(state:State):void{
+  deleteState(state: State): void {
     this.stateService.deleteState(state)
-      .subscribe(()=>{
+      .subscribe(() => {
         this.retrieveStates();
-        alert('deleted successfully!')
-      })
+        alert('deleted successfully!');
+      });
 
   }
 }
