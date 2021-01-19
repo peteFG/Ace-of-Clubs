@@ -122,6 +122,11 @@ export class UserService {
         return users[0];
       }));
   }
+
+  /*getCurrentUser():Observable<User>{
+    return this.http.get<User>('/api/users/?id=');
+  }*/
+
   // PK des aktuell angemeldeten User in Variable speichern
   getCurrentUserId(): void {
 
@@ -140,12 +145,17 @@ export class UserService {
 
   setUserEventEntry(eventPK:number) {
     this.clickedEvent =  eventPK;
-    this.getCurrentUserId();
-    this.existingUserEntry = 0
+    //this.getCurrentUserId();
+    this.existingUserEntry = 0;
     //alert('Object was pressed - ID of Event =' + eventPK)
-    var entriesOfActualUser = this.getUserEventsOfCurrentUser()
+    const checkIfEmpty = [];
+    const entriesOfActualUser = this.getUserEventsOfCurrentUser();
+    entriesOfActualUser.subscribe((events)=>{
 
-    if (entriesOfActualUser.pipe(isEmpty())){
+      checkIfEmpty.push(events)
+    });
+
+    if (checkIfEmpty == []){
 
       this.router.navigateByUrl('/user-event-form/')
 
@@ -159,7 +169,6 @@ export class UserService {
           if(eventEntry.event == eventPK){
 
             this.existingUserEntry = eventEntry.pk;
-
             this.router.navigateByUrl('/user-event-form/'+this.existingUserEntry)
 
           }
@@ -167,13 +176,11 @@ export class UserService {
             this.router.navigateByUrl('/user-event-form/')
           }
 
-        })
+        });
 
-      })
+      });
 
     }
-
-
 
   }
 

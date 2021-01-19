@@ -16,6 +16,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
     def list(self, request):
         username = request.GET.get("username")
+        #userid = request.user.id
         if username is None:
             serializer = self.serializer_class(self.queryset.all(), many=True)
         else:
@@ -43,7 +44,7 @@ class MediaDownloadView(View):
 
 
 class EventViewSet(viewsets.ModelViewSet):
-    queryset = models.Event.objects.all().order_by('pk')
+    queryset = models.Event.objects.all().order_by('start_date')
 
     serializer_class = serializers.EventSerializer
 

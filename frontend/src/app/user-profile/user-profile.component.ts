@@ -26,6 +26,12 @@ export class UserProfileComponent implements OnInit {
       this.userProfile=[]
       this.userProfile.push(user);
     });
+
+    /*this.userService.getCurrentUser().subscribe((user)=>{
+
+      this.userProfile= user;
+    });*/
+
   }
 
   deleteUser(user: User): void {
