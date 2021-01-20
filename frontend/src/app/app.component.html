@@ -87,16 +87,20 @@
   <div class="mobile-view">
     <div class="m-menu">
       <div class="m-menu-l">
-        <button class="m-menu-btn" mat-icon-button color="standard" aria-label="Menu"  (click)="sidenavdrawer.toggle()" *ngIf="isLoggedIn">
+        <button class="m-menu-btn" mat-icon-button color="standard" aria-label="Menu" (click)="sidenavdrawer.toggle()"
+                *ngIf="isLoggedIn">
           <mat-icon>menu</mat-icon>
         </button>
-        <button class="logo">ACE OF CLUBS</button>
+        <button style="margin-right: 50px" class="logo" routerLink="/overview" *ngIf="isLoggedIn">ACE OF CLUBS</button>
+        <button style="margin-right: 130px" class="logo" routerLink="/home" *ngIf="!isLoggedIn">ACE OF CLUBS</button>
       </div>
+      <span class="expand"></span>
       <div class="m-menu-r">
         <button mat-icon-button color="standard" routerLink="user-profile" *ngIf="isLoggedIn">
           <mat-icon>account_circle</mat-icon>
         </button>
-        <button mat-icon-button color="standard" [matMenuTriggerFor]="loginMenu" routerLink="/login" *ngIf="!isLoggedIn">
+        <button mat-icon-button color="standard" [matMenuTriggerFor]="loginMenu" routerLink="/login"
+                *ngIf="!isLoggedIn">
           <mat-icon>login</mat-icon>
         </button>
         <mat-menu #loginMenu="matMenu">
@@ -111,6 +115,7 @@
       </div>
     </div>
   </div>
+
 
 </mat-toolbar>
 

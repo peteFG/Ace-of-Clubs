@@ -24,7 +24,7 @@ export class UserProfileComponent implements OnInit {
       is_active: new FormControl(),
       pictures: new FormControl([]),
     });*/
-    this.retrieveUser()
+    this.retrieveUser();
   }
 
 
@@ -47,13 +47,13 @@ export class UserProfileComponent implements OnInit {
    */
 
   deleteUser(user: User): void {
-    //if (this.userService.currentUserPK == 1) {
+    // if (this.userService.currentUserPK == 1) {
     this.userService.deleteUser(user)
       .subscribe(() => {
         this.retrieveUser();
         alert('deleted successfully!');
       });
-    //}
+    // }
     /*else {
       this.userService.updateUser(user)
         .subscribe((is_active = false) => {

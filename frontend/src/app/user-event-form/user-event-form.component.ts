@@ -4,8 +4,8 @@ import {Event, EventService} from '../services/event.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Group, GroupService} from '../services/group.service';
 import {HttpClient} from '@angular/common/http';
-import {User, UserEvent, UserService} from "../services/user.service";
-import {State, StateService} from "../services/state.service";
+import {User, UserEvent, UserService} from '../services/user.service';
+import {State, StateService} from '../services/state.service';
 
 @Component({
   selector: 'app-user-event-form',
@@ -15,9 +15,10 @@ import {State, StateService} from "../services/state.service";
 export class UserEventFormComponent implements OnInit {
 
   userEventFormGroup: FormGroup;
-  currentUser:number;
-  currentUserName:string;
-  currentEvent:number;
+  currentUser: number;
+  currentUserName: string;
+  currentEvent: number;
+  event;
   eventOptions: Event[];
   stateOptions: State[];
 
@@ -39,20 +40,25 @@ export class UserEventFormComponent implements OnInit {
     });
 
     this.currentEvent = this.userService.clickedEvent;
-    //this.currentUser = this.userService.getCurrentUser().subscribe()
+    // this.currentUser = this.userService.getCurrentUser().subscribe()
 
     this.eventService.getEvents()
-      .subscribe((eventOptions)=>{
-        this.eventOptions = eventOptions
-      })
+      .subscribe((eventOptions) => {
+        this.eventOptions = eventOptions;
+      });
+
+    this.eventService.getEvent(this.currentEvent)
+        .subscribe((event) => {
+          this.event = event;
+        });
 
     this.stateService.getStates()
-      .subscribe((stateOptions)=>{
-        this.stateOptions = stateOptions
-      })
+      .subscribe((stateOptions) => {
+        this.stateOptions = stateOptions;
+      });
 
     const pk = this.route.snapshot.paramMap.get('pk');
-    if(pk) {
+    if (pk) {
       this.http.get('/api/userEvent/' + pk + '/')
         .subscribe((event) => {
           this.userEventFormGroup.patchValue(event);

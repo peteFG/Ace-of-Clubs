@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {BehaviorSubject, Observable} from "rxjs";
-import { Router } from "@angular/router";
+import {HttpClient} from '@angular/common/http';
+import {BehaviorSubject, Observable} from 'rxjs';
+import { Router } from '@angular/router';
 import {JwtHelperService} from '@auth0/angular-jwt';
-import {isEmpty, map} from "rxjs/operators";
-import {flatMap} from "rxjs/internal/operators";
+import {isEmpty, map} from 'rxjs/operators';
+import {flatMap} from 'rxjs/internal/operators';
 
 
 
@@ -26,7 +26,7 @@ export interface UserEvent {
   user: number;
   event: number;
   state: number;
-  //profile_picture: Media;
+  // profile_picture: Media;
 }
 
 export interface UserGroup{
@@ -43,11 +43,11 @@ export class UserService {
 
   readonly accessTokenLocalStorageKey = 'access_token';
   isLoggedIn = new BehaviorSubject(false);
-  currentUserPK:number;
-  currentUserName:string;
-  clickedEvent:number;
-  existingUserEntry:number;
-  goahead:boolean;
+  currentUserPK: number;
+  currentUserName: string;
+  clickedEvent: number;
+  existingUserEntry: number;
+  goahead: boolean;
 
 
   constructor(private http: HttpClient, private router: Router, private jwtHelperService: JwtHelperService) {
@@ -118,7 +118,7 @@ export class UserService {
   // Aktuell angemeldeten User mittels username ermitteln
   getCurrentUser(): Observable<User> {
     return this.http.get<User[]>('/api/users/?username=' + localStorage.getItem('currentUser'))
-      .pipe(map((users)=>{
+      .pipe(map((users) => {
         return users[0];
       }));
   }
@@ -131,48 +131,48 @@ export class UserService {
   getCurrentUserId(): void {
 
     this.getCurrentUser().
-    subscribe((user)=>{
-      this.currentUserPK=0
-      this.currentUserPK = user.pk
-    })
+    subscribe((user) => {
+      this.currentUserPK = 0;
+      this.currentUserPK = user.pk;
+    });
   }
 // ------------------------------------------ USER EVENT ------------------------------------------
-  //alle UserEvents des aktuellen Users
+  // alle UserEvents des aktuellen Users
 
-  deleteUserEventEntry(userEvent:UserEvent): Observable<any> {
-    return this.http.delete('/api/userEvent/' + userEvent.pk + '/')
+  deleteUserEventEntry(userEvent: UserEvent): Observable<any> {
+    return this.http.delete('/api/userEvent/' + userEvent.pk + '/');
   }
 
   getUserEventsOfCurrentUser(): Observable<UserEvent[]>{
     return this.http.get<UserEvent[]>('/api/userEvent/?user=');
   }
 
-  setUserEventEntry(eventPK:number) {
+  setUserEventEntry(eventPK: number) {
     const entriesOfActualUser = this.getUserEventsOfCurrentUser();
     this.clickedEvent =  eventPK;
-    //this.getCurrentUserId();
+    // this.getCurrentUserId();
     this.existingUserEntry = 0;
-    //alert('Object was pressed - ID of Event =' + eventPK)
+    // alert('Object was pressed - ID of Event =' + eventPK)
     let checkIfEmpty = [];
 
-    entriesOfActualUser.subscribe((events)=>{
-      events.forEach((event)=>{
+    entriesOfActualUser.subscribe((events) => {
+      events.forEach((event) => {
         checkIfEmpty.push(event);
       });
 
-      if (checkIfEmpty.length==0){
+      if (checkIfEmpty.length == 0){
         this.router.navigateByUrl('/user-event-form/');
       } else {
 
-        entriesOfActualUser.subscribe((userEvents)=>{
-          userEvents.forEach((eventEntry)=>{
+        entriesOfActualUser.subscribe((userEvents) => {
+          userEvents.forEach((eventEntry) => {
             if(eventEntry.event == eventPK){
 
               this.existingUserEntry = eventEntry.pk;
-              this.router.navigateByUrl('/user-event-form/'+this.existingUserEntry);
+              this.router.navigateByUrl('/user-event-form/' + this.existingUserEntry);
 
             }
-            if (this.existingUserEntry ==0){
+            if (this.existingUserEntry == 0){
               this.router.navigateByUrl('/user-event-form/');
             }
 
@@ -252,8 +252,8 @@ export class UserService {
 
   gGBUID(): Observable<UserGroup[]>{
     return this.getCurrentUser()
-      .pipe(flatMap((currentUser)=>{
-        return this.getUserGroupsByUserID(currentUser.pk)
+      .pipe(flatMap((currentUser) => {
+        return this.getUserGroupsByUserID(currentUser.pk);
       }));
   }
 

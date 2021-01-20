@@ -1,54 +1,68 @@
-<form [formGroup]="userEventFormGroup" (ngSubmit)="createUserEventEntry()" class="user_event_form">
-  <!-- <mat-form-field>
-     <input readonly matInput type="text"  formControlName="ev_type">
-     <mat-hint align="end"> Event Type </mat-hint>
-     <mat-error *ngIf="eventFormGroup.controls.ev_type.hasError('required')"> Event Type is required</mat-error>
-   </mat-form-field> -->
+<div class="desktop-view">
+  <form [formGroup]="userEventFormGroup" (ngSubmit)="createUserEventEntry()" class="user_event_form">
+    <!-- <mat-form-field>
+       <input readonly matInput type="text"  formControlName="ev_type">
+       <mat-hint align="end"> Event Type </mat-hint>
+       <mat-error *ngIf="eventFormGroup.controls.ev_type.hasError('required')"> Event Type is required</mat-error>
+     </mat-form-field> -->
 
-<!-- User -->
-  <mat-form-field>
+    <!-- User -->
+    <mat-form-field>
 
-    <mat-select placeholder="Username" formControlName="user">
-      <!-- <mat-option [value]="userOption.pk" *ngFor="let userOption of userOptions">{{userOption.username}}</mat-option> -->
-      <mat-option [value]="currentUser" >{{currentUserName}}</mat-option>
-    </mat-select>
-    <mat-hint align="end">Username</mat-hint>
+      <mat-select placeholder="Username" formControlName="user">
+        <!-- <mat-option [value]="userOption.pk" *ngFor="let userOption of userOptions">{{userOption.username}}</mat-option> -->
+        <mat-option [value]="currentUser">{{currentUserName}}</mat-option>
+      </mat-select>
+      <mat-hint align="end">Username</mat-hint>
 
-  </mat-form-field>
+    </mat-form-field>
 
-  <!-- Event -->
-  <mat-form-field>
+    <!-- Event -->
+    <mat-form-field>
 
-    <mat-select placeholder="Event" formControlName="event">
-      <mat-option [value]="currentEvent" >{{currentEvent}}</mat-option>
-    </mat-select>
-    <mat-hint align="end">Event</mat-hint>
+      <mat-select placeholder="Event" formControlName="event">
+        <mat-option [value]="currentEvent">{{currentEvent}}</mat-option>
+      </mat-select>
+      <mat-hint align="end">Event</mat-hint>
 
-  </mat-form-field>
+    </mat-form-field>
 
-  <!-- State -->
-  <mat-form-field>
+    <!-- State -->
+    <mat-form-field>
 
-    <mat-select placeholder="State" formControlName="state">
-      <mat-option [value]="stateOption.pk" *ngFor="let stateOption of stateOptions">{{stateOption.description}}</mat-option>
-    </mat-select>
-    <mat-hint align="end">State</mat-hint>
+      <mat-select placeholder="State" formControlName="state">
+        <mat-option [value]="stateOption.pk"
+                    *ngFor="let stateOption of stateOptions">{{stateOption.description}}</mat-option>
+      </mat-select>
+      <mat-hint align="end">State</mat-hint>
 
-  </mat-form-field>
+    </mat-form-field>
 
-  <mat-card-actions align="center">
-    <button mat-raised-button color="primary" [disabled]="!userEventFormGroup.valid">
-      <span *ngIf="!userEventFormGroup.controls.pk.value">Create</span>
-      <span *ngIf="userEventFormGroup.controls.pk.value">Update</span>
-    </button>
-  </mat-card-actions>
+    <mat-card-actions align="center">
+      <button mat-raised-button color="primary" [disabled]="!userEventFormGroup.valid">
+        <span *ngIf="!userEventFormGroup.controls.pk.value">Create</span>
+        <span *ngIf="userEventFormGroup.controls.pk.value">Update</span>
+      </button>
+    </mat-card-actions>
 
-  <!--<label>User: <input formControlName="user"></label>
+    <!--<label>User: <input formControlName="user"></label>
 
-  <label>Event: <input formControlName="event"></label>
+    <label>Event: <input formControlName="event"></label>
 
-  <label>State: <input formControlName="state"></label>
+    <label>State: <input formControlName="state"></label>
 
-  <button>Create</button> -->
+    <button>Create</button> -->
 
-</form>
+  </form>
+</div>
+
+<div class="mobile-view container">
+  <div class="mobile-header">
+    <div class="mobile-title">RSVP</div>
+    <mat-divider style="margin-bottom: 15px"></mat-divider>
+    <div>To the following event:</div>
+    <!--<div>{{event.name}}</div>-->
+
+    <mat-divider style="margin-top: 15px"></mat-divider>
+  </div>
+</div>

@@ -27,6 +27,7 @@
 }
 
 .profile-picture {
+  margin-top: 20px;
   width: 180px;
   height: 180px;
   padding: 25px;
@@ -59,4 +60,30 @@
 
 .ng-container {
   width: fit-content;
+}
+
+.mobile-title{
+  font-size: 340%;
+}
+
+@media only screen and (max-width: 450px) {
+  .profile-picture{
+    height: 110px;
+    width: 110px;
+    padding: 10px;
+  }
+
+  .small-heading {
+    font-size: 25px;
+  }
+
+  .acc-content {
+    padding: 15px;
+  }
+
+  .profile-card {
+    margin: 10px 5px 10px 5px;
+    border-radius: 10px;
+    box-shadow: 0 3px 1px -2px rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12);
+  }
 }
