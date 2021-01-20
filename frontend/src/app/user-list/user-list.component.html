@@ -133,11 +133,6 @@
         </div>
       </div>
       <mat-action-row class="m-acc-actions">
-        <div class="m-event-btn">
-          <button mat-icon-button color="standard">
-            <mat-icon>sms_failed</mat-icon>
-          </button>
-        </div>
         <div class="m-general-btn" style="margin-right: 12px">
           <button mat-icon-button color="standard" [routerLink]="'/user-form/' + user.pk"
                   *ngIf="userService.hasPermission('aceofclubs.change_user')">

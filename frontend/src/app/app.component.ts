@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {UserService} from "./services/user.service";
+import {Component, OnInit} from '@angular/core';
+import {UserService} from './services/user.service';
 
 
 
@@ -11,8 +11,19 @@ class AuthenticationService {
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+
+  title = 'frontend';
+  isLoggedIn = false;
+
   constructor(public userService: UserService) {
   }
-  title = 'frontend';
+
+  // tslint:disable-next-line:typedef
+  ngOnInit() {
+    this.userService.isLoggedIn.subscribe(response => {
+      this.isLoggedIn = response;
+    });
+  }
+
 }
