@@ -41,6 +41,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { OverviewComponent } from './overview/overview.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule} from '@angular/material/icon';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 /*export function initializeApp(appInitService: AppInitService){
   return (): Promise<any> =>{
@@ -92,6 +93,7 @@ import { MatIconModule} from '@angular/material/icon';
     MatDividerModule,
     MatExpansionModule,
     MatIconModule,
+    MatSidenavModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: () => {
