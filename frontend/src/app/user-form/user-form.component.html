@@ -23,9 +23,15 @@
 
 
   <mat-checkbox formControlName="is_active">Is active?</mat-checkbox>
-
+  <!--*ngIf="userService.hasPermission('aceofclubs.change_user')"-->
 
   <mat-checkbox formControlName="is_staff">Is Admin?</mat-checkbox>
+
+  <div>
+    <app-mediainput formControlName="pictures" [single]="true"></app-mediainput>
+  </div>
+
+  <br/>
 
   <mat-card-actions align="center">
     <button mat-raised-button color="primary" [disabled]="!userFormGroup.valid">

@@ -41,6 +41,9 @@ import { MatDividerModule } from '@angular/material/divider';
 import { OverviewComponent } from './overview/overview.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule} from '@angular/material/icon';
+import { MediainputComponent } from './mediainput/mediainput.component';
+import {FileUploadModule} from "ng2-file-upload";
+
 
 /*export function initializeApp(appInitService: AppInitService){
   return (): Promise<any> =>{
@@ -70,7 +73,8 @@ import { MatIconModule} from '@angular/material/icon';
     LoginComponent,
     LogoutComponent,
     UserProfileComponent,
-    OverviewComponent
+    OverviewComponent,
+    MediainputComponent
   ],
   imports: [
     BrowserModule,
@@ -99,7 +103,8 @@ import { MatIconModule} from '@angular/material/icon';
         },
         allowedDomains: ['localhost:4200']
       }
-    })
+    }),
+    FileUploadModule
   ],
   providers: [/*
     AppInitService,

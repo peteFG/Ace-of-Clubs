@@ -16,7 +16,15 @@ export class UserProfileComponent implements OnInit {
   constructor(private http: HttpClient, private userService: UserService) { }
 
   ngOnInit(): void {
-    this.retrieveUser();
+    /*this.userFormGroup = new FormGroup({
+      pk: new FormControl(),
+      username: new FormControl(),
+      first_name: new FormControl(),
+      last_name: new FormControl(),
+      is_active: new FormControl(),
+      pictures: new FormControl([]),
+    });*/
+    this.retrieveUser()
   }
 
 
@@ -34,12 +42,25 @@ export class UserProfileComponent implements OnInit {
 
   }
 
+  /** Delete User funktioniert noch nicht mit deactivate. Temporärer fix ->
+   * Wenn Kein Admin wird HTML Feld nicht angezeigt.
+   */
+
   deleteUser(user: User): void {
+    //if (this.userService.currentUserPK == 1) {
     this.userService.deleteUser(user)
       .subscribe(() => {
         this.retrieveUser();
         alert('deleted successfully!');
       });
+    //}
+    /*else {
+      this.userService.updateUser(user)
+        .subscribe((is_active = false) => {
+          this.userFormGroup.patchValue(is_active);
+          alert('Updated status to false')
+        });
+    }*/
   }
 }
 

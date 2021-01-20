@@ -286,7 +286,7 @@
   {"model": "aceofclubs.state",
     "pk": 2,
     "fields": {
-      "description": "Teilnahme"
+      "description": "Teilnehmen"
     }
   },
   {"model": "aceofclubs.state",

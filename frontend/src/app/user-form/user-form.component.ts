@@ -25,7 +25,8 @@ export class UserFormComponent implements OnInit {
       last_name: new FormControl(''),
       email: new FormControl(''),
       is_active: new FormControl(true),
-      is_staff: new FormControl(false)
+      is_staff: new FormControl(false),
+      pictures: new FormControl([]),
     });
 
     const pk = this.route.snapshot.paramMap.get('pk');

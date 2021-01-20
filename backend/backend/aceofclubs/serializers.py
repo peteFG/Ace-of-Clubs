@@ -1,17 +1,18 @@
 from rest_framework import serializers
 from . import models
+from .models import Media
 
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.User
-        fields = ['pk', 'username', 'email', 'first_name', 'last_name', 'is_active', 'is_staff']
+        fields = ['pk', 'username', 'email', 'first_name', 'last_name', 'is_active', 'is_staff', 'pictures']
 
 
 class MediaSerializer(serializers.ModelSerializer):
     class Meta:
-        model = models.Media
-        fields = ['id', 'file', 'content_type']
+        model = Media
+        fields = ('pk', 'file')
 
 
 class EventSerializer(serializers.ModelSerializer):

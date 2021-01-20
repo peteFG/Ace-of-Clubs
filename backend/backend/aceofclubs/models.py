@@ -31,8 +31,9 @@ class Event(models.Model):
 
 
 class Media(models.Model):
-    #file = models.FileField(upload_to='uploads/%Y-%m-%d-%H-%M-%S/')
-    content_type = models.CharField(null=True, blank=True, max_length=100)
+    file = models.FileField(upload_to='uploads/%Y-%m-%d-%H-%M-%S/', null=True)
+    content_type = models.TextField()
+    #null=True, blank=True, max_length=100
 
     def save(self, *args, **kwargs):
         self.content_type = self.file.file.content_type
@@ -40,7 +41,7 @@ class Media(models.Model):
 
 
 class User(AbstractUser):
-    profile_picture = models.ForeignKey(Media, null=True, on_delete=models.SET_NULL)
+    pictures = models.ManyToManyField('Media', blank=True)
     email = models.EmailField(unique=True)
 
     def __str__(self):

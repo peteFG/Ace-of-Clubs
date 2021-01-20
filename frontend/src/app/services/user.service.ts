@@ -148,7 +148,7 @@ export class UserService {
     //this.getCurrentUserId();
     this.existingUserEntry = 0;
     //alert('Object was pressed - ID of Event =' + eventPK)
-    const checkIfEmpty = [];
+    let checkIfEmpty = [];
     const entriesOfActualUser = this.getUserEventsOfCurrentUser();
     entriesOfActualUser.subscribe((events)=>{
 
