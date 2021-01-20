@@ -136,28 +136,74 @@ export class UserService {
       this.currentUserPK = user.pk
     })
   }
-
+// ------------------------------------------ USER EVENT ------------------------------------------
   //alle UserEvents des aktuellen Users
+
+  deleteUserEventEntry(userEvent:UserEvent): Observable<any> {
+    return this.http.delete('/api/userEvent/' + userEvent.pk + '/')
+  }
 
   getUserEventsOfCurrentUser(): Observable<UserEvent[]>{
     return this.http.get<UserEvent[]>('/api/userEvent/?user=');
   }
 
   setUserEventEntry(eventPK:number) {
+    const entriesOfActualUser = this.getUserEventsOfCurrentUser();
     this.clickedEvent =  eventPK;
     //this.getCurrentUserId();
     this.existingUserEntry = 0;
     //alert('Object was pressed - ID of Event =' + eventPK)
-    const checkIfEmpty = [];
+    let checkIfEmpty = [];
+
+    entriesOfActualUser.subscribe((events)=>{
+      events.forEach((event)=>{
+        checkIfEmpty.push(event);
+      });
+
+      if (checkIfEmpty.length==0){
+        this.router.navigateByUrl('/user-event-form/');
+      } else {
+
+        entriesOfActualUser.subscribe((userEvents)=>{
+          userEvents.forEach((eventEntry)=>{
+            if(eventEntry.event == eventPK){
+
+              this.existingUserEntry = eventEntry.pk;
+              this.router.navigateByUrl('/user-event-form/'+this.existingUserEntry);
+
+            }
+            if (this.existingUserEntry ==0){
+              this.router.navigateByUrl('/user-event-form/');
+            }
+
+          });
+
+        });
+
+      }
+    });
+
+
+
+  }
+
+  /*
+
+  setUserEventEntry(eventPK:number) {
+    this.clickedEvent =  eventPK;
+    //this.getCurrentUserId();
+    this.existingUserEntry = 0;
+    //alert('Object was pressed - ID of Event =' + eventPK)
+    let checkIfEmpty = [];
     const entriesOfActualUser = this.getUserEventsOfCurrentUser();
     entriesOfActualUser.subscribe((events)=>{
 
-      checkIfEmpty.push(events)
+      checkIfEmpty.concat(events);
     });
 
     if (checkIfEmpty == []){
 
-      this.router.navigateByUrl('/user-event-form/')
+      this.router.navigateByUrl('/user-event-form/');
 
     } else {
 
@@ -169,11 +215,11 @@ export class UserService {
           if(eventEntry.event == eventPK){
 
             this.existingUserEntry = eventEntry.pk;
-            this.router.navigateByUrl('/user-event-form/'+this.existingUserEntry)
+            this.router.navigateByUrl('/user-event-form/'+this.existingUserEntry);
 
           }
           if (this.existingUserEntry ==0){
-            this.router.navigateByUrl('/user-event-form/')
+            this.router.navigateByUrl('/user-event-form/');
           }
 
         });
@@ -183,6 +229,8 @@ export class UserService {
     }
 
   }
+
+   */
 
 
   hasPermission(permission: string): boolean {
