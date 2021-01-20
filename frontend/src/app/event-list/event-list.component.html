@@ -82,78 +82,82 @@
 <div class="mobile-view container">
 
   <div class="mobile-header">
-    <div class="mobile-title">ALL <br> EVENTS</div>
+    <div class="mobile-title anim-left">ALL <br> EVENTS</div>
     <mat-divider style="margin-bottom: 15px"></mat-divider>
-    <mat-accordion class="m-filter-acc">
-      <mat-expansion-panel hideToggle class="m-filter-elem-acc">
-        <mat-expansion-panel-header class="m-filter-header">
-          <div>
-            <mat-panel-title class="m-filter-title">FILTER EVENTS</mat-panel-title>
-          </div>
-        </mat-expansion-panel-header>
-      </mat-expansion-panel>
-    </mat-accordion>
+    <div class="anim-right">
+      <mat-accordion class="m-filter-acc anim-right">
+        <mat-expansion-panel hideToggle class="m-filter-elem-acc">
+          <mat-expansion-panel-header class="m-filter-header">
+            <div>
+              <mat-panel-title class="m-filter-title">FILTER EVENTS</mat-panel-title>
+            </div>
+          </mat-expansion-panel-header>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
     <mat-divider style="margin-top: 15px"></mat-divider>
   </div>
 
-  <mat-accordion class="event-view-acc">
-    <mat-expansion-panel *ngFor="let event of events" (opened)="panelOpen = true" (closed)="panelOpen = false">
-      <mat-expansion-panel-header class="acc-m-header">
-        <mat-panel-title class="acc-m-title">
-          <div class="event-name"> {{event.name}} </div>
-          <br>
-          <div *ngIf="!panelOpen" class="event-date">
-            {{event.start_date | date: 'dd MMM yyyy'}} - {{event.start_time.substring(0, 5)}}
+  <div class="anim-right">
+    <mat-accordion class="event-view-acc">
+      <mat-expansion-panel *ngFor="let event of events" (opened)="panelOpen = true" (closed)="panelOpen = false">
+        <mat-expansion-panel-header class="acc-m-header">
+          <mat-panel-title class="acc-m-title">
+            <div class="event-name"> {{event.name}} </div>
+            <br>
+            <div *ngIf="!panelOpen" class="event-date">
+              {{event.start_date | date: 'dd MMM yyyy'}} - {{event.start_time.substring(0, 5)}}
+            </div>
+          </mat-panel-title>
+          <mat-panel-description class="acc-m-description">
+            {{event.ev_type}}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div class="acc-content">
+          <div class="content-m-row">
+            <div class="content-m-hd">Start:</div>
+            <div class="content-m-data">{{event.start_date | date: 'dd.MM.yyyy'}}
+              - {{event.start_time.substring(0, 5)}}</div>
           </div>
-        </mat-panel-title>
-        <mat-panel-description class="acc-m-description">
-          {{event.ev_type}}
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-      <div class="acc-content">
-        <div class="content-m-row">
-          <div class="content-m-hd">Start:</div>
-          <div class="content-m-data">{{event.start_date | date: 'dd.MM.yyyy'}}
-            - {{event.start_time.substring(0, 5)}}</div>
-        </div>
-        <div class="content-m-row">
-          <div class="content-m-hd">End:</div>
-          <div class="content-m-data">
-            {{event.end_date | date: 'dd.MM.yyyy'}} - {{event.end_time.substring(0, 5)}}
+          <div class="content-m-row">
+            <div class="content-m-hd">End:</div>
+            <div class="content-m-data">
+              {{event.end_date | date: 'dd.MM.yyyy'}} - {{event.end_time.substring(0, 5)}}
+            </div>
+          </div>
+          <div class="content-m-row">
+            <div class="content-m-hd">Groups:</div>
+            <div class="content-m-data">{{event.group}}</div>
+          </div>
+          <div class="content-m-row">
+            <div class="content-m-hd">Participants:</div>
+            <!--<div class="content-m-data">{{event.angenommene_user}}</div>-->
+          </div>
+          <div class="content-m-row">
+            <div class="content-m-hd">Active Event:</div>
+            <div class="content-m-data">{{event.active}}</div>
+          </div>
+          <div class="content-m-row">
+            <div class="content-m-hd">State:</div>
+            <!--<div class="content-m-data">{{event.active}}</div>-->
           </div>
         </div>
-        <div class="content-m-row">
-          <div class="content-m-hd">Groups:</div>
-          <div class="content-m-data">{{event.group}}</div>
-        </div>
-        <div class="content-m-row">
-          <div class="content-m-hd">Participants:</div>
-          <!--<div class="content-m-data">{{event.angenommene_user}}</div>-->
-        </div>
-        <div class="content-m-row">
-          <div class="content-m-hd">Active Event:</div>
-          <div class="content-m-data">{{event.active}}</div>
-        </div>
-        <div class="content-m-row">
-          <div class="content-m-hd">State:</div>
-          <!--<div class="content-m-data">{{event.active}}</div>-->
-        </div>
-      </div>
-      <mat-action-row class="m-acc-actions">
-        <div class="m-event-btn">
-          <button mat-icon-button color="standard" (click)="userService.setUserEventEntry(event.pk)">
-            <mat-icon>sms_failed</mat-icon>
-          </button>
-        </div>
-        <div class="m-general-btn" style="margin-right: 12px">
-          <button mat-icon-button color="standard" [routerLink]="'/event-form/' + event.pk">
-            <mat-icon>edit</mat-icon>
-          </button>
-          <button mat-icon-button color="light" (click)="deleteEvent(event)">
-            <mat-icon>delete_outline</mat-icon>
-          </button>
-        </div>
-      </mat-action-row>
-    </mat-expansion-panel>
-  </mat-accordion>
+        <mat-action-row class="m-acc-actions">
+          <div class="m-event-btn">
+            <button mat-icon-button color="standard" (click)="userService.setUserEventEntry(event.pk)">
+              <mat-icon>sms_failed</mat-icon>
+            </button>
+          </div>
+          <div class="m-general-btn" style="margin-right: 12px">
+            <button mat-icon-button color="standard" [routerLink]="'/event-form/' + event.pk">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="light" (click)="deleteEvent(event)">
+              <mat-icon>delete_outline</mat-icon>
+            </button>
+          </div>
+        </mat-action-row>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
 </div>

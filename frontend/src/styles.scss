@@ -19,6 +19,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 /* Allgemein */
 .container {
   background: rgba(245,245,245,1);
+  width: 100%;
+  height: fit-content;
 }
 
 .default-container {

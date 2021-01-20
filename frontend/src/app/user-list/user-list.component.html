@@ -79,71 +79,77 @@
 <div class="mobile-view container">
 
   <div class="mobile-header">
-    <div class="mobile-title">ALL <br> MEMBERS</div>
+    <div class="mobile-title anim-left">ALL <br> MEMBERS</div>
     <mat-divider style="margin-bottom: 15px"></mat-divider>
-    <mat-accordion class="m-filter-acc">
-      <mat-expansion-panel hideToggle class="m-filter-elem-acc">
-        <mat-expansion-panel-header class="m-filter-header">
-          <div>
-            <mat-panel-title class="m-filter-title">FILTER MEMBERS</mat-panel-title>
-          </div>
-        </mat-expansion-panel-header>
-      </mat-expansion-panel>
-    </mat-accordion>
+
+    <!-- Filtern -->
+    <div class="anim-right">
+      <mat-accordion class="m-filter-acc">
+        <mat-expansion-panel hideToggle class="m-filter-elem-acc">
+          <mat-expansion-panel-header class="m-filter-header">
+            <div>
+              <mat-panel-title class="m-filter-title">FILTER MEMBERS</mat-panel-title>
+            </div>
+          </mat-expansion-panel-header>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
     <mat-divider style="margin-top: 15px"></mat-divider>
   </div>
 
-  <mat-accordion class="event-view-acc">
-    <mat-expansion-panel *ngFor="let user of users">
-      <mat-expansion-panel-header class="acc-m-header">
-        <mat-panel-title class="acc-m-title">
-          <div class="profile-pic"></div>
-          <div class="user-name"><b>{{user.last_name}}</b> {{user.first_name}}</div>
-          <br>
-          <div class="user-group">
-            Gruppe
+  <div class="anim-right">
+    <mat-accordion class="event-view-acc">
+      <mat-expansion-panel *ngFor="let user of users">
+        <mat-expansion-panel-header class="acc-m-header">
+          <mat-panel-title class="acc-m-title">
+            <div class="profile-pic"></div>
+            <div class="user-name"><b>{{user.last_name}}</b> {{user.first_name}}</div>
+            <br>
+            <div class="user-group">
+              Gruppe
+            </div>
+          </mat-panel-title>
+          <mat-panel-description class="acc-m-description">
+            Gruppenleiter?
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div class="acc-content" style="margin-top: 15px">
+          <div class="content-m-row">
+            <div class="content-m-hd">Username:</div>
+            <div class="content-m-data">{{user.username}}</div>
           </div>
-        </mat-panel-title>
-        <mat-panel-description class="acc-m-description">
-         Gruppenleiter?
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-      <div class="acc-content" style="margin-top: 15px">
-        <div class="content-m-row">
-          <div class="content-m-hd">Username:</div>
-          <div class="content-m-data">{{user.username}}</div>
-        </div>
-        <div class="content-m-row">
-          <div class="content-m-hd">E-Mail:</div>
-          <div class="content-m-data">
-            {{user.email}}
+          <div class="content-m-row">
+            <div class="content-m-hd">E-Mail:</div>
+            <div class="content-m-data">
+              {{user.email}}
+            </div>
+          </div>
+          <div class="content-m-row">
+            <div class="content-m-hd">Date Joined:</div>
+            <div class="content-m-data">{{user.date_joined | date: 'dd.MM.yyyy'}}</div>
+          </div>
+          <div class="content-m-row">
+            <div class="content-m-hd">Active:</div>
+            <div class="content-m-data">{{user.is_active}}</div>
+          </div>
+          <div class="content-m-row">
+            <div class="content-m-hd">Admin:</div>
+            <div class="content-m-data">{{user.is_staff}}</div>
           </div>
         </div>
-        <div class="content-m-row">
-          <div class="content-m-hd">Date Joined:</div>
-          <div class="content-m-data">{{user.date_joined | date: 'dd.MM.yyyy'}}</div>
-        </div>
-        <div class="content-m-row">
-          <div class="content-m-hd">Active:</div>
-          <div class="content-m-data">{{user.is_active}}</div>
-        </div>
-        <div class="content-m-row">
-          <div class="content-m-hd">Admin:</div>
-          <div class="content-m-data">{{user.is_staff}}</div>
-        </div>
-      </div>
-      <mat-action-row class="m-acc-actions">
-        <div class="m-general-btn" style="margin-right: 12px">
-          <button mat-icon-button color="standard" [routerLink]="'/user-form/' + user.pk"
-                  *ngIf="userService.hasPermission('aceofclubs.change_user')">
-            <mat-icon>edit</mat-icon>
-          </button>
-          <button mat-icon-button color="light" (click)="deleteUser(user)"
-                  *ngIf="userService.hasPermission('aceofclubs.delete_user')">
-            <mat-icon>delete_outline</mat-icon>
-          </button>
-        </div>
-      </mat-action-row>
-    </mat-expansion-panel>
-  </mat-accordion>
+        <mat-action-row class="m-acc-actions">
+          <div class="m-general-btn" style="margin-right: 12px">
+            <button mat-icon-button color="standard" [routerLink]="'/user-form/' + user.pk"
+                    *ngIf="userService.hasPermission('aceofclubs.change_user')">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="light" (click)="deleteUser(user)"
+                    *ngIf="userService.hasPermission('aceofclubs.delete_user')">
+              <mat-icon>delete_outline</mat-icon>
+            </button>
+          </div>
+        </mat-action-row>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
 </div>

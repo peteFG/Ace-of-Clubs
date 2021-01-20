@@ -5,6 +5,32 @@
   z-index: 1000;
 }
 
+.profile-picture {
+  width: 100px;
+  height: 100px;
+}
+
+.m-sidenav-container {
+  background-color: rgba(62,91,147,1);
+}
+
+.mat-drawer {
+  min-width: 14vw;
+  width: auto;
+  height: fit-content;
+}
+
+.sidenav-title {
+  font-size: 25px;
+  color: white;
+  margin: 0 40px 0 40px;
+}
+
+.h4 {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
 @media only screen and (max-width: 450px) {
   .toolbar {
     height: 12vh;
@@ -14,6 +40,7 @@
 
   .m-sidenav-container {
     height: 92vh;
+    width: 70vw;
   }
 
   .user-settings{
