@@ -141,7 +141,7 @@
       </div>
       <mat-action-row class="m-acc-actions">
         <div class="m-event-btn">
-          <button mat-icon-button color="standard">
+          <button mat-icon-button color="standard" (click)="userService.setUserEventEntry(event.pk)">
             <mat-icon>sms_failed</mat-icon>
           </button>
         </div>

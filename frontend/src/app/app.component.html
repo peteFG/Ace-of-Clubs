@@ -115,7 +115,7 @@
 </mat-toolbar>
 
 <mat-drawer-container class="m-sidenav-container" [hasBackdrop]="true">
-  <mat-drawer #sidenavdrawer mode="over">
+  <mat-drawer #sidenavdrawer mode="over" autoFocus="false" (click)="sidenavdrawer.close()">
     <div class="sidenav-profile">
       <mat-icon>account_circle</mat-icon>
       <button mat-button routerLink="user-profile">My Profile</button>
@@ -134,14 +134,11 @@
     </div>
     <div class="sidenav-users">
       <h4>Members</h4>
-      <button mat-button routerLink="event-list" *ngIf="userService.hasPermission('aceofclubs.view_event')">
-        All Events
+      <button mat-button routerLink="user-list" *ngIf="userService.hasPermission('aceofclubs.view_user')">
+        All Users
       </button>
-      <button mat-button *ngIf="userService.hasPermission('aceofclubs.view_event')">
-        New Events
-      </button>
-      <button mat-button routerLink="event-form" *ngIf="userService.hasPermission('aceofclubs.add_event')">
-        Create Event
+      <button mat-button routerLink="user-form" *ngIf="userService.hasPermission('aceofclubs.add_user')">
+        Create User
       </button>
     </div>
     <div class="sidenav-groups">
@@ -155,14 +152,20 @@
     </div>
     <div class="sidenav-administration">
       <h4>Administrative Tasks</h4>
-      <button mat-button routerLink="event-list" *ngIf="userService.hasPermission('aceofclubs.view_event')">
-        All Events
+      <button mat-button routerLink="state-list" *ngIf="userService.hasPermission('aceofclubs.view_state')">List
+        States
       </button>
-      <button mat-button *ngIf="userService.hasPermission('aceofclubs.view_event')">
-        New Events
+      <button mat-button routerLink="state-form" *ngIf="userService.hasPermission('aceofclubs.add_state')">Create
+        State
       </button>
-      <button mat-button routerLink="event-form" *ngIf="userService.hasPermission('aceofclubs.add_event')">
-        Create Event
+      <button mat-button routerLink="user-group-list" *ngIf="userService.hasPermission('aceofclubs.view_usergroup')">
+        List Group Entries
+      </button>
+      <button mat-button routerLink="event-type-list" *ngIf="userService.hasPermission('aceofclubs.view_eventtype')">
+        List Event Types
+      </button>
+      <button mat-button routerLink="user-event-list" *ngIf="userService.hasPermission('aceofclubs.add_eventtype')">
+        List Event Entries
       </button>
     </div>
   </mat-drawer>
@@ -170,5 +173,3 @@
     <router-outlet></router-outlet>
   </mat-drawer-content>
 </mat-drawer-container>
-
-
