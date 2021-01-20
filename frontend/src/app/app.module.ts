@@ -43,7 +43,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule} from '@angular/material/icon';
 import { MediainputComponent } from './mediainput/mediainput.component';
 import {FileUploadModule} from "ng2-file-upload";
-
+import {MatSidenavModule} from "@angular/material/sidenav";
 
 /*export function initializeApp(appInitService: AppInitService){
   return (): Promise<any> =>{
@@ -96,6 +96,7 @@ import {FileUploadModule} from "ng2-file-upload";
     MatDividerModule,
     MatExpansionModule,
     MatIconModule,
+    MatSidenavModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: () => {

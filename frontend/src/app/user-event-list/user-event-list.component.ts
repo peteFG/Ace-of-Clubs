@@ -6,9 +6,9 @@ import {UserService} from "../services/user.service";
 
 interface UserEvent {
   pk?: number;
-  user: string;
-  event: string;
-  state: string
+  user: number;
+  event: number;
+  state: number
 }
 
 @Component({
@@ -22,32 +22,33 @@ export class UserEventListComponent implements OnInit {
 
   //displayedColumns = ['ev_type', 'name', 'start_time', 'end_time', 'start_date', 'end_date', 'active', 'group']
 
-  constructor(private http: HttpClient, private userService: UserService) {
+  constructor(private http: HttpClient, public userService: UserService) {
   }
 
   ngOnInit(): void {
-    this.http.get('/api/userEvent/')
+    /*this.http.get('/api/userEvent/')
       .subscribe((userEvents: UserEvent[]) => {
         this.userEvents = userEvents;
-      })
-    /*
-    this.retrieveEvents()
-    */
+      })*/
+
+    this.retrieveUserEvents();
+
   }
 
-  /*
-  private retrieveEvents(): void {
-    this.eventService.getEvents()
-      .subscribe((events) => {
-        this.events = events;
+  retrieveUserEvents():void{
+    this.userService.getUserEventsOfCurrentUser().subscribe((userEvents)=>{
+      this.userEvents = userEvents;
     })
   }
+  /*deleteUserEvent(userEvent: UserEvent): void {
+    this.userService.deleteUserEventEntry(userEvent).subscribe(()=>{
 
-  deleteEvent(event: Event): void {
-    this.eventService.deleteEvent(event)
-      .subscribe(() => {
-        this.retrieveEvents();
-        alert('deleted successfully!');
-      });
-  } */
+    });
+  }*/
+
+  deleteUserEvent(uEvent: UserEvent):void{
+    this.userService.deleteUserEventEntry(uEvent).subscribe(()=>{
+      this.retrieveUserEvents();
+    })
+  }
 }

@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import {Event, EventService} from '../services/event.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Group, GroupService} from '../services/group.service';
 import {HttpClient} from '@angular/common/http';
-import {User, UserService} from "../services/user.service";
+import {User, UserEvent, UserService} from "../services/user.service";
 import {State, StateService} from "../services/state.service";
 
 @Component({
@@ -23,6 +23,7 @@ export class UserEventFormComponent implements OnInit {
 
   constructor(private http: HttpClient,
               private route: ActivatedRoute,
+              private router: Router,
               private userService: UserService,
               private eventService: EventService,
               private stateService: StateService) {
@@ -65,14 +66,18 @@ export class UserEventFormComponent implements OnInit {
       this.http.put('/api/userEvent/' + pk + '/', this.userEventFormGroup.value)
         .subscribe(() => {
           alert('updated successfully!');
+          this.router.navigateByUrl('/event-list');
         });
+
+
     } else {
       this.http.post('/api/userEvent/', this.userEventFormGroup.value)
         .subscribe(() => {
           alert('created successfully!');
+          this.router.navigateByUrl('/event-list');
         });
+
     }
   }
-
 
 }
