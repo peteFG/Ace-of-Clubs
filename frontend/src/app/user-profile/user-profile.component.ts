@@ -10,7 +10,7 @@ import {Observable} from 'rxjs';
 })
 export class UserProfileComponent implements OnInit {
 
-  userProfile: User[];
+  userProfile: User;
   displayedColumns = ['username', 'email', 'first_name', 'last_name', 'edit', 'delete'];
 
   constructor(private http: HttpClient, private userService: UserService) { }
@@ -30,15 +30,15 @@ export class UserProfileComponent implements OnInit {
 
   private retrieveUser(): void {
 
-    this.userService.getCurrentUser().subscribe((user) => {
+    /*this.userService.getCurrentUser().subscribe((user) => {
       this.userProfile = [];
       this.userProfile.push(user);
-    });
+    });*/
 
-    /*this.userService.getCurrentUser().subscribe((user)=>{
+    this.userService.getCurrentUser().subscribe((user)=>{
 
       this.userProfile= user;
-    });*/
+    });
 
   }
 

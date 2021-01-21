@@ -19,7 +19,7 @@ export class GroupFormComponent implements OnInit {
   ngOnInit(): void {
     this.groupFormGroup = new FormGroup({
       pk: new FormControl(null),
-      name: new FormControl()
+      name: new FormControl(),
     });
 
     const pk = this.route.snapshot.paramMap.get('pk');

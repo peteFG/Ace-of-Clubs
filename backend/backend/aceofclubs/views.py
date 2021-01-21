@@ -9,18 +9,36 @@ from . import serializers
 from . import models
 
 
+# AdminUserViewset  --> admin should be able to see all users
+
+
+class AdminUserViewSet(viewsets.ModelViewSet):
+    queryset = models.User.objects.all().order_by('username')
+    serializer_class = serializers.AdminUserSerializer
+
+    def list(self, request):
+        userid = request.GET.get("pk")
+        if userid is None:
+            serializer = self.serializer_class(self.queryset.all(), many=True)
+        else:
+            serializer = self.serializer_class(self.queryset.filter(id=userid), many=True)
+        return Response(serializer.data)
+
+
+# UserViewset --> only gets current user --> not important for common user to see all other users
+
+
 class UserViewSet(viewsets.ModelViewSet):
     queryset = models.User.objects.all().order_by('pk')
     permission_classes = (DjangoModelPermissions,)
     serializer_class = serializers.UserSerializer
 
     def list(self, request):
-        username = request.GET.get("username")
-        #userid = request.user.id
-        if username is None:
+        userid = request.user.id
+        if userid is None:
             serializer = self.serializer_class(self.queryset.all(), many=True)
         else:
-            serializer = self.serializer_class(self.queryset.filter(username=username), many=True)
+            serializer = self.serializer_class(self.queryset.filter(id=userid), many=True)
         return Response(serializer.data)
 
 
@@ -47,7 +65,6 @@ class EventViewSet(viewsets.ModelViewSet):
     queryset = models.Event.objects.all().order_by('start_date')
 
     serializer_class = serializers.EventSerializer
-
 
     def list(self, request):
         group = request.GET.get("group")
@@ -89,7 +106,7 @@ class UserEventViewSet(viewsets.ModelViewSet):
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
     def list(self, request):
-        #user = request.GET.get("user")
+        # user = request.GET.get("user")
         user = request.user.pk
         if user is None:
             serializer = self.serializer_class(self.queryset.all(), many=True)
@@ -117,3 +134,9 @@ class UserGroupViewSet(viewsets.ModelViewSet):
         else:
             serializer = self.serializer_class(self.queryset.filter(user=user), many=True)
         return Response(serializer.data)
+
+
+class AllUserGroupViewSet(viewsets.ModelViewSet):
+    queryset = models.UserGroup.objects.all()
+
+    serializer_class = serializers.AllUserGroupSerializer
