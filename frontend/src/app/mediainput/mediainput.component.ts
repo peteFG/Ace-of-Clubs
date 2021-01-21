@@ -27,32 +27,57 @@ export class MediainputComponent implements OnInit, ControlValueAccessor {
   @Input()
   single = false;
   @Input()
-  accept = '';
+  hasProfilePic = false;
+  @Input()
+  accept = 'image/jpeg';
   resourceUrl = '/api/media/';
   initializing = true;
   medias: IMedia[];
   uploader: FileUploader;
+  url;
   onChange = (medias: number[]) => {
     // empty default
   };
+
+  selectFile(event) {
+    if(!event.target.files[0] || event.target.files[0].length == 0) {
+      alert('Please select an image');
+      return;
+    }
+
+    let mimeType = event.target.files[0].type;
+
+    if (mimeType.match(/image\/*/) == null) {
+      alert('Only images are allowed');
+      return;
+    }
+
+    let reader = new FileReader();
+    reader.readAsDataURL(event.target.files[0]);
+
+    reader.onload = (_event) => {
+      this.url = reader.result;
+    }
+  }
 
   constructor(private userService: UserService, private http: HttpClient, elm: ElementRef) {
   }
 
   ngOnInit(): void {
+    this.hasProfilePic = false;
     this.uploader = new FileUploader({
       url: this.resourceUrl,
       authToken: 'Bearer ' + localStorage.getItem(this.userService.accessTokenLocalStorageKey),
       autoUpload: true,
     });
     this.uploader.onBeforeUploadItem = (item: FileItem) => {
-      if (!this.medias) {
-        this.medias = [];
-      }
-      this.medias.push({
-        pk: null,
-        file: item.file.name,
-      });
+        if (!this.medias) {
+          this.medias = [];
+        }
+        this.medias.push({
+          pk: null,
+          file: item.file.name,
+        });
     };
     this.uploader.onSuccessItem = (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
       const uploadedMedia = JSON.parse(response) as IMedia;
@@ -60,6 +85,7 @@ export class MediainputComponent implements OnInit, ControlValueAccessor {
       uploadingMedia.pk = uploadedMedia.pk;
       uploadingMedia.file = uploadedMedia.file;
     };
+    this.hasProfilePic = true;
     this.uploader.onCompleteAll = () => {
       this.onChange(this.medias.map((m) => {
         return m.pk;
@@ -67,8 +93,11 @@ export class MediainputComponent implements OnInit, ControlValueAccessor {
     };
   }
 
+
+
   deleteMedia(index: number): void {
     this.medias.splice(index, 1);
+    this.hasProfilePic = false;
     this.onChange(this.medias.map((m) => {
       return m.pk;
     }));

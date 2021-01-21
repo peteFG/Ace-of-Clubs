@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {isEmpty, map} from 'rxjs/operators';
 import {flatMap} from 'rxjs/internal/operators';
+import {IMedia} from "../mediainput/mediainput.component";
 
 
 
@@ -18,7 +19,7 @@ export interface User {
   is_staff: boolean;
   is_active: boolean;
   date_joined: Date;
-  // profile_picture: Media;
+  //profile_picture: IMedia;
 }
 
 export interface UserEvent {

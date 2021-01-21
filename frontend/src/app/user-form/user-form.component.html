@@ -1,10 +1,28 @@
 <form [formGroup]="userFormGroup" (ngSubmit)="createOrUpdateUser()" class="user-form__form">
 
+  <!--<div><img [src]="'api/media/download/' + userFormGroup.controls.pictures[0].pk + '/'" *ngIf="userFormGroup.controls.pictures[0].pk"/></div>-->
+
+  <!--<span>
+      <span *ngFor="let picture of pictures">
+        <button class="grow" [matMenuTriggerFor]="menu">
+          <img src="api/media/{{picture}}" height="30px"><br>
+        </button>
+      </span>
+    </span>-->
+
+
+    <!--<img [src]="'api/media/' + userFormGroup.controls.pictures[0].pk" >
+    <mat-hint align="end">pictures</mat-hint>-->
+
+  <!--{{userFormGroup.value.pictures[0].pk}}-->
+
   <mat-form-field>
     <input matInput type="text" placeholder="Username" formControlName="username">
     <mat-hint align="end">Username</mat-hint>
     <mat-error *ngIf="userFormGroup.controls.username.hasError('required')">Username is required</mat-error>
   </mat-form-field>
+
+
 
   <mat-form-field>
     <input matInput type="text" placeholder="firstname" formControlName="first_name">
@@ -28,10 +46,12 @@
   <mat-checkbox formControlName="is_staff">Is Admin?</mat-checkbox>
 
   <div>
-    <app-mediainput formControlName="pictures" [single]="true"></app-mediainput>
+    <app-mediainput formControlName="pictures" [hasProfilePic]="true" [single]="true"></app-mediainput>
   </div>
 
   <br/>
+
+
 
   <mat-card-actions align="center">
     <button mat-raised-button color="primary" [disabled]="!userFormGroup.valid">
