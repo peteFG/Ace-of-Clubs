@@ -4,6 +4,7 @@ import {EventService} from '../services/event.service';
 import {ActivatedRoute} from '@angular/router';
 import {Group, GroupService} from '../services/group.service';
 import {HttpClient} from '@angular/common/http';
+import {User, UserService} from "../services/user.service";
 
 @Component({
   selector: 'app-user-group-form',
@@ -13,36 +14,50 @@ import {HttpClient} from '@angular/common/http';
 export class UserGroupFormComponent implements OnInit {
 
   userGroupFormGroup: FormGroup;
+  userOptions:User[];
+  groupOptions:Group[];
 
-  constructor(private http: HttpClient, private route: ActivatedRoute) {
+  constructor(private http: HttpClient,
+              private route: ActivatedRoute,
+              public userService: UserService,
+              public groupService: GroupService) {
   }
 
   ngOnInit(): void {
     this.userGroupFormGroup = new FormGroup({
       pk: new FormControl(null),
-      user: new FormControl(),
-      group: new FormControl(),
+      user: new FormControl([]), // Angeklickter User
+      group: new FormControl([]), // list of Groups  --> bereits angehakte  sollen ersichtlich sein???
       is_leader: new FormControl(false)
     });
 
+    this.userService.getUsers().subscribe((users)=>{
+      this.userOptions = users;
+    });
+
+    this.groupService.retrieveGroups().subscribe((groups)=>{
+      this.groupOptions = groups;
+    });
+
+// ACHTUNG --> ALLE USERGroups benötigt!
     const pk = this.route.snapshot.paramMap.get('pk');
     if(pk) {
-      this.http.get('/api/userGroup/' + pk + '/')
+      this.http.get('/api/allUserGroups/' + pk + '/')
         .subscribe((userGroup) => {
           this.userGroupFormGroup.patchValue(userGroup);
         });
     }
   }
 
-  createGroupEntry(): void {
+  createOrUpdateGroupEntry(): void {
     const pk = this.userGroupFormGroup.value.pk;
     if (pk) {
-      this.http.put('/api/userGroup/' + pk + '/', this.userGroupFormGroup.value)
+      this.http.put('/api/allUserGroups/' + pk + '/', this.userGroupFormGroup.value)
         .subscribe(() => {
           alert('updated successfully!');
         });
     } else {
-      this.http.post('/api/userGroup/', this.userGroupFormGroup.value)
+      this.http.post('/api/allUserGroups/', this.userGroupFormGroup.value)
         .subscribe(() => {
           alert('created successfully!');
         });

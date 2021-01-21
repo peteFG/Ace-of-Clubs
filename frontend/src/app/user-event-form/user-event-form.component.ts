@@ -54,6 +54,8 @@ export class UserEventFormComponent implements OnInit {
             state: new FormControl(2)
         });
 
+        //console.log(this.userService.currentUserPK);
+
         this.currentEvent = this.userService.clickedEvent;
 
         this.eventService.getEvent(this.userService.clickedEvent)

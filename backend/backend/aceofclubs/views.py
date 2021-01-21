@@ -13,18 +13,18 @@ from .models import CsrfExemptSessionAuthentication
 # AdminUserViewset  --> admin should be able to see all users
 
 
-class AdminUserViewSet(viewsets.ModelViewSet):
-    authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
-    queryset = models.User.objects.all().order_by('username')
-    serializer_class = serializers.AdminUserSerializer
-
-    def list(self, request):
-        userid = request.GET.get("pk")
-        if userid is None:
-            serializer = self.serializer_class(self.queryset.all(), many=True)
-        else:
-            serializer = self.serializer_class(self.queryset.filter(id=userid), many=True)
-        return Response(serializer.data)
+#class AdminUserViewSet(viewsets.ModelViewSet):
+#    authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
+#    queryset = models.User.objects.all().order_by('username')
+#    serializer_class = serializers.AdminUserSerializer
+#
+#    def list(self, request):
+#        userid = request.GET.get("pk")
+#        if userid is None:
+#            serializer = self.serializer_class(self.queryset.all(), many=True)
+#        else:
+#            serializer = self.serializer_class(self.queryset.filter(id=userid), many=True)
+#        return Response(serializer.data)
 
 
 # UserViewset --> only gets current user --> not important for common user to see all other users
@@ -37,11 +37,12 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.UserSerializer
 
     def list(self, request):
-        userid = request.user.id
-        if userid is None:
+        username = request.GET.get("username")
+        #userid = request.user.pk
+        if username is None:
             serializer = self.serializer_class(self.queryset.all(), many=True)
         else:
-            serializer = self.serializer_class(self.queryset.filter(id=userid), many=True)
+            serializer = self.serializer_class(self.queryset.filter(username=username), many=True)
         return Response(serializer.data)
 
 

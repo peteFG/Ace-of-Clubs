@@ -23,8 +23,8 @@ from .aceofclubs import views
 from .aceofclubs.views import MediaDownloadView
 
 router = routers.DefaultRouter()
-router.register(r'user', views.UserViewSet)
-router.register(r'users', views.AdminUserViewSet)
+router.register(r'users', views.UserViewSet)
+#router.register(r'users', views.AdminUserViewSet)
 router.register(r'events', views.EventViewSet)
 router.register(r'groups', views.GroupViewSet)
 router.register(r'eventTypes', views.EventTypeViewSet)

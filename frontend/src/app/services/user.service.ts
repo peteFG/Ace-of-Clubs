@@ -49,6 +49,7 @@ export class UserService {
   clickedEvent: number;
   existingUserEntry: number;
   goahead: boolean;
+  currentUser:User;
 
 
   constructor(private http: HttpClient, private router: Router, private jwtHelperService: JwtHelperService) {
@@ -100,6 +101,7 @@ export class UserService {
         localStorage.setItem('currentUser', userData.username);
         localStorage.setItem('access_token', res.token);
         this.router.navigate(['event-list']);
+        this.retrieveCurrentUser();
         alert('Logged in as: ' + localStorage.getItem('currentUser'));
       }, () => {
         alert('wrong username or password');
@@ -116,15 +118,30 @@ export class UserService {
 
 
   // Aktuell angemeldeten User mittels username ermitteln
-  /*getCurrentUser(): Observable<User> {
+  getCurrentUser(): Observable<User> {
     return this.http.get<User[]>('/api/users/?username=' + localStorage.getItem('currentUser'))
       .pipe(map((users) => {
         return users[0];
       }));
-  }*/
+  }
 
+// bekommt vom Backend noch  den  falschen User!!!! --> vermuute den aktuell angemeldeten im backend (ADMIN)
+
+  /*
   getCurrentUser():Observable<User>{
     return this.http.get<User>('/api/user/');
+  }
+  *
+   */
+
+  retrieveCurrentUser():void{
+    this.getCurrentUser().subscribe((user)=>{
+      this.currentUser = user;
+      this.currentUserPK = 0;
+      this.currentUserPK = user.pk;
+      //console.log(user);
+      //console.log(user.pk);
+    });
   }
 
   // PK des aktuell angemeldeten User in Variable speichern

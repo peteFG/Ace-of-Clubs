@@ -21,7 +21,7 @@ export class UserGroupListComponent implements OnInit {
   constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
-    this.http.get('/api/userGroup/')
+    this.http.get('/api/allUserGroups/')
       .subscribe((userGroups: UserGroup[]) => {
         this.userGroups = userGroups;
       })

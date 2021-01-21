@@ -23,4 +23,6 @@ export class EventTypeService {
   getEventType(pk: number): Observable<EventType> {
     return this.http.get<EventType>('/api/eventTypes/' + pk + '/');
   }
+
+
 }

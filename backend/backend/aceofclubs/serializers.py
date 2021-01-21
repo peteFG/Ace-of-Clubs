@@ -43,11 +43,11 @@ class UserSerializer(serializers.ModelSerializer):
         userGroup.save()
         return user
 
-class AdminUserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = models.User
-        fields = ['pk', 'username', 'email', 'first_name', 'last_name', 'is_active', 'is_staff', 'pictures',
-                  'password', 'groups']
+#class AdminUserSerializer(serializers.ModelSerializer):
+#    class Meta:
+#        model = models.User
+#        fields = ['pk', 'username', 'email', 'first_name', 'last_name', 'is_active', 'is_staff', 'pictures',
+#                  'password', 'groups']
 
         extra_kwargs = {
             'password': {'write_only': True}

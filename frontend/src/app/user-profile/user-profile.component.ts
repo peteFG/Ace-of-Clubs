@@ -10,7 +10,7 @@ import {Observable} from 'rxjs';
 })
 export class UserProfileComponent implements OnInit {
 
-  userProfile: User;
+  userProfile: User[];
   displayedColumns = ['pictures' , 'username', 'email', 'first_name', 'last_name', 'edit', 'delete'];
 
   constructor(private http: HttpClient, private userService: UserService) { }
@@ -19,14 +19,22 @@ export class UserProfileComponent implements OnInit {
     this.retrieveUser();
   }
 
-
   private retrieveUser(): void {
+
+    this.userService.getCurrentUser().subscribe((user)=>{
+      this.userProfile=[];
+      this.userProfile.push(user);
+    });
+  }
+
+/** VERWENDEN WENN BACKEND PROBLEM BESEITIGT */
+  /*private retrieveUser(): void {
 
     this.userService.getCurrentUser().subscribe((user)=>{
 
       this.userProfile= user;
     });
-  }
+  }*/
 
   /** Delete User funktioniert noch nicht mit deactivate. Temporärer fix ->
    * Wenn Kein Admin wird HTML Feld nicht angezeigt.
