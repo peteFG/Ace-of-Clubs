@@ -10,7 +10,11 @@
       </span>
     </span>-->
 
+  <!--<ng-container>
+    <img src="/assets/image/user.png" height=30px *ngIf="!userFormGroup.controls.pictures">
+    <tr mat-cell *matCellDef="let element"> <img [src]="'/api/media/download/' + element.pictures + '/'" height=30px *ngIf="userService.hasProfilePic"></tr>
 
+  </ng-container>-->
     <!--<img [src]="'api/media/' + userFormGroup.controls.pictures[0].pk" >
     <mat-hint align="end">pictures</mat-hint>-->
 
@@ -46,7 +50,7 @@
   <mat-checkbox formControlName="is_staff">Is Admin?</mat-checkbox>
 
   <div>
-    <app-mediainput formControlName="pictures" [hasProfilePic]="true" [single]="true"></app-mediainput>
+    <app-mediainput formControlName="pictures" [single]="true"></app-mediainput>
   </div>
 
   <br/>

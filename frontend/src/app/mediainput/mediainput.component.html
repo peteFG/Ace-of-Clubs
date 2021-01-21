@@ -1,5 +1,4 @@
 
-{{hasProfilePic}}
 <div *ngIf="!initializing">
   <table class="table" *ngIf="medias?.length">
     <thead>
@@ -31,10 +30,10 @@
   </table>
 
 
-  <div><img [src]="url" *ngIf="url"></div>
+  <!--<div><img [src]="url" *ngIf="url"></div>
   <div><img [src]="this.resourceUrl + '/download/' + medias[0].pk + '/'" *ngIf="medias[0].pk" height="350rem"></div>
   {{this.resourceUrl}}
-  {{medias[0].pk}}
+  {{medias[0].pk}}-->
   <input type="file" [accept]="accept" ng2FileSelect [uploader]="uploader" [multiple]="false" (change)="selectFile($event)"/>
 
   {{single}}

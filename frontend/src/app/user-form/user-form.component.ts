@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 // import {Group, GroupService} from '../services/group.service';
@@ -11,13 +11,18 @@ import {UserService} from '../services/user.service';
   styleUrls: ['./user-form.component.scss']
 })
 export class UserFormComponent implements OnInit {
-
+  @Input()
+  hasProfilePic = false;
   userFormGroup: FormGroup;
 
   constructor(private userService: UserService, private route: ActivatedRoute) {
+
   }
 
   ngOnInit(): void {
+    /*this.userService.hasProfilePic.subscribe(response => {
+      this.hasProfilePic = response;
+    })*/
     this.userFormGroup = new FormGroup({
       pk: new FormControl(null),
       username: new FormControl(''),
