@@ -15,7 +15,7 @@ export class UserFormComponent implements OnInit {
   hasProfilePic = false;
   userFormGroup: FormGroup;
 
-  constructor(private userService: UserService, private route: ActivatedRoute) {
+  constructor(public userService: UserService, private route: ActivatedRoute) {
 
   }
 

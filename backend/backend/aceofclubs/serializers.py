@@ -1,18 +1,60 @@
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework import serializers
 from . import models
 from .models import Media
 
+from django.contrib.auth.models import User, Group
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
 
 class UserSerializer(serializers.ModelSerializer):
+    password2 = serializers.CharField(style={'input_type': 'password'}, write_only=True)
+
     class Meta:
         model = models.User
-        fields = ['pk', 'username', 'email', 'first_name', 'last_name', 'is_active', 'is_staff', 'pictures']
+        fields = ['pk', 'username', 'email', 'first_name', 'last_name', 'is_active', 'is_staff', 'pictures',
+                  'password',
+                  'password2', 'groups']
 
+        extra_kwargs = {
+            'password': {'write_only': False},
+            'pictures': {'write_only': True}
+        }
+
+    def create(self, validated_data):
+        userGroup = models.UserGroup
+        user = models.User(
+            email=self.validated_data['email'],
+            username=self.validated_data['username'],
+            first_name=self.validated_data['first_name'],
+            last_name=self.validated_data['last_name'],
+            is_active=self.validated_data['is_active'],
+            is_staff=self.validated_data['is_staff'],
+        )
+        password = self.validated_data['password']
+        password2 = self.validated_data['password2']
+        if password != password2:
+            raise serializers.ValidationError({'password': 'Passwords do not match!'})
+        user.set_password(password)
+        user.save()
+        user.groups.add(2)
+        user.save()
+
+        group = models.Group
+        userGroup = models.UserGroup(
+            user=user,
+            is_leader=False
+
+        )
+        userGroup.save()
+        return user
 
 class AdminUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.User
-        fields = ['pk', 'username', 'email', 'first_name', 'last_name', 'is_active', 'is_staff', 'pictures']
+        fields = ['pk', 'username', 'email', 'first_name', 'last_name', 'is_active', 'is_staff', 'pictures',
+                  'password', 'groups']
 
 
 class MediaSerializer(serializers.ModelSerializer):
@@ -87,3 +129,5 @@ class UserEventSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.UserEvent
         fields = ['pk', 'user', 'event', 'state']
+
+

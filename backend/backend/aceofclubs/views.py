@@ -3,16 +3,18 @@ import os
 from django.http import HttpResponse
 from django.views import View
 from rest_framework import viewsets, status
+from rest_framework.authentication import BasicAuthentication
 from rest_framework.response import Response
-from rest_framework.permissions import DjangoModelPermissions
+from rest_framework.permissions import DjangoModelPermissions, AllowAny
 from . import serializers
 from . import models
-
+from .models import CsrfExemptSessionAuthentication
 
 # AdminUserViewset  --> admin should be able to see all users
 
 
 class AdminUserViewSet(viewsets.ModelViewSet):
+    authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
     queryset = models.User.objects.all().order_by('username')
     serializer_class = serializers.AdminUserSerializer
 
@@ -29,6 +31,7 @@ class AdminUserViewSet(viewsets.ModelViewSet):
 
 
 class UserViewSet(viewsets.ModelViewSet):
+    authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
     queryset = models.User.objects.all().order_by('pk')
     permission_classes = (DjangoModelPermissions,)
     serializer_class = serializers.UserSerializer
@@ -47,11 +50,15 @@ class MediaViewSet(viewsets.ModelViewSet):
 
     serializer_class = serializers.MediaSerializer
 
+
     def pre_save(self, obj):
         obj.file = self.request.FILES.get('file')
 
 
+
+
 class MediaDownloadView(View):
+
     def get(self, request, pk):
         media = models.Media.objects.get(pk=pk)
         content_type = media.content_type
@@ -77,19 +84,16 @@ class EventViewSet(viewsets.ModelViewSet):
 
 class GroupViewSet(viewsets.ModelViewSet):
     queryset = models.Group.objects.all()
-
     serializer_class = serializers.GroupSerializer
 
 
 class EventTypeViewSet(viewsets.ModelViewSet):
     queryset = models.EventType.objects.all()
-
     serializer_class = serializers.EventTypeSerializer
 
 
 class StateViewSet(viewsets.ModelViewSet):
     queryset = models.State.objects.all()
-
     serializer_class = serializers.StateSerializer
 
 
@@ -98,12 +102,14 @@ class UserEventViewSet(viewsets.ModelViewSet):
 
     serializer_class = serializers.UserEventSerializer
 
+
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
 
     def list(self, request):
         # user = request.GET.get("user")
@@ -119,6 +125,7 @@ class UserGroupViewSet(viewsets.ModelViewSet):
     queryset = models.UserGroup.objects.all()
 
     serializer_class = serializers.UserGroupSerializer
+
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)

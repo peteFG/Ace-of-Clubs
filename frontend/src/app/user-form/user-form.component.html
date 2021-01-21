@@ -23,7 +23,6 @@
   <mat-form-field>
     <input matInput type="text" placeholder="Username" formControlName="username">
     <mat-hint align="end">Username</mat-hint>
-    <mat-error *ngIf="userFormGroup.controls.username.hasError('required')">Username is required</mat-error>
   </mat-form-field>
 
 
@@ -43,11 +42,15 @@
     <mat-hint align="end">E-Mail</mat-hint>
   </mat-form-field>
 
+  <mat-form-field>
+    <input matInput type="password" placeholder="Enter Password" formControlName="password">
+    <mat-hint align="end">Password</mat-hint>
+  </mat-form-field>
 
-  <mat-checkbox formControlName="is_active">Is active?</mat-checkbox>
+  <mat-checkbox formControlName="is_active" *ngIf="userService.hasPermission('aceofclubs.change_user')">Is Active?</mat-checkbox>
   <!--*ngIf="userService.hasPermission('aceofclubs.change_user')"-->
 
-  <mat-checkbox formControlName="is_staff">Is Admin?</mat-checkbox>
+  <mat-checkbox formControlName="is_staff" *ngIf="userService.hasPermission('aceofclubs.change_user')">Is Admin?</mat-checkbox>
 
   <div>
     <app-mediainput formControlName="pictures" [single]="true"></app-mediainput>

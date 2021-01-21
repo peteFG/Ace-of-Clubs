@@ -37,6 +37,7 @@ import { LoginComponent } from './login/login.component';
 import { LogoutComponent } from './logout/logout.component';
 import { JwtModule } from '@auth0/angular-jwt';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { RegisterComponent } from './register/register.component';
 import { MatDividerModule } from '@angular/material/divider';
 import { OverviewComponent } from './overview/overview.component';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -72,6 +73,8 @@ import {MatSidenavModule} from '@angular/material/sidenav';
     UserGroupFormComponent,
     LoginComponent,
     LogoutComponent,
+    UserProfileComponent,
+    RegisterComponent,
     UserProfileComponent,
     OverviewComponent,
     MediainputComponent

@@ -1,6 +1,12 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from rest_framework.authentication import SessionAuthentication
 
+
+class CsrfExemptSessionAuthentication(SessionAuthentication):
+
+    def enforce_csrf(self, request):
+        return  # To not perform the csrf check previously happening
 
 class Group(models.Model):
     name = models.TextField()
@@ -33,7 +39,7 @@ class Event(models.Model):
 class Media(models.Model):
     file = models.FileField(upload_to='uploads/%Y-%m-%d-%H-%M-%S/', null=True)
     content_type = models.TextField()
-    #null=True, blank=True, max_length=100
+    # null=True, blank=True, max_length=100
 
     def save(self, *args, **kwargs):
         self.content_type = self.file.file.content_type
@@ -43,6 +49,9 @@ class Media(models.Model):
 class User(AbstractUser):
     pictures = models.ManyToManyField('Media', blank=True)
     email = models.EmailField(unique=True)
+    first_name = models.CharField(max_length=150, blank=False)
+    last_name = models.CharField(max_length=150, blank=False)
+    #password = models.CharField(min_length=5, blank=False)
 
     def __str__(self):
         return self.email

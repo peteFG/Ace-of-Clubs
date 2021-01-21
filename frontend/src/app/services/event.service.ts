@@ -28,7 +28,8 @@ export class EventService {
   personalEvents: Event[];
 
   constructor(private http: HttpClient,
-              private userService: UserService) { }
+              private userService: UserService) {
+  }
 
   getEvents(): Observable<Event[]> {
     return this.http.get<Event[]>('/api/events/');
@@ -79,7 +80,7 @@ export class EventService {
           persEv.forEach((event) => {
 
             if (!personalEventsPK.includes(event.pk)) {
-            personalEvents.push(event);
+              personalEvents.push(event);
             }
             personalEventsPK.push(event.pk);
           });
