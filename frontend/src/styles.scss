@@ -8,11 +8,21 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   .desktop-view {
     display: none;
   }
+
+  .container {
+    height: fit-content;
+    min-height: 92vh;
+  }
 }
 
 @media only screen and (min-width: 450px) {
   .mobile-view {
     display: none;
+  }
+
+  .container {
+    height: fit-content;
+    min-height: 93.5vh;
   }
 }
 
@@ -20,7 +30,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .container {
   background: rgba(245,245,245,1);
   width: 100%;
-  height: fit-content;
 }
 
 .default-container {
@@ -123,6 +132,13 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   font-size: 18px;
 }
 
+.btn-standard2 {
+  width: fit-content;
+  color: rgba(62,91,147,0.9);
+  background-color: rgba(62,91,147,0.1);
+  font-size: 18px;
+}
+
 .btn-btn-link {
   font-size: 18px;
 }
@@ -145,6 +161,12 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .regular-text {
   font-size: 20px;
+  font-weight: lighter;
+}
+
+.text {
+  text-align: -webkit-center;
+  font-size: 25px;
   font-weight: lighter;
 }
 

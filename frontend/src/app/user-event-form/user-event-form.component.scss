@@ -4,3 +4,33 @@
   width: 20rem;
   margin: 3rem auto;
 }
+
+@media only screen and (max-width: 450px) {
+  .title-bg {
+    text-align: -webkit-center;
+    font-size: 650%;
+  }
+
+  .text {
+    font-size: 23px;
+  }
+
+  .error-message {
+    padding: 20px;
+  }
+
+  .position {
+    padding-top: 5vh;
+  }
+}
+
+@media only screen and (min-width: 450px) {
+  .title-bg {
+    text-align: -webkit-center;
+    font-size: 800%;
+  }
+
+  .position {
+    padding-top: 25vh;
+  }
+}
