@@ -1,11 +1,7 @@
-from django.views.decorators.csrf import csrf_exempt
 from rest_framework import serializers
 from . import models
 from .models import Media
 
-from django.contrib.auth.models import User, Group
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -18,12 +14,10 @@ class UserSerializer(serializers.ModelSerializer):
                   'password2', 'groups']
 
         extra_kwargs = {
-            'password': {'write_only': False},
-            'pictures': {'write_only': True}
+            'password': {'write_only': True}
         }
 
     def create(self, validated_data):
-        userGroup = models.UserGroup
         user = models.User(
             email=self.validated_data['email'],
             username=self.validated_data['username'],
@@ -41,7 +35,6 @@ class UserSerializer(serializers.ModelSerializer):
         user.groups.add(2)
         user.save()
 
-        group = models.Group
         userGroup = models.UserGroup(
             user=user,
             is_leader=False
@@ -55,6 +48,10 @@ class AdminUserSerializer(serializers.ModelSerializer):
         model = models.User
         fields = ['pk', 'username', 'email', 'first_name', 'last_name', 'is_active', 'is_staff', 'pictures',
                   'password', 'groups']
+
+        extra_kwargs = {
+            'password': {'write_only': True}
+        }
 
 
 class MediaSerializer(serializers.ModelSerializer):
