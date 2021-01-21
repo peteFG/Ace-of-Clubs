@@ -61,7 +61,7 @@ export class EventService {
     var personalEventsPK = [];
 
 
-    return this.userService.gGBUID().pipe(flatMap((userGroups) => {
+    return this.userService.getUserGroupsByUserID().pipe(flatMap((userGroups) => {
 
       const observables = [] as Observable<Event[]>[];
 
@@ -89,61 +89,11 @@ export class EventService {
         return personalEvents;
 
 
-
-
-        /*return results.forEach((persEventLists)=>{
-          return personalEvents.concat(persEventLists);
-        });*/
-
-
-
-
-     /*   results.forEach((events)=>{
-
-          //const events2 = <any>events1
-          //const events = <Event[]>events2;
-          events.forEach((event) => {
-
-            if (personalEventsPK.includes(event.pk)) {
-              alert('Event already in List');
-
-            } else {
-              //event.personalEntry = this.userService.setPersonalEntry(event.pk)
-              personalEventsPK = personalEventsPK.concat(event.pk); //  Sicherstellung, dass keine Duplikate vorhanden sind
-              this.personalEvents = this.personalEvents.concat(event);
-            }
-
-          })
-        })*/
-
-
       }));
 
     }));
 
   }
 
-
 }
 
-
-/*
-
-
-.subscribe((events) => {
-          events.forEach((event) => {
-
-            if (personalEventsPK.includes(event.pk)) {
-              alert('Event already in List');
-
-            } else {
-              //event.personalEntry = this.userService.setPersonalEntry(event.pk)
-              personalEventsPK = personalEventsPK.concat(event.pk); //  Sicherstellung, dass keine Duplikate vorhanden sind
-              this.personalEvents = this.personalEvents.concat(event);
-            }
-
-          })
-        })
-
-
- */
