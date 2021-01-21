@@ -27,7 +27,6 @@ export interface UserEvent {
   user: number;
   event: number;
   state: number;
-  // profile_picture: Media;
 }
 
 export interface UserGroup{
@@ -62,7 +61,7 @@ export class UserService {
 
 
 
-
+// get all users for Admin -->
   getUsers(): Observable<User[]> {
     return this.http.get<User[]>('/api/users/');
   }
@@ -117,16 +116,17 @@ export class UserService {
 
 
   // Aktuell angemeldeten User mittels username ermitteln
-  getCurrentUser(): Observable<User> {
+  /*getCurrentUser(): Observable<User> {
     return this.http.get<User[]>('/api/users/?username=' + localStorage.getItem('currentUser'))
-      .pipe(map((users) => {
+      .pipe(map((users)=>{
         return users[0];
       }));
-  }
-
-  /*getCurrentUser():Observable<User>{
-    return this.http.get<User>('/api/users/?id=');
   }*/
+
+  // aktuell angemeldeter User wird ausgelesen
+  getCurrentUser():Observable<User>{
+    return this.http.get<User>('/api/user/');
+  }
 
   // PK des aktuell angemeldeten User in Variable speichern
   getCurrentUserId(): void {
@@ -151,9 +151,7 @@ export class UserService {
   setUserEventEntry(eventPK: number) {
     const entriesOfActualUser = this.getUserEventsOfCurrentUser();
     this.clickedEvent =  eventPK;
-    // this.getCurrentUserId();
     this.existingUserEntry = 0;
-    // alert('Object was pressed - ID of Event =' + eventPK)
     let checkIfEmpty = [];
 
     entriesOfActualUser.subscribe((events) => {
@@ -176,62 +174,12 @@ export class UserService {
             if (this.existingUserEntry == 0){
               this.router.navigateByUrl('/user-event-form/');
             }
-
           });
-
         });
-
       }
     });
-
-
-
   }
 
-  /*
-
-  setUserEventEntry(eventPK:number) {
-    this.clickedEvent =  eventPK;
-    //this.getCurrentUserId();
-    this.existingUserEntry = 0;
-    //alert('Object was pressed - ID of Event =' + eventPK)
-    let checkIfEmpty = [];
-    const entriesOfActualUser = this.getUserEventsOfCurrentUser();
-    entriesOfActualUser.subscribe((events)=>{
-
-      checkIfEmpty.concat(events);
-    });
-
-    if (checkIfEmpty == []){
-
-      this.router.navigateByUrl('/user-event-form/');
-
-    } else {
-
-      entriesOfActualUser.subscribe((userEvents)=>{
-
-
-        userEvents.forEach((eventEntry)=>{
-
-          if(eventEntry.event == eventPK){
-
-            this.existingUserEntry = eventEntry.pk;
-            this.router.navigateByUrl('/user-event-form/'+this.existingUserEntry);
-
-          }
-          if (this.existingUserEntry ==0){
-            this.router.navigateByUrl('/user-event-form/');
-          }
-
-        });
-
-      });
-
-    }
-
-  }
-
-   */
 
 
   hasPermission(permission: string): boolean {
@@ -247,15 +195,9 @@ export class UserService {
 
   // --------------------------------------  USER GROUP SERVICES -------------------------------------------
 
-  getUserGroupsByUserID(userID: number): Observable<UserGroup[]> {
-    return this.http.get<UserGroup[]>('/api/userGroup/?user=' + userID);
+  getUserGroupsByUserID(): Observable<UserGroup[]> {
+    return this.http.get<UserGroup[]>('/api/userGroup/');
   }
 
-  gGBUID(): Observable<UserGroup[]>{
-    return this.getCurrentUser()
-      .pipe(flatMap((currentUser) => {
-        return this.getUserGroupsByUserID(currentUser.pk);
-      }));
-  }
 
 }
