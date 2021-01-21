@@ -2,15 +2,36 @@
 
   <div *ngIf="currentEvent != null && activeEvent">
     <div class="mobile-header">
-      <div class="mobile-title">RSVP</div>
-      <mat-divider style="margin-bottom: 15px"></mat-divider>
-      <div>To the following event:</div>
-      <div>{{currentEventName}}</div>
-      <div>{{currentEventSD}} - {{currentEventST}}</div>
-      <div>{{currentEventED}} - {{currentEventET}}</div>
-      <!--<div>{{eventType}}</div>-->
-      <div>{{currentEventType}}</div>
-      <div>{{currentEventGroup}}</div>
+      <div>
+        <div class="mobile-view mobile-title anim-left">RSVP</div>
+        <div class="desktop-view title-bg anim-right">RSVP</div>
+        <mat-divider style="margin-bottom: 15px"></mat-divider>
+        <div>To the following event:</div>
+        <mat-card class="anim-right">
+          <mat-card-header class="horiz-center" style="margin-bottom: 10px">
+            <mat-card-title class="small-heading" >{{currentEventName}}</mat-card-title>
+          </mat-card-header>
+          <mat-card-content class="acc-content">
+            <div class="content-m-row">
+              <div class="content-m-hd">Start:</div>
+              <div>{{currentEventSD | date: 'dd.MM.yyyy'}} - {{currentEventST.substring(0, 5)}}</div>
+            </div>
+            <div class="content-m-row">
+              <div class="content-m-hd">End:</div>
+              <div>{{currentEventED | date: 'dd.MM.yyyy'}} - {{currentEventET.substring(0, 5)}}</div>
+            </div>
+            <div class="content-m-row">
+              <div class="content-m-hd">Event Type:</div>
+              <div>{{currentEventType}}</div>
+            </div>
+            <div class="content-m-row">
+              <div class="content-m-hd">Groups:</div>
+              <div>{{currentEventGroup}}</div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+
+      </div>
 
       <mat-divider style="margin-top: 15px"></mat-divider>
     </div>
@@ -27,7 +48,7 @@
 
         <mat-select placeholder="Username" formControlName="user">
           <!-- <mat-option [value]="userOption.pk" *ngFor="let userOption of userOptions">{{userOption.username}}</mat-option> -->
-          <mat-option [value]="currentUser">{{currentUserName}}</mat-option>
+          <mat-option readonly="true" [value]="currentUser">{{currentUserName}}</mat-option>
         </mat-select>
         <mat-hint align="end">Username</mat-hint>
 
@@ -55,11 +76,11 @@
       </mat-form-field>
 
       <mat-card-actions align="center">
-        <button mat-raised-button color="standard" [disabled]="!userEventFormGroup.valid">
-          <span *ngIf="!userEventFormGroup.controls.pk.value">Create</span>
-          <span *ngIf="userEventFormGroup.controls.pk.value">Submit Response</span>
+        <button mat-button class="btn-standard2" [disabled]="!userEventFormGroup.valid">
+          <span *ngIf="!userEventFormGroup.controls.pk.value">Submit Response</span>
+          <span *ngIf="userEventFormGroup.controls.pk.value">Change Response</span>
         </button>
-        <button mat-raised-button color="light" routerLink="/event-list">Cancel</button>
+        <button mat-button class="btn-light" routerLink="/event-list">Cancel</button>
       </mat-card-actions>
 
       <!--<label>User: <input formControlName="user"></label>
@@ -76,7 +97,7 @@
   <!-- Error Handling: kein Event gewählt -->
   <div *ngIf="currentEvent == null">
     <div class="vertical-center position">
-      <div class="title-bg desktop-view anim-right">OH NO!</div>
+      <div style="font-size: 800%; margin-bottom: 40px" class="title-bg desktop-view anim-right">OH NO!</div>
       <div class="title-bg mobile-view anim-right">OH<br>NO!</div>
       <div class="error-message anim-right">
         <div class="text">You cannot respond to an Event as no Event has been selected. <br> Please choose an Event
@@ -84,7 +105,7 @@
         </div>
         <div style="margin-top: 30px" class="text">You can view all available Events here:</div>
       </div>
-      <div class="horiz-center" style="margin-top: 10px">
+      <div class="error-button horiz-center">
         <button mat-button class="btn-standard2 anim-right" routerLink="/event-list">Show All Events</button>
       </div>
     </div>
@@ -93,7 +114,7 @@
   <!-- Error Handling: Inaktiver Event gewählt -->
   <div *ngIf="currentEvent != null && !activeEvent">
     <div class="vertical-center position">
-      <div class="title-bg desktop-view anim-right">OH NO!</div>
+      <div style="font-size: 800%" class="title-bg desktop-view anim-right">OH NO!</div>
       <div class="title-bg mobile-view anim-right">OH<br>NO!</div>
       <div class="error-message anim-right">
         <div class="text">You cannot RSVP to this event as it has been cancelled or deleted. Please select a different

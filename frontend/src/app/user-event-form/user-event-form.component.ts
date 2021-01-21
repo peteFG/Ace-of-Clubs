@@ -66,10 +66,9 @@ export class UserEventFormComponent implements OnInit {
                 this.currentEventGroup = event.group;
                 this.currentEventType = event.ev_type;
                 this.activeEvent = event.active;
-                this.retrieveEventType(this.currentEventType);
             });
 
-        this.eventTypeService.getEventType(this.userService.clickedEvent)
+        this.eventTypeService.getEventType(this.currentEventType)
             .subscribe((eventType) => {
                 this.eventType = eventType;
             });

@@ -5,7 +5,17 @@
   margin: 3rem auto;
 }
 
+.ev-title {
+  font-size: 22px;
+  font-weight: lighter;
+  color: rgba(62,91,147,0.9);
+}
+
 @media only screen and (max-width: 450px) {
+  .mobile-title {
+    text-align: -webkit-right;
+  }
+
   .title-bg {
     text-align: -webkit-center;
     font-size: 650%;
@@ -22,15 +32,27 @@
   .position {
     padding-top: 5vh;
   }
+
+  .error-button {
+    margin-top: 10px;
+  }
 }
 
 @media only screen and (min-width: 450px) {
   .title-bg {
     text-align: -webkit-center;
-    font-size: 800%;
+    font-size: 600%;
   }
 
   .position {
-    padding-top: 25vh;
+    padding-top: 22vh;
+  }
+
+  .btn-standard2 {
+    font-size: 22px;
+  }
+
+  .error-button {
+    margin-top: 30px;
   }
 }
