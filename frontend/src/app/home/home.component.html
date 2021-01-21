@@ -1,20 +1,20 @@
 <div class="container">
   <mat-card class="home-card">
     <div class="card-container">
-      <h1 class="title">ACE OF CLUBS</h1>
-      <p class="subtitle">Manage and Keep on Top of Your Club with one simple Tool.</p>
+      <h1 class="title anim-right">ACE OF CLUBS</h1>
+      <p class="subtitle anim-right">Manage and Keep on Top of Your Club with one simple Tool.</p>
     </div>
     <p *ngIf="!isLoggedIn" class="subtitle2">JOIN US TODAY</p>
     <mat-divider class="main-divider" [inset]="true"></mat-divider>
     <div class="card-actions">
 
-      <div class="notloggedin" *ngIf="!isLoggedIn">
+      <div class="notloggedin anim-right" *ngIf="!isLoggedIn">
         <button style="margin-left: 15px" mat-stroked-button class="btn-transparent" routerLink="/login">Login</button>
         <mat-divider class="main-divider" [vertical]="true"></mat-divider>
         <button style="margin-right: 15px" mat-stroked-button class="btn-transparent" routerLink="/register">Sign Up
         </button>
       </div>
-      <div style="margin-top: 15px" *ngIf="isLoggedIn">
+      <div style="margin-top: 15px" class="anim-right" *ngIf="isLoggedIn">
         <button mat-stroked-button class="btn-transparent" routerLink="/overview">Visit your Personalized Page</button>
       </div>
     </div>
@@ -23,37 +23,48 @@
 
 
   <div style="margin-bottom: 20px" class="container">
-    <p class="subheading">What we are Offering</p>
+    <p class="subheading anim-right">What we are Offering</p>
     <mat-divider style="padding: 5px"></mat-divider>
     <div class="elem-container">
-      <mat-card class="elements">
-        <div class="header-elements">
-          <img class="icon" src="./assets/image/event_available-48dp.png" alt="Events">
+
+      <mat-card class="elements anim-right standard-card">
+        <div class="header-elements mobile-view">
+          <div class="horiz-center">
+            <img class="icon" src="./assets/image/event_available-48dp.png" alt="Events">
+          </div>
           <p class="small-heading">ORANIZE EVENTS SUCCESSFULLY</p>
         </div>
         <div class="footer-elements">
           <mat-divider></mat-divider>
-          <p class="regular-text">123</p>
+          <p class="regular-text">Facilitate the successful Organisation of all Types of Events and Outings for your Club.</p>
         </div>
       </mat-card>
-      <mat-card class="elements">
-        <div class="header-elements">
-          <img class="icon" src="./assets/image/groups-48dp.png" alt="Members">
+
+      <mat-card class="elements anim-right standard-card">
+        <div class="header-elements mobile-view">
+          <div class="horiz-center">
+            <img class="icon" src="./assets/image/groups-48dp.png" alt="Members">
+          </div>
           <p class="small-heading">COORDINATE ALL CLUB MEMBERS</p>
         </div>
         <div class="footer-elements">
           <mat-divider></mat-divider>
-          <p class="regular-text">123</p>
+          <p class="regular-text">Easily coordinate all Members of your Club including different Sub-Groups and their
+            respective Purposes.</p>
         </div>
       </mat-card>
-      <mat-card class="elements">
-        <div class="header-elements">
-          <img class="icon" src="./assets/image/leaderboard-48dp.png" alt="Statistics">
+
+      <mat-card class="elements anim-right standard-card">
+        <div class="header-elements mobile-view">
+          <div class="horiz-center">
+            <img class="icon" src="./assets/image/leaderboard-48dp.png" alt="Statistics">
+          </div>
           <p class="small-heading">KEEP TRACK OF YOUR CLUB</p>
         </div>
         <div class="footer-elements">
           <mat-divider></mat-divider>
-          <p class="regular-text">123</p>
+          <p class="regular-text">Keep Track of all Events, Members and and Groups and view detailed Statistics of
+            Attendances and Absences.</p>
         </div>
       </mat-card>
     </div>

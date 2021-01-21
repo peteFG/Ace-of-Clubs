@@ -4,6 +4,12 @@
 <mat-toolbar>
   <!-- Desktop Ansicht -->
   <div class="desktop-view">
+    <button class="m-menu-btn" mat-icon-button color="standard" aria-label="Menu" (click)="sidenavdrawer.toggle()"
+            *ngIf="isLoggedIn">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <button style="margin-right: 50px" class="logo" routerLink="/overview" *ngIf="isLoggedIn">ACE OF CLUBS</button>
+    <button style="margin-right: 130px" class="logo" routerLink="/home" *ngIf="!isLoggedIn">ACE OF CLUBS</button>
     <button mat-button [matMenuTriggerFor]="eventMenu" *ngIf="userService.hasPermission('aceofclubs.view_event')">
       Event
     </button>
@@ -78,9 +84,22 @@
       </button>
     </mat-menu>
 
-    <button mat-button routerLink="user-profile">My Profile</button>
+    <button mat-button routerLink="user-profile" *ngIf="isLoggedIn">My Profile</button>
 
+    <button class="logo" [matMenuTriggerFor]="loginMenuDesktop" routerLink="/login"
+            *ngIf="!isLoggedIn">
+      LOGIN OR SIGN UP
+    </button>
+    <mat-menu #loginMenuDesktop="matMenu">
+      <button mat-menu-item routerLink="/login">
+        Login
+      </button>
+      <button mat-menu-item routerLink="/register">
+        Sign Up
+      </button>
+    </mat-menu>
     <app-logout></app-logout>
+
   </div>
 
   <!-- Mobile Ansicht -->
