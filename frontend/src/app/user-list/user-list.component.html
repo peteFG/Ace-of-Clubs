@@ -1,166 +1,185 @@
-<!-- Desktop Ansicht -->
-<div class="desktop-view">
-  <div>
-    <table mat-table [dataSource]="users" matSort class="mat-elevation-z8">
+<div class="container">
+  <!-- Desktop Ansicht -->
+  <div class="desktop-view" *ngIf="userService.hasPermission('aceofclubs.view_user')">
+    <div>
+      <table mat-table [dataSource]="users" matSort class="mat-elevation-z8">
 
 
-      <ng-container matColumnDef="pictures">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
-        <td mat-cell *matCellDef="let element">
+        <ng-container matColumnDef="pictures">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+          <td mat-cell *matCellDef="let element">
 
-          <img [src]="'/api/media/download/' + element.pictures + '/'" height=30px *ngIf="element.pictures.length>0; else alt">
-          <ng-template #alt> <img src="./assets/image/user.png" height=30px></ng-template>
-        </td>
+            <img [src]="'/api/media/download/' + element.pictures + '/'" height=30px
+                 *ngIf="element.pictures.length>0; else alt">
+            <ng-template #alt><img src="./assets/image/user.png" height=30px></ng-template>
+          </td>
 
-      </ng-container>
-
-
-      <ng-container matColumnDef="username">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Username</th>
-        <td mat-cell *matCellDef="let element"> {{element.username}}</td>
-      </ng-container>
+        </ng-container>
 
 
-      <ng-container matColumnDef="first_name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>First Name</th>
-        <td mat-cell *matCellDef="let element"> {{element.first_name}}</td>
-      </ng-container>
+        <ng-container matColumnDef="username">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Username</th>
+          <td mat-cell *matCellDef="let element"> {{element.username}}</td>
+        </ng-container>
 
 
-      <ng-container matColumnDef="last_name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Last Name</th>
-        <td mat-cell *matCellDef="let element"> {{element.last_name}}</td>
-      </ng-container>
+        <ng-container matColumnDef="first_name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>First Name</th>
+          <td mat-cell *matCellDef="let element"> {{element.first_name}}</td>
+        </ng-container>
 
 
-      <ng-container matColumnDef="email">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>E-Mail Address</th>
-        <td mat-cell *matCellDef="let element"> {{element.email}}</td>
-      </ng-container>
+        <ng-container matColumnDef="last_name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Last Name</th>
+          <td mat-cell *matCellDef="let element"> {{element.last_name}}</td>
+        </ng-container>
 
 
-      <ng-container matColumnDef="is_active">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Active User?</th>
-        <td mat-cell *matCellDef="let element"> {{element.is_active ? 'Yes' : 'No'}}</td>
-      </ng-container>
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>E-Mail Address</th>
+          <td mat-cell *matCellDef="let element"> {{element.email}}</td>
+        </ng-container>
 
 
-      <ng-container matColumnDef="is_staff">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Admin User?</th>
-        <td mat-cell *matCellDef="let element"> {{element.is_staff ? 'Yes' : 'No'}}</td>
-      </ng-container>
+        <ng-container matColumnDef="is_active">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Active User?</th>
+          <td mat-cell *matCellDef="let element"> {{element.is_active ? 'Yes' : 'No'}}</td>
+        </ng-container>
 
 
-      <ng-container matColumnDef="date_joined">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Date Joined</th>
-        <td mat-cell *matCellDef="let element">
-          {{element.date_joined| date: 'd.M.yyyy'}}</td>
-      </ng-container>
+        <ng-container matColumnDef="is_staff">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Admin User?</th>
+          <td mat-cell *matCellDef="let element"> {{element.is_staff ? 'Yes' : 'No'}}</td>
+        </ng-container>
 
-      <!-- Edit Column -->
-      <ng-container matColumnDef="edit">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
-        <td mat-cell *matCellDef="let element">
-          <button mat-button color="primary" [routerLink]="'/user-form/' + element.pk"
-                  *ngIf="userService.hasPermission('aceofclubs.change_user')">Edit
-          </button>
-          <!--<button mat-button color="primary" [routerLink]="'user-form/' + element.pk" *ngIf="element.is_staff" >Edit</button> -->
-        </td>
-      </ng-container>
 
-      <!-- Delete Column -->
-      <ng-container matColumnDef="delete">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
-        <td mat-cell *matCellDef="let element">
-          <button mat-button color="warn" (click)="deleteUser(element)"
-                  *ngIf="userService.hasPermission('aceofclubs.delete_user')">Delete
-          </button>
-          <!--<button mat-button color="warn" (click)="deleteUser(element)" *ngIf="element.is_staff">Delete</button>-->
-        </td>
-      </ng-container>
+        <ng-container matColumnDef="date_joined">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Date Joined</th>
+          <td mat-cell *matCellDef="let element">
+            {{element.date_joined| date: 'd.M.yyyy'}}</td>
+        </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
+        <!-- Edit Column -->
+        <ng-container matColumnDef="edit">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-button color="primary" [routerLink]="'/user-form/' + element.pk"
+                    *ngIf="userService.hasPermission('aceofclubs.change_user')">Edit
+            </button>
+            <!--<button mat-button color="primary" [routerLink]="'user-form/' + element.pk" *ngIf="element.is_staff" >Edit</button> -->
+          </td>
+        </ng-container>
 
+        <!-- Delete Column -->
+        <ng-container matColumnDef="delete">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-button color="warn" (click)="deleteUser(element)"
+                    *ngIf="userService.hasPermission('aceofclubs.delete_user')">Delete
+            </button>
+            <!--<button mat-button color="warn" (click)="deleteUser(element)" *ngIf="element.is_staff">Delete</button>-->
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+    </div>
   </div>
-</div>
 
-<!-- Mobile Ansicht -->
-<div class="mobile-view container">
+  <!-- Mobile Ansicht -->
+  <div class="mobile-view" *ngIf="userService.hasPermission('aceofclubs.view_user')">
 
-  <div class="mobile-header">
-    <div class="mobile-title anim-left">ALL <br> MEMBERS</div>
-    <mat-divider style="margin-bottom: 15px"></mat-divider>
+    <div class="mobile-header">
+      <div class="mobile-title anim-left">ALL <br> MEMBERS</div>
+      <mat-divider style="margin-bottom: 15px"></mat-divider>
 
-    <!-- Filtern -->
+      <!-- Filtern -->
+      <div class="anim-right">
+        <mat-accordion class="m-filter-acc">
+          <mat-expansion-panel hideToggle class="m-filter-elem-acc">
+            <mat-expansion-panel-header class="m-filter-header">
+              <div>
+                <mat-panel-title class="m-filter-title">FILTER MEMBERS</mat-panel-title>
+              </div>
+            </mat-expansion-panel-header>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+      <mat-divider style="margin-top: 15px"></mat-divider>
+    </div>
+
     <div class="anim-right">
-      <mat-accordion class="m-filter-acc">
-        <mat-expansion-panel hideToggle class="m-filter-elem-acc">
-          <mat-expansion-panel-header class="m-filter-header">
-            <div>
-              <mat-panel-title class="m-filter-title">FILTER MEMBERS</mat-panel-title>
-            </div>
+      <mat-accordion class="event-view-acc">
+        <mat-expansion-panel *ngFor="let user of users">
+          <mat-expansion-panel-header class="acc-m-header">
+            <mat-panel-title class="acc-m-title">
+              <div class="profile-pic"></div>
+              <div class="user-name"><b>{{user.last_name}}</b> {{user.first_name}}</div>
+              <br>
+              <div class="user-group">
+                Gruppe
+              </div>
+            </mat-panel-title>
+            <mat-panel-description class="acc-m-description">
+              Gruppenleiter?
+            </mat-panel-description>
           </mat-expansion-panel-header>
+          <div class="acc-content" style="margin-top: 15px">
+            <div class="content-m-row">
+              <div class="content-m-hd">Username:</div>
+              <div class="content-m-data">{{user.username}}</div>
+            </div>
+            <div class="content-m-row">
+              <div class="content-m-hd">E-Mail:</div>
+              <div class="content-m-data">
+                {{user.email}}
+              </div>
+            </div>
+            <div class="content-m-row">
+              <div class="content-m-hd">Date Joined:</div>
+              <div class="content-m-data">{{user.date_joined | date: 'dd.MM.yyyy'}}</div>
+            </div>
+            <div class="content-m-row">
+              <div class="content-m-hd">Active:</div>
+              <div class="content-m-data">{{user.is_active}}</div>
+            </div>
+            <div class="content-m-row">
+              <div class="content-m-hd">Admin:</div>
+              <div class="content-m-data">{{user.is_staff}}</div>
+            </div>
+          </div>
+          <mat-action-row class="m-acc-actions">
+            <div class="m-general-btn" style="margin-right: 12px">
+              <button mat-icon-button color="standard" [routerLink]="'/user-form/' + user.pk"
+                      *ngIf="userService.hasPermission('aceofclubs.change_user')">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button color="light" (click)="deleteUser(user)"
+                      *ngIf="userService.hasPermission('aceofclubs.delete_user')">
+                <mat-icon>delete_outline</mat-icon>
+              </button>
+            </div>
+          </mat-action-row>
         </mat-expansion-panel>
       </mat-accordion>
     </div>
-    <mat-divider style="margin-top: 15px"></mat-divider>
   </div>
 
-  <div class="anim-right">
-    <mat-accordion class="event-view-acc">
-      <mat-expansion-panel *ngFor="let user of users">
-        <mat-expansion-panel-header class="acc-m-header">
-          <mat-panel-title class="acc-m-title">
-            <div class="profile-pic"></div>
-            <div class="user-name"><b>{{user.last_name}}</b> {{user.first_name}}</div>
-            <br>
-            <div class="user-group">
-              Gruppe
-            </div>
-          </mat-panel-title>
-          <mat-panel-description class="acc-m-description">
-            Gruppenleiter?
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-        <div class="acc-content" style="margin-top: 15px">
-          <div class="content-m-row">
-            <div class="content-m-hd">Username:</div>
-            <div class="content-m-data">{{user.username}}</div>
-          </div>
-          <div class="content-m-row">
-            <div class="content-m-hd">E-Mail:</div>
-            <div class="content-m-data">
-              {{user.email}}
-            </div>
-          </div>
-          <div class="content-m-row">
-            <div class="content-m-hd">Date Joined:</div>
-            <div class="content-m-data">{{user.date_joined | date: 'dd.MM.yyyy'}}</div>
-          </div>
-          <div class="content-m-row">
-            <div class="content-m-hd">Active:</div>
-            <div class="content-m-data">{{user.is_active}}</div>
-          </div>
-          <div class="content-m-row">
-            <div class="content-m-hd">Admin:</div>
-            <div class="content-m-data">{{user.is_staff}}</div>
-          </div>
+  <!-- Error Handling -->
+  <div *ngIf="!userService.hasPermission('aceofclubs.view_user')">
+    <div class="vertical-center error-position">
+      <div style="font-size: 800%; margin-bottom: 40px" class="error-title desktop-view anim-right">OH NO!</div>
+      <div class="error-title mobile-view anim-right">OH<br>NO!</div>
+      <div class="error-message anim-right">
+        <div class="error-text">You do not have the Permissions to view other Clubmembers!
         </div>
-        <mat-action-row class="m-acc-actions">
-          <div class="m-general-btn" style="margin-right: 12px">
-            <button mat-icon-button color="standard" [routerLink]="'/user-form/' + user.pk"
-                    *ngIf="userService.hasPermission('aceofclubs.change_user')">
-              <mat-icon>edit</mat-icon>
-            </button>
-            <button mat-icon-button color="light" (click)="deleteUser(user)"
-                    *ngIf="userService.hasPermission('aceofclubs.delete_user')">
-              <mat-icon>delete_outline</mat-icon>
-            </button>
-          </div>
-        </mat-action-row>
-      </mat-expansion-panel>
-    </mat-accordion>
+        <div style="margin-top: 30px" class="error-text">You can visit your own Profile here:</div>
+      </div>
+      <div class="error-button horiz-center">
+        <button mat-button class="btn-standard2 anim-right" routerLink="/user-profile">My Profile</button>
+      </div>
+    </div>
   </div>
 </div>

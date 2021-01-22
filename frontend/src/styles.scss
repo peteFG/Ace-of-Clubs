@@ -1,7 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 /* Anpassungen für Mobil und Desktop */
 @media only screen and (max-width: 450px) {
@@ -36,7 +42,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 /* Allgemein */
 .container {
-  background: rgba(245,245,245,1);
+  background: rgba(245, 245, 245, 1);
   width: 100%;
 }
 
@@ -56,19 +62,19 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   padding: 15px;
 }
 
-.vertical-center{
+.vertical-center {
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-.horiz-center{
+.horiz-center {
   display: flex;
   flex-direction: row;
   justify-content: center;
 }
 
-.horiz-space-around{
+.horiz-space-around {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -106,7 +112,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   justify-content: center;
 }
 
-.card-container{
+.card-container {
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -132,7 +138,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 /* Buttons */
 .btn-transparent {
-  background-color: rgba(255,255,255,0);
+  background-color: rgba(255, 255, 255, 0);
   color: white;
   border: 1px white !important;
   font-size: 18px;
@@ -140,42 +146,43 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 .btn-transparent:not([disabled]):hover {
-  background-color: rgba(255,255,255,0.2);
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
 .btn-txt-strd {
-  background-color: rgba(255,255,255,0);
-  color: rgba(62,91,147,0.9);
+  background-color: rgba(255, 255, 255, 0);
+  color: rgba(62, 91, 147, 0.9);
   border: 1px white !important;
   font-size: 16px;
 }
 
 .btn-standard {
-  background-color: rgba(62,91,147,0.9);
+  background-color: rgba(62, 91, 147, 0.9);
   color: white;
   font-size: 18px;
 }
 
 .btn-standard2 {
   width: fit-content;
-  color: rgba(62,91,147,0.9);
-  background-color: rgba(62,91,147,0.1);
+  color: rgba(62, 91, 147, 0.9);
+  background-color: rgba(62, 91, 147, 0.1);
   font-size: 18px;
 }
 
 .btn-light {
   width: fit-content;
   color: #262626;
-  background-color: rgba(88,88,88,0.1);
+  background-color: rgba(88, 88, 88, 0.1);
   font-size: 18px;
 }
+
 .btn-btn-link {
   font-size: 18px;
 }
 
 /* Materialien */
 .mat-standard {
-  color: rgba(62,91,147,0.9);
+  color: rgba(62, 91, 147, 0.9);
 }
 
 .mat-light {
@@ -186,7 +193,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .small-heading {
   font-size: 30px;
   font-weight: lighter;
-  color: rgba(26,63,143,1);
+  color: rgba(26, 63, 143, 1);
 }
 
 .regular-text {
@@ -294,6 +301,66 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .acc-m-header {
   height: fit-content;
+}
+
+
+/* Error Handling */
+@media only screen and (max-width: 450px) {
+  .error-title {
+    color: white;
+    font-weight: bold;
+    background-image: url("./assets/image/mountain-range.jpg");
+    background-size: 100% 100%;
+    color: transparent;
+    -webkit-background-clip: text;
+    text-align: -webkit-center;
+    font-size: 650%;
+  }
+
+  .error-text {
+    text-align: -webkit-center;
+    font-size: 23px;
+    font-weight: lighter;
+  }
+
+  .error-message {
+    padding: 20px;
+  }
+
+  .error-position {
+    padding-top: 5vh;
+  }
+
+  .error-button {
+    margin-top: 10px;
+  }
+}
+
+@media only screen and (min-width: 450px) {
+  .error-title {
+    color: white;
+    font-weight: bold;
+    background-image: url("./assets/image/mountain-range.jpg");
+    background-size: 100% 100%;
+    color: transparent;
+    -webkit-background-clip: text;
+    text-align: -webkit-center;
+    font-size: 600%;
+  }
+
+  .error-button {
+    margin-top: 30px;
+  }
+
+  .error-text {
+    text-align: -webkit-center;
+    font-size: 25px;
+    font-weight: lighter;
+  }
+
+  .error-position {
+    padding-top: 22vh;
+  }
 }
 
 /* Animation */

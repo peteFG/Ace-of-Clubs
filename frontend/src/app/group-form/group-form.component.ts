@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {GroupService} from '../services/group.service';
+import {UserService} from '../services/user.service';
 
 @Component({
   selector: 'app-group-form',
@@ -13,7 +14,9 @@ export class GroupFormComponent implements OnInit {
   groupFormGroup: FormGroup;
 
 
-  constructor(private groupService: GroupService, private route: ActivatedRoute) {
+  constructor(private groupService: GroupService,
+              private route: ActivatedRoute,
+              public userService: UserService) {
   }
 
   ngOnInit(): void {

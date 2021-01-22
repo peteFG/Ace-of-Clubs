@@ -4,7 +4,8 @@ import {EventService} from '../services/event.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Group, GroupService} from '../services/group.service';
 import {HttpClient} from '@angular/common/http';
-import {EventType, EventTypeService} from "../services/event-type.service";
+import {EventType, EventTypeService} from '../services/event-type.service';
+import {UserService} from '../services/user.service';
 /*import {User, UserService} from "../services/user.service";*/
 
 @Component({
@@ -17,32 +18,33 @@ export class EventFormComponent implements OnInit {
   eventFormGroup: FormGroup;
   eventTypeOptions: EventType[];
   groupOptions: Group[];
+  isStaff: boolean;
   /*personOptions: User[];*/
 
   constructor(private eventService: EventService,
               private route: ActivatedRoute,
               public eventTypeService: EventTypeService,
               private router: Router,
-              private groupService: GroupService/*,
-              private userService: UserService*/) {
+              private groupService: GroupService,
+              public userService: UserService) {
   }
 
   ngOnInit(): void {
 
-    const now = new Date()
+    const now = new Date();
 
     const defaultDate = now.getFullYear() + '-' + now.getMonth() + '-' + now.getDate();
 
     this.eventFormGroup = new FormGroup({
       pk: new FormControl(null),
-      ev_type: new FormControl(null),
+      ev_type: new FormControl(null, Validators.required),
       name: new FormControl('', Validators.required),
-      start_time: new FormControl(new Date().getTime()),
-      end_time: new FormControl(new Date().getTime()),
-      start_date: new FormControl(defaultDate),
-      end_date: new FormControl(defaultDate),
+      start_time: new FormControl('00:00', Validators.required),
+      end_time: new FormControl('00:00', Validators.required),
+      start_date: new FormControl(new Date(), Validators.required),
+      end_date: new FormControl(new Date(), Validators.required),
       active: new FormControl(true),
-      group: new FormControl([]),
+      group: new FormControl([1]),
     });
 
     this.eventTypeService.retrieveEventTypeOptions().subscribe((eventTypeOptions) => {
@@ -62,9 +64,13 @@ export class EventFormComponent implements OnInit {
     if (pkFromUrl) {
       this.eventService.getEvent(parseInt(pkFromUrl, 10))
         .subscribe((event) => {
-          this.eventFormGroup.patchValue(event)
+          this.eventFormGroup.patchValue(event);
         });
     }
+
+    this.userService.getCurrentUser().subscribe((user) => {
+      this.isStaff = user.is_staff;
+    });
   }
 
   createOrUpdateEvent(): void {

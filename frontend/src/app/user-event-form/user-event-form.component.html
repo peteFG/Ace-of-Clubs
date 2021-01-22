@@ -90,9 +90,9 @@
 
   <!-- Error Handling: kein Event gewählt -->
   <div *ngIf="currentEvent == null">
-    <div class="vertical-center position">
-      <div style="font-size: 800%; margin-bottom: 40px" class="title-bg desktop-view anim-right">OH NO!</div>
-      <div class="title-bg mobile-view anim-right">OH<br>NO!</div>
+    <div class="vertical-center error-position">
+      <div style="font-size: 800%; margin-bottom: 40px" class="error-title desktop-view anim-right">OH NO!</div>
+      <div class="error-title mobile-view anim-right">OH<br>NO!</div>
       <div class="error-message anim-right">
         <div class="text">You cannot respond to an Event as no Event has been selected. <br> Please choose an Event
           first.
@@ -107,16 +107,16 @@
 
   <!-- Error Handling: Inaktiver Event gewählt -->
   <div *ngIf="currentEvent != null && !activeEvent">
-    <div class="vertical-center position">
-      <div style="font-size: 800%" class="title-bg desktop-view anim-right">OH NO!</div>
-      <div class="title-bg mobile-view anim-right">OH<br>NO!</div>
+    <div class="vertical-center error-position">
+      <div style="font-size: 800%" class="error-title desktop-view anim-right">OH NO!</div>
+      <div class="error-title mobile-view anim-right">OH<br>NO!</div>
       <div class="error-message anim-right">
-        <div class="text">You cannot RSVP to this event as it has been cancelled or deleted. Please select a different
+        <div class="error-text">You cannot RSVP to this event as it has been cancelled or deleted. Please select a different
           Event.
         </div>
-        <div style="margin-top: 30px" class="text">You can view all available Events here:</div>
+        <div style="margin-top: 30px" class="error-text">You can view all available Events here:</div>
       </div>
-      <div class="horiz-center" style="margin-top: 10px">
+      <div class="error-button horiz-center" style="margin-top: 10px">
         <button mat-button class="btn-standard2 anim-right" routerLink="/event-list">Show All Events</button>
       </div>
     </div>
