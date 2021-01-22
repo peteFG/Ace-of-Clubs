@@ -4,7 +4,8 @@ import {EventService} from '../services/event.service';
 import {ActivatedRoute} from '@angular/router';
 import {Group, GroupService} from '../services/group.service';
 import {HttpClient} from '@angular/common/http';
-import {StateService} from "../services/state.service";
+import {StateService} from '../services/state.service';
+import {UserService} from '../services/user.service';
 
 @Component({
   selector: 'app-state-form',
@@ -15,7 +16,9 @@ export class StateFormComponent implements OnInit {
 
   stateFormGroup: FormGroup;
 
-  constructor(private stateService: StateService, private route: ActivatedRoute) {
+  constructor(private stateService: StateService,
+              private route: ActivatedRoute,
+              public userService: UserService) {
   }
 
   ngOnInit(): void {
@@ -25,8 +28,8 @@ export class StateFormComponent implements OnInit {
     });
 
     const pkFromUrl = this.route.snapshot.paramMap.get('pk');
-    if(pkFromUrl) {
-      this.stateService.getState(parseInt(pkFromUrl,10))
+    if (pkFromUrl) {
+      this.stateService.getState(parseInt(pkFromUrl, 10))
         .subscribe((state) => {
           this.stateFormGroup.patchValue(state);
         });

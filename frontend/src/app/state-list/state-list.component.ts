@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Time} from '@angular/common';
 import {HttpClient} from '@angular/common/http';
 import {State, StateService} from '../services/state.service';
+import {UserService} from '../services/user.service';
 
 @Component({
   selector: 'app-state-list',
@@ -13,7 +14,9 @@ export class StateListComponent implements OnInit {
   states: State[];
   displayedColumns = ['description', 'edit', 'delete'];
 
-  constructor(private http: HttpClient, private stateService: StateService) { }
+  constructor(private http: HttpClient,
+              private stateService: StateService,
+              public userService: UserService) { }
 
   ngOnInit(): void {
     this.retrieveStates();

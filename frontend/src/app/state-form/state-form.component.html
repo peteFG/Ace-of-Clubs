@@ -1,18 +1,39 @@
-<form [formGroup]="stateFormGroup" (ngSubmit)="createOrUpdateState()" class="state-form__form">
-  <!--<label>Description: <input formControlName="description"></label>
-  <button>Create</button>-->
+<div class="container">
 
-  <mat-form-field>
-    <input matInput type="text" placeholder="State" formControlName="description">
-    <mat-hint align="end">Name of the State</mat-hint>
-    <mat-error *ngIf="stateFormGroup.controls.description.hasError('required')">State is required</mat-error>
-  </mat-form-field>
+  <div class="horiz-center" *ngIf="userService.hasPermission('aceofclubs.add_state') || userService.hasPermission('aceofclubs.change_state')">
+    <form [formGroup]="stateFormGroup" (ngSubmit)="createOrUpdateState()" class="state-form__form">
+      <!--<label>Description: <input formControlName="description"></label>
+      <button>Create</button>-->
 
-  <mat-card-actions align="center">
-    <button mat-raised-button color="primary" [disabled]="!stateFormGroup.valid">
-      <span *ngIf="!stateFormGroup.controls.pk.value">Create</span>
-      <span *ngIf="stateFormGroup.controls.pk.value">Update</span>
-    </button>
-  </mat-card-actions>
+      <mat-form-field>
+        <input matInput type="text" placeholder="State" formControlName="description">
+        <mat-hint align="end">Name of the State</mat-hint>
+        <mat-error *ngIf="stateFormGroup.controls.description.hasError('required')">State is required</mat-error>
+      </mat-form-field>
 
-</form>
+      <mat-card-actions align="center">
+        <button mat-raised-button color="primary" [disabled]="!stateFormGroup.valid">
+          <span *ngIf="!stateFormGroup.controls.pk.value">Create</span>
+          <span *ngIf="stateFormGroup.controls.pk.value">Update</span>
+        </button>
+      </mat-card-actions>
+
+    </form>
+  </div>
+
+  <!-- Error Handling -->
+  <div *ngIf="!userService.hasPermission('aceofclubs.add_state') || !userService.hasPermission('aceofclubs.change_state')">
+    <div class="vertical-center error-position">
+      <div style="font-size: 800%; margin-bottom: 40px" class="error-title desktop-view anim-right">OH NO!</div>
+      <div class="error-title mobile-view anim-right">OH<br>NO!</div>
+      <div class="error-message anim-right">
+        <div class="error-text">You are not allowed to perform Administrative Tasks!
+        </div>
+        <div style="margin-top: 30px" class="error-text">Go back to your Homepage:</div>
+      </div>
+      <div class="error-button horiz-center">
+        <button mat-button class="btn-standard2 anim-right" routerLink="/overview">Home</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,105 +1,50 @@
-<!--<table>
-  <tr>
-    <th>State</th>
-    <th>Actions</th>
-  </tr>
-  <tr *ngFor="let state of states">
-    <td>{{state.description}}</td>
-    <td><a [routerLink]="'/state-form/'+state.pk">Edit</a> </td>
-    <button type="button" (click)="deleteState(state)">Delete</button>
-  </tr>
-</table>
--->
+<div class="container">
 
-<table mat-table [dataSource]="states" matSort class="mat-elevation-z8">
+  <div class="horiz-center" *ngIf="userService.hasPermission('aceofclubs.view_state')">
 
-  <!-- Genre -->
-  <ng-container matColumnDef="description" class="state_column">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>States</th>
-    <td mat-cell *matCellDef="let element"> {{element.description}} </td>
-  </ng-container>
+    <table mat-table [dataSource]="states" matSort class="mat-elevation-z8">
 
-  <!-- Edit Column -->
-  <ng-container matColumnDef="edit">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
-    <td mat-cell *matCellDef="let element">
-      <button mat-button color="primary" [routerLink]="'/state-form/' + element.pk">Edit</button>
-    </td>
-  </ng-container>
+      <!-- Genre -->
+      <ng-container matColumnDef="description" class="state_column">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>States</th>
+        <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+      </ng-container>
 
-  <!-- Delete Column -->
-  <ng-container matColumnDef="delete">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
-    <td mat-cell *matCellDef="let element">
-      <button mat-button color="warn" (click)="deleteState(element)">Delete</button>
-  </ng-container>
+      <!-- Edit Column -->
+      <ng-container matColumnDef="edit">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-button color="primary" [routerLink]="'/state-form/' + element.pk">Edit</button>
+        </td>
+      </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      <!-- Delete Column -->
+      <ng-container matColumnDef="delete">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-button color="warn" (click)="deleteState(element)">Delete</button>
+      </ng-container>
 
-</table>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
-<!--
-<table mat-table [dataSource]="events" matSort class="mat-elevation-z8">
--->
-<!-- Event Type -->
-<!--
-<ng-container matColumnDef="ev_type">
-  <th mat-header-cell *matHeaderCellDef mat-sort-header>Event Type</th>
-  <td mat-cell *matCellDef="let element"> {{ genreService.genreNames[element.genre] }} </td>
-</ng-container>
--->
+    </table>
 
-<!-- Name Column -->
-<!--
-  <ng-container matColumnDef="name">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
-    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-  </ng-container>
-  -->
+  </div>
 
-<!-- Start Date Column -->
-<!--
-  <ng-container matColumnDef="start_date">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>Start Date</th>
-    <td mat-cell *matCellDef="let element">
-      {{element.start_date | date : 'dd.MM.yyyy'}} </td>
-  </ng-container>
--->
-<!-- Start Time Column -->
-<!--
-  <ng-container matColumnDef="start_time">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>Start Time</th>
-    <td mat-cell *matCellDef="let element">
-      {{element.start_time | date : 'HH:mm'}}
-    </td>
-  </ng-container>
--->
-<!-- End Date Column --> <!--
-  <ng-container matColumnDef="end_date">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>End Date</th>
-    <td mat-cell *matCellDef="let element">
-      {{element.end_date | date : 'dd.MM.yyyy'}} </td>
-  </ng-container>
--->
-<!-- Edit Column --> <!--
-  <ng-container matColumnDef="edit">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
-    <td mat-cell *matCellDef="let element">
-      <button mat-button color="primary" [routerLink]="'/movie-form/' + element.pk">Edit</button>
-    </td>
-  </ng-container>
--->
-<!-- Delete Column -->
-<!--
-  <ng-container matColumnDef="delete">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
-    <td mat-cell *matCellDef="let element">
-      <button mat-button color="warn" (click)="deleteMovie(element)">Delete</button>
-  </ng-container>
-
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
--->
-
+  <!-- Error Handling -->
+  <div *ngIf="!userService.hasPermission('aceofclubs.view_state')">
+    <div class="vertical-center error-position">
+      <div style="font-size: 800%; margin-bottom: 40px" class="error-title desktop-view anim-right">OH NO!</div>
+      <div class="error-title mobile-view anim-right">OH<br>NO!</div>
+      <div class="error-message anim-right">
+        <div class="error-text">You are not allowed to perform Administrative Tasks!
+        </div>
+        <div style="margin-top: 30px" class="error-text">Go back to your Homepage:</div>
+      </div>
+      <div class="error-button horiz-center">
+        <button mat-button class="btn-standard2 anim-right" routerLink="/overview">Home</button>
+      </div>
+    </div>
+  </div>
+</div>
