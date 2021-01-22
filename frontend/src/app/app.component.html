@@ -115,9 +115,15 @@
       </div>
       <span class="expand"></span>
       <div class="m-menu-r">
-        <button mat-icon-button color="standard" routerLink="user-profile" *ngIf="isLoggedIn">
-          <mat-icon>account_circle</mat-icon>
-        </button>
+        <div *ngFor="let user of this.userService.currentUser">
+          <button mat-icon-button color="standard" routerLink="user-profile" *ngIf="isLoggedIn">
+            <img class="profile-picture-small" [src]="'/api/media/download/' + user.pictures + '/'"
+                 *ngIf="user.pictures.length>0; else alt">
+            <ng-template #alt>
+              <mat-icon>account_circle</mat-icon>
+            </ng-template>
+          </button>
+        </div>
         <button mat-icon-button color="standard" [matMenuTriggerFor]="loginMenu" routerLink="/login"
                 *ngIf="!isLoggedIn">
           <mat-icon>login</mat-icon>
@@ -143,12 +149,15 @@
   <mat-drawer-container [hasBackdrop]="true">
     <mat-drawer #sidenavdrawer mode="over" autoFocus="false" (click)="sidenavdrawer.close()"
                 class="m-sidenav-container">
-      <div class="sidenav-profile horiz-center">
-        <button mat-button routerLink="user-profile">
-          <img class="profile-picture anim-left" src="./assets/image/user1.png">
-        </button>
-      </div>
-      <div *ngFor="let user of userProfile">
+      <div *ngFor="let user of this.userService.currentUser">
+        <div class="sidenav-profile horiz-center">
+          <button mat-button routerLink="user-profile">
+            <img class="profile-picture" [src]="'/api/media/download/' + user.pictures + '/'"
+                 *ngIf="user.pictures.length>0; else alt">
+            <ng-template #alt><img class="profile-picture" src="/assets/image/user1.png"></ng-template>
+          </button>
+        </div>
+
         <div class="sidenav-title horiz-center">
           <h4>{{user.first_name}} {{user.last_name}}</h4>
         </div>

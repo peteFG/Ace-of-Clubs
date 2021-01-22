@@ -16,6 +16,12 @@ export class AppComponent implements OnInit {
   title = 'frontend';
   isLoggedIn = false;
   userProfile: User;
+  currentUser: any;
+
+  currentUserName: any;
+  currentUserFN: any;
+  currentUserLN: any;
+  currentUserPic: any;
 
   constructor(public userService: UserService) {
   }
@@ -27,12 +33,14 @@ export class AppComponent implements OnInit {
     });
 
     this.retrieveUser();
+
+    this.currentUser = this.userService.retrieveCurrentUser();
   }
 
   private retrieveUser(): void {
 
     this.userService.getCurrentUser().subscribe((user) => {
-      this.userProfile =user;
+      this.userProfile = user;
     });
   }
 

@@ -8,8 +8,9 @@
       <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
       <td mat-cell *matCellDef="let element">
 
-        <img [src]="'/api/media/download/' + element.pictures + '/'" height=30px *ngIf="element.pictures.length>0; else alt">
-        <ng-template #alt> <img src="/assets/image/user.png" height=30px></ng-template>
+        <img [src]="'/api/media/download/' + element.pictures + '/'" height=30px
+             *ngIf="element.pictures.length>0; else alt">
+        <ng-template #alt><img src="/assets/image/user.png" height=30px></ng-template>
       </td>
     </ng-container>
 
@@ -52,8 +53,12 @@
       <td mat-cell *matCellDef="let element">
         <!-- TEMPORÄRER FIX -> WENN KEIN ADMIN IST WIRD DER DELETE BUTTON NICHT ANGEZEIGT.
         Besser wenn delete button zu deactivate werden würde. -->
-        <button *ngIf="userService.hasPermission('aceofclubs.delete_user')" mat-button color="warn" (click)="deleteUser(element)">Delete</button>
-        <button *ngIf="!userService.hasPermission('aceofclubs.delete_user')" mat-button color="warn" (click)="deleteUser(element)">Deactivate</button>
+        <button *ngIf="userService.hasPermission('aceofclubs.delete_user')" mat-button color="warn"
+                (click)="deleteUser(element)">Delete
+        </button>
+        <button *ngIf="!userService.hasPermission('aceofclubs.delete_user')" mat-button color="warn"
+                (click)="deleteUser(element)">Deactivate
+        </button>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -65,15 +70,17 @@
 <div class="mobile-view container">
   <div class="mobile-h2">
     <div class="vertical-center">
-      <div class="horiz-center">
-        <img class="profile-picture anim-right" src="./assets/image/user.png">
-      </div>
-      <div class="horiz-center">
-        <div class="mobile-title anim-right">MY PROFILE</div>
-      </div>
-      <mat-divider style="margin-bottom: 15px"></mat-divider>
-
       <div *ngFor="let user of userProfile">
+        <div class="horiz-center">
+          <img class="profile-picture" [src]="'/api/media/download/' + user.pictures + '/'"
+               *ngIf="user.pictures.length>0; else alt">
+          <ng-template #alt><img class="profile-picture" src="/assets/image/user.png"></ng-template>
+        </div>
+        <div class="horiz-center">
+          <div class="mobile-title anim-right">MY PROFILE</div>
+        </div>
+        <mat-divider style="margin-bottom: 15px"></mat-divider>
+
 
         <!-- Profile Actions: Edit & Delete Profile -->
         <div class="actions horiz-space-around anim-right">

@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {isEmpty, map} from 'rxjs/operators';
 import {flatMap} from 'rxjs/internal/operators';
-import {IMedia} from "../mediainput/mediainput.component";
+import {IMedia} from '../mediainput/mediainput.component';
 
 
 
@@ -49,7 +49,7 @@ export class UserService {
   clickedEvent: number;
   existingUserEntry: number;
   goahead: boolean;
-  currentUser:User;
+  currentUser: User[];
 
 
   constructor(private http: HttpClient, private router: Router, private jwtHelperService: JwtHelperService) {
@@ -134,13 +134,14 @@ export class UserService {
   *
    */
 
-  retrieveCurrentUser():void{
-    this.getCurrentUser().subscribe((user)=>{
-      this.currentUser = user;
+  retrieveCurrentUser(): void {
+    this.getCurrentUser().subscribe((user) => {
+      this.currentUser = [];
+      this.currentUser.push(user);
       this.currentUserPK = 0;
       this.currentUserPK = user.pk;
-      //console.log(user);
-      //console.log(user.pk);
+      console.log(user);
+      console.log(user.pk);
     });
   }
 
