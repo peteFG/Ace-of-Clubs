@@ -5,6 +5,11 @@
   margin: 3rem auto;
 }
 
+.rsvp-card {
+  width: 95vw;
+  max-width: 400px;
+}
+
 .ev-title {
   font-size: 22px;
   font-weight: lighter;
@@ -48,11 +53,31 @@
     padding-top: 22vh;
   }
 
+  .text-1 {
+    font-size: 30px;
+  }
+
+  .small-heading {
+    font-size: 24px;
+  }
+
+  .position-1 {
+    padding-top: 10vh;
+  }
+
   .btn-standard2 {
-    font-size: 22px;
+    font-size: 20px;
+  }
+
+  .btn-light {
+    font-size: 20px;
   }
 
   .error-button {
     margin-top: 30px;
+  }
+
+  .rsvp-card {
+    margin: 30px;
   }
 }

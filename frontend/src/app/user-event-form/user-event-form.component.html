@@ -1,97 +1,91 @@
 <div class="container">
 
   <div *ngIf="currentEvent != null && activeEvent">
-    <div class="mobile-header">
+    <div class="mobile-header position-1">
       <div>
         <div class="mobile-view mobile-title anim-left">RSVP</div>
-        <div class="desktop-view title-bg anim-right">RSVP</div>
-        <mat-divider style="margin-bottom: 15px"></mat-divider>
-        <div>To the following event:</div>
-        <mat-card class="anim-right">
-          <mat-card-header class="horiz-center" style="margin-bottom: 10px">
-            <mat-card-title class="small-heading" >{{currentEventName}}</mat-card-title>
-          </mat-card-header>
-          <mat-card-content class="acc-content">
-            <div class="content-m-row">
-              <div class="content-m-hd">Start:</div>
-              <div>{{currentEventSD | date: 'dd.MM.yyyy'}} - {{currentEventST.substring(0, 5)}}</div>
-            </div>
-            <div class="content-m-row">
-              <div class="content-m-hd">End:</div>
-              <div>{{currentEventED | date: 'dd.MM.yyyy'}} - {{currentEventET.substring(0, 5)}}</div>
-            </div>
-            <div class="content-m-row">
-              <div class="content-m-hd">Event Type:</div>
-              <div>{{currentEventType}}</div>
-            </div>
-            <div class="content-m-row">
-              <div class="content-m-hd">Groups:</div>
-              <div>{{currentEventGroup}}</div>
-            </div>
-          </mat-card-content>
-        </mat-card>
-
+        <div style="margin-bottom: 3vh" class="desktop-view title-bg anim-right">RSVP</div>
+        <mat-divider class="mobile-view" style="margin-bottom: 15px"></mat-divider>
+        <div class="horiz-center">
+          <mat-card class="anim-right rsvp-card">
+            <mat-card-header class="horiz-center" style="margin-bottom: 10px">
+              <mat-card-title class="small-heading">{{currentEventName}}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content class="acc-content">
+              <div class="content-m-row">
+                <div class="content-m-hd">Start:</div>
+                <div>{{currentEventSD | date: 'dd.MM.yyyy'}} - {{currentEventST.substring(0, 5)}}</div>
+              </div>
+              <div class="content-m-row">
+                <div class="content-m-hd">End:</div>
+                <div>{{currentEventED | date: 'dd.MM.yyyy'}} - {{currentEventET.substring(0, 5)}}</div>
+              </div>
+              <div class="content-m-row">
+                <div class="content-m-hd">Event Type:</div>
+                <div>{{currentEventType}}</div>
+              </div>
+              <div class="content-m-row">
+                <div class="content-m-hd">Groups:</div>
+                <div>{{currentEventGroup}}</div>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
       </div>
 
       <mat-divider style="margin-top: 15px"></mat-divider>
     </div>
 
-    <form [formGroup]="userEventFormGroup" (ngSubmit)="createUserEventEntry()" class="user_event_form">
-      <!-- <mat-form-field>
-         <input readonly matInput type="text"  formControlName="ev_type">
-         <mat-hint align="end"> Event Type </mat-hint>
-         <mat-error *ngIf="eventFormGroup.controls.ev_type.hasError('required')"> Event Type is required</mat-error>
-       </mat-form-field> -->
+    <div class="horiz-center anim-right">
+      <p style="margin-bottom: 0 !important;" class="text">Respond to this Event:</p>
+    </div>
 
-      <!-- User -->
-      <mat-form-field>
+    <!-- Response Form -->
+    <div style="margin-top: 0">
+      <form [formGroup]="userEventFormGroup" (ngSubmit)="createUserEventEntry()" class="user_event_form anim-right">
 
-        <mat-select placeholder="Username" formControlName="user">
-          <!-- <mat-option [value]="userOption.pk" *ngFor="let userOption of userOptions">{{userOption.username}}</mat-option> -->
-          <mat-option readonly="true" [value]="currentUser">{{currentUserName}}</mat-option>
-        </mat-select>
-        <mat-hint align="end">Username</mat-hint>
+        <!-- User -->
+        <mat-form-field class="invisible">
 
-      </mat-form-field>
+          <mat-select placeholder="Username" formControlName="user">
+            <!-- <mat-option [value]="userOption.pk" *ngFor="let userOption of userOptions">{{userOption.username}}</mat-option> -->
+            <mat-option [value]="currentUser">{{currentUserName}}</mat-option>
+          </mat-select>
+          <mat-hint align="end">Username</mat-hint>
 
-      <!-- Event -->
-      <mat-form-field>
+        </mat-form-field>
 
-        <mat-select placeholder="Event" formControlName="event">
-          <mat-option [value]="currentEvent">{{currentEvent}}</mat-option>
-        </mat-select>
-        <mat-hint align="end">Event</mat-hint>
+        <!-- Event -->
+        <mat-form-field class="invisible">
 
-      </mat-form-field>
+          <mat-select placeholder="Event" formControlName="event">
+            <mat-option [value]="currentEvent">{{currentEvent}}</mat-option>
+          </mat-select>
+          <mat-hint align="end">Event</mat-hint>
 
-      <!-- State -->
-      <mat-form-field>
+        </mat-form-field>
 
-        <mat-select placeholder="State" formControlName="state">
-          <mat-option [value]="stateOption.pk"
-                      *ngFor="let stateOption of stateOptions">{{stateOption.description}}</mat-option>
-        </mat-select>
-        <mat-hint align="end">State</mat-hint>
+        <!-- State -->
+        <mat-form-field>
 
-      </mat-form-field>
+          <mat-select placeholder="Choose an Option" formControlName="state">
+            <mat-option [value]="stateOption.pk"
+                        *ngFor="let stateOption of stateOptions">{{stateOption.description}}</mat-option>
+          </mat-select>
+          <mat-hint align="end">State</mat-hint>
 
-      <mat-card-actions align="center">
-        <button mat-button class="btn-standard2" [disabled]="!userEventFormGroup.valid">
-          <span *ngIf="!userEventFormGroup.controls.pk.value">Submit Response</span>
-          <span *ngIf="userEventFormGroup.controls.pk.value">Change Response</span>
-        </button>
-        <button mat-button class="btn-light" routerLink="/event-list">Cancel</button>
-      </mat-card-actions>
+        </mat-form-field>
 
-      <!--<label>User: <input formControlName="user"></label>
+        <mat-card-actions align="center">
+          <button mat-button class="btn-standard2" [disabled]="!userEventFormGroup.valid">
+            <span *ngIf="!userEventFormGroup.controls.pk.value">Submit Response</span>
+            <span *ngIf="userEventFormGroup.controls.pk.value">Change Response</span>
+          </button>
+          <button mat-button class="btn-light" routerLink="/event-list">Cancel</button>
+        </mat-card-actions>
 
-      <label>Event: <input formControlName="event"></label>
-
-      <label>State: <input formControlName="state"></label>
-
-      <button>Create</button> -->
-
-    </form>
+      </form>
+    </div>
   </div>
 
   <!-- Error Handling: kein Event gewählt -->

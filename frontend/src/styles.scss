@@ -26,6 +26,14 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   }
 }
 
+/* Input */
+.invisible {
+  display: block;
+  visibility: hidden;
+  height: 0;
+  width: 0;
+}
+
 /* Allgemein */
 .container {
   background: rgba(245,245,245,1);
