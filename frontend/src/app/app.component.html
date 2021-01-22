@@ -64,13 +64,16 @@
       <button mat-menu-item routerLink="event-type-list" *ngIf="userService.hasPermission('aceofclubs.view_eventtype')">
         List Event Types
       </button>
+      <button mat-menu-item routerLink="event-type-from" *ngIf="userService.hasPermission('aceofclubs.add_eventtype')">
+        Add Event Type
+      </button>
     </mat-menu>
 
     <button mat-button [matMenuTriggerFor]="userEventMenu"
-            *ngIf="userService.hasPermission('aceofclubs.add_eventtype')">Event Entries
+            *ngIf="userService.hasPermission('aceofclubs.view_userevent')">Event Entries
     </button>
     <mat-menu #userEventMenu="matMenu">
-      <button mat-menu-item routerLink="user-event-list" *ngIf="userService.hasPermission('aceofclubs.add_eventtype')">
+      <button mat-menu-item routerLink="user-event-list" *ngIf="userService.hasPermission('aceofclubs.add_user')">
         List Event Entries
       </button>
     </mat-menu>

@@ -4,6 +4,7 @@ import {EventService} from '../services/event.service';
 import {ActivatedRoute} from '@angular/router';
 import {Group, GroupService} from '../services/group.service';
 import {HttpClient} from '@angular/common/http';
+import {UserService} from '../services/user.service';
 
 @Component({
   selector: 'app-event-type-form',
@@ -14,7 +15,9 @@ export class EventTypeFormComponent implements OnInit {
 
   eventTypeFormGroup: FormGroup;
 
-  constructor(private http: HttpClient, private route: ActivatedRoute) {
+  constructor(private http: HttpClient,
+              private route: ActivatedRoute,
+              public userService: UserService) {
   }
 
   ngOnInit(): void {
@@ -24,7 +27,7 @@ export class EventTypeFormComponent implements OnInit {
     });
 
     const pk = this.route.snapshot.paramMap.get('pk');
-    if(pk) {
+    if (pk) {
       this.http.get('/api/eventTypes/' + pk + '/')
         .subscribe((eventType) => {
           this.eventTypeFormGroup.patchValue(eventType);

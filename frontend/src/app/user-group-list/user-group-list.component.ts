@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient} from '@angular/common/http';
+import {UserService} from '../services/user.service';
 
 interface UserGroup {
   pk?: number;
@@ -16,15 +17,16 @@ interface UserGroup {
 export class UserGroupListComponent implements OnInit {
 
   userGroups: UserGroup[];
-  //displayedColumns = ['ev_type', 'name', 'start_time', 'end_time', 'start_date', 'end_date', 'active', 'group']
+  // displayedColumns = ['ev_type', 'name', 'start_time', 'end_time', 'start_date', 'end_date', 'active', 'group']
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              public userService: UserService) { }
 
   ngOnInit(): void {
     this.http.get('/api/allUserGroups/')
       .subscribe((userGroups: UserGroup[]) => {
         this.userGroups = userGroups;
-      })
+      });
   }
 
 

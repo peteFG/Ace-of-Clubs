@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import {EventService} from "../services/event.service";
-import {Time} from "@angular/common";
-import {HttpClient} from "@angular/common/http";
+import {EventService} from '../services/event.service';
+import {Time} from '@angular/common';
+import {HttpClient} from '@angular/common/http';
+import {UserService} from '../services/user.service';
 
 interface EventType {
   pk?: number;
-  description: string
+  description: string;
 }
 
 @Component({
@@ -16,15 +17,16 @@ interface EventType {
 export class EventTypeListComponent implements OnInit {
 
   eventTypes: EventType[];
-  //displayedColumns = ['ev_type', 'name', 'start_time', 'end_time', 'start_date', 'end_date', 'active', 'group']
+  // displayedColumns = ['ev_type', 'name', 'start_time', 'end_time', 'start_date', 'end_date', 'active', 'group']
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              public userService: UserService) { }
 
   ngOnInit(): void {
     this.http.get('/api/eventTypes/')
-      .subscribe((eventTypes:EventType[]) => {
+      .subscribe((eventTypes: EventType[]) => {
         this.eventTypes = eventTypes;
-      })
+      });
     /*
     this.retrieveEvents()
     */
