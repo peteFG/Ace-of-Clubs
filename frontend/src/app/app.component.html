@@ -149,20 +149,22 @@
   <mat-drawer-container [hasBackdrop]="true">
     <mat-drawer #sidenavdrawer mode="over" autoFocus="false" (click)="sidenavdrawer.close()"
                 class="m-sidenav-container">
-      <div *ngFor="let user of this.userService.currentUser">
-        <div class="sidenav-profile horiz-center">
-          <button mat-button routerLink="user-profile">
-            <img class="profile-picture" [src]="'/api/media/download/' + user.pictures + '/'"
-                 *ngIf="user.pictures.length>0; else alt">
-            <ng-template #alt><img class="profile-picture" src="/assets/image/user1.png"></ng-template>
-          </button>
-        </div>
+      <div *ngIf="isLoggedIn">
+        <div *ngFor="let user of this.userService.currentUser">
+          <div class="sidenav-profile horiz-center">
+            <button mat-button routerLink="user-profile">
+              <img class="profile-picture" [src]="'/api/media/download/' + user.pictures + '/'"
+                   *ngIf="user.pictures.length>0; else alt">
+              <ng-template #alt><img class="profile-picture" src="/assets/image/user1.png"></ng-template>
+            </button>
+          </div>
 
-        <div class="sidenav-title horiz-center">
-          <h4>{{user.first_name}} {{user.last_name}}</h4>
-        </div>
-        <div class="sidenav-subtitle horiz-center">
-          <div>Logged in as {{user.username}}</div>
+          <div class="sidenav-title horiz-center">
+            <h4>{{user.first_name}} {{user.last_name}}</h4>
+          </div>
+          <div class="sidenav-subtitle horiz-center">
+            <div>Logged in as {{user.username}}</div>
+          </div>
         </div>
       </div>
       <div class="sidenav-events vertical-center">

@@ -87,8 +87,11 @@
           <button style="margin-right: 40px" mat-icon-button color="standard" [routerLink]="'/user-form/' + user.pk">
             <mat-icon>edit</mat-icon>
           </button>
-          <button style="margin-left: 40px" *ngIf="user.pk==1" mat-icon-button color="light" (click)="deleteUser(user)">
+          <button style="margin-left: 40px" *ngIf="isStaff" mat-icon-button color="light" (click)="deleteUser(user)">
             <mat-icon>delete_outline</mat-icon>
+          </button>
+          <button style="margin-left: 40px" *ngIf="!isStaff" mat-icon-button color="light" (click)="deleteUser(user)">
+            <mat-icon>person_remove</mat-icon>
           </button>
         </div>
         <mat-divider style="margin-top: 15px; margin-bottom: 15px"></mat-divider>

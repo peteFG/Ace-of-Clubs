@@ -11,6 +11,7 @@ import {Observable} from 'rxjs';
 export class UserProfileComponent implements OnInit {
 
   userProfile: User[];
+  isStaff: boolean;
   displayedColumns = ['pictures' , 'username', 'email', 'first_name', 'last_name', 'edit', 'delete'];
 
   constructor(private http: HttpClient, public userService: UserService) { }
@@ -24,6 +25,7 @@ export class UserProfileComponent implements OnInit {
     this.userService.getCurrentUser().subscribe((user) => {
       this.userProfile = [];
       this.userProfile.push(user);
+      this.isStaff = user.is_staff;
     });
   }
 
@@ -48,6 +50,7 @@ export class UserProfileComponent implements OnInit {
         alert('deleted successfully!');
       });
   }
+
 }
 
 

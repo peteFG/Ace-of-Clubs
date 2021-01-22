@@ -69,7 +69,7 @@ export class UserService {
   }
 
   deleteUser(user: User): Observable<any> {
-    if (this.currentUserPK != 1) {
+    if (this.currentUserPK === 1) {
       return this.http.delete('/api/users/' + user.pk + '/');
     } else {
       alert('Users may only be deleted by Administrators!');
