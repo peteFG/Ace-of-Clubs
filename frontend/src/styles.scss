@@ -127,6 +127,7 @@ body {
   height: 180px;
   padding: 25px;
   border-radius: 90px;
+  object-fit: cover;
 }
 
 .profile-picture-small {
@@ -134,6 +135,15 @@ body {
   height: 24px;
   padding: 8px;
   border-radius: 90px;
+  object-fit: cover;
+}
+
+.profile-picture-large {
+  object-fit: cover;
+  width: 192px;
+  height: 192px;
+  border-radius: 100%;
+  padding: 18.5px;
 }
 
 /* Buttons */
@@ -171,7 +181,7 @@ body {
 
 .btn-light {
   width: fit-content;
-  color: #262626;
+  color: #585858;
   background-color: rgba(88, 88, 88, 0.1);
   font-size: 18px;
 }

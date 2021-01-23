@@ -6,7 +6,7 @@ import {JwtHelperService} from '@auth0/angular-jwt';
 import {isEmpty, map} from 'rxjs/operators';
 import {flatMap} from 'rxjs/internal/operators';
 import {IMedia} from '../mediainput/mediainput.component';
-import {Group, GroupService} from "./group.service";
+import {Group, GroupService} from './group.service';
 
 
 
@@ -20,7 +20,7 @@ export interface User {
   is_staff: boolean;
   is_active: boolean;
   date_joined: Date;
-  profile_picture: IMedia;
+  pictures: IMedia;
 }
 
 export interface UserEvent {
@@ -58,7 +58,7 @@ export class UserService {
 
   constructor(private http: HttpClient,
               private router: Router,
-              public groupService:GroupService,
+              public groupService: GroupService,
               private jwtHelperService: JwtHelperService) {
     const token = localStorage.getItem(this.accessTokenLocalStorageKey);
     if (token) {
@@ -147,8 +147,8 @@ export class UserService {
       this.currentUser.push(user);
       this.currentUserPK = 0;
       this.currentUserPK = user.pk;
-      //console.log(user);
-      //console.log(user.pk);
+      // console.log(user);
+      // console.log(user.pk);
     });
   }
 
@@ -234,8 +234,8 @@ export class UserService {
     return this.http.get<UserGroup[]>('/api/userGroup/');
   }
 
-  getUserGroupsByUsersPK(userID:number): Observable<UserGroup[]>{
-    return this.http.get<UserGroup[]>('/api/allUserGroups/?user='+userID);
+  getUserGroupsByUsersPK(userID: number): Observable<UserGroup[]>{
+    return this.http.get<UserGroup[]>('/api/allUserGroups/?user=' + userID);
   }
 
   getAllUserGroups(): Observable<UserGroup[]>{
@@ -252,27 +252,27 @@ export class UserService {
 
   setUserGroupEntry(){
     this.groupService.getGroupPKs();
-    const userID = this.clickedUser
+    const userID = this.clickedUser;
     const entriesOfClickedUser = this.getUserGroupsByUsersPK(userID);
-    //this.clickedUser = userID;
+    // this.clickedUser = userID;
     this.availableGroups =[];
     //  this.groupService.existingGroupsPK --> hier sind die PKs der aktuell existierenden Gruppen verspeichert
-    //this.clickedUser = userID;
+    // this.clickedUser = userID;
     this.existingGroupEntry = 0;
-    const checkIfEmpty=[];
-    const attendedGroups=[]; // die Gruppen PKs, in denen sich der angeklickte User bereits befindet
+    const checkIfEmpty = [];
+    const attendedGroups = []; // die Gruppen PKs, in denen sich der angeklickte User bereits befindet
 
-    entriesOfClickedUser.subscribe((userGroups)=>{
-      userGroups.forEach((userGroup)=>{
+    entriesOfClickedUser.subscribe((userGroups) => {
+      userGroups.forEach((userGroup) => {
         checkIfEmpty.push(userGroup);
         attendedGroups.push(userGroup.group);
       });
 
       // dapasst noch was nicht --> wenn  attended leer --> dann bekommt er iwie keine existing  Groups
       // eig net so tragisch, da jede/r in der ALL Gruppe sein sollte
-      if(attendedGroups.length==0){
+      if (attendedGroups.length == 0){
 
-        //this.availableGroups.concat(this.groupService.existingGroupsPK);
+        // this.availableGroups.concat(this.groupService.existingGroupsPK);
         this.availableGroups = this.groupService.existingGroupsPK;
 
       } else {
@@ -303,8 +303,8 @@ export class UserService {
 
     this.router.navigateByUrl('/user-group-form/');
 
-    console.log(this.availableGroups)
-    console.log(this.clickedUser)
+    console.log(this.availableGroups);
+    console.log(this.clickedUser);
   }
 
   /*

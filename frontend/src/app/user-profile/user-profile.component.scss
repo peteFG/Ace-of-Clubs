@@ -32,12 +32,18 @@
   padding: 0;
 }
 
-.mat-divider {
-  margin-left: 30px;
-  margin-right: 35px;
+.btn-light {
+  background-color: transparent;
+  font-size: 17px;
+  min-width: fit-content;
+  width: 8vw;
 }
-.user_profile_column{
 
+.btn-standard2 {
+  background-color: transparent;
+  font-size: 17px;
+  min-width: fit-content;
+  width: 8vw;
 }
 
 .mat-header-cell{
@@ -73,5 +79,32 @@
     padding: 15px;
   }
 
+  .mat-divider {
+    margin-left: 30px;
+    margin-right: 35px;
+  }
+}
 
+@media only screen and (min-width: 450px) {
+  .standard-card {
+    min-width: 250px;
+    width: 23%;
+    min-height: 200px;
+    height: 40%;
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  .position {
+    padding-top: 7vh;
+  }
+
+  .small-heading {
+    font-size: 27px;
+  }
+
+  .content-m-row {
+    font-size: 18px;
+    padding: 0px 15px 15px 15px;
+  }
 }
