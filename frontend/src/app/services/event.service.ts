@@ -15,6 +15,8 @@ export interface Event {
   end_date: Date;
   active: boolean;
   group: number[];
+  group_names: string[];
+  event_type_name: string;
 
   // not from API
   // personalEntry?: number;

@@ -4,6 +4,7 @@
     <table mat-table [dataSource]="userGroups" matSort class="mat-elevation-z8">
 
       <!-- User -->
+
       <ng-container matColumnDef="user" class="usergroup_column">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>User</th>
         <td mat-cell *matCellDef="let element"> {{element.user}} </td>
@@ -12,7 +13,7 @@
       <!-- Group -->
       <ng-container matColumnDef="group" class="usergroup_column">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Group</th>
-        <td mat-cell *matCellDef="let element"> {{element.group}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.group_name}} </td>
       </ng-container>
 
       <!-- Leader -->

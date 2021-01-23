@@ -62,12 +62,16 @@ class MediaSerializer(serializers.ModelSerializer):
 
 class EventSerializer(serializers.ModelSerializer):
     angenommene_user = serializers.SerializerMethodField()
+    group_names = serializers.SerializerMethodField()
+    event_type_name = serializers.SerializerMethodField()
 
     def get_angenommene_user(self, obj):
         # ACHTUNG!! falls kein Status mit "Teilnehmen" existiert, wird dies nicht funktionieren!!!
         #  .all()  verwenden um alle anzeigen zu lassen
         return ", ".join([str(i["user__username"]) for i in
                           obj.user_relations.filter(state__description="Teilnehmen").values("user__username")])
+
+
 
     def validate(self, value):
         if (value['start_date'] > value['end_date']) | (
@@ -78,7 +82,16 @@ class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Event
         fields = ['pk', 'name', 'start_date', 'start_time',
-                  'end_date', 'end_time', 'active', 'group', 'ev_type', 'angenommene_user']
+                  'end_date', 'end_time', 'active', 'group', 'group_names', 'ev_type', 'event_type_name', 'angenommene_user']
+
+    def get_group_names(self, obj):
+        listofnames = []
+        for x in (obj.group.all()):
+            listofnames.append(x.name)
+        return listofnames
+
+    def get_event_type_name(self, obj):
+        return obj.ev_type.description if obj.ev_type else ""
 
 
 class GroupSerializer(serializers.ModelSerializer):
@@ -111,15 +124,29 @@ class StateSerializer(serializers.ModelSerializer):
 
 
 class UserGroupSerializer(serializers.ModelSerializer):
+    group_name = serializers.SerializerMethodField()
+
     class Meta:
         model = models.UserGroup
-        fields = ['pk', 'user', 'group', 'is_leader']
+        fields = ['pk', 'user', 'group', 'is_leader', 'group_name']
+
+    def get_group_name(self, obj):
+        return obj.group.name if obj.group else ""
 
 
 class AllUserGroupSerializer(serializers.ModelSerializer):
+    group_name = serializers.SerializerMethodField()
+    user_name = serializers.SerializerMethodField()
+
     class Meta:
         model = models.UserGroup
-        fields = ['pk', 'user', 'group', 'is_leader']
+        fields = ['pk', 'user', 'group', 'is_leader',  'group_name', 'user_name']
+
+    def get_group_name(self, obj):
+        return obj.group.name if obj.group else ""
+
+    def get_user_name(self, obj):
+        return obj.user.username if obj.group else ""
 
 
 class UserEventSerializer(serializers.ModelSerializer):

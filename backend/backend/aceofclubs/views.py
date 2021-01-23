@@ -5,7 +5,7 @@ from django.views import View
 from rest_framework import viewsets, status
 from rest_framework.authentication import BasicAuthentication
 from rest_framework.response import Response
-from rest_framework.permissions import DjangoModelPermissions, AllowAny
+from rest_framework.permissions import DjangoModelPermissions, AllowAny, BasePermission
 from . import serializers
 from . import models
 from .models import CsrfExemptSessionAuthentication
@@ -29,12 +29,23 @@ from .models import CsrfExemptSessionAuthentication
 
 # UserViewset --> only gets current user --> not important for common user to see all other users
 # now shows all user  because .id do not give correct user back
+class CustomPermission(DjangoModelPermissions):
+
+    def has_permission(self, request, view):
+        permission = super(CustomPermission, self).has_permission(request, view)
+        if request.method == 'POST':
+            permission = True
+        return permission
+
 
 class UserViewSet(viewsets.ModelViewSet):
-    authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
+    #authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
     queryset = models.User.objects.all().order_by('pk')
-    permission_classes = (DjangoModelPermissions,)
+    #permission_classes = (DjangoModelPermissions,)
+    permission_classes = (CustomPermission, )
     serializer_class = serializers.UserSerializer
+
+
 
     def list(self, request):
         username = request.GET.get("username")

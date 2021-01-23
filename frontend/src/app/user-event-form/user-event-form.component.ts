@@ -24,7 +24,7 @@ export class UserEventFormComponent implements OnInit {
     currentEventName: string;
     currentEventSD: any;
     currentEventST: any;
-    currentEventGroup: number[];
+    currentEventGroup: string[];
     currentEventED: any;
     currentEventET: any;
     currentEventType: any;
@@ -65,8 +65,8 @@ export class UserEventFormComponent implements OnInit {
                 this.currentEventST = event.start_time;
                 this.currentEventED = event.end_date;
                 this.currentEventET = event.end_time;
-                this.currentEventGroup = event.group;
-                this.currentEventType = event.ev_type;
+                this.currentEventGroup = event.group_names;
+                this.currentEventType = event.event_type_name;
                 this.activeEvent = event.active;
             });
 
