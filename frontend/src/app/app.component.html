@@ -54,7 +54,7 @@
 
       <div class="menu-r horiz-center" style="float: right">
         <button mat-button [matMenuTriggerFor]="adminMenu"
-                *ngIf="isStaff" color="standard">
+                *ngIf="isStaff" color="standard" matTooltip="Admin Panel" matTooltipClass="tooltips">
           <mat-icon>security</mat-icon>
         </button>
         <mat-menu #adminMenu="matMenu">
@@ -110,7 +110,7 @@
         </mat-menu>
 
         <div *ngFor="let user of this.userService.currentUser">
-          <button mat-button style="float: right" color="standard" routerLink="user-profile" *ngIf="isLoggedIn">
+          <button mat-button style="float: right" color="standard" matTooltip="My Profile" matTooltipClass="tooltips" routerLink="user-profile" *ngIf="isLoggedIn">
             <img class="profile-picture-small" [src]="'/api/media/download/' + user.pictures + '/'"
                  *ngIf="user.pictures.length>0; else alt">
             <ng-template #alt>
@@ -132,7 +132,7 @@
           </button>
         </mat-menu>
 
-        <app-logout style="float: right"></app-logout>
+        <app-logout style="float: right" matTooltip="Logout" matTooltipClass="tooltips"></app-logout>
       </div>
     </div>
   </div>

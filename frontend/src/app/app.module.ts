@@ -45,6 +45,7 @@ import { MatIconModule} from '@angular/material/icon';
 import { MediainputComponent } from './mediainput/mediainput.component';
 import {FileUploadModule} from 'ng2-file-upload';
 import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 /*export function initializeApp(appInitService: AppInitService){
   return (): Promise<any> =>{
@@ -79,37 +80,38 @@ import {MatSidenavModule} from '@angular/material/sidenav';
     OverviewComponent,
     MediainputComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    ReactiveFormsModule,
-    BrowserAnimationsModule,
-    MatTableModule,
-    MatButtonModule,
-    MatToolbarModule,
-    MatMenuModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    MatInputModule,
-    MatCardModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatCheckboxModule,
-    MatDividerModule,
-    MatExpansionModule,
-    MatIconModule,
-    MatSidenavModule,
-    JwtModule.forRoot({
-      config: {
-        tokenGetter: () => {
-          return localStorage.getItem('access_token');
-        },
-        allowedDomains: ['localhost:4200']
-      }
-    }),
-    FileUploadModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        ReactiveFormsModule,
+        BrowserAnimationsModule,
+        MatTableModule,
+        MatButtonModule,
+        MatToolbarModule,
+        MatMenuModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        MatInputModule,
+        MatCardModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatCheckboxModule,
+        MatDividerModule,
+        MatExpansionModule,
+        MatIconModule,
+        MatSidenavModule,
+        JwtModule.forRoot({
+            config: {
+                tokenGetter: () => {
+                    return localStorage.getItem('access_token');
+                },
+                allowedDomains: ['localhost:4200']
+            }
+        }),
+        FileUploadModule,
+        MatTooltipModule
+    ],
   providers: [/*
     AppInitService,
     {provide: APP_INITIALIZER, useFactory: initializeApp, deps:[AppInitService], multi:true}

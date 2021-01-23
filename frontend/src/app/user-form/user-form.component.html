@@ -1,74 +1,80 @@
-<form [formGroup]="userFormGroup" (ngSubmit)="createOrUpdateUser()" class="user-form__form">
+<div class="container">
 
-  <!--<div><img [src]="'api/media/download/' + userFormGroup.controls.pictures[0].pk + '/'" *ngIf="userFormGroup.controls.pictures[0].pk"/></div>-->
+  <div class="horiz-center">
 
-  <!--<span>
-      <span *ngFor="let picture of pictures">
-        <button class="grow" [matMenuTriggerFor]="menu">
-          <img src="api/media/{{picture}}" height="30px"><br>
+    <form [formGroup]="userFormGroup" (ngSubmit)="createOrUpdateUser()" class="user-form__form">
+
+      <!--<div><img [src]="'api/media/download/' + userFormGroup.controls.pictures[0].pk + '/'" *ngIf="userFormGroup.controls.pictures[0].pk"/></div>-->
+
+      <!--<span>
+          <span *ngFor="let picture of pictures">
+            <button class="grow" [matMenuTriggerFor]="menu">
+              <img src="api/media/{{picture}}" height="30px"><br>
+            </button>
+          </span>
+        </span>-->
+
+      <!--<ng-container>
+        <img src="/assets/image/user.png" height=30px *ngIf="!userFormGroup.controls.pictures">
+        <tr mat-cell *matCellDef="let element"> <img [src]="'/api/media/download/' + element.pictures + '/'" height=30px *ngIf="userService.hasProfilePic"></tr>
+
+      </ng-container>-->
+      <!--<img [src]="'api/media/' + userFormGroup.controls.pictures[0].pk" >
+      <mat-hint align="end">pictures</mat-hint>-->
+
+      <!--{{userFormGroup.value.pictures[0].pk}}-->
+
+      <mat-form-field>
+        <input matInput type="text" placeholder="Username" formControlName="username">
+        <mat-hint align="end">Username</mat-hint>
+      </mat-form-field>
+
+
+      <mat-form-field>
+        <input matInput type="text" placeholder="firstname" formControlName="first_name">
+        <mat-hint align="end">First Name</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput type="text" placeholder="lastname" formControlName="last_name">
+        <mat-hint align="end">Last Name</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput type="email" placeholder="email" formControlName="email">
+        <mat-hint align="end">E-Mail</mat-hint>
+      </mat-form-field>
+
+      <!-- <mat-form-field>
+         <input matInput type="password" placeholder="Enter Password" formControlName="password">
+         <mat-hint align="end">Password</mat-hint>
+       </mat-form-field> -->
+
+      <mat-checkbox formControlName="is_active" *ngIf="userService.hasPermission('aceofclubs.change_user')">Is Active?
+      </mat-checkbox>
+      <!--*ngIf="userService.hasPermission('aceofclubs.change_user')"-->
+
+      <mat-checkbox formControlName="is_staff" *ngIf="userService.hasPermission('aceofclubs.change_user')">Is Admin?
+      </mat-checkbox>
+
+      <div>
+        <app-mediainput formControlName="pictures" [single]="true"></app-mediainput>
+      </div>
+
+
+
+      <br/>
+
+
+      <mat-card-actions align="center">
+        <button mat-raised-button color="primary" [disabled]="!userFormGroup.valid">
+          <span *ngIf="!userFormGroup.controls.pk.value">Create</span>
+          <span *ngIf="userFormGroup.controls.pk.value">Update</span>
         </button>
-      </span>
-    </span>-->
-
-  <!--<ng-container>
-    <img src="/assets/image/user.png" height=30px *ngIf="!userFormGroup.controls.pictures">
-    <tr mat-cell *matCellDef="let element"> <img [src]="'/api/media/download/' + element.pictures + '/'" height=30px *ngIf="userService.hasProfilePic"></tr>
-
-  </ng-container>-->
-    <!--<img [src]="'api/media/' + userFormGroup.controls.pictures[0].pk" >
-    <mat-hint align="end">pictures</mat-hint>-->
-
-  <!--{{userFormGroup.value.pictures[0].pk}}-->
-
-  <mat-form-field>
-    <input matInput type="text" placeholder="Username" formControlName="username">
-    <mat-hint align="end">Username</mat-hint>
-  </mat-form-field>
-
-
-
-  <mat-form-field>
-    <input matInput type="text" placeholder="firstname" formControlName="first_name">
-    <mat-hint align="end">First Name</mat-hint>
-  </mat-form-field>
-
-  <mat-form-field>
-    <input matInput type="text" placeholder="lastname" formControlName="last_name">
-    <mat-hint align="end">Last Name</mat-hint>
-  </mat-form-field>
-
-  <mat-form-field>
-    <input matInput type="email" placeholder="email" formControlName="email">
-    <mat-hint align="end">E-Mail</mat-hint>
-  </mat-form-field>
-
- <!-- <mat-form-field>
-    <input matInput type="password" placeholder="Enter Password" formControlName="password">
-    <mat-hint align="end">Password</mat-hint>
-  </mat-form-field> -->
-
-  <mat-checkbox formControlName="is_active" *ngIf="userService.hasPermission('aceofclubs.change_user')">Is Active?</mat-checkbox>
-  <!--*ngIf="userService.hasPermission('aceofclubs.change_user')"-->
-
-  <mat-checkbox formControlName="is_staff" *ngIf="userService.hasPermission('aceofclubs.change_user')">Is Admin?</mat-checkbox>
-
-  <div>
-    <app-mediainput formControlName="pictures" [single]="true"></app-mediainput>
+      </mat-card-actions>
+    </form>
   </div>
-
-
-
-  <br/>
-
-
-
-  <mat-card-actions align="center">
-    <button mat-raised-button color="primary" [disabled]="!userFormGroup.valid">
-      <span *ngIf="!userFormGroup.controls.pk.value">Create</span>
-      <span *ngIf="userFormGroup.controls.pk.value">Update</span>
-    </button>
-  </mat-card-actions>
-</form>
+</div>
 
 <!-- nicht  im Form, sonst kommt ein  Fehler bzw eine Warnung -->
 
