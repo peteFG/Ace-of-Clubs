@@ -4,105 +4,137 @@
 <mat-toolbar>
   <!-- Desktop Ansicht -->
   <div class="desktop-view">
-    <button class="m-menu-btn" mat-icon-button color="standard" aria-label="Menu" (click)="sidenavdrawer.toggle()"
-            *ngIf="isLoggedIn">
-      <mat-icon>menu</mat-icon>
-    </button>
-    <button style="margin-right: 50px" class="logo" routerLink="/overview" *ngIf="isLoggedIn">ACE OF CLUBS</button>
-    <button style="margin-right: 130px" class="logo" routerLink="/home" *ngIf="!isLoggedIn">ACE OF CLUBS</button>
-    <button mat-button [matMenuTriggerFor]="eventMenu" *ngIf="userService.hasPermission('aceofclubs.view_event')">
-      Event
-    </button>
-    <mat-menu #eventMenu="matMenu">
-      <button mat-menu-item routerLink="event-list" *ngIf="userService.hasPermission('aceofclubs.view_event')">List
-        Events
-      </button>
-      <button mat-menu-item routerLink="event-form" *ngIf="userService.hasPermission('aceofclubs.add_event')">Create
-        Event
-      </button>
-    </mat-menu>
+    <div class="menu horiz-center">
+      <div class="menu-l horiz-center">
+        <button class="menu-btn" mat-button color="standard" aria-label="Menu" (click)="sidenavdrawer.toggle()"
+                *ngIf="isLoggedIn">
+          <mat-icon>menu</mat-icon>
+        </button>
+        <button style="margin-left:10px; margin-right: 50px" class="logo" routerLink="/overview" *ngIf="isLoggedIn">ACE
+          OF CLUBS
+        </button>
+        <button style="margin-left:10px; margin-right: 130px" class="logo" routerLink="/home" *ngIf="!isLoggedIn">ACE OF
+          CLUBS
+        </button>
+        <button mat-button [matMenuTriggerFor]="eventMenu" *ngIf="userService.hasPermission('aceofclubs.view_event')">
+          Event
+        </button>
+        <mat-menu #eventMenu="matMenu">
+          <button mat-menu-item routerLink="event-list" *ngIf="userService.hasPermission('aceofclubs.view_event')">List
+            Events
+          </button>
+          <button mat-menu-item routerLink="event-form" *ngIf="userService.hasPermission('aceofclubs.add_event')">Create
+            Event
+          </button>
+        </mat-menu>
 
-    <button mat-button [matMenuTriggerFor]="userMenu" *ngIf="userService.hasPermission('aceofclubs.view_user')">Users
-    </button>
-    <mat-menu #userMenu="matMenu">
-      <button mat-menu-item routerLink="user-list" *ngIf="userService.hasPermission('aceofclubs.view_user')">List
-        Users
-      </button>
-      <button mat-menu-item routerLink="user-form" *ngIf="userService.hasPermission('aceofclubs.add_user')">Create
-        User
-      </button>
-    </mat-menu>
+        <button mat-button [matMenuTriggerFor]="userMenu" *ngIf="userService.hasPermission('aceofclubs.view_user')">
+          Users
+        </button>
+        <mat-menu #userMenu="matMenu">
+          <button mat-menu-item routerLink="user-list" *ngIf="userService.hasPermission('aceofclubs.view_user')">List
+            Users
+          </button>
+          <button mat-menu-item routerLink="user-form" *ngIf="userService.hasPermission('aceofclubs.add_user')">Create
+            User
+          </button>
+        </mat-menu>
 
-    <button mat-button [matMenuTriggerFor]="groupMenu" *ngIf="userService.hasPermission('aceofclubs.view_group')">
-      Group
-    </button>
-    <mat-menu #groupMenu="matMenu">
-      <button mat-menu-item routerLink="group-list" *ngIf="userService.hasPermission('aceofclubs.view_group')">List
-        Groups
-      </button>
-      <button mat-menu-item routerLink="group-form" *ngIf="userService.hasPermission('aceofclubs.add_group')">Create
-        Groups
-      </button>
-    </mat-menu>
+        <button mat-button [matMenuTriggerFor]="userEventMenu"
+                *ngIf="userService.hasPermission('aceofclubs.view_userevent')">Event Entries
+        </button>
+        <mat-menu #userEventMenu="matMenu">
+          <button mat-menu-item routerLink="user-event-list" *ngIf="userService.hasPermission('aceofclubs.add_user')">
+            List Event Entries
+          </button>
+        </mat-menu>
 
-    <button mat-button [matMenuTriggerFor]="stateMenu" *ngIf="userService.hasPermission('aceofclubs.view_state')">
-      States
-    </button>
-    <mat-menu #stateMenu="matMenu">
-      <button mat-menu-item routerLink="state-list" *ngIf="userService.hasPermission('aceofclubs.view_state')">List
-        States
-      </button>
-      <button mat-menu-item routerLink="state-form" *ngIf="userService.hasPermission('aceofclubs.add_state')">Create
-        State
-      </button>
-    </mat-menu>
 
-    <button mat-button [matMenuTriggerFor]="eventTypeMenu"
-            *ngIf="userService.hasPermission('aceofclubs.view_eventtype')">Event Types
-    </button>
-    <mat-menu #eventTypeMenu="matMenu">
-      <button mat-menu-item routerLink="event-type-list" *ngIf="userService.hasPermission('aceofclubs.view_eventtype')">
-        List Event Types
-      </button>
-      <button mat-menu-item routerLink="event-type-from" *ngIf="userService.hasPermission('aceofclubs.add_eventtype')">
-        Add Event Type
-      </button>
-    </mat-menu>
+      </div>
 
-    <button mat-button [matMenuTriggerFor]="userEventMenu"
-            *ngIf="userService.hasPermission('aceofclubs.view_userevent')">Event Entries
-    </button>
-    <mat-menu #userEventMenu="matMenu">
-      <button mat-menu-item routerLink="user-event-list" *ngIf="userService.hasPermission('aceofclubs.add_user')">
-        List Event Entries
-      </button>
-    </mat-menu>
+      <div class="menu-r horiz-center" style="float: right">
+        <button mat-button [matMenuTriggerFor]="adminMenu"
+                *ngIf="isStaff" color="standard">
+          <mat-icon>security</mat-icon>
+        </button>
+        <mat-menu #adminMenu="matMenu">
 
-    <button mat-button [matMenuTriggerFor]="userGroupMenu"
-            *ngIf="userService.hasPermission('aceofclubs.view_usergroup')">Group Entries
-    </button>
-    <mat-menu #userGroupMenu="matMenu">
-      <button mat-menu-item routerLink="user-group-list" *ngIf="userService.hasPermission('aceofclubs.view_usergroup')">
-        List Group Entries
-      </button>
-    </mat-menu>
+          <button mat-menu-item [matMenuTriggerFor]="stateMenu"
+                  *ngIf="userService.hasPermission('aceofclubs.view_state')">
+            <mat-icon>sms</mat-icon>
+            <span>Manage States</span>
+          </button>
+          <mat-menu #stateMenu="matMenu">
+            <button mat-menu-item routerLink="state-list" *ngIf="userService.hasPermission('aceofclubs.view_state')">
+              View States
+            </button>
+            <button mat-menu-item routerLink="state-form" *ngIf="userService.hasPermission('aceofclubs.add_state')">
+              Add a new State
+            </button>
+          </mat-menu>
 
-    <button mat-button routerLink="user-profile" *ngIf="isLoggedIn">My Profile</button>
+          <button mat-menu-item [matMenuTriggerFor]="groupMenu"
+                  *ngIf="userService.hasPermission('aceofclubs.view_group')">
+            <mat-icon>groups</mat-icon>
+            <span>Manage Groups</span>
+          </button>
+          <mat-menu #groupMenu="matMenu">
+            <button mat-menu-item routerLink="group-list" *ngIf="userService.hasPermission('aceofclubs.view_group')">
+              View all Groups
+            </button>
+            <button mat-menu-item routerLink="group-form" *ngIf="userService.hasPermission('aceofclubs.add_group')">
+              Add a new Group
+            </button>
+            <button mat-menu-item routerLink="user-group-list"
+                    *ngIf="userService.hasPermission('aceofclubs.view_usergroup')">
+              View Group Memberships
+            </button>
+          </mat-menu>
 
-    <button class="logo" [matMenuTriggerFor]="loginMenuDesktop" routerLink="/login"
-            *ngIf="!isLoggedIn">
-      LOGIN OR SIGN UP
-    </button>
-    <mat-menu #loginMenuDesktop="matMenu">
-      <button mat-menu-item routerLink="/login">
-        Login
-      </button>
-      <button mat-menu-item routerLink="/register">
-        Sign Up
-      </button>
-    </mat-menu>
-    <app-logout></app-logout>
+          <button mat-menu-item [matMenuTriggerFor]="eventTypeMenu"
+                  *ngIf="userService.hasPermission('aceofclubs.view_eventtype')">
+            <mat-icon>event</mat-icon>
+            <span>Manage Events</span>
+          </button>
+          <mat-menu #eventTypeMenu="matMenu">
+            <button mat-menu-item routerLink="event-type-list"
+                    *ngIf="userService.hasPermission('aceofclubs.view_eventtype')">
+              List Event Types
+            </button>
+            <button mat-menu-item routerLink="event-type-from"
+                    *ngIf="userService.hasPermission('aceofclubs.add_eventtype')">
+              Add Event Type
+            </button>
+          </mat-menu>
 
+        </mat-menu>
+
+        <div *ngFor="let user of this.userService.currentUser">
+          <button mat-button style="float: right" color="standard" routerLink="user-profile" *ngIf="isLoggedIn">
+            <img class="profile-picture-small" [src]="'/api/media/download/' + user.pictures + '/'"
+                 *ngIf="user.pictures.length>0; else alt">
+            <ng-template #alt>
+              <mat-icon>account_circle</mat-icon>
+            </ng-template>
+          </button>
+        </div>
+
+        <button class="logo" [matMenuTriggerFor]="loginMenuDesktop" routerLink="/login"
+                *ngIf="!isLoggedIn">
+          LOGIN OR SIGN UP
+        </button>
+        <mat-menu #loginMenuDesktop="matMenu">
+          <button mat-menu-item routerLink="/login">
+            Login
+          </button>
+          <button mat-menu-item routerLink="/register">
+            Sign Up
+          </button>
+        </mat-menu>
+
+        <app-logout style="float: right"></app-logout>
+      </div>
+    </div>
   </div>
 
   <!-- Mobile Ansicht -->

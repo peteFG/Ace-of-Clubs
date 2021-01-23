@@ -15,7 +15,8 @@ export class AppComponent implements OnInit {
 
   title = 'frontend';
   isLoggedIn = false;
-  userProfile: User;
+  isStaff = false;
+  userProfile: User[];
   currentUser: any;
 
   currentUserName: any;
@@ -40,7 +41,9 @@ export class AppComponent implements OnInit {
   private retrieveUser(): void {
 
     this.userService.getCurrentUser().subscribe((user) => {
-      this.userProfile = user;
+      this.userProfile = [];
+      this.userProfile.push(user);
+      this.isStaff = user.is_staff;
     });
   }
 
