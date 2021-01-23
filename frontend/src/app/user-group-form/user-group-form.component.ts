@@ -4,7 +4,8 @@ import {EventService} from '../services/event.service';
 import {ActivatedRoute} from '@angular/router';
 import {Group, GroupService} from '../services/group.service';
 import {HttpClient} from '@angular/common/http';
-import {User, UserService} from "../services/user.service";
+import {User, UserGroup, UserService} from "../services/user.service";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-user-group-form',
@@ -15,6 +16,7 @@ export class UserGroupFormComponent implements OnInit {
 
   userGroupFormGroup: FormGroup;
   userOptions:User[];
+  //groupOptions:number[];
   groupOptions:Group[];
 
   constructor(private http: HttpClient,
@@ -26,18 +28,23 @@ export class UserGroupFormComponent implements OnInit {
   ngOnInit(): void {
     this.userGroupFormGroup = new FormGroup({
       pk: new FormControl(null),
-      user: new FormControl([]), // Angeklickter User
-      group: new FormControl([]), // list of Groups  --> bereits angehakte  sollen ersichtlich sein???
+      user: new FormControl(this.userService.clickedUser), // Angeklickter User
+      group: new FormControl(), // list of Groups  --> bereits angehakte  sollen ersichtlich sein???
       is_leader: new FormControl(false)
     });
+
+
+
+    // Get Group Options
+
+    console.log(this.userService.availableGroups);
+    this.readAvailableGroups();
+    //console.log(this.groupOptions)
 
     this.userService.getUsers().subscribe((users)=>{
       this.userOptions = users;
     });
 
-    this.groupService.retrieveGroups().subscribe((groups)=>{
-      this.groupOptions = groups;
-    });
 
 // ACHTUNG --> ALLE USERGroups benötigt!
     const pk = this.route.snapshot.paramMap.get('pk');
@@ -63,5 +70,19 @@ export class UserGroupFormComponent implements OnInit {
         });
     }
   }
+
+  readAvailableGroups(): void {
+    const pks = this.userService.availableGroups;
+    this.groupOptions = [];
+
+    this.groupService.retrieveGroups().subscribe((groups)=>{
+      groups.forEach((group)=>{
+        if(pks.includes(group.pk)){
+          this.groupOptions.push(group);
+        }
+      });
+    })
+  }
+
 
 }

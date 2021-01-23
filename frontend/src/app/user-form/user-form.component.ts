@@ -38,6 +38,8 @@ export class UserFormComponent implements OnInit {
     if (pk) {
       this.userService.getUser(parseInt(pk, 10))
         .subscribe((user) => {
+          this.userService.clickedUser = parseInt(pk, 10);
+          console.log(pk)
           this.userFormGroup.patchValue(user);
         });
     }
@@ -48,6 +50,7 @@ export class UserFormComponent implements OnInit {
     if (pk) {
       this.userService.updateUser(this.userFormGroup.value)
         .subscribe(() => {
+
           alert('updated successfully!');
         });
     } else {

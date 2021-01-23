@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {UserService} from "./user.service";
+import {map} from "rxjs/operators";
+import {flatMap} from "rxjs/internal/operators";
 
 export interface Group {
   pk?: number;
@@ -14,10 +16,9 @@ export interface Group {
 })
 export class GroupService {
 
+  existingGroupsPK: number[];
 
-
-  constructor(private http: HttpClient,
-              userService: UserService) { }
+  constructor(private http: HttpClient) { }
 
   createGroup(group: Group): Observable<Group> {
 
@@ -38,6 +39,15 @@ export class GroupService {
 
   updateGroup(group: Group): Observable<any> {
     return this.http.patch('/api/groups/' + group.pk + '/', group);
+  }
+
+  getGroupPKs():void{
+    this.existingGroupsPK =[];
+    this.retrieveGroups().subscribe((groups)=>{
+      groups.forEach((group)=>{
+        this.existingGroupsPK.push(group.pk)
+      });
+    });
   }
 
 }

@@ -46,6 +46,7 @@ const routes: Routes = [
   {path: 'user-event-form/:pk', component: UserEventFormComponent, canActivate: [AuthGuard]},
   {path: 'user-event-form/:0', redirectTo: 'user-event-form', pathMatch: 'full'},
   {path: 'user-group-list', component: UserGroupListComponent, canActivate: [AuthGuard]},
+  {path: 'user-group-list/:pk', component: UserGroupListComponent, canActivate: [AuthGuard]},
   {path: 'user-group-form', component: UserGroupFormComponent, canActivate: [AuthGuard]},
   {path: 'user-group-form/:pk', component: UserGroupFormComponent, canActivate: [AuthGuard]},
   {path: 'user-profile', component: UserProfileComponent, canActivate: [AuthGuard]},

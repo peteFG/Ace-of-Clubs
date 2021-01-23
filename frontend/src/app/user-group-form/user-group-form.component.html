@@ -24,16 +24,16 @@
 
   <!-- Groups -->
   <mat-form-field>
-    <mat-select placeholder="User" formControlName="user" multiple>
+    <mat-select placeholder="User" formControlName="user" [disabled]="true">
       <mat-option [value]="userOption.pk"
                   *ngFor="let userOption of userOptions">{{userOption.username}}</mat-option>
     </mat-select>
-    <mat-hint align="end">The groups involved in this event</mat-hint>
+    <mat-hint align="end">The user you want to add to a group</mat-hint>
   </mat-form-field>
 
   <!-- Groups -->
   <mat-form-field>
-    <mat-select placeholder="Groups" formControlName="group" multiple>
+    <mat-select placeholder="Groups" formControlName="group">
       <mat-option [value]="groupOption.pk"
                   *ngFor="let groupOption of groupOptions">{{groupOption.name}}</mat-option>
     </mat-select>

@@ -128,3 +128,7 @@ class UserEventSerializer(serializers.ModelSerializer):
         fields = ['pk', 'user', 'event', 'state']
 
 
+class AllUserEventSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.UserEvent
+        fields = ['pk', 'user', 'event', 'state']

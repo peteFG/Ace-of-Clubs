@@ -28,7 +28,7 @@ from .models import CsrfExemptSessionAuthentication
 
 
 # UserViewset --> only gets current user --> not important for common user to see all other users
-
+# now shows all user  because .id do not give correct user back
 
 class UserViewSet(viewsets.ModelViewSet):
     authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
@@ -122,8 +122,13 @@ class UserEventViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 
+class AllUserEventViewSet(viewsets.ModelViewSet):
+    queryset = models.UserEvent.objects.all().order_by('user')
+    serializer_class = serializers.AllUserEventSerializer
+
+
 class UserGroupViewSet(viewsets.ModelViewSet):
-    queryset = models.UserGroup.objects.all()
+    queryset = models.UserGroup.objects.all().order_by('user')
 
     serializer_class = serializers.UserGroupSerializer
 
@@ -145,6 +150,14 @@ class UserGroupViewSet(viewsets.ModelViewSet):
 
 
 class AllUserGroupViewSet(viewsets.ModelViewSet):
-    queryset = models.UserGroup.objects.all()
+    queryset = models.UserGroup.objects.all().order_by('user')
 
     serializer_class = serializers.AllUserGroupSerializer
+
+    def list(self, request):
+        user = request.GET.get("user")
+        if user is None:
+            serializer = self.serializer_class(self.queryset.all(), many=True)
+        else:
+            serializer = self.serializer_class(self.queryset.filter(user=user), many=True)
+        return Response(serializer.data)

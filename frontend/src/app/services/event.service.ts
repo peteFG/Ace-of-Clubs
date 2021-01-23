@@ -59,7 +59,7 @@ export class EventService {
 
   personalEventsFunction(): Observable<Event[]> {
 
-    var personalEventsPK = [];
+    let personalEventsPK = [];
 
 
     return this.userService.getUserGroupsByUserID().pipe(flatMap((userGroups) => {

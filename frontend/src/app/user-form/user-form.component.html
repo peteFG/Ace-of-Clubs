@@ -56,6 +56,8 @@
     <app-mediainput formControlName="pictures" [single]="true"></app-mediainput>
   </div>
 
+
+
   <br/>
 
 
@@ -67,3 +69,18 @@
     </button>
   </mat-card-actions>
 </form>
+
+<!-- nicht  im Form, sonst kommt ein  Fehler bzw eine Warnung -->
+
+<div class="group-add">
+  <button (click)="userService.setUserGroupEntry()" mat-raised-button color="primary">Add to Group
+  </button>
+</div>
+
+
+
+<div class="group-editOrDelete">
+  <button mat-raised-button color="primary" [routerLink]="'/user-group-list/' + this.userService.clickedUser">Edit/Delete Group
+  </button>
+</div>
+
