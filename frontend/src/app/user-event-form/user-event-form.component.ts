@@ -7,7 +7,7 @@ import {HttpClient} from '@angular/common/http';
 import {User, UserEvent, UserService} from '../services/user.service';
 import {State, StateService} from '../services/state.service';
 import {map} from 'rxjs/operators';
-import {EventTypeService} from '../services/event-type.service';
+import {EventType, EventTypeService} from '../services/event-type.service';
 
 @Component({
     selector: 'app-user-event-form',
@@ -19,7 +19,6 @@ export class UserEventFormComponent implements OnInit {
     userEventFormGroup: FormGroup;
     currentUser: number;
     currentUserName: string;
-
     currentEvent: number;
     currentEventName: string;
     currentEventSD: any;
@@ -29,9 +28,8 @@ export class UserEventFormComponent implements OnInit {
     currentEventET: any;
     currentEventType: any;
     activeEvent: boolean;
-
-    eventType: any;
-    event;
+    eventType: EventType;
+    event: Event;
     eventOptions: Event[];
     stateOptions: State[];
 
@@ -70,11 +68,12 @@ export class UserEventFormComponent implements OnInit {
                 this.activeEvent = event.active;
             });
 
+       /*
         this.eventTypeService.getEventType(this.currentEventType)
             .subscribe((eventType) => {
                 this.eventType = eventType;
             });
-
+*/
         this.eventService.getEvents()
             .subscribe((eventOptions) => {
                 this.eventOptions = eventOptions;
