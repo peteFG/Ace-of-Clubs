@@ -1,11 +1,11 @@
 <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0"/>
 
 
-<mat-toolbar>
-  <!-- Desktop Ansicht -->
-  <div class="desktop-view">
-    <div class="menu horiz-center">
-      <div class="menu-l horiz-center">
+<mat-toolbar style="justify-content: space-between">
+  <mat-toolbar-row>
+    <!-- Desktop Ansicht -->
+    <div class="desktop-view">
+      <div class="menu horiz-center">
         <button class="menu-btn" mat-button color="standard" aria-label="Menu" (click)="sidenavdrawer.toggle()"
                 *ngIf="isLoggedIn">
           <mat-icon>menu</mat-icon>
@@ -49,12 +49,13 @@
           </button>
         </mat-menu>
 
+        <span class="example-spacer"></span>
 
-      </div>
+        <!-- Admin Panel -->
 
-      <div class="menu-r horiz-center" style="float: right">
         <button mat-button [matMenuTriggerFor]="adminMenu"
-                *ngIf="userService.hasPermission('aceofclubs.add_eventtype') || userService.hasPermission('aceofclubs.add_group') || userService.hasPermission('aceofclubs.add_state') && isLoggedIn" color="standard" matTooltip="Admin Panel" matTooltipClass="tooltips">
+                *ngIf="userService.hasPermission('aceofclubs.add_eventtype') || userService.hasPermission('aceofclubs.add_group') || userService.hasPermission('aceofclubs.add_state') && isLoggedIn"
+                color="standard" matTooltip="Admin Panel" matTooltipClass="tooltips">
           <mat-icon>security</mat-icon>
         </button>
         <mat-menu #adminMenu="matMenu">
@@ -110,7 +111,8 @@
         </mat-menu>
 
         <div *ngFor="let user of this.userService.currentUser">
-          <button mat-button style="float: right" color="standard" matTooltip="My Profile" matTooltipClass="tooltips" routerLink="user-profile" *ngIf="isLoggedIn">
+          <button mat-button color="standard" matTooltip="My Profile" matTooltipClass="tooltips"
+                  routerLink="user-profile" *ngIf="isLoggedIn">
             <img class="profile-picture-small" [src]="'/api/media/download/' + user.pictures + '/'"
                  *ngIf="user.pictures.length>0; else alt">
             <ng-template #alt>
@@ -119,7 +121,7 @@
           </button>
         </div>
 
-        <button class="logo" style="float: right" [matMenuTriggerFor]="loginMenuDesktop"
+        <button class="logo" [matMenuTriggerFor]="loginMenuDesktop"
                 *ngIf="!isLoggedIn">
           LOGIN OR SIGN UP
         </button>
@@ -132,51 +134,52 @@
           </button>
         </mat-menu>
 
-        <app-logout style="float: right" matTooltip="Logout" matTooltipClass="tooltips"></app-logout>
+        <app-logout matTooltip="Logout" matTooltipClass="tooltips"></app-logout>
       </div>
     </div>
-  </div>
 
-  <!-- Mobile Ansicht -->
-  <div class="mobile-view">
-    <div class="m-menu">
-      <div class="m-menu-l">
-        <button class="m-menu-btn" mat-icon-button color="standard" aria-label="Menu" (click)="sidenavdrawer.toggle()"
-                *ngIf="isLoggedIn">
-          <mat-icon>menu</mat-icon>
-        </button>
-        <button style="margin-right: 50px" class="logo" routerLink="/overview" *ngIf="isLoggedIn">ACE OF CLUBS</button>
-        <button style="margin-right: 130px" class="logo" routerLink="/home" *ngIf="!isLoggedIn">ACE OF CLUBS</button>
-      </div>
-      <span class="expand"></span>
-      <div class="m-menu-r">
-        <div *ngFor="let user of this.userService.currentUser">
-          <button mat-icon-button color="standard" routerLink="user-profile" *ngIf="isLoggedIn">
-            <img class="profile-picture-small" [src]="'/api/media/download/' + user.pictures + '/'"
-                 *ngIf="user.pictures.length>0; else alt">
-            <ng-template #alt>
-              <mat-icon>account_circle</mat-icon>
-            </ng-template>
+
+    <!-- Mobile Ansicht -->
+    <div class="mobile-view">
+      <div class="m-menu">
+        <div class="m-menu-l">
+          <button class="m-menu-btn" mat-icon-button color="standard" aria-label="Menu" (click)="sidenavdrawer.toggle()"
+                  *ngIf="isLoggedIn">
+            <mat-icon>menu</mat-icon>
           </button>
+          <button style="margin-right: 50px" class="logo" routerLink="/overview" *ngIf="isLoggedIn">ACE OF CLUBS
+          </button>
+          <button style="margin-right: 130px" class="logo" routerLink="/home" *ngIf="!isLoggedIn">ACE OF CLUBS</button>
         </div>
-        <button mat-icon-button color="standard" [matMenuTriggerFor]="loginMenu" routerLink="/login"
-                *ngIf="!isLoggedIn">
-          <mat-icon>login</mat-icon>
-        </button>
-        <mat-menu #loginMenu="matMenu">
-          <button mat-menu-item routerLink="/login">
-            Login
+        <span class="expand" style="flex: 1 1 auto"></span>
+        <div class="m-menu-r">
+          <div *ngFor="let user of this.userService.currentUser">
+            <button mat-icon-button color="standard" routerLink="user-profile" *ngIf="isLoggedIn">
+              <img class="profile-picture-small" [src]="'/api/media/download/' + user.pictures + '/'"
+                   *ngIf="user.pictures.length>0; else alt">
+              <ng-template #alt>
+                <mat-icon>account_circle</mat-icon>
+              </ng-template>
+            </button>
+          </div>
+          <button mat-icon-button color="standard" [matMenuTriggerFor]="loginMenu" routerLink="/login"
+                  *ngIf="!isLoggedIn">
+            <mat-icon>login</mat-icon>
           </button>
-          <button mat-menu-item routerLink="/register">
-            Sign Up
-          </button>
-        </mat-menu>
-        <app-logout></app-logout>
+          <mat-menu #loginMenu="matMenu">
+            <button mat-menu-item routerLink="/login">
+              Login
+            </button>
+            <button mat-menu-item routerLink="/register">
+              Sign Up
+            </button>
+          </mat-menu>
+          <app-logout></app-logout>
+        </div>
       </div>
     </div>
-  </div>
 
-
+  </mat-toolbar-row>
 </mat-toolbar>
 
 <!-- Sidenav -->

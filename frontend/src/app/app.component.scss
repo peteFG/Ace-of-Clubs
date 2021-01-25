@@ -78,6 +78,10 @@
     height: 8vh;
   }
 
+  .menu {
+    width: 97vw !important;
+  }
+
   .user-settings {
     float: right;
     text-align: end;
@@ -87,8 +91,8 @@
     margin-left: 20px;
   }
 
-  .menu-btn {
-
+  .expand {
+    margin-right: 50%;
   }
 }
 
@@ -131,4 +135,8 @@
   border: 1px white !important;
   font-size: 22px;
   padding-top: 4px;
+}
+
+.example-spacer {
+  flex: 1 1 auto;
 }
