@@ -1,6 +1,73 @@
+.container {
+  display: block;
+  width: 100%;
+  height: 93.4vh;
+  background: url('../../assets/image/mountain-range.jpg') no-repeat center center fixed;
+}
+
 .register-card{
+  padding: 30px;
+  text-align: -webkit-center;
+  background-color: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 3px 1px -1px rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12)
+}
+
+.card-bg {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  vertical-align: center;
+}
+
+.card-bg {
+  height: 100%;
   display: flex;
   flex-direction: column;
-  width: 20rem;
-  margin: 3rem auto;
+  justify-content: center;
+}
+
+.mat-card-title {
+  padding: 10px;
+  font-size: 200%;
+  font-weight: lighter;
+}
+
+.btn-link {
+  color: rgba(62, 91, 147, 0.9);
+}
+
+@media only screen and (max-width: 450px) {
+  .mat-form-field {
+    width: 70vw;
+  }
+
+  .register-card{
+    padding: 30px;
+    height: 84vh;
+  }
+
+  .container {
+    height: 92vh;
+  }
+}
+
+@media only screen and (min-width: 450px) and (max-width: 1280px) {
+  .mat-form-field {
+    width: 25vw;
+  }
+}
+
+@media only screen and (min-width: 1280px) {
+  .mat-form-field {
+    width: 15vw;
+  }
+
+  .mat-card-content {
+    width: fit-content;
+  }
+
+  .container {
+    height: 93.4vh;
+  }
 }

@@ -45,7 +45,8 @@ import { MatIconModule} from '@angular/material/icon';
 import { MediainputComponent } from './mediainput/mediainput.component';
 import {FileUploadModule} from 'ng2-file-upload';
 import {MatSidenavModule} from '@angular/material/sidenav';
-import {MatTooltipModule} from "@angular/material/tooltip";
+import {MatTooltipModule} from '@angular/material/tooltip';
+
 
 /*export function initializeApp(appInitService: AppInitService){
   return (): Promise<any> =>{

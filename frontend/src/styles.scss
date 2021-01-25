@@ -319,6 +319,14 @@ body {
   height: fit-content;
 }
 
+@media only screen and (max-width: 450px) {
+  .content-m-data {
+    width: 45%;
+    min-height: fit-content;
+    overflow: visible;
+  }
+}
+
 
 /* Error Handling */
 @media only screen and (max-width: 450px) {
@@ -389,6 +397,10 @@ body {
   animation: 1000ms ease-out 1 m-areaSlide300InFromLeft;
 }
 
+.anim-right2 {
+  animation: 1000ms ease-out 1 m-areaSlide300InFromRightSlow;
+}
+
 @keyframes m-areaSlide300InFromRight {
   0% {
     transform: translateX(50%);
@@ -411,6 +423,21 @@ body {
   }
   50% {
     transform: translateX(-25%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes areaSlide300InFromRightSlow {
+  0% {
+    transform: translateX(500%);
+    opacity: 0;
+  }
+  50% {
+    transform: translateX(300%);
     opacity: 0;
   }
   100% {

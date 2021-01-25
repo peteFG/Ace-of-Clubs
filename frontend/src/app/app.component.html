@@ -41,7 +41,7 @@
         </mat-menu>
 
         <button mat-button [matMenuTriggerFor]="userEventMenu"
-                *ngIf="userService.hasPermission('aceofclubs.view_userevent')">Event Entries
+                *ngIf="userService.hasPermission('aceofclubs.add_user')">Event Entries
         </button>
         <mat-menu #userEventMenu="matMenu">
           <button mat-menu-item routerLink="user-event-list" *ngIf="userService.hasPermission('aceofclubs.add_user')">
@@ -54,7 +54,7 @@
 
       <div class="menu-r horiz-center" style="float: right">
         <button mat-button [matMenuTriggerFor]="adminMenu"
-                *ngIf="isStaff" color="standard" matTooltip="Admin Panel" matTooltipClass="tooltips">
+                *ngIf="userService.hasPermission('aceofclubs.add_eventtype') || userService.hasPermission('aceofclubs.add_group') || userService.hasPermission('aceofclubs.add_state') && isLoggedIn" color="standard" matTooltip="Admin Panel" matTooltipClass="tooltips">
           <mat-icon>security</mat-icon>
         </button>
         <mat-menu #adminMenu="matMenu">
@@ -119,7 +119,7 @@
           </button>
         </div>
 
-        <button class="logo" [matMenuTriggerFor]="loginMenuDesktop" routerLink="/login"
+        <button class="logo" style="float: right" [matMenuTriggerFor]="loginMenuDesktop"
                 *ngIf="!isLoggedIn">
           LOGIN OR SIGN UP
         </button>
