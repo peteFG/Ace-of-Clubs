@@ -61,15 +61,29 @@ class MediaSerializer(serializers.ModelSerializer):
 
 
 class EventSerializer(serializers.ModelSerializer):
-    angenommene_user = serializers.SerializerMethodField()
+    state_one = serializers.SerializerMethodField()
+    state_two = serializers.SerializerMethodField()
+    state_three = serializers.SerializerMethodField()
     group_names = serializers.SerializerMethodField()
     event_type_name = serializers.SerializerMethodField()
 
-    def get_angenommene_user(self, obj):
+    def get_state_one(self, obj):
         # ACHTUNG!! falls kein Status mit "Teilnehmen" existiert, wird dies nicht funktionieren!!!
         #  .all()  verwenden um alle anzeigen zu lassen
         return ", ".join([str(i["user__username"]) for i in
-                          obj.user_relations.filter(state__description="Teilnehmen").values("user__username")])
+                          obj.user_relations.filter(state__pk=1).values("user__username")])
+
+    def get_state_two(self, obj):
+        # ACHTUNG!! falls kein Status mit "Teilnehmen" existiert, wird dies nicht funktionieren!!!
+        #  .all()  verwenden um alle anzeigen zu lassen
+        return ", ".join([str(i["user__username"]) for i in
+                          obj.user_relations.filter(state__pk=2).values("user__username")])
+
+    def get_state_three(self, obj):
+        # ACHTUNG!! falls kein Status mit "Teilnehmen" existiert, wird dies nicht funktionieren!!!
+        #  .all()  verwenden um alle anzeigen zu lassen
+        return ", ".join([str(i["user__username"]) for i in
+                          obj.user_relations.filter(state__pk=3).values("user__username")])
 
 
 
@@ -82,7 +96,9 @@ class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Event
         fields = ['pk', 'name', 'start_date', 'start_time',
-                  'end_date', 'end_time', 'active', 'group', 'group_names', 'ev_type', 'event_type_name', 'angenommene_user']
+                  'end_date', 'end_time', 'active', 'group',
+                  'group_names', 'ev_type', 'event_type_name',
+                  'state_one', 'state_two', 'state_three']
 
     def get_group_names(self, obj):
         listofnames = []

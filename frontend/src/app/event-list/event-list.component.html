@@ -70,12 +70,23 @@
         <td mat-cell *matCellDef="let element"> {{element.active}} </td>
       </ng-container>
 
-      <!-- angenommene User Column -->
-      <ng-container matColumnDef="angenommene_user">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Teilnahmen</th>
-        <td mat-cell *matCellDef="let element"> {{element.angenommene_user}} </td>
+      <!-- Status mit Index 1 -->
+      <ng-container matColumnDef="state_one">
+        <th mat-header-cell *matHeaderCellDef="let element" mat-sort-header>{{this.stateOneName}}</th>
+        <td mat-cell *matCellDef="let element"> {{element.state_one}} </td>
       </ng-container>
 
+      <!-- Status mit Index 3 -->
+      <ng-container matColumnDef="state_two">
+        <th mat-header-cell *matHeaderCellDef="let element" mat-sort-header>{{this.stateTwoName}}</th>
+        <td mat-cell *matCellDef="let element"> {{element.state_two}} </td>
+      </ng-container>
+
+      <!-- Status mit Index 1 -->
+      <ng-container matColumnDef="state_three">
+        <th mat-header-cell *matHeaderCellDef="let element" mat-sort-header>{{this.stateThreeName}}</th>
+        <td mat-cell *matCellDef="let element"> {{element.state_three}} </td>
+      </ng-container>
 
       <!-- Edit Column -->
       <ng-container matColumnDef="actions">

@@ -229,11 +229,11 @@ export class UserService {
 
 
   // --------------------------------------  USER GROUP SERVICES -------------------------------------------
-
+// User Groups for logged in user
   getUserGroupsByUserID(): Observable<UserGroup[]> {
     return this.http.get<UserGroup[]>('/api/userGroup/');
   }
-
+// user Groups by user ID
   getUserGroupsByUsersPK(userID: number): Observable<UserGroup[]>{
     return this.http.get<UserGroup[]>('/api/allUserGroups/?user=' + userID);
   }

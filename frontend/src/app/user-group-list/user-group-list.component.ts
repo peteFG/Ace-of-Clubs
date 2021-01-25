@@ -19,7 +19,9 @@ export class UserGroupListComponent implements OnInit {
               public userService: UserService) { }
 
   ngOnInit(): void {
-    this.retrieveUserGroupEntries();
+
+    /** untere retrieveUserGroupEntries function ausführen wenn */
+
 
     const pkFromUrl = this.route.snapshot.paramMap.get('pk');
     if(pkFromUrl) {
@@ -27,6 +29,11 @@ export class UserGroupListComponent implements OnInit {
         .subscribe((groups) => {
           this.userGroups = groups;
         });
+    }
+    else {
+      /** Überprüfung ob ADMIN!!! */
+      this.retrieveUserGroupEntries();
+
     }
 
   }
