@@ -1,6 +1,23 @@
 <!-- Desktop Ansicht -->
 <div class="desktop-view container">
   <div class="mat-elevation-z8">
+    <!-- Vacation Form -->
+    <form [formGroup]="vacationDateForm" (ngSubmit)="createVacationForUserEvents(vacationDateForm.value.vac_start_date,
+      vacationDateForm.value.vac_end_date)" class="user-form__form">
+
+
+      <app-date placeholder="Vacation Start Date" formControlName="vac_start_date" hint="The start date of your vacation"
+                [required]="true"></app-date>
+
+      <app-date placeholder="Vacation End Date" formControlName="vac_end_date" hint="The end date of your vacation"
+                [required]="true"></app-date>
+
+      <mat-card-actions align="center">
+        <button mat-raised-button color="primary" [disabled]="!vacationDateForm.valid">
+          <span>Set Vacation</span>
+        </button>
+      </mat-card-actions>
+    </form>
 
     <table mat-table [dataSource]="events" matSort>
 
