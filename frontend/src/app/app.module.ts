@@ -43,9 +43,10 @@ import { OverviewComponent } from './overview/overview.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule} from '@angular/material/icon';
 import { MediainputComponent } from './mediainput/mediainput.component';
-import {FileUploadModule} from 'ng2-file-upload';
-import {MatSidenavModule} from '@angular/material/sidenav';
-import {MatTooltipModule} from '@angular/material/tooltip';
+import { FileUploadModule } from 'ng2-file-upload';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 
 /*export function initializeApp(appInitService: AppInitService){
@@ -102,6 +103,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
         MatExpansionModule,
         MatIconModule,
         MatSidenavModule,
+        MatButtonToggleModule,
         JwtModule.forRoot({
             config: {
                 tokenGetter: () => {

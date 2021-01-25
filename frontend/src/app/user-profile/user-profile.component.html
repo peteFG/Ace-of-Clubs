@@ -3,26 +3,6 @@
 
   <div *ngFor="let user of userProfile">
 
-    <button style="float: right" mat-icon-button color="standard" [matMenuTriggerFor]="settingsMenu"
-            aria-label="Settings Menu">
-      <mat-icon style="padding: 5px">settings</mat-icon>
-    </button>
-    <mat-menu #settingsMenu="matMenu">
-      <button mat-menu-item>
-        <mat-icon>edit</mat-icon>
-        <span>Edit Profile</span>
-      </button>
-      <button mat-menu-item *ngIf="userService.hasPermission('aceofclubs.delete_user')"
-              (click)="deleteUser(user)">
-        <mat-icon>delete_outline</mat-icon>
-        <span>Delete Profile</span>
-      </button>
-      <button mat-menu-item *ngIf="!userService.hasPermission('aceofclubs.delete_user')"
-              (click)="deleteUser(user)">
-        <mat-icon>person_remove</mat-icon>
-        <span>Disable Profile</span>
-      </button>
-    </mat-menu>
     <div class="position"></div>
     <div class="horiz-center">
       <div class="anim-right">
@@ -33,27 +13,30 @@
       <mat-divider style="margin-left: 30px; margin-right: 48px" [vertical]="true"></mat-divider>
       <h1 class="title-bg anim-left">MY<br>PROFILE</h1>
     </div>
-    <mat-divider [inset]="true" style="margin-top: 8vh; margin-bottom: 8vh"></mat-divider>
 
-    <!-- Profile Actions: Edit & Delete Profile --> <!--
+
+    <!-- Profile Actions: Edit & Delete Profile -->
     <div class="actions horiz-space-around">
-      <button style="margin-right: 10vw" mat-button class="btn-standard2 anim-right"
-              [routerLink]="'/user-form/' + user.pk">
-        edit
-      </button> -->
-      <!-- TEMPORÄRER FIX -> WENN KEIN ADMIN IST WIRD DER DELETE BUTTON NICHT ANGEZEIGT. -->
-      <!-- Besser wenn delete button zu deactivate werden würde. -->
-      <!--<button style="margin-left: 10vw" *ngIf="userService.hasPermission('aceofclubs.delete_user')" mat-button
-              class="btn-light anim-left" (click)="deleteUser(user)">
-        delete
-      </button>
-      <button style="margin-left: 10vw" *ngIf="!userService.hasPermission('aceofclubs.delete_user')" mat-button
-              class="btn-light anim-left" (click)="deleteUser(user)">
-        deactivate
-      </button>
+      <mat-button-toggle-group>
+        <mat-button-toggle class=" anim-right" matTooltip="Edit Profile" matTooltipClass="tooltips"
+                [routerLink]="'/user-form/' + user.pk">
+          <mat-icon>edit</mat-icon>
+        </mat-button-toggle>
+
+        <mat-button-toggle *ngIf="userService.hasPermission('aceofclubs.delete_user')"
+                class="anim-right" (click)="deleteUser(user)" matTooltip="Delete Profile" matTooltipClass="tooltips">
+          <mat-icon>delete_outline</mat-icon>
+        </mat-button-toggle>
+        <mat-button-toggle *ngIf="!userService.hasPermission('aceofclubs.delete_user')"
+                class="anim-right" (click)="deleteUser(user)" matTooltip="Disable Profile" matTooltipClass="tooltips">
+          <mat-icon>person_remove</mat-icon>
+        </mat-button-toggle>
+        <mat-button-toggle class="anim-right" matTooltip="Create Vacation" matTooltipClass="tooltips">
+          <mat-icon>event_busy</mat-icon>
+        </mat-button-toggle>
+      </mat-button-toggle-group>
     </div>
 
-    <mat-divider style="margin-top: 1.5vh; margin-bottom: 7vh"></mat-divider>-->
     <div class="horiz-center">
 
       <!-- Personal Information Card -->
