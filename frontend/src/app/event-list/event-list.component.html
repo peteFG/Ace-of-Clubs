@@ -1,6 +1,16 @@
 <!-- Desktop Ansicht -->
+
+<div> <button  (click)="downloadAsPDF()">Export To PDF</button></div>
+
+
+
 <div class="desktop-view container">
   <div class="mat-elevation-z8">
+
+    <div id="pdfView" #pdfView>
+
+
+
     <table mat-table [dataSource]="events" matSort>
 
       <ng-container matColumnDef="pk">
@@ -85,8 +95,10 @@
 
     </table>
 
+    </div>
+    </div>
   </div>
-</div>
+
 
 <!-- Mobile Ansicht -->
 <div class="mobile-view container">

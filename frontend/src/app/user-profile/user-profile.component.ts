@@ -85,7 +85,7 @@ export class UserProfileComponent implements OnInit {
       console.log(vac_start_date);
       console.log(vac_end_date);
 
-      events.filter(event => event.start_date.toString() > vacationStart
+      events.filter(event => event.start_date.toString() >= vacationStart
         && event.end_date.toString() < vacationEnd).forEach((entry) => {
         this.pks.push(entry.pk);
 
@@ -217,7 +217,7 @@ export class VacationForm implements OnInit {
       console.log(vac_start_date);
       console.log(vac_end_date);
 
-      events.filter(event => event.start_date.toString() > vacationStart
+      events.filter(event => event.start_date.toString() >= vacationStart
         && event.end_date.toString() < vacationEnd).forEach((entry) => {
         this.pks.push(entry.pk);
 
