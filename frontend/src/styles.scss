@@ -210,6 +210,19 @@ body {
   color: rgba(26, 63, 143, 1);
 }
 
+.form-heading {
+  padding: 10px;
+  font-size: 200%;
+  font-weight: lighter;
+  text-align: -webkit-center;
+}
+
+.form-subtitle {
+  padding: 10px;
+  text-align: -webkit-center;
+  font-size: 16px;
+}
+
 .regular-text {
   font-size: 20px;
   font-weight: lighter;
@@ -325,9 +338,13 @@ body {
 
 @media only screen and (max-width: 450px) {
   .content-m-data {
-    width: 45%;
+    width: 65%;
     min-height: fit-content;
     overflow: visible;
+    text-align: -webkit-right;
+    text-overflow: ellipsis;
+    direction: ltr;
+    overflow: hidden;
   }
 }
 

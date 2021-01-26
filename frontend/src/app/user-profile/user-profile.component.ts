@@ -14,8 +14,8 @@ import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog
 export class UserProfileComponent implements OnInit {
 
 
-  vacationFormGroup: FormGroup;
-  vacationDateForm: FormGroup;
+  // vacationFormGroup: FormGroup;
+  // vacationDateForm: FormGroup;
   pks: number[];
   userProfile: User[];
   isStaff: boolean;
@@ -29,11 +29,12 @@ export class UserProfileComponent implements OnInit {
 
   ngOnInit(): void {
 
+    /*
     this.vacationDateForm = new FormGroup({
       vac_start_date: new FormControl(new Date(), Validators.required),
       vac_end_date: new FormControl(new Date(), Validators.required)
     });
-
+*/
     this.retrieveUser();
 
 
@@ -41,7 +42,7 @@ export class UserProfileComponent implements OnInit {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(VacationForm, {
-      width: '40%',
+      width: 'fit-content',
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -58,7 +59,7 @@ export class UserProfileComponent implements OnInit {
     });
   }
 
-
+/*
   private postForEveryUserEvent(): void {
     this.pks.forEach((key) => {
       this.vacationFormGroup = new FormGroup({
@@ -71,7 +72,8 @@ export class UserProfileComponent implements OnInit {
       });
     });
   }
-
+*/
+  /*
   createVacationForUserEvents(vac_start_date, vac_end_date): void {
     const entriesOfActualUser = this.userService.getUserEventsOfCurrentUser();
     this.pks = [];
@@ -135,7 +137,7 @@ export class UserProfileComponent implements OnInit {
     });
 
   }
-
+*/
 
   /** VERWENDEN WENN BACKEND PROBLEM BESEITIGT */
 
@@ -165,7 +167,8 @@ export class UserProfileComponent implements OnInit {
 @Component(
   {
     selector: 'vacation-form',
-    templateUrl: 'vacation-form.html'
+    templateUrl: 'vacation-form.html',
+    styleUrls: ['./vacation-form.scss']
   }
 )
 
