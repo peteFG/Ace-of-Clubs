@@ -1,35 +1,52 @@
 <div class="container">
 
   <div class="horiz-center" *ngIf="userService.hasPermission('aceofclubs.add_user')">
-    <table>
-      <tr>
-        <th>User</th>
-        <th>Event</th>
-        <th>State</th>
-        <th>actions</th>
-      </tr>
-      <tr *ngFor="let eventEntry of allUserEvents">
-        <td>{{eventEntry.user}}</td>
-        <td>{{eventEntry.event}}</td>
-        <td>{{eventEntry.state }}</td>
+    <table mat-table [dataSource]="allUserEvents" matSort class="mat-elevation-z8">
 
-        <td><a [routerLink]="'/user-event-form/'+eventEntry.pk"
-               *ngIf="userService.hasPermission('aceofclubs.change_userevent')">Edit</a>
+      <!-- User -->
+
+      <ng-container matColumnDef="user" class="userevent_column">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>User</th>
+        <td mat-cell *matCellDef="let element"> {{element.user_name}} </td>
+      </ng-container>
+
+      <!-- Group -->
+      <ng-container matColumnDef="event" class="userevent_column">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Event</th>
+        <td mat-cell *matCellDef="let element"> {{element.event_name}} </td>
+      </ng-container>
+
+      <!-- Leader -->
+      <ng-container matColumnDef="state" class="userevent_column">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>State</th>
+        <td mat-cell *matCellDef="let element"> {{element.state_name}} </td>
+      </ng-container>
+
+      <!-- Actions -->
+
+      <!--
+      <ng-container matColumnDef="edit">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-button color="primary" [routerLink]="'/user-event-form/' + element.pk">Edit</button>
         </td>
-        <td><a (click)="deleteUserEvent(eventEntry)">delete</a></td>
-      </tr>
+      </ng-container>
+      -->
 
       <ng-container matColumnDef="delete">
         <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
         <td mat-cell *matCellDef="let element">
-          <button mat-button color="warn" (click)="deleteUserEvent(element)"
-                  *ngIf="userService.hasPermission('aceofclubs.delete_userevent')">Delete
-          </button>
-          <!--<button mat-button color="warn" (click)="deleteUser(element)" *ngIf="element.is_staff">Delete</button>-->
-        </td>
+          <button mat-button color="warn" (click)="deleteUserEventEntry(element)">Delete</button>
       </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
     </table>
+
   </div>
+
+
 
   <!-- Error Handling -->
   <div
@@ -47,4 +64,5 @@
       </div>
     </div>
   </div>
+
 </div>

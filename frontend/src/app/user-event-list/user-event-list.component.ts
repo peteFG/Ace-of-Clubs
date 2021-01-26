@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {EventService} from "../services/event.service";
 import {Time} from "@angular/common";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient} from '@angular/common/http';
 import {UserEvent, UserService} from "../services/user.service";
+import {ActivatedRoute} from "@angular/router";
 
 
 @Component({
@@ -12,25 +13,29 @@ import {UserEvent, UserService} from "../services/user.service";
 })
 export class UserEventListComponent implements OnInit {
 
-  userEvents: UserEvent[];
+  //userEvents: UserEvent[];
   allUserEvents: UserEvent[];
+  displayedColumns = ['user', 'event', 'state', 'delete']
 
-  //displayedColumns = ['ev_type', 'name', 'start_time', 'end_time', 'start_date', 'end_date', 'active', 'group']
-
-  constructor(private http: HttpClient, public userService: UserService) {
+  constructor(private http: HttpClient,
+              private route: ActivatedRoute,
+              public userService: UserService) {
   }
 
   ngOnInit(): void {
 
-    //this.retrieveUserEvents();
-    this.retrieveAllUserEvents();
+    const pkFromUrl = this.route.snapshot.paramMap.get('pk');
+    if(pkFromUrl) {
+      this.retrieveUserEventsFromClickedUser(pkFromUrl);
+    }
+    else {
+      /** Überprüfung ob ADMIN!!! */
+      this.retrieveAllUserEvents();
+
+    }
+
   }
 
-  retrieveUserEvents():void{
-    this.userService.getUserEventsOfCurrentUser().subscribe((userEvents)=>{
-      this.userEvents = userEvents;
-    })
-  }
 
   retrieveAllUserEvents():void{
     this.userService.getAllUserEvents().subscribe((userEvents)=>{
@@ -38,10 +43,26 @@ export class UserEventListComponent implements OnInit {
   });
   }
 
+  retrieveUserEventsFromClickedUser(pk:string): void {
+    this.userService.getUserEventsByUserID(parseInt(pk,10))
+      .subscribe((userEvents) => {
+        this.allUserEvents = userEvents;
+      });
 
-  deleteUserEvent(uEvent: UserEvent):void{
-    this.userService.deleteUserEventEntry(uEvent).subscribe(()=>{
-      this.retrieveAllUserEvents();
-    })
+  }
+
+  deleteUserEventEntry(entry: UserEvent): void {
+    this.userService.deleteUserEventEntry(entry).subscribe(()=>{
+      const pkFromUrl = this.route.snapshot.paramMap.get('pk');
+      if(pkFromUrl) {
+        this.userService.getUserEventsByUserID(parseInt(pkFromUrl,10))
+          .subscribe((userEvents) => {
+            this.allUserEvents = userEvents;
+          });
+      }else {
+        this.retrieveAllUserEvents();
+        alert('deleted successfully!');
+      }
+    });
   }
 }

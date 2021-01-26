@@ -167,7 +167,11 @@ export class UserService {
   }
 
   getUserEventsOfCurrentUser(): Observable<UserEvent[]> {
-    return this.http.get<UserEvent[]>('/api/userEvent/?user=');
+    return this.http.get<UserEvent[]>('/api/userEvent/');
+  }
+
+  getUserEventsByUserID(iD: number): Observable<UserEvent[]>{
+    return this.http.get<UserEvent[]>('/api/allUserEvents/?user='+iD);
   }
 
   getAllUserEvents(): Observable<UserEvent[]>{
@@ -285,21 +289,6 @@ export class UserService {
           }
         }
       }
-/*
-
-      if(checkIfEmpty.length==0){
-        this.router.navigateByUrl('/user-group-form/');
-      } else {
-
-        entriesOfActualUser.subscribe((userGroups)=>{
-          userGroups.forEach((userGroupEntry)=>{
-
-        })
-
-      });
-
-    }
-      */
 
   });
 
@@ -309,12 +298,4 @@ export class UserService {
     console.log(this.clickedUser);
   }
 
-  /*
-  getFilteredGroups(): Observable<Group[]>{
-
-    const
-
-  }
-
-   */
 }

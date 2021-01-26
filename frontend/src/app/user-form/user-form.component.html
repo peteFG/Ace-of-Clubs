@@ -71,6 +71,7 @@
       <br/>
 
       <mat-card-actions align="center">
+        <!-- <button mat-raised-button color="primary" [disabled]="!userFormGroup.valid"> -->
         <button mat-raised-button color="primary">
           <span *ngIf="!userFormGroup.controls.pk.value">Create</span>
           <span *ngIf="userFormGroup.controls.pk.value">Update</span>
@@ -89,8 +90,12 @@
 
 
   <div class="group-editOrDelete">
-    <button mat-raised-button color="primary" [routerLink]="'/user-group-list/' + this.userService.clickedUser">
-      Edit/Delete Group
+    <button mat-raised-button color="primary" [routerLink]="'/user-group-list/' + this.userService.clickedUser">View/Delete Group
+    </button>
+  </div>
+
+  <div class="userEvent-editOrDelete">
+    <button mat-raised-button color="primary" [routerLink]="'/user-event-list/' + this.userService.clickedUser">View/Delete Event Entries
     </button>
   </div>
 </div>

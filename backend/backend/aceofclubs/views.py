@@ -219,6 +219,14 @@ class AllUserEventViewSet(viewsets.ModelViewSet):
     queryset = models.UserEvent.objects.all().order_by('user')
     serializer_class = serializers.AllUserEventSerializer
 
+    def list(self, request):
+        user = request.GET.get("user")
+        if user is None:
+            serializer = self.serializer_class(self.queryset.all(), many=True)
+        else:
+            serializer = self.serializer_class(self.queryset.filter(user=user), many=True)
+        return Response(serializer.data)
+
 
 class UserGroupViewSet(viewsets.ModelViewSet):
     permission_classes = (CustomPermissionAdmin,)

@@ -201,12 +201,34 @@ class AllUserGroupSerializer(serializers.ModelSerializer):
 
 
 class UserEventSerializer(serializers.ModelSerializer):
+    #event_name = serializers.SerializerMethodField()
+    #user_name = serializers.SerializerMethodField()
+
     class Meta:
         model = models.UserEvent
         fields = ['pk', 'user', 'event', 'state']
+
+    #def get_event_name(self, obj):
+    #    return obj.event.name if obj.event else ""
+
+    #def get_user_name(self, obj):
+    #    return obj.user.username if obj.event else ""
 
 
 class AllUserEventSerializer(serializers.ModelSerializer):
+    event_name = serializers.SerializerMethodField()
+    user_name = serializers.SerializerMethodField()
+    state_name = serializers.SerializerMethodField()
+
     class Meta:
         model = models.UserEvent
-        fields = ['pk', 'user', 'event', 'state']
+        fields = ['pk', 'user', 'event', 'state', 'event_name', 'user_name', 'state_name']
+
+    def get_event_name(self, obj):
+        return obj.event.name if obj.event else ""
+
+    def get_user_name(self, obj):
+        return obj.user.username if obj.event else ""
+
+    def get_state_name(self,obj):
+        return  obj.state.description if obj.event else ""

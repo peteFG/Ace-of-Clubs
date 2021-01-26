@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import {EventService} from '../services/event.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Group, GroupService} from '../services/group.service';
 import {HttpClient} from '@angular/common/http';
 import {User, UserGroup, UserService} from "../services/user.service";
@@ -21,6 +21,7 @@ export class UserGroupFormComponent implements OnInit {
 
   constructor(private http: HttpClient,
               private route: ActivatedRoute,
+              private router: Router,
               public userService: UserService,
               public groupService: GroupService) {
   }
@@ -62,11 +63,13 @@ export class UserGroupFormComponent implements OnInit {
       this.http.put('/api/allUserGroups/' + pk + '/', this.userGroupFormGroup.value)
         .subscribe(() => {
           alert('updated successfully!');
+          this.router.navigateByUrl('/user-form/'+ this.userGroupFormGroup.controls['user'].value)
         });
     } else {
       this.http.post('/api/allUserGroups/', this.userGroupFormGroup.value)
         .subscribe(() => {
           alert('created successfully!');
+          this.router.navigateByUrl('/user-form/'+ this.userGroupFormGroup.controls['user'].value)
         });
     }
   }

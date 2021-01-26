@@ -11,17 +11,13 @@ import {UserGroup, UserService} from '../services/user.service';
 export class UserGroupListComponent implements OnInit {
 
   userGroups: UserGroup[];
-  displayedColumns = ['user', 'group', 'is_leader', 'edit', 'delete']
-  // displayedColumns = ['ev_type', 'name', 'start_time', 'end_time', 'start_date', 'end_date', 'active', 'group']
+  displayedColumns = ['user', 'group', 'is_leader', 'delete']
 
   constructor(private http: HttpClient,
               private route: ActivatedRoute,
               public userService: UserService) { }
 
   ngOnInit(): void {
-
-    /** untere retrieveUserGroupEntries function ausführen wenn */
-
 
     const pkFromUrl = this.route.snapshot.paramMap.get('pk');
     if(pkFromUrl) {
