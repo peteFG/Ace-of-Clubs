@@ -36,7 +36,7 @@ import { MatInputModule } from '@angular/material/input';
 import { LoginComponent } from './login/login.component';
 import { LogoutComponent } from './logout/logout.component';
 import { JwtModule } from '@auth0/angular-jwt';
-import { UserProfileComponent } from './user-profile/user-profile.component';
+import {UserProfileComponent, VacationForm} from './user-profile/user-profile.component';
 import { RegisterComponent } from './register/register.component';
 import { MatDividerModule } from '@angular/material/divider';
 import { OverviewComponent } from './overview/overview.component';
@@ -47,6 +47,7 @@ import { FileUploadModule } from 'ng2-file-upload';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 /*export function initializeApp(appInitService: AppInitService){
@@ -80,7 +81,8 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     RegisterComponent,
     UserProfileComponent,
     OverviewComponent,
-    MediainputComponent
+    MediainputComponent,
+    VacationForm
   ],
     imports: [
         BrowserModule,
@@ -113,7 +115,8 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
             }
         }),
         FileUploadModule,
-        MatTooltipModule
+        MatTooltipModule,
+        MatDialogModule
     ],
   providers: [/*
     AppInitService,
