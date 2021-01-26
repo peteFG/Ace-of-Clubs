@@ -8,11 +8,13 @@
         <mat-card-content>
           <mat-form-field>
             <input matInput placeholder="Username" formControlName="username" name="username" required>
+            <mat-error *ngIf="loginFormGroup.controls.username.hasError('required') ">Field can not be empty!</mat-error>
           </mat-form-field>
           <br>
           <mat-form-field>
             <input matInput placeholder="Password" formControlName="password" type="password" name="password"
                    required>
+            <mat-error *ngIf="loginFormGroup.controls.password.hasError('required') ">Field can not be empty!</mat-error>
           </mat-form-field>
         </mat-card-content>
         <mat-card-actions>

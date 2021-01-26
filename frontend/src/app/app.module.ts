@@ -43,9 +43,10 @@ import { OverviewComponent } from './overview/overview.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule} from '@angular/material/icon';
 import { MediainputComponent } from './mediainput/mediainput.component';
-import { FileUploadModule } from 'ng2-file-upload';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatTooltipModule } from '@angular/material/tooltip';
+import {FileUploadModule} from 'ng2-file-upload';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import { ChangePasswordComponent } from './change-password/change-password.component';
+import {MatTooltipModule} from '@angular/material/tooltip';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatDialogModule } from '@angular/material/dialog';
 
@@ -80,6 +81,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     UserProfileComponent,
     RegisterComponent,
     UserProfileComponent,
+    ChangePasswordComponent,
     OverviewComponent,
     MediainputComponent,
     VacationForm

@@ -4,16 +4,22 @@ from django.http import HttpResponse
 from django.views import View
 from rest_framework import viewsets, status
 from rest_framework.authentication import BasicAuthentication
+from rest_framework.decorators import api_view
+from rest_framework.exceptions import NotFound
 from rest_framework.response import Response
+from rest_framework.permissions import DjangoModelPermissions, AllowAny
+from rest_framework.views import APIView
 from rest_framework.permissions import DjangoModelPermissions, AllowAny, BasePermission
 from . import serializers
 from . import models
 from .models import CsrfExemptSessionAuthentication
+from .serializers import UserSerializer
+
 
 # AdminUserViewset  --> admin should be able to see all users
 
 
-#class AdminUserViewSet(viewsets.ModelViewSet):
+# class AdminUserViewSet(viewsets.ModelViewSet):
 #    authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
 #    queryset = models.User.objects.all().order_by('username')
 #    serializer_class = serializers.AdminUserSerializer
@@ -31,29 +37,47 @@ from .models import CsrfExemptSessionAuthentication
 # now shows all user  because .id do not give correct user back
 class CustomPermission(DjangoModelPermissions):
 
-    def has_permission(self, request, view):
+    def has_permission(self, request, view, *args, **kwargs):
         permission = super(CustomPermission, self).has_permission(request, view)
+        if request.method == 'POST':
+            permission = True
+        elif request.user.is_authenticated:
+            permission = True
+        return permission
+
+
+class CustomPermissionAdmin(DjangoModelPermissions):
+
+    def has_permission(self, request, view, *args, **kwargs):
+        permission = super(CustomPermissionAdmin, self).has_permission(request, view)
         if request.method == 'POST':
             permission = True
         return permission
 
 
 class UserViewSet(viewsets.ModelViewSet):
-    #authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
     queryset = models.User.objects.all().order_by('pk')
-    #permission_classes = (DjangoModelPermissions,)
-    permission_classes = (CustomPermission, )
+    permission_classes = (CustomPermission,)
     serializer_class = serializers.UserSerializer
-
-
 
     def list(self, request):
         username = request.GET.get("username")
-        #userid = request.user.pk
         if username is None:
             serializer = self.serializer_class(self.queryset.all(), many=True)
         else:
             serializer = self.serializer_class(self.queryset.filter(username=username), many=True)
+        return Response(serializer.data)
+
+    # holt user der im backend angemeldet ist
+    def partial_update(self, request, *args, **kwargs):
+        instance = models.User.objects.get(pk=kwargs.get('pk'))
+        # checks permissions of current user
+        if request.user.is_staff == False:
+            if request.user.pk != int(kwargs.get('pk')):
+                raise NotFound('Not enough Permissions')
+        serializer = self.serializer_class(instance, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
         return Response(serializer.data)
 
 
@@ -62,11 +86,8 @@ class MediaViewSet(viewsets.ModelViewSet):
 
     serializer_class = serializers.MediaSerializer
 
-
     def pre_save(self, obj):
         obj.file = self.request.FILES.get('file')
-
-
 
 
 class MediaDownloadView(View):
@@ -82,38 +103,99 @@ class MediaDownloadView(View):
 
 class EventViewSet(viewsets.ModelViewSet):
     queryset = models.Event.objects.all().order_by('start_date')
-
+    userGroups = models.UserGroup.objects.all().order_by('user')
+    serializer_classUG = serializers.UserGroupSerializer
     serializer_class = serializers.EventSerializer
 
-    def list(self, request):
+    """def list(self, request):
         group = request.GET.get("group")
         if group is None:
             serializer = self.serializer_class(self.queryset.all(), many=True)
         else:
             serializer = self.serializer_class(self.queryset.filter(group=group), many=True)
+        return Response(serializer.data)"""
+
+    """filter events"""
+
+    def list(self, request):
+        group = request.GET.get("group")
+        ev_type = request.GET.get("evtype")
+        sdate = request.GET.get("sdate")
+        edate = request.GET.get("edate")
+        if sdate is None:
+            sdate = "2000-01-01"
+        if edate is None:
+            edate = "9999-12-31"
+        print(sdate)
+        if group is None and ev_type is None:
+            serializer = self.serializer_class(self.queryset.all(), many=True)
+        elif group is None and ev_type is not None:
+            serializer = self.serializer_class(
+                self.queryset.filter(ev_type=ev_type, start_date__gte=sdate, end_date__lte=edate), many=True)
+        elif group is not None and ev_type is None:
+            serializer = self.serializer_class(
+                self.queryset.filter(group=group, start_date__gte=sdate, end_date__lte=edate), many=True)
+        else:
+            serializer = self.serializer_class(
+                self.queryset.filter(group=group, ev_type=ev_type, start_date__gte=sdate, end_date__lte=edate),
+                many=True)
+        return Response(serializer.data)
+
+    def create(self, request, *args, **kwargs):
+        group = request.data['group'][0]
+        # checks if no group was selected
+        if group == 0:
+            raise NotFound('No Group was selected!')
+        serializerCustom = self.serializer_classUG(
+            self.userGroups.filter(user=request.user.pk, group=group, is_leader=True), many=True)
+        # checks if user has permissions to create the event
+        if request.user.is_staff == False:
+            if serializerCustom.data == []:
+                raise NotFound('Not enough Permissions')
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        return Response(serializer.data)
+
+    def partial_update(self, request, *args, **kwargs):
+        instance = models.Event.objects.get(pk=kwargs.get('pk'))
+        user = request.user.pk
+        group = request.data['group'][0]
+        if group == 0:
+            raise NotFound('No Group was selected!')
+        serializerCustom = self.serializer_classUG(self.userGroups.filter(user=user, group=group, is_leader=True),
+                                                   many=True)
+        if request.user.is_staff == False:
+            if serializerCustom.data == []:
+                raise NotFound('Not enough Permissions')
+        serializer = self.serializer_class(instance, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
         return Response(serializer.data)
 
 
 class GroupViewSet(viewsets.ModelViewSet):
+    permission_classes = (CustomPermissionAdmin,)
     queryset = models.Group.objects.all()
     serializer_class = serializers.GroupSerializer
 
 
 class EventTypeViewSet(viewsets.ModelViewSet):
+    permission_classes = (CustomPermissionAdmin,)
     queryset = models.EventType.objects.all()
     serializer_class = serializers.EventTypeSerializer
 
 
 class StateViewSet(viewsets.ModelViewSet):
+    permission_classes = (CustomPermissionAdmin,)
     queryset = models.State.objects.all()
     serializer_class = serializers.StateSerializer
 
 
 class UserEventViewSet(viewsets.ModelViewSet):
+    permission_classes = (CustomPermissionAdmin,)
     queryset = models.UserEvent.objects.all()
-
     serializer_class = serializers.UserEventSerializer
-
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -121,7 +203,6 @@ class UserEventViewSet(viewsets.ModelViewSet):
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
-
 
     def list(self, request):
         # user = request.GET.get("user")
@@ -129,20 +210,20 @@ class UserEventViewSet(viewsets.ModelViewSet):
         if user is None:
             serializer = self.serializer_class(self.queryset.all(), many=True)
         else:
-            serializer = self.serializer_class(self.queryset.filter(user=user), many=True)
+            serializer = self.serializer_class(self.queryset.filter(user=user, ), many=True)
         return Response(serializer.data)
 
 
 class AllUserEventViewSet(viewsets.ModelViewSet):
+    permission_classes = (CustomPermissionAdmin,)
     queryset = models.UserEvent.objects.all().order_by('user')
     serializer_class = serializers.AllUserEventSerializer
 
 
 class UserGroupViewSet(viewsets.ModelViewSet):
+    permission_classes = (CustomPermissionAdmin,)
     queryset = models.UserGroup.objects.all().order_by('user')
-
     serializer_class = serializers.UserGroupSerializer
-
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -153,16 +234,20 @@ class UserGroupViewSet(viewsets.ModelViewSet):
 
     def list(self, request):
         user = request.user.pk
-        if user is None:
+        leader = request.GET.get("leader")
+        if user is None and leader is None:
             serializer = self.serializer_class(self.queryset.all(), many=True)
+        elif leader:
+            serializer = self.serializer_class(self.queryset.filter(user=user, is_leader=True), many=True)
         else:
             serializer = self.serializer_class(self.queryset.filter(user=user), many=True)
         return Response(serializer.data)
 
 
 class AllUserGroupViewSet(viewsets.ModelViewSet):
+    # persmissions create/update
+    permission_classes = (CustomPermissionAdmin,)
     queryset = models.UserGroup.objects.all().order_by('user')
-
     serializer_class = serializers.AllUserGroupSerializer
 
     def list(self, request):

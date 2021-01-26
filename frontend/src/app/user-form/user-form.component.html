@@ -25,30 +25,37 @@
       <!--{{userFormGroup.value.pictures[0].pk}}-->
 
       <mat-form-field>
-        <input matInput type="text" placeholder="Username" formControlName="username">
+        <input matInput type="text" placeholder="Username" formControlName="username" required>
         <mat-hint align="end">Username</mat-hint>
+        <mat-error *ngIf="userFormGroup.controls.username.hasError('required')">Username is required</mat-error>
       </mat-form-field>
 
 
       <mat-form-field>
-        <input matInput type="text" placeholder="firstname" formControlName="first_name">
+        <input matInput type="text" placeholder="First Name" formControlName="first_name" required>
         <mat-hint align="end">First Name</mat-hint>
+        <mat-error *ngIf="userFormGroup.controls.first_name.hasError('required')">First Name is required</mat-error>
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput type="text" placeholder="lastname" formControlName="last_name">
+        <input matInput type="text" placeholder="Last Name" formControlName="last_name" required>
         <mat-hint align="end">Last Name</mat-hint>
+        <mat-error *ngIf="userFormGroup.controls.last_name.hasError('required')">Last Name is required</mat-error>
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput type="email" placeholder="email" formControlName="email">
+        <input matInput type="email" placeholder="Email" formControlName="email" ngModel [email]="true" required>
         <mat-hint align="end">E-Mail</mat-hint>
+        <mat-error *ngIf="userFormGroup.controls.email.hasError('required')">Email is required</mat-error>
+        <mat-error *ngIf="userFormGroup.controls.email.hasError('email')">Enter a valid Email address</mat-error>
       </mat-form-field>
 
-      <!-- <mat-form-field>
-         <input matInput type="password" placeholder="Enter Password" formControlName="password">
-         <mat-hint align="end">Password</mat-hint>
-       </mat-form-field> -->
+      <mat-form-field>
+        <input matInput type="password" placeholder="Enter Password" formControlName="password" required minlength="6">
+        <mat-hint align="end">Password</mat-hint>
+        <mat-error *ngIf="userFormGroup.controls.password.hasError('required') ">Password is required</mat-error>
+        <mat-error *ngIf="userFormGroup.controls.password.hasError('minlength') ">Password is not secure!</mat-error>
+      </mat-form-field>
 
       <mat-checkbox formControlName="is_active" *ngIf="userService.hasPermission('aceofclubs.change_user')">Is Active?
       </mat-checkbox>
@@ -61,13 +68,10 @@
         <app-mediainput formControlName="pictures" [single]="true"></app-mediainput>
       </div>
 
-
-
       <br/>
 
-
       <mat-card-actions align="center">
-        <button mat-raised-button color="primary" [disabled]="!userFormGroup.valid">
+        <button mat-raised-button color="primary">
           <span *ngIf="!userFormGroup.controls.pk.value">Create</span>
           <span *ngIf="userFormGroup.controls.pk.value">Update</span>
         </button>
@@ -75,18 +79,20 @@
     </form>
   </div>
 
+
+  <!-- nicht  im Form, sonst kommt ein  Fehler bzw eine Warnung -->
+
   <div class="group-add">
     <button (click)="userService.setUserGroupEntry()" mat-raised-button color="primary">Add to Group
     </button>
   </div>
 
 
-
   <div class="group-editOrDelete">
-    <button mat-raised-button color="primary" [routerLink]="'/user-group-list/' + this.userService.clickedUser">Edit/Delete Group
+    <button mat-raised-button color="primary" [routerLink]="'/user-group-list/' + this.userService.clickedUser">
+      Edit/Delete Group
     </button>
   </div>
-
 </div>
 
 <!-- nicht  im Form, sonst kommt ein  Fehler bzw eine Warnung -->

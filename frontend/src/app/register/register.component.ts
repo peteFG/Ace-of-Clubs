@@ -38,15 +38,19 @@ export class RegisterComponent implements OnInit {
 
 
   /* Shorthands for form controls (used from within template) */
-  get password() { return this.registerFormGroup.get('password'); }
-  get password2() { return this.registerFormGroup.get('password2'); }
+  get password() {
+    return this.registerFormGroup.get('password');
+  }
+
+  get password2() {
+    return this.registerFormGroup.get('password2');
+  }
 
   /* Called on each input in either password field */
   onPasswordInput() {
     if (this.registerFormGroup.hasError('passwordMismatch')) {
       this.password2.setErrors([{passwordMismatch: true}]);
-    }
-    else {
+    } else {
       this.password2.setErrors(null);
     }
   }
@@ -54,23 +58,27 @@ export class RegisterComponent implements OnInit {
   passwordMatchValidator: ValidatorFn = (formGroup: FormGroup): ValidationErrors | null => {
     if (formGroup.get('password').value === formGroup.get('password2').value) {
       return null;
-    }
-    else {
+    } else {
       return {passwordMismatch: true};
     }
   }
 
   createOrUpdateUser(): void {
-    this.userService.createUser(this.registerFormGroup.value)
-      .pipe(first())
-      .subscribe(
-        data => {
-          alert('User Registered successfully!!');
-          this.router.navigate(['/login']);
-        },
-        (error) => {
-          alert('Ups! Something went wrong. \n Check your login credentials. \n (Maybe the Username is already taken!)');
-        });
-
+    if (this.registerFormGroup.value.password !== this.registerFormGroup.value.password2) {
+      alert('Passwords do not match!');
+    } else if (this.registerFormGroup.value.password <= 8) {
+      alert('Passwords must be 8 Characters long!');
+    } else {
+      this.userService.createUser(this.registerFormGroup.value)
+        .pipe(first())
+        .subscribe(
+          data => {
+            alert('User Registered successfully!!');
+            this.router.navigate(['/login']);
+          },
+          (error) => {
+            alert('Something went wrong, please check your login credentials!');
+          });
+    }
   }
 }

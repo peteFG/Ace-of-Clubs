@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from . import models
 from .models import Media
+from django.contrib.auth.hashers import make_password
 
 
 
@@ -13,10 +14,6 @@ class UserSerializer(serializers.ModelSerializer):
                   'password',
                   'password2', 'groups']
 
-        extra_kwargs = {
-            'password': {'write_only': True}
-        }
-
     def create(self, validated_data):
         user = models.User(
             email=self.validated_data['email'],
@@ -28,30 +25,42 @@ class UserSerializer(serializers.ModelSerializer):
         )
         password = self.validated_data['password']
         password2 = self.validated_data['password2']
+        if len(password) < 8:
+            raise serializers.ValidationError({'password': 'Password is not secure! (At least, 8 Characters!)'})
         if password != password2:
             raise serializers.ValidationError({'password': 'Passwords do not match!'})
         user.set_password(password)
         user.save()
         user.groups.add(2)
         user.save()
-
         userGroup = models.UserGroup(
             user=user,
             is_leader=False
-
         )
         userGroup.save()
         return user
+
+    def update(self, instance, validated_data):
+        password = validated_data['password']
+        password2 = validated_data['password2']
+        if len(password) < 8:
+            raise serializers.ValidationError({'password': 'Password is not secure! (At least, 8 Characters!)'})
+        if not "pbkdf2_sha256$216000$" in password:
+            if password != password2:
+                raise serializers.ValidationError({'password': 'Passwords do not match!'})
+            instance.set_password(validated_data['password'])
+        instance.username = validated_data['username']
+        instance.first_name = validated_data['first_name']
+        instance.last_name = validated_data['last_name']
+        instance.email = validated_data['email']
+        instance.save()
+        return instance
 
 #class AdminUserSerializer(serializers.ModelSerializer):
 #    class Meta:
 #        model = models.User
 #        fields = ['pk', 'username', 'email', 'first_name', 'last_name', 'is_active', 'is_staff', 'pictures',
 #                  'password', 'groups']
-
-        extra_kwargs = {
-            'password': {'write_only': True}
-        }
 
 
 class MediaSerializer(serializers.ModelSerializer):
@@ -150,6 +159,7 @@ class UserGroupSerializer(serializers.ModelSerializer):
         return obj.group.name if obj.group else ""
 
 
+
 class AllUserGroupSerializer(serializers.ModelSerializer):
     group_name = serializers.SerializerMethodField()
     user_name = serializers.SerializerMethodField()
@@ -163,6 +173,31 @@ class AllUserGroupSerializer(serializers.ModelSerializer):
 
     def get_user_name(self, obj):
         return obj.user.username if obj.group else ""
+
+    def create(self, validated_data):
+        userGroup = models.UserGroup(
+            user=self.validated_data['user'],
+            group=self.validated_data['group'],
+            is_leader=self.validated_data['is_leader'],
+        )
+        userGroup.save()
+        if userGroup.is_leader ==True:
+            model = self.validated_data['user']
+            user = models.User.objects.get(email=str(model))
+            user.groups.add(1)
+            user.save()
+        return userGroup
+
+
+    def update(self, instance, validated_data):
+        instance.is_leader = validated_data['is_leader']
+        instance.save()
+        if instance.is_leader == True:
+            model = self.validated_data['user']
+            user = models.User.objects.get(email=str(model))
+            user.groups.add(1)
+            user.save()
+        return instance
 
 
 class UserEventSerializer(serializers.ModelSerializer):

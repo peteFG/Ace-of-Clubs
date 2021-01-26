@@ -20,11 +20,13 @@ import {AuthGuard} from './guards/auth.guard';
 import {UserProfileComponent} from './user-profile/user-profile.component';
 import {OverviewComponent} from './overview/overview.component';
 import {RegisterComponent} from './register/register.component';
+import {ChangePasswordComponent} from './change-password/change-password.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
+  {path: 'change-pw/:pk', component: ChangePasswordComponent},
   {path: 'home', component: HomeComponent},
   {path: 'user-list', component: UserListComponent, canActivate: [AuthGuard]},
   {path: 'user-form', component: UserFormComponent, canActivate: [AuthGuard]},

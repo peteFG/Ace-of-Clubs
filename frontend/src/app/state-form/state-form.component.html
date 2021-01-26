@@ -6,7 +6,7 @@
       <button>Create</button>-->
 
       <mat-form-field>
-        <input matInput type="text" placeholder="State" formControlName="description">
+        <input matInput type="text" placeholder="State" formControlName="description" required>
         <mat-hint align="end">Name of the State</mat-hint>
         <mat-error *ngIf="stateFormGroup.controls.description.hasError('required')">State is required</mat-error>
       </mat-form-field>

@@ -1,14 +1,13 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
-import { Router } from '@angular/router';
+import {Router} from '@angular/router';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {isEmpty, map} from 'rxjs/operators';
 import {flatMap} from 'rxjs/internal/operators';
 import {IMedia} from '../mediainput/mediainput.component';
 import {Group, GroupService} from './group.service';
-
-
+import {Compiler} from '@angular/core';
 
 
 export interface User {
@@ -31,7 +30,7 @@ export interface UserEvent {
   // profile_picture: Media;
 }
 
-export interface UserGroup{
+export interface UserGroup {
   pk?: number;
   user: number;
   group: number;
@@ -120,7 +119,6 @@ export class UserService {
     localStorage.removeItem('currentUser');
     this.isLoggedIn.next(false);
     this.router.navigate(['/login']);
-
   }
 
 
@@ -135,7 +133,7 @@ export class UserService {
 // bekommt vom Backend noch  den  falschen User!!!! --> vermuute den aktuell angemeldeten im backend (ADMIN)
 
   /*
-  getCurrentUser():Observable<User>{
+  getCurrentUser(): Observable<User> {
     return this.http.get<User>('/api/user/');
   }
   *
@@ -155,12 +153,12 @@ export class UserService {
   // PK des aktuell angemeldeten User in Variable speichern
   getCurrentUserId(): void {
 
-    this.getCurrentUser().
-    subscribe((user) => {
+    this.getCurrentUser().subscribe((user) => {
       this.currentUserPK = 0;
       this.currentUserPK = user.pk;
     });
   }
+
 // ------------------------------------------ USER EVENT ------------------------------------------
   // alle UserEvents des aktuellen Users
 
@@ -168,7 +166,7 @@ export class UserService {
     return this.http.delete('/api/userEvent/' + userEvent.pk + '/');
   }
 
-  getUserEventsOfCurrentUser(): Observable<UserEvent[]>{
+  getUserEventsOfCurrentUser(): Observable<UserEvent[]> {
     return this.http.get<UserEvent[]>('/api/userEvent/?user=');
   }
 
@@ -178,7 +176,7 @@ export class UserService {
 
   setUserEventEntry(eventPK: number) {
     const entriesOfActualUser = this.getUserEventsOfCurrentUser();
-    this.clickedEvent =  eventPK;
+    this.clickedEvent = eventPK;
     // this.getCurrentUserId();
     this.existingUserEntry = 0;
     // alert('Object was pressed - ID of Event =' + eventPK)
@@ -189,19 +187,19 @@ export class UserService {
         checkIfEmpty.push(event);
       });
 
-      if (checkIfEmpty.length == 0){
+      if (checkIfEmpty.length === 0) {
         this.router.navigateByUrl('/user-event-form/');
       } else {
 
         entriesOfActualUser.subscribe((userEvents) => {
           userEvents.forEach((eventEntry) => {
-            if(eventEntry.event == eventPK){
+            if (eventEntry.event === eventPK) {
 
               this.existingUserEntry = eventEntry.pk;
               this.router.navigateByUrl('/user-event-form/' + this.existingUserEntry);
 
             }
-            if (this.existingUserEntry == 0){
+            if (this.existingUserEntry === 0) {
               this.router.navigateByUrl('/user-event-form/');
             }
 
@@ -232,6 +230,10 @@ export class UserService {
 // User Groups for logged in user
   getUserGroupsByUserID(): Observable<UserGroup[]> {
     return this.http.get<UserGroup[]>('/api/userGroup/');
+  }
+
+  getUserGroupsByLeader(userID: number): Observable<UserGroup[]> {
+    return this.http.get<UserGroup[]>('/api/userGroup/?leader=' + userID);
   }
 // user Groups by user ID
   getUserGroupsByUsersPK(userID: number): Observable<UserGroup[]>{

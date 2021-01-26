@@ -19,16 +19,17 @@ export class UserProfileComponent implements OnInit {
   pks: number[];
   userProfile: User[];
   isStaff: boolean;
-  displayedColumns = ['pictures' , 'username', 'email', 'first_name', 'last_name', 'edit', 'delete'];
+  displayedColumns = ['pictures', 'username', 'email', 'first_name', 'last_name', 'edit', 'changePW', 'delete'];
 
   constructor(private http: HttpClient,
               public userService: UserService,
               private eventService: EventService,
-              public dialog: MatDialog) { }
+              public dialog: MatDialog) {
+  }
 
   ngOnInit(): void {
 
-    this.vacationDateForm = new FormGroup( {
+    this.vacationDateForm = new FormGroup({
       vac_start_date: new FormControl(new Date(), Validators.required),
       vac_end_date: new FormControl(new Date(), Validators.required)
     });
@@ -136,12 +137,13 @@ export class UserProfileComponent implements OnInit {
   }
 
 
-/** VERWENDEN WENN BACKEND PROBLEM BESEITIGT */
+  /** VERWENDEN WENN BACKEND PROBLEM BESEITIGT */
+
   /*private retrieveUser(): void {
 
     this.userService.getCurrentUser().subscribe((user)=>{
 
-      this.userProfile= user;
+      this.userProfile = user;
     });
   }*/
 
@@ -175,14 +177,14 @@ export class VacationForm implements OnInit {
   userProfile: User[];
   isStaff: boolean;
 
-  constructor( private http: HttpClient,
-               public userService: UserService,
-               private eventService: EventService,
+  constructor(private http: HttpClient,
+              public userService: UserService,
+              private eventService: EventService,
   ) {
   }
 
   ngOnInit(): void {
-    this.vacationDateForm = new FormGroup( {
+    this.vacationDateForm = new FormGroup({
       vac_start_date: new FormControl(new Date(), Validators.required),
       vac_end_date: new FormControl(new Date(), Validators.required)
     });

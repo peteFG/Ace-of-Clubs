@@ -6,6 +6,7 @@ import {Group, GroupService} from '../services/group.service';
 import {HttpClient} from '@angular/common/http';
 import {EventType, EventTypeService} from '../services/event-type.service';
 import {UserService} from '../services/user.service';
+
 /*import {User, UserService} from "../services/user.service";*/
 
 @Component({
@@ -19,6 +20,9 @@ export class EventFormComponent implements OnInit {
   eventTypeOptions: EventType[];
   groupOptions: Group[];
   isStaff: boolean;
+  groupOptionsForLeader: Group[];
+  currentUserIsStaff: boolean;
+
   /*personOptions: User[];*/
 
   constructor(private eventService: EventService,
@@ -44,15 +48,31 @@ export class EventFormComponent implements OnInit {
       start_date: new FormControl(new Date(), Validators.required),
       end_date: new FormControl(new Date(), Validators.required),
       active: new FormControl(true),
-      group: new FormControl([1]),
+      group: new FormControl([0]),
     });
 
     this.eventTypeService.retrieveEventTypeOptions().subscribe((eventTypeOptions) => {
       this.eventTypeOptions = eventTypeOptions;
     });
+    this.userService.getCurrentUser().subscribe((user) => {
+      this.isStaff = false;
+      this.isStaff = user.is_staff;
 
-    this.groupService.retrieveGroups().subscribe((groupOptions) => {
-      this.groupOptions = groupOptions;
+      console.log(this.isStaff);
+      if (this.isStaff === true) {
+        this.groupService.retrieveGroups().subscribe((groupOptions) => {
+          this.groupOptions = groupOptions;
+        });
+      } else {
+        this.userService.getUserGroupsByLeader(this.userService.currentUserPK).subscribe((userGroups) => {
+          this.groupOptions = [];
+          userGroups.forEach((userGroup) => {
+            this.groupService.getGroup(userGroup.group).subscribe((group) => {
+              this.groupOptions.push(group);
+            });
+          });
+        });
+      }
     });
 
     /*this.userService.getUsers()
@@ -67,10 +87,6 @@ export class EventFormComponent implements OnInit {
           this.eventFormGroup.patchValue(event);
         });
     }
-
-    this.userService.getCurrentUser().subscribe((user) => {
-      this.isStaff = user.is_staff;
-    });
   }
 
   createOrUpdateEvent(): void {
@@ -88,5 +104,4 @@ export class EventFormComponent implements OnInit {
         });
     }
   }
-
 }

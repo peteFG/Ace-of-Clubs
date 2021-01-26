@@ -33,11 +33,12 @@
 
   <!-- Groups -->
   <mat-form-field>
-    <mat-select placeholder="Groups" formControlName="group">
+    <mat-select placeholder="Groups" formControlName="group" required>
       <mat-option [value]="groupOption.pk"
                   *ngFor="let groupOption of groupOptions">{{groupOption.name}}</mat-option>
     </mat-select>
     <mat-hint align="end">The groups involved in this event</mat-hint>
+    <mat-error *ngIf="userGroupFormGroup.controls.group.hasError('required')">Group is required</mat-error>
   </mat-form-field>
 
   <!-- Is Leader -->

@@ -7,9 +7,9 @@
       <button>Create</button>-->
 
       <mat-form-field>
-        <input matInput type="text" placeholder="Group Name" formControlName="name">
+        <input matInput type="text" placeholder="Group Name" formControlName="name" required>
         <mat-hint align="end">Name of the Group</mat-hint>
-        <mat-error *ngIf="groupFormGroup.controls.name.hasError('required')">State is required</mat-error>
+        <mat-error *ngIf="groupFormGroup.controls.name.hasError('required')">Group Name is required</mat-error>
       </mat-form-field>
 
       <mat-card-actions align="center">
