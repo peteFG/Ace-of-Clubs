@@ -49,6 +49,8 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatDialogModule } from '@angular/material/dialog';
+import { AllEventsListComponent } from './all-events-list/all-events-list.component';
+// @ts-ignore
 import {MatTableExporterModule } from 'mat-table-exporter';
 
 
@@ -86,7 +88,8 @@ import {MatTableExporterModule } from 'mat-table-exporter';
     OverviewComponent,
     MediainputComponent,
     VacationForm,
-    DeleteConfirmation
+    DeleteConfirmation,
+    AllEventsListComponent
   ],
     imports: [
         BrowserModule,

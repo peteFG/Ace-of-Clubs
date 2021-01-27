@@ -8,12 +8,17 @@ from .models import Media
 
 class UserSerializer(serializers.ModelSerializer):
     password2 = serializers.CharField(style={'input_type': 'password'}, write_only=True)
+    group_names = serializers.SerializerMethodField()
 
     class Meta:
         model = models.User
         fields = ['pk', 'username', 'email', 'first_name', 'last_name', 'is_active', 'is_staff', 'pictures',
                   'password',
-                  'password2', 'groups']
+                  'password2', 'groups', 'group_names']
+
+    def get_group_names(self, obj):
+        return ", ".join([str(i["group__name"]) for i in obj.group_relations.values("group__name")])
+
 
     def create(self, validated_data):
         user = models.User(
@@ -81,24 +86,45 @@ class EventSerializer(serializers.ModelSerializer):
     state_one = serializers.SerializerMethodField()
     state_two = serializers.SerializerMethodField()
     state_three = serializers.SerializerMethodField()
+    count_state_one = serializers.SerializerMethodField()
+    count_state_two = serializers.SerializerMethodField()
+    count_state_three = serializers.SerializerMethodField()
     group_names = serializers.SerializerMethodField()
     event_type_name = serializers.SerializerMethodField()
 
+    def get_count_state_one(self, obj):
+        listofstateone = []
+
+        for x in obj.user_relations.filter(state__pk=1).values("user__username"):
+            listofstateone.append(x)
+        return len(listofstateone)
+
+    def get_count_state_two(self, obj):
+        listofstatetwo = []
+
+        for x in obj.user_relations.filter(state__pk=2).values("user__username"):
+            listofstatetwo.append(x)
+        return len(listofstatetwo)
+
+    def get_count_state_three(self, obj):
+        listofstatethree = []
+
+        for x in obj.user_relations.filter(state__pk=3).values("user__username"):
+            listofstatethree.append(x)
+        return len(listofstatethree)
+
     def get_state_one(self, obj):
-        # ACHTUNG!! falls kein Status mit "Teilnehmen" existiert, wird dies nicht funktionieren!!!
-        #  .all()  verwenden um alle anzeigen zu lassen
+
         return ", ".join([str(i["user__username"]) for i in
                           obj.user_relations.filter(state__pk=1).values("user__username")])
 
     def get_state_two(self, obj):
-        # ACHTUNG!! falls kein Status mit "Teilnehmen" existiert, wird dies nicht funktionieren!!!
-        #  .all()  verwenden um alle anzeigen zu lassen
+
         return ", ".join([str(i["user__username"]) for i in
                           obj.user_relations.filter(state__pk=2).values("user__username")])
 
     def get_state_three(self, obj):
-        # ACHTUNG!! falls kein Status mit "Teilnehmen" existiert, wird dies nicht funktionieren!!!
-        #  .all()  verwenden um alle anzeigen zu lassen
+
         return ", ".join([str(i["user__username"]) for i in
                           obj.user_relations.filter(state__pk=3).values("user__username")])
 
@@ -125,7 +151,8 @@ class EventSerializer(serializers.ModelSerializer):
         fields = ['pk', 'name', 'start_date', 'start_time',
                   'end_date', 'end_time', 'active', 'group',
                   'group_names', 'ev_type', 'event_type_name',
-                  'state_one', 'state_two', 'state_three']
+                  'state_one', 'state_two', 'state_three',
+                  'count_state_one', 'count_state_two', 'count_state_three']
 
     def get_group_names(self, obj):
         listofnames = []

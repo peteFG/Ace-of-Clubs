@@ -17,24 +17,6 @@ from .serializers import UserSerializer
 
 
 # AdminUserViewset  --> admin should be able to see all users
-
-
-# class AdminUserViewSet(viewsets.ModelViewSet):
-#    authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
-#    queryset = models.User.objects.all().order_by('username')
-#    serializer_class = serializers.AdminUserSerializer
-#
-#    def list(self, request):
-#        userid = request.GET.get("pk")
-#        if userid is None:
-#            serializer = self.serializer_class(self.queryset.all(), many=True)
-#        else:
-#            serializer = self.serializer_class(self.queryset.filter(id=userid), many=True)
-#        return Response(serializer.data)
-
-
-# UserViewset --> only gets current user --> not important for common user to see all other users
-# now shows all user  because .id do not give correct user back
 class CustomPermission(DjangoModelPermissions):
 
     def has_permission(self, request, view, *args, **kwargs):
@@ -55,12 +37,34 @@ class CustomPermissionAdmin(DjangoModelPermissions):
         return permission
 
 
+class AllUserViewSet(viewsets.ModelViewSet):
+    queryset = models.User.objects.all().order_by('pk')
+    permission_classes = (CustomPermission,)
+    serializer_class = serializers.UserSerializer
+
+    def list(self, request):
+        userid = request.GET.get("pk")
+        if userid is None:
+            serializer = self.serializer_class(self.queryset.all(), many=True)
+        else:
+            serializer = self.serializer_class(self.queryset.filter(id=userid), many=True)
+        return Response(serializer.data)
+
+
 class UserViewSet(viewsets.ModelViewSet):
     queryset = models.User.objects.all().order_by('pk')
     permission_classes = (CustomPermission,)
     serializer_class = serializers.UserSerializer
 
     def list(self, request):
+        user = request.user.pk
+        if user is None:
+            serializer = self.serializer_class(self.queryset.all(), many=True)
+        else:
+            serializer = self.serializer_class(self.queryset.filter(pk=user), many=True)
+        return Response(serializer.data)  # Response(self.serializer_class(queryset, many=True).data) #
+
+    """def list(self, request):
         queryset = []
         username = request.GET.get("username")
         search = request.GET.get("search")
@@ -68,14 +72,14 @@ class UserViewSet(viewsets.ModelViewSet):
             serializer = self.serializer_class(self.queryset.all(), many=True)
         else:
             serializer = self.serializer_class(self.queryset.filter(username=username), many=True)
-        """if search is not None:
+        if search is not None:
             queryset = self.queryset.filter(email__contains=search)
             queryset |= self.queryset.filter(username__contains=search)
             queryset |= self.queryset.filter(first_name__contains=search)
             queryset |= self.queryset.filter(last_name__contains=search)
         else:
-            queryset = self.queryset"""
-        return Response(serializer.data)  # Response(self.serializer_class(queryset, many=True).data) #
+            queryset = self.queryset
+        return Response(serializer.data)  # Response(self.serializer_class(queryset, many=True).data) #"""
 
     # holt user der im backend angemeldet ist
     def partial_update(self, request, *args, **kwargs):
@@ -193,6 +197,57 @@ class EventViewSet(viewsets.ModelViewSet):
         serializer.save()
         return Response(serializer.data)
 
+"""class AllEventsViewSet(viewsets.ModelViewSet):
+    queryset = models.Event.objects.all().order_by('start_date')
+    serializer_class = serializers.EventSerializer
+
+    def list(self, request):
+        queryset = self.queryset
+        group = request.GET.get("group")
+        ev_type = request.GET.get("evtype")
+        sdate = request.GET.get("sdate")
+        edate = request.GET.get("edate")
+        search = request.GET.get("search")
+        null = 'null'
+        if search is not None:
+            queryset = queryset.filter(name__contains=search)
+        if group is not None and group != null:
+            queryset = queryset.filter(group=int(group))
+        if ev_type is not None and ev_type != null:
+            queryset = queryset.filter(ev_type=int(ev_type))
+        if sdate is not None and sdate != null:
+            queryset = queryset.filter(start_date__gte=sdate)
+        if edate is not None and edate != null:
+            queryset = queryset.filter(end_date__lte=edate)
+
+        return Response(self.serializer_class(queryset, many=True).data)
+"""
+
+class AllEventsViewSet(viewsets.ModelViewSet):
+    queryset = models.Event.objects.all().order_by('start_date')
+    serializer_class = serializers.EventSerializer
+
+    def list(self, request):
+        queryset = self.queryset.all()
+        group = request.GET.get("group")
+        ev_type = request.GET.get("evtype")
+        sdate = request.GET.get("sdate")
+        edate = request.GET.get("edate")
+        search = request.GET.get("search")
+        null = 'null'
+        if search is not None:
+            queryset = queryset.filter(name__contains=search)
+        if group is not None and group != null:
+            queryset = queryset.filter(group=int(group))
+        if ev_type is not None and ev_type != null:
+            queryset = queryset.filter(ev_type=int(ev_type))
+        if sdate is not None and sdate != null:
+            queryset = queryset.filter(start_date__gte=sdate)
+        if edate is not None and edate != null:
+            queryset = queryset.filter(end_date__lte=edate)
+
+        return Response(self.serializer_class(queryset, many=True).data)
+
 
 class GroupViewSet(viewsets.ModelViewSet):
     permission_classes = (CustomPermissionAdmin,)
@@ -279,7 +334,8 @@ class AllUserGroupViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.AllUserGroupSerializer
 
     def list(self, request):
-        user = request.GET.get("user")
+        #user = request.GET.get("user")
+        user = request.user.pk
         if user is None:
             serializer = self.serializer_class(self.queryset.all(), many=True)
         else:

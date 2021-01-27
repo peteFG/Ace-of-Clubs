@@ -22,6 +22,7 @@ export class UserListComponent extends CdkTableExporterModule implements OnInit 
 
   ngOnInit(): void {
     this.retrieveUsers();
+    //console.log(this.userService.currentUserPK)
   }
 
   private retrieveUsers(): void {

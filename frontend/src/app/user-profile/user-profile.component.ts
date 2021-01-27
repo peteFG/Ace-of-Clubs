@@ -157,7 +157,7 @@ export class VacationForm implements OnInit {
     const entriesOfActualUser = this.userService.getUserEventsOfCurrentUser();
     this.pks = [];
 
-    this.eventService.personalEventsFunction().subscribe((events) => {
+    this.eventService.getEvents().subscribe((events) => {
 
       const vacationStart = vac_start_date;
       const vacationEnd = vac_end_date;

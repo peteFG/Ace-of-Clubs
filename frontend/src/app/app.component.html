@@ -23,7 +23,7 @@
           <button mat-menu-item routerLink="event-list" *ngIf="userService.hasPermission('aceofclubs.view_event')">My
             Events
           </button>
-          <button mat-menu-item routerLink="event-list" *ngIf="userService.hasPermission('aceofclubs.add_event')">All
+          <button mat-menu-item routerLink="all-events-list" *ngIf="userService.hasPermission('aceofclubs.add_event')">All
             Events
           </button>
           <button mat-menu-item routerLink="event-form" *ngIf="userService.hasPermission('aceofclubs.add_event')">Create

@@ -17,6 +17,12 @@ export interface Event {
   group: number[];
   group_names: string[];
   event_type_name: string;
+  state_one: string[];
+  state_two: string[];
+  state_three: string[];
+  count_state_one: number;
+  count_state_two: number;
+  count_state_three: number;
 
   // not from API
   // personalEntry?: number;
@@ -38,7 +44,7 @@ export class EventService {
   }
 
   deleteEvent(event: Event): Observable<any> {
-    return this.http.delete('/api/events/' + event.pk + '/');
+    return this.http.delete('/api/allEvents/' + event.pk + '/');
   }
 
   getEvent(pk: number): Observable<Event> {
@@ -53,12 +59,6 @@ export class EventService {
     return this.http.post<Event>('/api/events/', event);
   }
 
-
-  // Filter Events nach Gruppen des aktuellen User
-  filtEvents(groupID: number): Observable<Event[]> {
-    return this.http.get<Event[]>('api/events/?group=' + groupID);
-  }
-
   searchEventCustom(str: string): Observable<Event[]> {
     return this.http.get<Event[]>('/api/events/?search=' + str);
   }
@@ -67,6 +67,46 @@ export class EventService {
 
     return this.http.get<Event[]>('/api/events/?group=' + group  +'&evtype=' + evtype  +'&sdate=' + sdate +'&edate=' + edate );
   }
+
+  //-------------------- Section  for ADMIN ----------------------
+
+  getAllEvents(): Observable<Event[]> {
+    return this.http.get<Event[]>('/api/allEvents/');
+  }
+
+  deleteEntryAllEvents(event: Event): Observable<any> {
+    return this.http.delete('/api/allEvents/' + event.pk + '/');
+  }
+
+  getEntryAllEvents(pk: number): Observable<Event> {
+    return this.http.get<Event>('/api/allEvents/' + pk + '/');
+  }
+
+  updateEntryAllEvents(event: Event): Observable<any> {
+    return this.http.patch('/api/allEvents/' + event.pk + '/', event);
+  }
+
+  createEntryAllEvents(event: Event): Observable<Event> {
+    return this.http.post<Event>('/api/allEvents/', event);
+  }
+
+  // Filter Events nach Gruppen des aktuellen User
+  filtEvents(groupID: number): Observable<Event[]> {
+    return this.http.get<Event[]>('api/events/?group=' + groupID);
+  }
+
+  searchAllEventsCustom(str: string): Observable<Event[]> {
+    return this.http.get<Event[]>('/api/allEvents/?search=' + str);
+  }
+
+  filterAllEventsCustom(group?: string, evtype?: string, sdate?: string, edate?: string): Observable<Event[]> {
+
+    return this.http.get<Event[]>('/api/allEvents/?group=' + group  +'&evtype=' + evtype  +'&sdate=' + sdate +'&edate=' + edate );
+  }
+
+  /*
+
+  RIP - My lovely function - 27.01.2021
 
   personalEventsFunction(): Observable<Event[]> {
     let personalEventsPK = [];
@@ -90,5 +130,7 @@ export class EventService {
       }));
     }));
   }
+  */
+
 }
 

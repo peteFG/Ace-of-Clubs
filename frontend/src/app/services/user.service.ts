@@ -3,11 +3,9 @@ import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {Router} from '@angular/router';
 import {JwtHelperService} from '@auth0/angular-jwt';
-import {isEmpty, map} from 'rxjs/operators';
-import {flatMap} from 'rxjs/internal/operators';
+import {map} from 'rxjs/operators';
 import {IMedia} from '../mediainput/mediainput.component';
-import {Group, GroupService} from './group.service';
-import {Compiler} from '@angular/core';
+import {GroupService} from './group.service';
 
 
 export interface User {
@@ -27,6 +25,7 @@ export interface UserEvent {
   user: number;
   event: number;
   state: number;
+  state_name:string;
   // profile_picture: Media;
 }
 
@@ -73,7 +72,7 @@ export class UserService {
   }
 
   deleteUser(user: User): Observable<any> {
-    if (this.currentUserPK === 1) {
+    if (this.currentUser[0].is_staff === true) {
       return this.http.delete('/api/users/' + user.pk + '/');
     } else {
       alert('Users may only be deleted by Administrators!');
@@ -125,6 +124,7 @@ export class UserService {
 
 
   // Aktuell angemeldeten User mittels username ermitteln
+  /*
   getCurrentUser(): Observable<User> {
     return this.http.get<User[]>('/api/users/?username=' + localStorage.getItem('currentUser'))
       .pipe(map((users) => {
@@ -132,14 +132,13 @@ export class UserService {
       }));
   }
 
-// bekommt vom Backend noch  den  falschen User!!!! --> vermuute den aktuell angemeldeten im backend (ADMIN)
-
-  /*
-  getCurrentUser(): Observable<User> {
-    return this.http.get<User>('/api/user/');
-  }
-  *
    */
+
+  getCurrentUser(): Observable<User> {
+    return this.http.get<User>('/api/user/').pipe(map((user)=>{
+      return user[0];
+    }));
+  }
 
   retrieveCurrentUser(): void {
     this.getCurrentUser().subscribe((user) => {
