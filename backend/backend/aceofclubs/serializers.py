@@ -55,7 +55,7 @@ class UserSerializer(serializers.ModelSerializer):
         instance.first_name = validated_data['first_name']
         instance.last_name = validated_data['last_name']
         instance.email = validated_data['email']
-        if instance.pictures.count() < 2:
+        if instance.pictures.count() > 1:
             raise serializers.ValidationError({'You can have only one picture at time!'})
         instance.pictures.set(validated_data['pictures'])
         instance.is_active = validated_data['is_active']
