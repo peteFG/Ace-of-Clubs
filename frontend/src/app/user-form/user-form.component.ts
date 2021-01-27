@@ -40,6 +40,7 @@ export class UserFormComponent implements OnInit {
       password2: ['', Validators.required],
       is_active: new FormControl(false),
       is_staff: new FormControl(false),
+      groups: new FormControl([2]),
     });
     this.userService.retrieveCurrentUser();
     const pk = this.route.snapshot.paramMap.get('pk');

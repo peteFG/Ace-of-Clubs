@@ -45,13 +45,13 @@
 
               <!-- Genre -->
               <ng-container matColumnDef="description" class="state_column">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>States</th>
+                <th mat-header-cell *matHeaderCellDef>States</th>
                 <td mat-cell *matCellDef="let element"> {{element.description}} </td>
               </ng-container>
 
               <!-- Actions Column -->
               <ng-container matColumnDef="actions">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+                <th mat-header-cell *matHeaderCellDef></th>
                 <td mat-cell *matCellDef="let element">
                   <button matTooltip="Edit" matTooltipClass="tooltips" mat-icon-button color="standard"
                           [routerLink]="'/state-form/' + element.pk">

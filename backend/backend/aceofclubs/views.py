@@ -43,12 +43,15 @@ class AllUserViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.UserSerializer
 
     def list(self, request):
-        userid = request.GET.get("pk")
-        if userid is None:
-            serializer = self.serializer_class(self.queryset.all(), many=True)
+        search = request.GET.get("search")
+        if search is not None:
+            queryset = self.queryset.filter(email__contains=search)
+            queryset |= self.queryset.filter(username__contains=search)
+            queryset |= self.queryset.filter(first_name__contains=search)
+            queryset |= self.queryset.filter(last_name__contains=search)
         else:
-            serializer = self.serializer_class(self.queryset.filter(id=userid), many=True)
-        return Response(serializer.data)
+            queryset = self.queryset
+        return Response(self.serializer_class(queryset, many=True).data)
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -63,23 +66,6 @@ class UserViewSet(viewsets.ModelViewSet):
         else:
             serializer = self.serializer_class(self.queryset.filter(pk=user), many=True)
         return Response(serializer.data)  # Response(self.serializer_class(queryset, many=True).data) #
-
-    """def list(self, request):
-        queryset = []
-        username = request.GET.get("username")
-        search = request.GET.get("search")
-        if username is None:
-            serializer = self.serializer_class(self.queryset.all(), many=True)
-        else:
-            serializer = self.serializer_class(self.queryset.filter(username=username), many=True)
-        if search is not None:
-            queryset = self.queryset.filter(email__contains=search)
-            queryset |= self.queryset.filter(username__contains=search)
-            queryset |= self.queryset.filter(first_name__contains=search)
-            queryset |= self.queryset.filter(last_name__contains=search)
-        else:
-            queryset = self.queryset
-        return Response(serializer.data)  # Response(self.serializer_class(queryset, many=True).data) #"""
 
     # holt user der im backend angemeldet ist
     def partial_update(self, request, *args, **kwargs):
@@ -118,26 +104,24 @@ class EventViewSet(viewsets.ModelViewSet):
     userGroups = models.UserGroup.objects.all().order_by('user')
     serializer_classUG = serializers.UserGroupSerializer
     serializer_class = serializers.EventSerializer
-
-    """def list(self, request):
-        group = request.GET.get("group")
-        if group is None:
-            serializer = self.serializer_class(self.queryset.all(), many=True)
-        else:
-            serializer = self.serializer_class(self.queryset.filter(group=group), many=True)
-        return Response(serializer.data)"""
-
-    """filter events"""
+    fields = ['pk', 'name', 'start_date', 'start_time',
+              'end_date', 'end_time', 'active']
 
     def list(self, request):
-        groupsUser = models.UserGroup.objects.filter(user=request.user.pk).values_list('group_id', flat=True)
-        queryset = self.queryset.filter(group__in=groupsUser)
+        if request.user.pk is None:
+            raise NotFound('No User ID found!')
         group = request.GET.get("group")
         ev_type = request.GET.get("evtype")
         sdate = request.GET.get("sdate")
         edate = request.GET.get("edate")
         search = request.GET.get("search")
+        sort = request.GET.get("sort")
         null = 'null'
+        fields = self.fields
+        if not fields.__contains__(sort):
+            sort = 'pk'
+        groupsOfUser = models.UserGroup.objects.filter(user=request.user.pk).values_list('group_id', flat=True)
+        queryset = self.queryset.filter(group__in=groupsOfUser).order_by(sort)
         if search is not None:
             queryset = queryset.filter(name__contains=search)
         if group is not None and group != null:
@@ -148,21 +132,6 @@ class EventViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(start_date__gte=sdate)
         if edate is not None and edate != null:
             queryset = queryset.filter(end_date__lte=edate)
-
-        """ first try (it worked, tho!)
-        if group is None and ev_type is None:
-            serializer = self.serializer_class(self.queryset.all(), many=True)
-        elif group is None and ev_type is not None:
-            serializer = self.serializer_class(
-                self.queryset.filter(ev_type=ev_type, start_date__gte=sdate, end_date__lte=edate), many=True)
-        elif group is not None and ev_type is None:
-            serializer = self.serializer_class(
-                self.queryset.filter(group=group, start_date__gte=sdate, end_date__lte=edate), many=True)
-        else:
-            serializer = self.serializer_class(
-                self.queryset.filter(group=group, ev_type=ev_type, start_date__gte=sdate, end_date__lte=edate),
-                many=True)"""
-
         return Response(self.serializer_class(queryset, many=True).data)
 
     def create(self, request, *args, **kwargs):
@@ -197,35 +166,12 @@ class EventViewSet(viewsets.ModelViewSet):
         serializer.save()
         return Response(serializer.data)
 
-"""class AllEventsViewSet(viewsets.ModelViewSet):
-    queryset = models.Event.objects.all().order_by('start_date')
-    serializer_class = serializers.EventSerializer
-
-    def list(self, request):
-        queryset = self.queryset
-        group = request.GET.get("group")
-        ev_type = request.GET.get("evtype")
-        sdate = request.GET.get("sdate")
-        edate = request.GET.get("edate")
-        search = request.GET.get("search")
-        null = 'null'
-        if search is not None:
-            queryset = queryset.filter(name__contains=search)
-        if group is not None and group != null:
-            queryset = queryset.filter(group=int(group))
-        if ev_type is not None and ev_type != null:
-            queryset = queryset.filter(ev_type=int(ev_type))
-        if sdate is not None and sdate != null:
-            queryset = queryset.filter(start_date__gte=sdate)
-        if edate is not None and edate != null:
-            queryset = queryset.filter(end_date__lte=edate)
-
-        return Response(self.serializer_class(queryset, many=True).data)
-"""
 
 class AllEventsViewSet(viewsets.ModelViewSet):
     queryset = models.Event.objects.all().order_by('start_date')
     serializer_class = serializers.EventSerializer
+    fields = ['pk', 'name', 'start_date', 'start_time',
+              'end_date', 'end_time', 'active']
 
     def list(self, request):
         queryset = self.queryset.all()
@@ -234,7 +180,11 @@ class AllEventsViewSet(viewsets.ModelViewSet):
         sdate = request.GET.get("sdate")
         edate = request.GET.get("edate")
         search = request.GET.get("search")
+        sort = request.GET.get("sort")
         null = 'null'
+        fields = self.fields
+        if not fields.__contains__(sort):
+            sort = 'pk'
         if search is not None:
             queryset = queryset.filter(name__contains=search)
         if group is not None and group != null:
@@ -245,7 +195,7 @@ class AllEventsViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(start_date__gte=sdate)
         if edate is not None and edate != null:
             queryset = queryset.filter(end_date__lte=edate)
-
+        queryset = queryset.order_by(sort)
         return Response(self.serializer_class(queryset, many=True).data)
 
 
@@ -280,7 +230,6 @@ class UserEventViewSet(viewsets.ModelViewSet):
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
     def list(self, request):
-        # user = request.GET.get("user")
         user = request.user.pk
         if user is None:
             serializer = self.serializer_class(self.queryset.all(), many=True)
@@ -334,7 +283,7 @@ class AllUserGroupViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.AllUserGroupSerializer
 
     def list(self, request):
-        #user = request.GET.get("user")
+        # user = request.GET.get("user")
         user = request.user.pk
         if user is None:
             serializer = self.serializer_class(self.queryset.all(), many=True)
