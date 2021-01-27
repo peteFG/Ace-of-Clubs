@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {Group, GroupService} from '../services/group.service';
 import {UserService} from '../services/user.service';
 import {HttpClient} from '@angular/common/http';
-import {EventService} from "../services/event.service";
-
+import {EventService} from '../services/event.service';
+import {MatDialog} from '@angular/material/dialog';
+import {GroupFormComponent} from '../group-form/group-form.component';
 
 
 @Component({
@@ -19,11 +20,21 @@ export class GroupListComponent implements OnInit {
   constructor(private http: HttpClient,
               private groupService: GroupService,
               private eventService: EventService,
-              public userService: UserService) { }
+              public userService: UserService,
+              public dialog: MatDialog) {
 
+  }
 
   ngOnInit(): void {
     this.retrieveGroups();
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(GroupFormComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('Dialog result ${result');
+    });
   }
 
   private retrieveGroups(): void {
@@ -34,7 +45,7 @@ export class GroupListComponent implements OnInit {
   }
 
   deleteGroup(group: Group): void {
-    if (localStorage.getItem('currentUser') == group.leader || localStorage.getItem('currentUser') == "admin") {
+    if (localStorage.getItem('currentUser') == group.leader || localStorage.getItem('currentUser') == 'admin') {
       this.groupService.deleteGroup(group)
         .subscribe(() => {
           this.retrieveGroups();
