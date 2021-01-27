@@ -29,10 +29,13 @@ export class UserListComponent implements OnInit {
   deleteUser(user: User): void {
     this.userService.deleteUser(user)
       .subscribe(() => {
-      this.retrieveUsers();
-      alert('User deleted successfully!');
-    });
+        this.retrieveUsers();
+        alert('User deleted successfully!');
+      });
   }
 
+  searchCustom(str: string): void {
+    this.userService.searchUserCustom(str);
+  }
 
 }

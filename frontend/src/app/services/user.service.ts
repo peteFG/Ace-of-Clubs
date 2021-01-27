@@ -68,8 +68,6 @@ export class UserService {
   }
 
 
-
-
   getUsers(): Observable<User[]> {
     return this.http.get<User[]>('/api/users/');
   }
@@ -90,6 +88,14 @@ export class UserService {
 
   getUser(pk: number): Observable<User> {
     return this.http.get<User>('/api/users/' + pk + '/');
+  }
+
+  searchUserCustom(str: string): Observable<User> {
+    return this.http.get<User>('/api/users/?search=' + str);
+  }
+
+  filterEventCustom(group: number, evtype: number, sdate: string, edate: string): Observable<User> {
+    return this.http.get<User>('/api/events/?group=' + group + '&evtype=' + evtype + '&sdate=' + sdate + '&edate' + edate);
   }
 
   updateUser(user: User): Observable<any> {
@@ -170,11 +176,11 @@ export class UserService {
     return this.http.get<UserEvent[]>('/api/userEvent/');
   }
 
-  getUserEventsByUserID(iD: number): Observable<UserEvent[]>{
-    return this.http.get<UserEvent[]>('/api/allUserEvents/?user='+iD);
+  getUserEventsByUserID(iD: number): Observable<UserEvent[]> {
+    return this.http.get<UserEvent[]>('/api/allUserEvents/?user=' + iD);
   }
 
-  getAllUserEvents(): Observable<UserEvent[]>{
+  getAllUserEvents(): Observable<UserEvent[]> {
     return this.http.get<UserEvent[]>('/api/allUserEvents/');
   }
 
@@ -215,7 +221,6 @@ export class UserService {
     });
 
 
-
   }
 
 
@@ -239,12 +244,13 @@ export class UserService {
   getUserGroupsByLeader(userID: number): Observable<UserGroup[]> {
     return this.http.get<UserGroup[]>('/api/userGroup/?leader=' + userID);
   }
+
 // user Groups by user ID
-  getUserGroupsByUsersPK(userID: number): Observable<UserGroup[]>{
+  getUserGroupsByUsersPK(userID: number): Observable<UserGroup[]> {
     return this.http.get<UserGroup[]>('/api/allUserGroups/?user=' + userID);
   }
 
-  getAllUserGroups(): Observable<UserGroup[]>{
+  getAllUserGroups(): Observable<UserGroup[]> {
     return this.http.get<UserGroup[]>('/api/allUserGroups/');
   }
 
@@ -256,12 +262,12 @@ export class UserService {
   // diese Gruppen anschließend als input für userGroupForm
   // das heißt beim Button im User muss die UserID ausgelesen werden und zum filtern verwendet werden
 
-  setUserGroupEntry(){
+  setUserGroupEntry() {
     this.groupService.getGroupPKs();
     const userID = this.clickedUser;
     const entriesOfClickedUser = this.getUserGroupsByUsersPK(userID);
     // this.clickedUser = userID;
-    this.availableGroups =[];
+    this.availableGroups = [];
     //  this.groupService.existingGroupsPK --> hier sind die PKs der aktuell existierenden Gruppen verspeichert
     // this.clickedUser = userID;
     this.existingGroupEntry = 0;
@@ -276,21 +282,21 @@ export class UserService {
 
       // dapasst noch was nicht --> wenn  attended leer --> dann bekommt er iwie keine existing  Groups
       // eig net so tragisch, da jede/r in der ALL Gruppe sein sollte
-      if (attendedGroups.length == 0){
+      if (attendedGroups.length == 0) {
 
         // this.availableGroups.concat(this.groupService.existingGroupsPK);
         this.availableGroups = this.groupService.existingGroupsPK;
 
       } else {
 
-        for (let elem of (this.groupService.existingGroupsPK)){
-          if (!attendedGroups.includes(elem)){
+        for (let elem of (this.groupService.existingGroupsPK)) {
+          if (!attendedGroups.includes(elem)) {
             this.availableGroups.push(elem);
           }
         }
       }
 
-  });
+    });
 
     this.router.navigateByUrl('/user-group-form/');
 

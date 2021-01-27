@@ -61,18 +61,27 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.UserSerializer
 
     def list(self, request):
+        queryset = []
         username = request.GET.get("username")
+        search = request.GET.get("search")
         if username is None:
             serializer = self.serializer_class(self.queryset.all(), many=True)
         else:
             serializer = self.serializer_class(self.queryset.filter(username=username), many=True)
-        return Response(serializer.data)
+        """ zukunftsmusik
+        if search is not None:
+            queryset = self.queryset.filter(email__contains=search)
+            queryset |= self.queryset.filter(username__contains=search)
+            queryset |= self.queryset.filter(first_name__contains=search)
+            queryset |= self.queryset.filter(last_name__contains=search)"""
+
+        return Response(serializer.data)  # Response(self.serializer_class(queryset, many=True).data)
 
     # holt user der im backend angemeldet ist
     def partial_update(self, request, *args, **kwargs):
         instance = models.User.objects.get(pk=kwargs.get('pk'))
         # checks permissions of current user
-        if request.user.is_staff == False:
+        if not request.user.is_staff:
             if request.user.pk != int(kwargs.get('pk')):
                 raise NotFound('Not enough Permissions')
         serializer = self.serializer_class(instance, data=request.data, partial=True)
@@ -83,7 +92,6 @@ class UserViewSet(viewsets.ModelViewSet):
 
 class MediaViewSet(viewsets.ModelViewSet):
     queryset = models.Media.objects.all()
-
     serializer_class = serializers.MediaSerializer
 
     def pre_save(self, obj):
@@ -118,15 +126,21 @@ class EventViewSet(viewsets.ModelViewSet):
     """filter events"""
 
     def list(self, request):
+        queryset = self.queryset
         group = request.GET.get("group")
         ev_type = request.GET.get("evtype")
         sdate = request.GET.get("sdate")
         edate = request.GET.get("edate")
-        if sdate is None:
-            sdate = "2000-01-01"
-        if edate is None:
-            edate = "9999-12-31"
-        print(sdate)
+        if group is not None:
+            queryset = queryset.filter(group=group)
+        if ev_type is not None:
+            queryset = queryset.filter(ev_type=ev_type)
+        if sdate is not None:
+            queryset = queryset.filter(start_date__gte=sdate)
+        if edate is not None:
+            queryset = queryset.filter(end_date__lte=edate)
+
+        """ first try (it worked, tho!)
         if group is None and ev_type is None:
             serializer = self.serializer_class(self.queryset.all(), many=True)
         elif group is None and ev_type is not None:
@@ -138,8 +152,8 @@ class EventViewSet(viewsets.ModelViewSet):
         else:
             serializer = self.serializer_class(
                 self.queryset.filter(group=group, ev_type=ev_type, start_date__gte=sdate, end_date__lte=edate),
-                many=True)
-        return Response(serializer.data)
+                many=True)"""
+        return Response(self.serializer_class(queryset, many=True).data)
 
     def create(self, request, *args, **kwargs):
         group = request.data['group'][0]
@@ -149,8 +163,8 @@ class EventViewSet(viewsets.ModelViewSet):
         serializerCustom = self.serializer_classUG(
             self.userGroups.filter(user=request.user.pk, group=group, is_leader=True), many=True)
         # checks if user has permissions to create the event
-        if request.user.is_staff == False:
-            if serializerCustom.data == []:
+        if not request.user.is_staff:
+            if not serializerCustom.data:
                 raise NotFound('Not enough Permissions')
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -165,8 +179,8 @@ class EventViewSet(viewsets.ModelViewSet):
             raise NotFound('No Group was selected!')
         serializerCustom = self.serializer_classUG(self.userGroups.filter(user=user, group=group, is_leader=True),
                                                    many=True)
-        if request.user.is_staff == False:
-            if serializerCustom.data == []:
+        if not request.user.is_staff:
+            if not serializerCustom.data:
                 raise NotFound('Not enough Permissions')
         serializer = self.serializer_class(instance, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
