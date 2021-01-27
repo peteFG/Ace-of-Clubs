@@ -102,16 +102,17 @@ class EventSerializer(serializers.ModelSerializer):
         return ", ".join([str(i["user__username"]) for i in
                           obj.user_relations.filter(state__pk=3).values("user__username")])
 
-    def validate_start_date(self, data):
+    """def validate_start_date(self, data):
         if data < datetime.now().date():
             raise serializers.ValidationError(
                 "Start date can not be in the past. Unless you are a magician. \n But we all know there is no magic in programming!")
         return data
 
     def validate_end_date(self, data):
+        print(data > datetime.now().date() + timedelta(weeks=5))
         if data > datetime.now().date() + timedelta(weeks=5):
-            raise serializers.ValidationError("Please choose a realistic end date!")
-        return data
+            raise serializers.ValidationError("Please choose a realistic end date! Event can not last longer than 5 weeks!")
+        return data"""
 
     def validate(self, value):
         if (value['start_date'] > value['end_date']) | (
