@@ -69,9 +69,6 @@
             <button mat-menu-item routerLink="state-list" *ngIf="userService.hasPermission('aceofclubs.view_state')">
               View States
             </button>
-            <button mat-menu-item routerLink="state-form" *ngIf="userService.hasPermission('aceofclubs.add_state')">
-              Add a new State
-            </button>
           </mat-menu>
 
           <button mat-menu-item [matMenuTriggerFor]="groupMenu"
@@ -102,7 +99,7 @@
                     *ngIf="userService.hasPermission('aceofclubs.view_eventtype')">
               List Event Types
             </button>
-            <button mat-menu-item routerLink="event-type-from"
+            <button mat-menu-item routerLink="event-type-form"
                     *ngIf="userService.hasPermission('aceofclubs.add_eventtype')">
               Add Event Type
             </button>
@@ -239,9 +236,6 @@
         <h4>Administrative Tasks</h4>
         <button class="sidenav-button" mat-button routerLink="state-list" *ngIf="userService.hasPermission('aceofclubs.view_state')">List
           States
-        </button>
-        <button class="sidenav-button" mat-button routerLink="state-form" *ngIf="userService.hasPermission('aceofclubs.add_state')">Create
-          State
         </button>
         <button class="sidenav-button" mat-button routerLink="user-group-list" *ngIf="userService.hasPermission('aceofclubs.view_usergroup')">
           List Group Entries

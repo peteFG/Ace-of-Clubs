@@ -15,9 +15,9 @@ export class UserProfileComponent implements OnInit {
 
   pks: number[];
   userProfile: User[];
-  disableFormGroup: FormGroup;
+  // disableFormGroup: FormGroup;
   isStaff: boolean;
-  //isActive: boolean;
+  // isActive: boolean;
   displayedColumns = ['pictures', 'username', 'email', 'first_name', 'last_name', 'edit', 'changePW', 'delete'];
 
   constructor(private http: HttpClient,
@@ -36,6 +36,16 @@ export class UserProfileComponent implements OnInit {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(VacationForm, {
+      width: 'fit-content',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+  }
+
+  openDeleteDialog(): void {
+    const dialogRef = this.dialog.open(DeleteConfirmation, {
       width: 'fit-content',
     });
 
@@ -67,6 +77,7 @@ export class UserProfileComponent implements OnInit {
    * Wenn Kein Admin wird HTML Feld nicht angezeigt.
    */
 
+  /*
   deleteUser(user: User): void {
 
     this.userService.deleteUser(user)
@@ -74,8 +85,8 @@ export class UserProfileComponent implements OnInit {
         this.retrieveUser();
         alert('deleted successfully!');
       });
-  }
-
+  } */
+/*
   disableUser(user: User): void {
 
       this.disableFormGroup = this.fb.group({
@@ -97,14 +108,14 @@ export class UserProfileComponent implements OnInit {
       this.http.put('api/users/' + user.pk + '/', this.disableFormGroup.value).subscribe(() => {
         this.userService.logout()
       });
-  }
+  }*/
 }
 
 @Component(
   {
     selector: 'vacation-form',
     templateUrl: 'vacation-form.html',
-    styleUrls: ['./vacation-form.scss']
+    styleUrls: ['./modal.scss']
   }
 )
 
@@ -182,7 +193,7 @@ export class VacationForm implements OnInit {
 
             }
 
-            let index = this.pks.indexOf(entry.event);
+            const index = this.pks.indexOf(entry.event);
             if (index > -1) {
               this.pks.splice(index, 1);
             }
@@ -196,5 +207,72 @@ export class VacationForm implements OnInit {
       });
     });
 
+  }
+}
+
+@Component(
+  {
+    selector: 'delete-confirmation',
+    templateUrl: 'delete-confirmation.html',
+    styleUrls: ['./modal.scss']
+  }
+)
+
+export class DeleteConfirmation implements OnInit {
+
+  pks: number[];
+  userProfile: User[];
+  disableFormGroup: FormGroup;
+
+  constructor(private http: HttpClient,
+              public userService: UserService,
+              private eventService: EventService,
+              private fb: FormBuilder
+  ) {
+  }
+
+  ngOnInit(): void {
+
+    this.retrieveUser();
+  }
+
+  private retrieveUser(): void {
+
+    this.userService.getCurrentUser().subscribe((user) => {
+      this.userProfile = [];
+      this.userProfile.push(user);
+    });
+  }
+
+  deleteUser(user: User): void {
+    // if (this.userService.currentUserPK == 1) {
+    this.userService.deleteUser(user)
+      .subscribe(() => {
+        this.retrieveUser();
+        alert('deleted successfully!');
+      });
+  }
+
+  disableUser(user: User): void {
+
+    this.disableFormGroup = this.fb.group({
+      pk: new FormControl(),
+      email: new FormControl(),
+      username: new FormControl(),
+      first_name: new FormControl(),
+      last_name: new FormControl(),
+      password: ['', Validators.required],
+      groups: new FormControl(),
+      is_staff: new FormControl(),
+      pictures: new FormControl(),
+      is_active: new FormControl()
+
+    });
+    this.disableFormGroup.patchValue(user);
+    this.disableFormGroup.value.password2 = this.disableFormGroup.value.password;
+    this.disableFormGroup.value.is_active = false;
+    this.http.put('api/users/' + user.pk + '/', this.disableFormGroup.value).subscribe(() => {
+      this.userService.logout();
+    });
   }
 }

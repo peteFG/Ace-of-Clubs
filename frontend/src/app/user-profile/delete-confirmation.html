@@ -1,0 +1,30 @@
+<!-- Confirm delete Modal -->
+<div *ngFor="let user of userProfile">
+  <div class="horiz-center">
+    <div class="vacation-form">
+      <div class="form-heading">NOT SO FAST!</div>
+      <div class="form-subtitle" *ngIf="userService.hasPermission('aceofclubs.delete_user')">Do you really want to
+        delete your account? If you proceed, it cannot be reversed.
+      </div>
+      <div class="form-subtitle" *ngIf="!userService.hasPermission('aceofclubs.delete_user')">Do you really want to
+        deactivate your account?
+      </div>
+      <div class="form-subtitle" *ngIf="!userService.hasPermission('aceofclubs.delete_user')">If you proceed, you will not be able to restore your account yourself, you need to
+        contact your administrator to do so.
+      </div>
+
+      <div style="margin-top: 20px" class="horiz-center">
+        <button mat-button mat-dialog-close class="btn-standard" *ngIf="userService.hasPermission('aceofclubs.delete_user')"
+                (click)="deleteUser(user)">Delete
+        </button>
+
+        <button mat-button mat-dialog-close class="btn-standard" *ngIf="!userService.hasPermission('aceofclubs.delete_user')"
+                (click)="disableUser(user)">Deactivate
+        </button>
+
+        <button style="margin-left: 20px" mat-button mat-dialog-close class="btn-light">Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

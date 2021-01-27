@@ -36,17 +36,17 @@ import { MatInputModule } from '@angular/material/input';
 import { LoginComponent } from './login/login.component';
 import { LogoutComponent } from './logout/logout.component';
 import { JwtModule } from '@auth0/angular-jwt';
-import {UserProfileComponent, VacationForm} from './user-profile/user-profile.component';
+import {DeleteConfirmation, UserProfileComponent, VacationForm} from './user-profile/user-profile.component';
 import { RegisterComponent } from './register/register.component';
 import { MatDividerModule } from '@angular/material/divider';
 import { OverviewComponent } from './overview/overview.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule} from '@angular/material/icon';
 import { MediainputComponent } from './mediainput/mediainput.component';
-import {FileUploadModule} from 'ng2-file-upload';
-import {MatSidenavModule} from '@angular/material/sidenav';
+import { FileUploadModule } from 'ng2-file-upload';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { ChangePasswordComponent } from './change-password/change-password.component';
-import {MatTooltipModule} from '@angular/material/tooltip';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatDialogModule } from '@angular/material/dialog';
 
@@ -84,7 +84,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     ChangePasswordComponent,
     OverviewComponent,
     MediainputComponent,
-    VacationForm
+    VacationForm,
+    DeleteConfirmation
   ],
     imports: [
         BrowserModule,
