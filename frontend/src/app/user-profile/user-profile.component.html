@@ -108,39 +108,6 @@
       </mat-card>
     </div>
 
-    <!-- E-Mail Address -->
-    <ng-container matColumnDef="email">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>E-Mail Address</th>
-      <td mat-cell *matCellDef="let element"> {{element.email}}</td>
-    </ng-container>
-
-    <!-- Edit Column -->
-    <ng-container matColumnDef="edit">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
-      <td mat-cell *matCellDef="let element">
-        <button mat-button color="primary" [routerLink]="'/user-form/' + element.pk">Edit</button>
-      </td>
-    </ng-container>
-
-    <!-- Change PW Column -->
-    <ng-container matColumnDef="changePW">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
-      <td mat-cell *matCellDef="let element">
-        <button mat-button color="accent" [routerLink]="'/change-pw/' + element.pk">Change Password</button>
-      </td>
-    </ng-container>
-
-    <!-- Delete Column -->
-    <ng-container matColumnDef="delete">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
-      <td mat-cell *matCellDef="let element">
-        <button *ngIf="userService.hasPermission('aceofclubs.delete_user')" mat-button color="warn" (click)="deleteUser(element)">Delete</button>
-        <button *ngIf="!userService.hasPermission('aceofclubs.delete_user')" mat-button color="warn" (click)="deleteUser(element)">Deactivate</button>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
   </div>
 </div>
 

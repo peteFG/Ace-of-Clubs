@@ -1,11 +1,131 @@
-.mat-elevation-z8{
+.card-table {
   display: flex;
   flex-direction: column;
   width: fit-content;
   align-items: center;
-  margin: 5rem auto;
 }
 
-.userevent_column{
-  margin-right: 20rem;
+.group_column {
+  margin-right: 200rem;
+}
+
+.mat-button-toggle {
+  min-width: 70px;
+  width: 5vw !important;
+}
+
+.mat-button-toggle-group {
+  border-color: white;
+  border-radius: 5px;
+}
+
+.inactive-manage {
+  color: gray;
+}
+
+.active-manage {
+  color: rgba(62, 91, 147, 0.9);
+  background-color: rgba(255, 255, 255, 0.6);
+}
+
+@media only screen and (max-width: 450px) {
+
+  .mat-card {
+    background-color: rgba(245, 245, 245, 1);
+  }
+
+  .mat-card-header {
+    background-color: rgba(245, 245, 245, 1);
+  }
+
+  .content-card {
+    width: 100%;
+    padding: 20px;
+    border-radius: 0;
+  }
+
+  .mat-card-title {
+    font-size: 200%;
+    font-weight: lighter;
+  }
+
+
+  .mat-header-cell, .mat-footer-cell, .mat-cell {
+    min-width: 85px;
+    box-sizing: border-box;
+  }
+
+  .mat-header-cell {
+    padding: 0 !important;
+    text-align: -webkit-center;
+    font-weight: bold;
+    font-size: 16px;
+    color: rgba(62, 91, 147, 0.9);
+  }
+
+  .mat-cell {
+    padding: 8px 0 !important;
+    text-align: -webkit-center;
+    font-size: 14px;
+  }
+
+  .position {
+    padding-top: 15px
+  }
+
+  .title-bg {
+    font-size: 400%;
+    text-align: -webkit-right;
+    padding-right: 20px;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+}
+
+
+@media only screen and (min-width: 450px) {
+  .mat-card-content {
+    height: 60vh;
+  }
+
+  .title-bg {
+    text-align: -webkit-center;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  .content-card {
+    width: 65vw;
+    padding: 25px;
+    border-radius: 30px;
+  }
+
+  .mat-card-title {
+    padding: 0px 10px 10px 10px;
+    font-size: 200%;
+    font-weight: lighter;
+  }
+
+
+  .mat-header-cell, .mat-footer-cell, .mat-cell {
+    min-width: 250px;
+    text-align: -webkit-center;
+    box-sizing: border-box;
+  }
+
+  .mat-header-cell {
+    font-weight: bold;
+    font-size: 18px;
+    color: rgba(62, 91, 147, 0.9);
+  }
+
+
+  .table-container {
+    height: 55vh;
+    overflow: auto;
+  }
+
+  .position {
+    padding-top: 30px
+  }
 }

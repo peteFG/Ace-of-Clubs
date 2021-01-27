@@ -1,56 +1,67 @@
-<div class="container">
+<div class="container" *ngIf="userService.hasPermission('aceofclubs.add_user')">
 
-  <div class="horiz-center" *ngIf="userService.hasPermission('aceofclubs.add_user')">
-    <table mat-table [dataSource]="allUserEvents" matSort class="mat-elevation-z8">
+  <h1 style="padding-top: 5vh; padding-bottom: 5vh" class="title-bg desktop-view">RECEIVED RESPONSES</h1>
+  <h1 style="padding-top: 5vh; padding-bottom: 5vh" class="title-bg mobile-view">RECEIVED RSVPS</h1>
 
-      <!-- User -->
+  <div class="horiz-center">
+    <mat-card class="content-card anim-right">
+      <mat-card-header style="display: flex; flex-direction: row; justify-content: space-between">
 
-      <ng-container matColumnDef="user" class="userevent_column">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>User</th>
-        <td mat-cell *matCellDef="let element"> {{element.user_name}} </td>
-      </ng-container>
+        <mat-card-title class="mat-h3">ALL RESPONSES</mat-card-title>
 
-      <!-- Group -->
-      <ng-container matColumnDef="event" class="userevent_column">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Event</th>
-        <td mat-cell *matCellDef="let element"> {{element.event_name}} </td>
-      </ng-container>
+      </mat-card-header>
+      <mat-divider [inset]="true"></mat-divider>
+      <mat-card-content>
+        <div class="horiz-center position">
+          <div class="table-container">
+            <table mat-table [dataSource]="allUserEvents" matSort class="mat-elevation-z8">
 
-      <!-- Leader -->
-      <ng-container matColumnDef="state" class="userevent_column">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>State</th>
-        <td mat-cell *matCellDef="let element"> {{element.state_name}} </td>
-      </ng-container>
+              <!-- User -->
 
-      <!-- Actions -->
+              <ng-container matColumnDef="user" class="userevent_column">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>User</th>
+                <td mat-cell *matCellDef="let element"> {{element.user_name}} </td>
+              </ng-container>
 
-      <!--
-      <ng-container matColumnDef="edit">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
-        <td mat-cell *matCellDef="let element">
-          <button mat-button color="primary" [routerLink]="'/user-event-form/' + element.pk">Edit</button>
-        </td>
-      </ng-container>
-      -->
+              <!-- Group -->
+              <ng-container matColumnDef="event" class="userevent_column">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Event</th>
+                <td mat-cell *matCellDef="let element"> {{element.event_name}} </td>
+              </ng-container>
 
-      <ng-container matColumnDef="delete">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
-        <td mat-cell *matCellDef="let element">
-          <button mat-button color="warn" (click)="deleteUserEventEntry(element)">Delete</button>
-      </ng-container>
+              <!-- Leader -->
+              <ng-container matColumnDef="state" class="userevent_column">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>State</th>
+                <td mat-cell *matCellDef="let element"> {{element.state_name}} </td>
+              </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+              <!-- Actions -->
 
-    </table>
+              <ng-container matColumnDef="delete">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+                <td mat-cell *matCellDef="let element">
+                  <button matTooltip="Delete" matTooltipClass="tooltips" mat-icon-button color="light"
+                          (click)="deleteUserEventEntry(element)">
+                    <mat-icon>delete_outline</mat-icon>
+                  </button>
+              </ng-container>
 
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+            </table>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
   </div>
 
+</div>
 
-
-  <!-- Error Handling -->
-  <div
-    *ngIf="!userService.hasPermission('aceofclubs.add_user')">
+<!-- Error Handling -->
+<div
+  *ngIf="!userService.hasPermission('aceofclubs.add_user')">
+  <div class="container">
     <div class="vertical-center error-position">
       <div style="font-size: 800%; margin-bottom: 40px" class="error-title desktop-view anim-right">OH NO!</div>
       <div class="error-title mobile-view anim-right">OH<br>NO!</div>
@@ -64,5 +75,4 @@
       </div>
     </div>
   </div>
-
 </div>
