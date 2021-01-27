@@ -9,31 +9,24 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let media of medias; let i = index;">
-      <td><strong>{{ getFilename(media) }}</strong></td>
+      <td><strong>{{ getFilename(medias[0]) }}</strong></td>
       <td>
-        <span *ngIf="!media.pk">Wird hochgeladen...</span>
-        <span *ngIf="media.pk">Hochgeladen</span>
+        <span *ngIf="!medias[0].pk">Wird hochgeladen...</span>
+        <span *ngIf="medias[0].pk">Hochgeladen</span>
       </td>
       <td>
         <div class="btn-group">
-          <button type="button" class="btn btn-primary" (click)="downloadMedia(media)">
+          <button type="button" class="btn btn-primary" (click)="downloadMedia(medias[0])">
             Download
           </button>
-          <button type="button" class="btn btn-danger" (click)="deleteMedia(i)">
+          <button type="button" class="btn btn-danger" (click)="deleteMedia(0)">
             Entfernen
           </button>
         </div>
       </td>
-    </tr>
     </tbody>
   </table>
 
-
-  <!--<div><img [src]="url" *ngIf="url"></div>
-  <div><img [src]="this.resourceUrl + '/download/' + medias[0].pk + '/'" *ngIf="medias[0].pk" height="350rem"></div>
-  {{this.resourceUrl}}
-  {{medias[0].pk}}-->
-  <input type="file" [accept]="accept" ng2FileSelect [uploader]="uploader" [multiple]="false" (change)="selectFile($event)"/>
+  <input type="file" [accept]="accept" *ngIf="!hasProfilePic" ng2FileSelect [uploader]="uploader" [multiple]="false" (change)="selectFile($event)"/>
 
 </div>

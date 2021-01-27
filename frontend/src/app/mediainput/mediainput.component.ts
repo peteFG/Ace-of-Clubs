@@ -25,9 +25,7 @@ export interface IMedia {
 })
 export class MediainputComponent implements OnInit, ControlValueAccessor {
   @Input()
-  single = false;
-  @Input()
-  hasProfilePic = false;
+  hasProfilePic: boolean;
   @Input()
   accept = 'image/jpeg';
   resourceUrl = '/api/media/';
@@ -64,7 +62,9 @@ export class MediainputComponent implements OnInit, ControlValueAccessor {
   }
 
   ngOnInit(): void {
-    this.hasProfilePic = false;
+    if (this.medias) {
+      this.hasProfilePic = true;
+    }
     this.uploader = new FileUploader({
       url: this.resourceUrl,
       authToken: 'Bearer ' + localStorage.getItem(this.userService.accessTokenLocalStorageKey),
@@ -73,23 +73,28 @@ export class MediainputComponent implements OnInit, ControlValueAccessor {
     this.uploader.onBeforeUploadItem = (item: FileItem) => {
         if (!this.medias) {
           this.medias = [];
+          this.hasProfilePic = false;
         }
+      this.hasProfilePic = true;
         this.medias.push({
           pk: null,
           file: item.file.name,
         });
+      this.hasProfilePic = true;
     };
     this.uploader.onSuccessItem = (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
       const uploadedMedia = JSON.parse(response) as IMedia;
       const uploadingMedia = this.medias.find(media => !media.pk && uploadedMedia.file.endsWith(media.file));
       uploadingMedia.pk = uploadedMedia.pk;
       uploadingMedia.file = uploadedMedia.file;
+      this.hasProfilePic = true;
     };
-    this.hasProfilePic = true;
+
     this.uploader.onCompleteAll = () => {
       this.onChange(this.medias.map((m) => {
         return m.pk;
       }));
+      this.hasProfilePic = true;
     };
   }
 
@@ -97,10 +102,11 @@ export class MediainputComponent implements OnInit, ControlValueAccessor {
 
   deleteMedia(index: number): void {
     this.medias.splice(index, 1);
-    this.hasProfilePic = false;
+
     this.onChange(this.medias.map((m) => {
       return m.pk;
     }));
+    this.hasProfilePic = false;
   }
 
   downloadMedia(media: IMedia): void {
@@ -142,6 +148,7 @@ export class MediainputComponent implements OnInit, ControlValueAccessor {
     })).subscribe((medias) => {
       this.medias = medias;
       this.initializing = false;
+      this.hasProfilePic = true;
     });
   }
 }
