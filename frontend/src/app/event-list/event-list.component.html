@@ -7,8 +7,41 @@
 <div class="desktop-view container">
   <div class="mat-elevation-z8">
 
-    <div id="pdfView" #pdfView>
+    <input class="form-control mr-sm-2" type="text" placeholder="Search" [(ngModel)]="search" (ngModelChange)="searchCustom(search)">
 
+
+
+    <form [formGroup]="eventFilterFormGroup" (ngSubmit)="filterEvents()">
+      <mat-form-field>
+        <mat-select placeholder="Event Type" formControlName="ev_type">
+          <mat-option [value]="null">Unknown</mat-option>
+          <mat-option [value]="eventTypeOption.pk"
+                      *ngFor="let eventTypeOption of eventTypeOptions">{{eventTypeOption.description}}</mat-option>
+        </mat-select>
+        <mat-hint align="end">What kind of Event is it?</mat-hint>
+        <mat-error *ngIf="eventFilterFormGroup.controls.ev_type.hasError('required')">Event Type is required</mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-select placeholder="Group" formControlName="group">
+          <mat-option [value]="null">Unknown</mat-option>
+          <mat-option [value]="groupOption.pk"
+                      *ngFor="let groupOption of groupOptions">{{groupOption.name}}</mat-option>
+        </mat-select>
+        <mat-hint align="end">What kind of Group is it?</mat-hint>
+        <mat-error *ngIf="eventFilterFormGroup.controls.ev_type.hasError('required')">Event Type is required</mat-error>
+      </mat-form-field>
+
+      <app-date placeholder="Start Date" formControlName="start_date" hint="The start date of this event"></app-date>
+
+      <app-date placeholder="End Date" formControlName="end_date" hint="The end date of this event"></app-date>
+
+      <mat-card-actions align="center">
+        <button mat-raised-button color="primary">Filter</button>
+      </mat-card-actions>
+
+    </form>
+    <div id="pdfView" #pdfView>
 
 
     <table mat-table [dataSource]="events" matSort>

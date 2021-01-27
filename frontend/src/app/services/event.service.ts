@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {forkJoin, Observable} from 'rxjs';
-import {UserService} from './user.service';
+import {User, UserService} from './user.service';
 import {flatMap} from 'rxjs/internal/operators';
 import {map} from 'rxjs/operators';
 
@@ -57,6 +57,15 @@ export class EventService {
   // Filter Events nach Gruppen des aktuellen User
   filtEvents(groupID: number): Observable<Event[]> {
     return this.http.get<Event[]>('api/events/?group=' + groupID);
+  }
+
+  searchEventCustom(str: string): Observable<Event[]> {
+    return this.http.get<Event[]>('/api/events/?search=' + str);
+  }
+
+  filterEventCustom(group?: string, evtype?: string, sdate?: string, edate?: string): Observable<Event[]> {
+
+    return this.http.get<Event[]>('/api/events/?group=' + group  +'&evtype=' + evtype  +'&sdate=' + sdate +'&edate=' + edate );
   }
 
   personalEventsFunction(): Observable<Event[]> {

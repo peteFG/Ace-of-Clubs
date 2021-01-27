@@ -90,12 +90,8 @@ export class UserService {
     return this.http.get<User>('/api/users/' + pk + '/');
   }
 
-  searchUserCustom(str: string): Observable<User> {
-    return this.http.get<User>('/api/users/?search=' + str);
-  }
-
-  filterEventCustom(group: number, evtype: number, sdate: string, edate: string): Observable<User> {
-    return this.http.get<User>('/api/events/?group=' + group + '&evtype=' + evtype + '&sdate=' + sdate + '&edate' + edate);
+  searchUserCustom(str: string): Observable<User[]> {
+    return this.http.get<User[]>('/api/users/?search=' + str);
   }
 
   updateUser(user: User): Observable<any> {

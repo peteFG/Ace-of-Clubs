@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {User, UserService} from '../services/user.service';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-user-list',
@@ -10,8 +11,9 @@ export class UserListComponent implements OnInit {
 
   users: User[];
   displayedColumns = ['pictures', 'username', 'email', 'first_name', 'last_name', 'is_active', 'is_staff', 'date_joined', 'edit', 'delete'];
+  search: '';
 
-  constructor(public userService: UserService) {
+  constructor(public userService: UserService, private route: Router) {
   }
 
   ngOnInit(): void {
@@ -35,7 +37,10 @@ export class UserListComponent implements OnInit {
   }
 
   searchCustom(str: string): void {
-    this.userService.searchUserCustom(str);
+    this.userService.searchUserCustom(str).subscribe((users) => {
+      this.users = users;
+      this.route.navigateByUrl('/user-list');
+    });
   }
 
 }

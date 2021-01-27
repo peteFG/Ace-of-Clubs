@@ -8,6 +8,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {filter} from "rxjs/operators";
 import {StateService} from "../services/state.service";
 import jsPDF from 'jspdf';
+import {Group, GroupService} from "../services/group.service";
 
 
 @Component({
@@ -26,8 +27,12 @@ export class EventListComponent implements OnInit {
   stateOneName: string;
   stateTwoName: string;
   stateThreeName: string;
+  search: string;
+  eventFilterFormGroup: FormGroup;
+  eventTypeOptions: EventType[];
+  groupOptions: Group[];
 
-  displayedColumns = ['pk', 'name', 'start_date', 'start_time', 'end_date', 'end_time', 'active', 'state_one','state_two','state_three', 'actions'];
+  displayedColumns = ['pk', 'name', 'start_date', 'start_time', 'end_date', 'end_time', 'active', 'state_one', 'state_two', 'state_three', 'actions'];
 
 
   @ViewChild('pdfView', {static: false}) pdfView: ElementRef;
@@ -54,6 +59,7 @@ export class EventListComponent implements OnInit {
 
   constructor(private http: HttpClient,
               private eventService: EventService,
+              private groupService: GroupService,
               private route: ActivatedRoute,
               private router: Router,
               public eventTypeService: EventTypeService,
@@ -65,6 +71,35 @@ export class EventListComponent implements OnInit {
 
     this.retrieveEvents();
     this.retrieveStates();
+    this.retrieveGroups();
+
+    this.eventTypeService.retrieveEventTypeOptions().subscribe((eventTypeOptions) => {
+      this.eventTypeOptions = eventTypeOptions;
+    });
+
+    /*this.groupService.retrieveGroups().subscribe((groups) => {
+      this.groupOptions = groups;
+    });*/
+
+    this.eventFilterFormGroup = new FormGroup({
+      group: new FormControl(null),
+      ev_type: new FormControl(null),
+      start_date: new FormControl(null),
+      end_date: new FormControl(null),
+    });
+  }
+
+  private retrieveGroups(): void {
+    this.userService.getCurrentUser().subscribe((user) => {
+      this.userService.getUserGroupsByUsersPK(user.pk).subscribe((userGroups) => {
+        userGroups.forEach((userGroup) => {
+          this.groupOptions = [];
+          this.groupService.getGroup(userGroup.group).subscribe((group) => {
+            this.groupOptions.push(group);
+          });
+        });
+      });
+    });
   }
 
 
@@ -75,7 +110,7 @@ export class EventListComponent implements OnInit {
   }
 
   private retrieveStates(): void {
-    this.stateService.getStates().subscribe((states)=>{
+    this.stateService.getStates().subscribe((states) => {
       this.stateOneName = states[0].description
       this.stateTwoName = states[1].description
       this.stateThreeName = states[2].description
@@ -87,6 +122,24 @@ export class EventListComponent implements OnInit {
     this.eventService.deleteEvent(event).subscribe(() => {
       this.retrieveEvents();
       alert('deleted successfully!');
+    });
+  }
+
+  searchCustom(str: string): void {
+    this.eventService.searchEventCustom(str).subscribe((events) => {
+      this.events = events;
+      this.router.navigateByUrl('/event-list');
+    });
+  }
+
+  filterEvents(): void {
+    this.eventService.filterEventCustom(
+      this.eventFilterFormGroup.value.group,
+      this.eventFilterFormGroup.value.ev_type,
+      this.eventFilterFormGroup.value.start_date,
+      this.eventFilterFormGroup.value.end_date).subscribe((events) => {
+        this.events = events;
+        this.router.navigateByUrl('/event-list');
     });
   }
 

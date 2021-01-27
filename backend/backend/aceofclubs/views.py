@@ -68,14 +68,14 @@ class UserViewSet(viewsets.ModelViewSet):
             serializer = self.serializer_class(self.queryset.all(), many=True)
         else:
             serializer = self.serializer_class(self.queryset.filter(username=username), many=True)
-        """ zukunftsmusik
-        if search is not None:
+        """if search is not None:
             queryset = self.queryset.filter(email__contains=search)
             queryset |= self.queryset.filter(username__contains=search)
             queryset |= self.queryset.filter(first_name__contains=search)
-            queryset |= self.queryset.filter(last_name__contains=search)"""
-
-        return Response(serializer.data)  # Response(self.serializer_class(queryset, many=True).data)
+            queryset |= self.queryset.filter(last_name__contains=search)
+        else:
+            queryset = self.queryset"""
+        return Response(serializer.data)  #Response(self.serializer_class(queryset, many=True).data) #
 
     # holt user der im backend angemeldet ist
     def partial_update(self, request, *args, **kwargs):
@@ -131,14 +131,21 @@ class EventViewSet(viewsets.ModelViewSet):
         ev_type = request.GET.get("evtype")
         sdate = request.GET.get("sdate")
         edate = request.GET.get("edate")
-        if group is not None:
-            queryset = queryset.filter(group=group)
-        if ev_type is not None:
-            queryset = queryset.filter(ev_type=ev_type)
-        if sdate is not None:
+        search = request.GET.get("search")
+        null = 'null'
+        if search is not None:
+            queryset = self.queryset.filter(name__contains = search)
+        if group is not None and group != null:
+            queryset = queryset.filter(group= int(group))
+        if ev_type is not None and ev_type != null:
+            queryset = queryset.filter(ev_type= int(ev_type))
+        if sdate is not None and sdate != null:
             queryset = queryset.filter(start_date__gte=sdate)
-        if edate is not None:
+        if edate is not None and edate != null:
             queryset = queryset.filter(end_date__lte=edate)
+
+
+
 
         """ first try (it worked, tho!)
         if group is None and ev_type is None:

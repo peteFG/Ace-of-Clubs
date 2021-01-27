@@ -2,9 +2,13 @@
   <!-- Desktop Ansicht -->
   <div class="desktop-view" *ngIf="userService.hasPermission('aceofclubs.view_user')">
     <div>
+
+      <input class="form-control mr-sm-2" type="text" placeholder="Search" [(ngModel)]="search" (ngModelChange)="searchCustom(search)">
+
+
+
+
       <table mat-table [dataSource]="users" matSort class="mat-elevation-z8">
-
-
 
         <ng-container matColumnDef="pictures">
           <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
