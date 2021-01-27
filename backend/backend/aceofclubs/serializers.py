@@ -53,6 +53,7 @@ class UserSerializer(serializers.ModelSerializer):
         instance.first_name = validated_data['first_name']
         instance.last_name = validated_data['last_name']
         instance.email = validated_data['email']
+        instance.is_active = validated_data['is_active']
         instance.save()
         return instance
 

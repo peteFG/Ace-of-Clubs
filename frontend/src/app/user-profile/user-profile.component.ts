@@ -2,7 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {User, UserService} from '../services/user.service';
 import {Observable} from 'rxjs';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {EventService} from '../services/event.service';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 
@@ -15,13 +15,16 @@ export class UserProfileComponent implements OnInit {
 
   pks: number[];
   userProfile: User[];
+  disableFormGroup: FormGroup;
   isStaff: boolean;
+  //isActive: boolean;
   displayedColumns = ['pictures', 'username', 'email', 'first_name', 'last_name', 'edit', 'changePW', 'delete'];
 
   constructor(private http: HttpClient,
               public userService: UserService,
               private eventService: EventService,
-              public dialog: MatDialog) {
+              public dialog: MatDialog,
+              private fb: FormBuilder) {
   }
 
   ngOnInit(): void {
@@ -65,7 +68,7 @@ export class UserProfileComponent implements OnInit {
    */
 
   deleteUser(user: User): void {
-    // if (this.userService.currentUserPK == 1) {
+
     this.userService.deleteUser(user)
       .subscribe(() => {
         this.retrieveUser();
@@ -73,6 +76,28 @@ export class UserProfileComponent implements OnInit {
       });
   }
 
+  disableUser(user: User): void {
+
+      this.disableFormGroup = this.fb.group({
+        pk: new FormControl(),
+        email: new FormControl(),
+        username: new FormControl(),
+        first_name: new FormControl(),
+        last_name: new FormControl(),
+        password: ['', Validators.required],
+        groups: new FormControl(),
+        is_staff: new FormControl(),
+        pictures: new FormControl(),
+        is_active: new FormControl()
+
+      });
+      this.disableFormGroup.patchValue(user);
+      this.disableFormGroup.value.password2 = this.disableFormGroup.value.password;
+      this.disableFormGroup.value.is_active = false;
+      this.http.put('api/users/' + user.pk + '/', this.disableFormGroup.value).subscribe(() => {
+        this.userService.logout()
+      });
+  }
 }
 
 @Component(
