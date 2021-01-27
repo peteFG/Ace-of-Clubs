@@ -15,7 +15,7 @@ import {GroupFormComponent} from '../group-form/group-form.component';
 export class GroupListComponent implements OnInit {
 
   groups: Group[];
-  displayedColumns = ['name', 'leader', 'edit', 'delete'];
+  displayedColumns = ['name', 'leader', 'actions'];
 
   constructor(private http: HttpClient,
               private groupService: GroupService,

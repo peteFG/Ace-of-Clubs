@@ -1,6 +1,7 @@
 <div class="container-bg" *ngIf="userService.hasPermission('aceofclubs.view_group')">
 
-  <h1 style="padding-top: 5vh; padding-bottom: 5vh" class="title-regular">CLUB MANAGEMENT</h1>
+  <h1 style="padding-top: 5vh; padding-bottom: 5vh" class="title-regular desktop-view">CLUB MANAGEMENT</h1>
+  <h1 style="padding-top: 5vh; padding-bottom: 5vh" class="title-regular mobile-view">MANAGE YOUR CLUB</h1>
 
   <!-- Club Management -->
   <div class="actions horiz-space-around">
@@ -34,11 +35,11 @@
 
         <mat-card-title class="mat-h3">ALL GROUPS</mat-card-title>
         <div>
-          <button mat-button routerLink="/group-form" color="standard" matTooltip="Add a new Group"
+          <button style="margin-bottom: 12px" mat-button routerLink="/group-form" color="standard" matTooltip="Add a new Group"
                   matTooltipClass="tooltips">
             <mat-icon>group_add</mat-icon>
           </button>
-          <button mat-button routerLink="/user-group-list" color="standard" matTooltip="View Group Memberships"
+          <button style="margin-bottom: 12px" mat-button routerLink="/user-group-list" color="standard" matTooltip="View Group Memberships"
                   matTooltipClass="tooltips">
             <mat-icon>how_to_reg</mat-icon>
           </button>
@@ -47,7 +48,7 @@
       </mat-card-header>
       <mat-divider [inset]="true"></mat-divider>
       <mat-card-content>
-        <div class="horiz-center" style="padding-top: 30px">
+        <div class="horiz-center position">
           <div class="table-container">
             <table mat-table [dataSource]="groups" matSort class="card-table">
 
@@ -63,23 +64,18 @@
                 <td mat-cell *matCellDef="let element"> {{element.leader}} </td>
               </ng-container>
 
-              <!-- Edit Column -->
-              <ng-container matColumnDef="edit">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Edit</th>
+              <!-- Actions Column -->
+              <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Actions</th>
                 <td mat-cell *matCellDef="let element">
-                  <button mat-button color="primary" [routerLink]="'/group-form/' + element.pk"
+                  <button matTooltip="Edit" matTooltipClass="tooltips" mat-icon-button color="standard" [routerLink]="'/group-form/' + element.pk"
                           *ngIf="userService.currentUserName == element.leader || userService.hasPermission('aceofclubs.change_group')">
-                    Edit
+                    <mat-icon>edit</mat-icon>
                   </button>
+                  <button matTooltip="Delete" matTooltipClass="tooltips" mat-icon-button color="light" (click)="deleteGroup(element)"><mat-icon>delete_outline</mat-icon></button>
                 </td>
               </ng-container>
 
-              <!-- Delete Column -->
-              <ng-container matColumnDef="delete">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Delete</th>
-                <td mat-cell *matCellDef="let element">
-                  <button mat-button color="warn" (click)="deleteGroup(element)">Delete</button>
-              </ng-container>
 
               <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
               <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
