@@ -69,43 +69,26 @@ export class EventService {
   }
 
   personalEventsFunction(): Observable<Event[]> {
-
     let personalEventsPK = [];
-
-
     return this.userService.getUserGroupsByUserID().pipe(flatMap((userGroups) => {
-
       const observables = [] as Observable<Event[]>[];
-
       userGroups.forEach((group) => {
-
         observables.push(this.filtEvents(group.group));
       });
 
       return forkJoin(observables).pipe(map((results) => {
-
         const personalEvents = [] as Event[];
-
         results.forEach((persEv) => {
-
           persEv.forEach((event) => {
-
             if (!personalEventsPK.includes(event.pk)) {
               personalEvents.push(event);
             }
             personalEventsPK.push(event.pk);
           });
-
         });
-
         return personalEvents;
-
-
       }));
-
     }));
-
   }
-
 }
 

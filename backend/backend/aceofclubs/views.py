@@ -75,7 +75,7 @@ class UserViewSet(viewsets.ModelViewSet):
             queryset |= self.queryset.filter(last_name__contains=search)
         else:
             queryset = self.queryset"""
-        return Response(serializer.data)  #Response(self.serializer_class(queryset, many=True).data) #
+        return Response(serializer.data)  # Response(self.serializer_class(queryset, many=True).data) #
 
     # holt user der im backend angemeldet ist
     def partial_update(self, request, *args, **kwargs):
@@ -126,7 +126,8 @@ class EventViewSet(viewsets.ModelViewSet):
     """filter events"""
 
     def list(self, request):
-        queryset = self.queryset
+        groupsUser = models.UserGroup.objects.filter(user=request.user.pk).values_list('group_id', flat=True)
+        queryset = self.queryset.filter(group__in=groupsUser)
         group = request.GET.get("group")
         ev_type = request.GET.get("evtype")
         sdate = request.GET.get("sdate")
@@ -134,18 +135,15 @@ class EventViewSet(viewsets.ModelViewSet):
         search = request.GET.get("search")
         null = 'null'
         if search is not None:
-            queryset = self.queryset.filter(name__contains = search)
+            queryset = queryset.filter(name__contains=search)
         if group is not None and group != null:
-            queryset = queryset.filter(group= int(group))
+            queryset = queryset.filter(group=int(group))
         if ev_type is not None and ev_type != null:
-            queryset = queryset.filter(ev_type= int(ev_type))
+            queryset = queryset.filter(ev_type=int(ev_type))
         if sdate is not None and sdate != null:
             queryset = queryset.filter(start_date__gte=sdate)
         if edate is not None and edate != null:
             queryset = queryset.filter(end_date__lte=edate)
-
-
-
 
         """ first try (it worked, tho!)
         if group is None and ev_type is None:
@@ -160,6 +158,7 @@ class EventViewSet(viewsets.ModelViewSet):
             serializer = self.serializer_class(
                 self.queryset.filter(group=group, ev_type=ev_type, start_date__gte=sdate, end_date__lte=edate),
                 many=True)"""
+
         return Response(self.serializer_class(queryset, many=True).data)
 
     def create(self, request, *args, **kwargs):
