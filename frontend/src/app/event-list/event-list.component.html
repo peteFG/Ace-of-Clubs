@@ -1,5 +1,4 @@
-<!-- Desktop Ansicht -->
-
+<!-- Buttons for exporting -->
 <div>
   <button mat-raised-button  (click)="downloadAsPDF()">Export To PDF</button>
   <button mat-raised-button (click)="exporter.exportTable('xlsx',{fileName:'My_Events_data'})">Excel</button>
@@ -8,14 +7,10 @@
   <button mat-raised-button (click)="exporter.exportTable('txt',{fileName:'My_Events_data'})">TEXT</button>
 </div>
 
-
-
+<!-- Desktop Ansicht -->
 <div class="desktop-view container">
   <div class="mat-elevation-z8">
-
     <input class="form-control mr-sm-2" type="text" placeholder="Search" [(ngModel)]="search" (ngModelChange)="searchCustom(search)">
-
-
 
     <form [formGroup]="eventFilterFormGroup" (ngSubmit)="filterEvents()">
       <mat-form-field>
@@ -52,18 +47,11 @@
 
     <table mat-table matTableExporter [dataSource]="events" #exporter="matTableExporter" matSort>
 
-
-      <ng-container matColumnDef="pk">
-        <th mat-header-cell *matHeaderCellDef>PK</th>
-        <td mat-cell *matCellDef="let element">{{element.pk}} </td>
-      </ng-container>
-
       <!-- Name Column -->
       <ng-container matColumnDef="name" matSort (matSortChange)="sortData('name')" matSortActive="name" matSortDirection="asc" matSortDisableClear>
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
         <td (click)="userService.setUserEventEntry(element.pk)" mat-cell
             *matCellDef="let element"> {{element.name}} </td>
-        <!-- <td (click)="setUserEventEntry(element.pk)" [routerLink]="userService.goahead ? ['/user-event-form/'+ userService.existingUserEntry]: []" mat-cell *matCellDef="let element"> {{element.name}} </td> -->
       </ng-container>
 
       <!-- Start date Column -->
@@ -82,6 +70,7 @@
         </td>
       </ng-container>
 
+      <!-- End date Column -->
       <ng-container matColumnDef="end_date" matSort (matSortChange)="sortData('end_date')" matSortActive="end_date" matSortDirection="asc" matSortDisableClear>
         <th mat-header-cell *matHeaderCellDef mat-sort-header>End Date</th>
         <td mat-cell *matCellDef="let element">
@@ -89,6 +78,7 @@
         </td>
       </ng-container>
 
+      <!-- End time Column -->
       <ng-container matColumnDef="end_time" matSort (matSortChange)="sortData('end_time')" matSortActive="end_time" matSortDirection="asc" matSortDisableClear>
         <th mat-header-cell *matHeaderCellDef mat-sort-header>End Time</th>
         <td mat-cell *matCellDef="let element">
@@ -120,8 +110,6 @@
         <td mat-cell *matCellDef="let element"> {{element.state_three}} </td>
       </ng-container>
 
-
-
       <!-- Edit Column -->
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Actions</th>
@@ -130,7 +118,6 @@
           <button mat-button color="warn" (click)="deleteEvent(element)">Delete</button>
         </td>
       </ng-container>
-
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

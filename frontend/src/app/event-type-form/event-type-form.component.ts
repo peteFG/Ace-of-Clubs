@@ -1,8 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
-import {EventService} from '../services/event.service';
-import {ActivatedRoute} from '@angular/router';
-import {Group, GroupService} from '../services/group.service';
+import {ActivatedRoute, Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 import {UserService} from '../services/user.service';
 
@@ -17,6 +15,7 @@ export class EventTypeFormComponent implements OnInit {
 
   constructor(private http: HttpClient,
               private route: ActivatedRoute,
+              private router: Router,
               public userService: UserService) {
   }
 
@@ -41,11 +40,13 @@ export class EventTypeFormComponent implements OnInit {
       this.http.put('/api/eventTypes/' + pk + '/', this.eventTypeFormGroup.value)
         .subscribe(() => {
           alert('updated successfully!');
+          this.router.navigateByUrl('event-type-list');
         });
     } else {
       this.http.post('/api/eventTypes/', this.eventTypeFormGroup.value)
         .subscribe(() => {
           alert('created successfully!');
+          this.router.navigateByUrl('event-type-list');
         });
     }
   }

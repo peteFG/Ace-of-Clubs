@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {GroupService} from '../services/group.service';
 import {UserService} from '../services/user.service';
 
@@ -16,6 +16,7 @@ export class GroupFormComponent implements OnInit {
 
   constructor(private groupService: GroupService,
               private route: ActivatedRoute,
+              private router: Router,
               public userService: UserService) {
   }
 
@@ -42,11 +43,13 @@ export class GroupFormComponent implements OnInit {
       this.groupService.updateGroup(this.groupFormGroup.value)
         .subscribe(() => {
           alert('updated successfully!');
+          this.router.navigateByUrl('group-list');
         });
     } else {
       this.groupService.createGroup(this.groupFormGroup.value)
         .subscribe(() => {
           alert('created successfully!');
+          this.router.navigateByUrl('group-list');
         });
     }
   }

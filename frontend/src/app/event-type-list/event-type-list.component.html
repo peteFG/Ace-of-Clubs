@@ -65,6 +65,10 @@
                           [routerLink]="'/event-type-form/' + element.pk">
                     <mat-icon>edit</mat-icon>
                   </button>
+                  <button matTooltip="Delete" matTooltipClass="tooltips" mat-icon-button color="light"
+                          (click)="deleteEventType(element)">
+                    <mat-icon>delete_outline</mat-icon>
+                  </button>
                 </td>
               </ng-container>
 

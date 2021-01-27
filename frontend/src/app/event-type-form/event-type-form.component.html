@@ -8,8 +8,6 @@
 
 
       <form [formGroup]="eventTypeFormGroup" (ngSubmit)="createEventType()">
-        <!--<label>Group Name: <input formControlName="name"></label>
-        <button>Create</button>-->
         <div style="padding-top: 25vh">
           <mat-card class="manage-card anim-right">
             <mat-card-header class="card-container">
@@ -59,8 +57,6 @@
     <div class="card-bg">
 
       <form [formGroup]="eventTypeFormGroup" (ngSubmit)="createEventType()" class="group-form__form">
-        <!--<label>Group Name: <input formControlName="name"></label>
-        <button>Create</button>-->
         <mat-card class="manage-card anim-right">
           <mat-card-header class="card-container">
             <mat-card-title class="mat-h3" *ngIf="!eventTypeFormGroup.controls.pk.value">CREATE A NEW

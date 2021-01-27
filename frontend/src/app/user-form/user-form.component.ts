@@ -26,9 +26,6 @@ export class UserFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    /*this.userService.hasProfilePic.subscribe(response => {
-      this.hasProfilePic = response;
-    })*/
     this.userFormGroup = this.fb.group({
       pk: new FormControl(null),
       username: ['', Validators.required],
@@ -58,7 +55,7 @@ export class UserFormComponent implements OnInit {
       this.currentUserPK = 0;
       this.currentUserPK = user.pk;
 
-      console.log(this.currentUserIsStaff === true || parseInt(pk, 10) === this.currentUserPK);
+      //console.log(this.currentUserIsStaff === true || parseInt(pk, 10) === this.currentUserPK);
       if (!(this.currentUserIsStaff === true || parseInt(pk, 10) === this.currentUserPK)) {
         this.router.navigateByUrl('/event-list');
       }
@@ -68,15 +65,18 @@ export class UserFormComponent implements OnInit {
 
 
   createOrUpdateUser(): void {
-    //if (this.currentUser !== 1 && this.currentUser  !== this.userFormGroup.value.pk) {
-    //alert('You are not allowed to do this!');
-    //} else {
     this.userFormGroup.value.password2 = this.userFormGroup.value.password;
     const pk = this.userFormGroup.value.pk;
     if (pk) {
       this.userService.updateUser(this.userFormGroup.value)
         .subscribe(() => {
           alert('updated successfully!');
+          if (this.userService.previousSite == '/user-profile') {
+            this.router.navigateByUrl('/user-profile');
+          }
+          else {
+            this.router.navigateByUrl('/user-list');
+          }
         });
     } else {
       this.userService.createUser(this.userFormGroup.value)
@@ -84,7 +84,7 @@ export class UserFormComponent implements OnInit {
           alert('created successfully!');
         });
     }
-    //}
+
   }
 
 

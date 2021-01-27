@@ -111,5 +111,4 @@ export class UserEventFormComponent implements OnInit {
 
         }
     }
-
 }

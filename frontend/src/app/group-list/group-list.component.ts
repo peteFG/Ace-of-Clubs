@@ -45,7 +45,7 @@ export class GroupListComponent implements OnInit {
   }
 
   deleteGroup(group: Group): void {
-    if (localStorage.getItem('currentUser') == group.leader || localStorage.getItem('currentUser') == 'admin') {
+    if (this.userService.currentUser[0].is_staff) {
       this.groupService.deleteGroup(group)
         .subscribe(() => {
           this.retrieveGroups();

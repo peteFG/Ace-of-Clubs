@@ -95,6 +95,7 @@ export class EventFormComponent implements OnInit {
       this.eventService.updateEvent(this.eventFormGroup.value)
         .subscribe(() => {
           alert('updated successfully!');
+          this.router.navigateByUrl('/event-list');
         });
     } else {
       this.eventService.createEvent(this.eventFormGroup.value)

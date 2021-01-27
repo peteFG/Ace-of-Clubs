@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Event} from "./event.service";
+import {UserGroup} from "./user.service";
 
 export interface EventType {
-  pk: number;
+  pk?: number;
   description: string;
 }
 
@@ -22,6 +23,10 @@ export class EventTypeService {
 
   getEventType(pk: number): Observable<EventType> {
     return this.http.get<EventType>('/api/eventTypes/' + pk + '/');
+  }
+
+  deleteEventTypeEntry(eventType: EventType): Observable<any> {
+    return this.http.delete('/api/eventTypes/' + eventType.pk + '/');
   }
 
 

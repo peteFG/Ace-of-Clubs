@@ -27,11 +27,13 @@
                            matTooltipClass="tooltips">
           <mat-icon>delete_outline</mat-icon>
         </mat-button-toggle>
+
         <mat-button-toggle *ngIf="!userService.hasPermission('aceofclubs.delete_user')"
                            class="anim-right" (click)="openDeleteDialog()" matTooltip="Disable Profile"
                            matTooltipClass="tooltips">
           <mat-icon>person_remove</mat-icon>
         </mat-button-toggle>
+
         <mat-button-toggle class="anim-right" matTooltip="Create Vacation" matTooltipClass="tooltips"
                            (click)="openDialog()">
           <mat-icon>event_busy</mat-icon>
@@ -94,10 +96,6 @@
             <div class="content-m-row">
               <div class="content-m-hd">Username:</div>
               <div class="content-m-data">{{user.username}}</div>
-            </div>
-            <div class="content-m-row">
-              <div class="content-m-hd">Date Joined:</div>
-              <div class="content-m-data">{{user.date_joined | date: 'dd.MM.yyyy'}}</div>
             </div>
             <div class="content-m-row">
               <div class="content-m-hd">Active:</div>
@@ -205,10 +203,6 @@
               <div class="content-m-row">
                 <div class="content-m-hd">Username:</div>
                 <div class="content-m-data">{{user.username}}</div>
-              </div>
-              <div class="content-m-row">
-                <div class="content-m-hd">Date Joined:</div>
-                <div class="content-m-data">{{user.date_joined | date: 'dd.MM.yyyy'}}</div>
               </div>
               <div class="content-m-row">
                 <div class="content-m-hd">Active:</div>

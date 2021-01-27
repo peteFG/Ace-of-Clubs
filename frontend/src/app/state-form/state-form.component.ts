@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import {EventService} from '../services/event.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Group, GroupService} from '../services/group.service';
 import {HttpClient} from '@angular/common/http';
 import {StateService} from '../services/state.service';
@@ -18,6 +18,7 @@ export class StateFormComponent implements OnInit {
 
   constructor(private stateService: StateService,
               private route: ActivatedRoute,
+              private router: Router,
               public userService: UserService) {
   }
 
@@ -43,11 +44,13 @@ export class StateFormComponent implements OnInit {
       this.stateService.updateState(this.stateFormGroup.value)
         .subscribe(() => {
           alert('updated successfully!');
+          this.router.navigateByUrl('state-list');
         });
     } else {
       this.stateService.createState(this.stateFormGroup.value)
         .subscribe(() => {
           alert('created successfully!');
+          this.router.navigateByUrl('state-list');
         });
     }
   }

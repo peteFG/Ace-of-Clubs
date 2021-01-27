@@ -54,13 +54,6 @@ import { AllEventsListComponent } from './all-events-list/all-events-list.compon
 import {MatTableExporterModule } from 'mat-table-exporter';
 import {MatSortModule} from '@angular/material/sort';
 
-
-/*export function initializeApp(appInitService: AppInitService){
-  return (): Promise<any> =>{
-    return appInitService.Init();
-  }
-}*/
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -129,10 +122,7 @@ import {MatSortModule} from '@angular/material/sort';
     FormsModule,
     MatSortModule
   ],
-  providers: [/*
-    AppInitService,
-    {provide: APP_INITIALIZER, useFactory: initializeApp, deps:[AppInitService], multi:true}
-    */],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

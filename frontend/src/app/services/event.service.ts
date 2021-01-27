@@ -23,9 +23,6 @@ export interface Event {
   count_state_one: number;
   count_state_two: number;
   count_state_three: number;
-
-  // not from API
-  // personalEntry?: number;
 }
 
 @Injectable({

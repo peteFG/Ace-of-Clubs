@@ -13,7 +13,6 @@ import {ActivatedRoute} from "@angular/router";
 })
 export class UserEventListComponent implements OnInit {
 
-  //userEvents: UserEvent[];
   allUserEvents: UserEvent[];
   displayedColumns = ['user', 'event', 'state', 'delete']
 

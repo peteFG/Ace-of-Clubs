@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {Router} from '@angular/router';
+import {NavigationEnd, Router} from '@angular/router';
 import {JwtHelperService} from '@auth0/angular-jwt';
-import {map} from 'rxjs/operators';
+import {filter, map} from 'rxjs/operators';
 import {IMedia} from '../mediainput/mediainput.component';
 import {GroupService} from './group.service';
 
@@ -52,6 +52,8 @@ export class UserService {
   clickedUser: number;
   existingGroupEntry: number;
   availableGroups: number[];
+  previousSite: string;
+  previousUrl: string;
 
 
   constructor(private http: HttpClient,
@@ -81,10 +83,6 @@ export class UserService {
     }
   }
 
-  /*deactivateUser(user: User): Observable<any> {
-    return this.http.delete('/api/users/' + user.pk + '/');
-  };*/
-
   getUser(pk: number): Observable<User> {
     return this.http.get<User>('/api/users/' + pk + '/');
   }
@@ -109,6 +107,7 @@ export class UserService {
         localStorage.setItem('access_token', res.token);
         this.router.navigate(['event-list']);
         this.retrieveCurrentUser();
+        this.getPreviousSite(this.router);
         alert('Logged in as: ' + localStorage.getItem('currentUser'));
       }, () => {
         alert('wrong username or password');
@@ -146,8 +145,6 @@ export class UserService {
       this.currentUser.push(user);
       this.currentUserPK = 0;
       this.currentUserPK = user.pk;
-      // console.log(user);
-      // console.log(user.pk);
     });
   }
 
@@ -182,9 +179,7 @@ export class UserService {
   setUserEventEntry(eventPK: number) {
     const entriesOfActualUser = this.getUserEventsOfCurrentUser();
     this.clickedEvent = eventPK;
-    // this.getCurrentUserId();
     this.existingUserEntry = 0;
-    // alert('Object was pressed - ID of Event =' + eventPK)
     let checkIfEmpty = [];
 
     entriesOfActualUser.subscribe((events) => {
@@ -261,10 +256,7 @@ export class UserService {
     this.groupService.getGroupPKs();
     const userID = this.clickedUser;
     const entriesOfClickedUser = this.getUserGroupsByUsersPK(userID);
-    // this.clickedUser = userID;
     this.availableGroups = [];
-    //  this.groupService.existingGroupsPK --> hier sind die PKs der aktuell existierenden Gruppen verspeichert
-    // this.clickedUser = userID;
     this.existingGroupEntry = 0;
     const checkIfEmpty = [];
     const attendedGroups = []; // die Gruppen PKs, in denen sich der angeklickte User bereits befindet
@@ -275,11 +267,12 @@ export class UserService {
         attendedGroups.push(userGroup.group);
       });
 
+
+      console.log(attendedGroups);
       // dapasst noch was nicht --> wenn  attended leer --> dann bekommt er iwie keine existing  Groups
       // eig net so tragisch, da jede/r in der ALL Gruppe sein sollte
-      if (attendedGroups.length == 0) {
+      if (attendedGroups.length==0) {
 
-        // this.availableGroups.concat(this.groupService.existingGroupsPK);
         this.availableGroups = this.groupService.existingGroupsPK;
 
       } else {
@@ -293,10 +286,19 @@ export class UserService {
 
     });
 
-    this.router.navigateByUrl('/user-group-form/');
+    this.router.navigateByUrl('/user-group-form');
 
     console.log(this.availableGroups);
     console.log(this.clickedUser);
+  }
+
+
+  getPreviousSite(router: Router) {
+    router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => {
+        this.previousUrl = event.url;
+      });
   }
 
 }

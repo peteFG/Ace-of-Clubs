@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {EventService} from '../services/event.service';
-import {Time} from '@angular/common';
 import {HttpClient} from '@angular/common/http';
-import {UserService} from '../services/user.service';
+import {UserGroup, UserService} from '../services/user.service';
+import {EventTypeService} from "../services/event-type.service";
+import {ActivatedRoute} from "@angular/router";
 
 interface EventType {
   pk?: number;
@@ -20,31 +20,31 @@ export class EventTypeListComponent implements OnInit {
   displayedColumns = ['ev_type', 'actions'];
 
   constructor(private http: HttpClient,
-              public userService: UserService) { }
+              public userService: UserService,
+              private eventTypeService: EventTypeService,
+              private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.retrieveEventTypes()
+  }
+
+  retrieveEventTypes(): void {
     this.http.get('/api/eventTypes/')
       .subscribe((eventTypes: EventType[]) => {
         this.eventTypes = eventTypes;
       });
-    /*
-    this.retrieveEvents()
-    */
   }
 
-  /*
-  private retrieveEvents(): void {
-    this.eventService.getEvents()
-      .subscribe((events) => {
-        this.events = events;
-    })
+  deleteEventType(entry: EventType): void {
+    if (this.userService.currentUser[0].is_staff) {
+      this.eventTypeService.deleteEventTypeEntry(entry)
+        .subscribe(() => {
+          this.retrieveEventTypes();
+          alert('deleted successfully!');
+        });
+    }
+    else {
+      alert('You do not have permission to perform this action.');
+    }
   }
-
-  deleteEvent(event: Event): void {
-    this.eventService.deleteEvent(event)
-      .subscribe(() => {
-        this.retrieveEvents();
-        alert('deleted successfully!');
-      });
-  } */
 }

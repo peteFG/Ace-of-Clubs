@@ -17,6 +17,7 @@ export class UserProfileComponent implements OnInit {
   userProfile: User[];
   // disableFormGroup: FormGroup;
   isStaff: boolean;
+  backToProfile: string;
   // isActive: boolean;
   displayedColumns = ['pictures', 'username', 'email', 'first_name', 'last_name', 'edit', 'changePW', 'delete'];
 
@@ -29,8 +30,9 @@ export class UserProfileComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.userService.previousSite = this.userService.previousUrl;
+    //console.log(this.userService.previousSite);
     this.retrieveUser();
-
 
   }
 
@@ -73,42 +75,6 @@ export class UserProfileComponent implements OnInit {
     });
   }*/
 
-  /** Delete User funktioniert noch nicht mit deactivate. Temporärer fix ->
-   * Wenn Kein Admin wird HTML Feld nicht angezeigt.
-   */
-
-  /*
-  deleteUser(user: User): void {
-
-    this.userService.deleteUser(user)
-      .subscribe(() => {
-        this.retrieveUser();
-        alert('deleted successfully!');
-      });
-  } */
-/*
-  disableUser(user: User): void {
-
-      this.disableFormGroup = this.fb.group({
-        pk: new FormControl(),
-        email: new FormControl(),
-        username: new FormControl(),
-        first_name: new FormControl(),
-        last_name: new FormControl(),
-        password: ['', Validators.required],
-        groups: new FormControl(),
-        is_staff: new FormControl(),
-        pictures: new FormControl(),
-        is_active: new FormControl()
-
-      });
-      this.disableFormGroup.patchValue(user);
-      this.disableFormGroup.value.password2 = this.disableFormGroup.value.password;
-      this.disableFormGroup.value.is_active = false;
-      this.http.put('api/users/' + user.pk + '/', this.disableFormGroup.value).subscribe(() => {
-        this.userService.logout()
-      });
-  }*/
 }
 
 @Component(

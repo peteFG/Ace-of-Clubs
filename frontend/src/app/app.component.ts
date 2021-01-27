@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {User, UserService} from './services/user.service';
+import {Router} from "@angular/router";
 
 
 
@@ -24,7 +25,8 @@ export class AppComponent implements OnInit {
   currentUserLN: any;
   currentUserPic: any;
 
-  constructor(public userService: UserService) {
+  constructor(public userService: UserService,
+              private router: Router) {
   }
 
   // tslint:disable-next-line:typedef
@@ -36,6 +38,7 @@ export class AppComponent implements OnInit {
     this.retrieveUser();
 
     this.currentUser = this.userService.retrieveCurrentUser();
+    this.userService.getPreviousSite(this.router);
   }
 
   private retrieveUser(): void {

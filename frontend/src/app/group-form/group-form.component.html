@@ -8,8 +8,6 @@
 
 
       <form [formGroup]="groupFormGroup" (ngSubmit)="createGroup()" class="group-form__form">
-        <!--<label>Group Name: <input formControlName="name"></label>
-        <button>Create</button>-->
         <div style="padding-top: 25vh">
           <mat-card class="manage-card anim-right">
             <mat-card-header class="card-container">
@@ -55,8 +53,6 @@
     <div class="card-bg">
 
       <form [formGroup]="groupFormGroup" (ngSubmit)="createGroup()" class="group-form__form">
-        <!--<label>Group Name: <input formControlName="name"></label>
-        <button>Create</button>-->
         <mat-card class="manage-card anim-right">
           <mat-card-header class="card-container">
             <mat-card-title class="mat-h3" *ngIf="!groupFormGroup.controls.pk.value">CREATE A NEW</mat-card-title>
