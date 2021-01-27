@@ -17,7 +17,7 @@ interface EventType {
 export class EventTypeListComponent implements OnInit {
 
   eventTypes: EventType[];
-  // displayedColumns = ['ev_type', 'name', 'start_time', 'end_time', 'start_date', 'end_date', 'active', 'group']
+  displayedColumns = ['ev_type', 'actions'];
 
   constructor(private http: HttpClient,
               public userService: UserService) { }
