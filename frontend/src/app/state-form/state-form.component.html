@@ -1,8 +1,8 @@
-<div class="container">
+<div class="container-bg"
+     *ngIf="userService.hasPermission('aceofclubs.add_state') || userService.hasPermission('aceofclubs.change_state')">
 
   <!-- Desktop Ansicht -->
-  <div class="desktop-view"
-       *ngIf="userService.hasPermission('aceofclubs.add_state') || userService.hasPermission('aceofclubs.change_state')">
+  <div class="desktop-view">
     <div class="manage-container card-bg"
          style="height: 100%; display: flex; flex-direction: column; justify-content: center">
 
@@ -13,7 +13,8 @@
         <div style="padding-top: 25vh">
           <mat-card class="manage-card anim-right">
             <mat-card-header class="card-container">
-              <mat-card-title style="padding-bottom: 30px" class="mat-h3" *ngIf="stateFormGroup.controls.pk.value">CHANGE A STATE'S NAME
+              <mat-card-title style="padding-bottom: 30px" class="mat-h3" *ngIf="stateFormGroup.controls.pk.value">
+                CHANGE A STATE'S NAME
               </mat-card-title>
             </mat-card-header>
             <mat-card-content>
@@ -24,7 +25,8 @@
               <mat-form-field>
                 <input matInput type="text" placeholder="State" formControlName="description" required>
                 <mat-hint align="end">Name of the State</mat-hint>
-                <mat-error *ngIf="stateFormGroup.controls.description.hasError('required')">State is required</mat-error>
+                <mat-error *ngIf="stateFormGroup.controls.description.hasError('required')">State is required
+                </mat-error>
               </mat-form-field>
 
               <mat-card-actions align="center" style="margin-top: 40px">
@@ -44,8 +46,7 @@
   </div>
 
   <!-- Mobile Ansicht -->
-  <div class="mobile-view"
-       *ngIf="userService.hasPermission('aceofclubs.add_state') || userService.hasPermission('aceofclubs.change_state')">
+  <div class="mobile-view">
     <div class="card-bg">
 
       <form [formGroup]="stateFormGroup" (ngSubmit)="createOrUpdateState()" class="group-form__form">
@@ -86,11 +87,13 @@
 
     </div>
   </div>
+</div>
 
 
-  <!-- Error Handling -->
-  <div
-    *ngIf="!userService.hasPermission('aceofclubs.add_state') || !userService.hasPermission('aceofclubs.change_state')">
+<!-- Error Handling -->
+<div
+  *ngIf="!userService.hasPermission('aceofclubs.add_state') || !userService.hasPermission('aceofclubs.change_state')">
+  <div class="container">
     <div class="vertical-center error-position">
       <div style="font-size: 800%; margin-bottom: 40px" class="error-title desktop-view anim-right">OH NO!</div>
       <div class="error-title mobile-view anim-right">OH<br>NO!</div>
@@ -104,19 +107,4 @@
       </div>
     </div>
   </div>
-
-  <div
-    *ngIf="currentState == 0">
-    <div style="font-size: 800%; margin-bottom: 40px" class="error-title desktop-view anim-right">OH NO!</div>
-    <div class="error-title mobile-view anim-right">OH<br>NO!</div>
-    <div class="error-message anim-right">
-      <div class="error-text">You cannot change the state as no state has been selected.
-      </div>
-      <div style="margin-top: 30px" class="error-text">Select a state here:</div>
-    </div>
-    <div class="error-button horiz-center">
-      <button mat-button class="btn-standard2 anim-right" routerLink="/state-list">View States</button>
-    </div>
-  </div>
 </div>
-
