@@ -1,11 +1,127 @@
-.mat-elevation-z8{
+.card-table {
   display: flex;
   flex-direction: column;
   width: fit-content;
   align-items: center;
-  margin: 5rem auto;
 }
 
-.usergroup_column{
-  margin-right: 20rem;
+.group_column {
+  margin-right: 200rem;
+}
+
+.mat-button-toggle {
+  min-width: 70px;
+  width: 5vw !important;
+}
+
+.mat-button-toggle-group {
+  border-color: white;
+  border-radius: 5px;
+}
+
+.inactive-manage {
+  color: gray;
+}
+
+.active-manage {
+  color: rgba(62, 91, 147, 0.9);
+  background-color: rgba(255, 255, 255, 0.6);
+}
+
+@media only screen and (max-width: 450px) {
+
+  .mat-card {
+    background-color: rgba(245,245,245,1);
+  }
+
+  .mat-card-header {
+    background-color: rgba(245,245,245,1);
+  }
+
+  .content-card {
+    width: 100%;
+    padding: 20px;
+    border-radius: 0;
+  }
+
+  .mat-card-title {
+    font-size: 200%;
+    font-weight: lighter;
+  }
+
+
+  .mat-header-cell, .mat-footer-cell, .mat-cell {
+    min-width: 85px;
+    box-sizing: border-box;
+  }
+
+  .mat-header-cell {
+    padding: 0 !important;
+    text-align: -webkit-center;
+    font-weight: bold;
+    font-size: 16px;
+    color: rgba(62, 91, 147, 0.9);
+  }
+
+  .mat-cell {
+    padding: 8px 0 !important;
+    text-align: -webkit-center;
+    font-size: 14px;
+  }
+
+  .position {
+    padding-top: 15px
+  }
+
+  .title-regular {
+    font-size: 400%;
+    text-align: -webkit-right;
+    padding-right: 20px;
+  }
+}
+
+
+@media only screen and (min-width: 450px) {
+  .mat-card-content {
+    height: 50vh;
+  }
+
+  .content-card {
+    width: 65vw;
+    padding: 25px;
+    border-radius: 30px;
+  }
+
+  .mat-card-title {
+    padding: 0px 10px 10px 10px;
+    font-size: 200%;
+    font-weight: lighter;
+  }
+
+
+  .mat-header-cell, .mat-footer-cell, .mat-cell {
+    min-width: 250px;
+    box-sizing: border-box;
+    text-align: -webkit-center;
+  }
+
+  .mat-header-cell {
+    font-weight: bold;
+    font-size: 18px;
+    text-align: -webkit-center;
+    color: rgba(62, 91, 147, 0.9);
+  }
+
+  .table-container {
+    height: 45vh;
+    overflow: auto;
+  }
+
+  .position {
+    padding-top: 30px
+  }
+
+  .menu-button {
+    padding: 5px;
+  }
 }

@@ -31,11 +31,11 @@
 @media only screen and (max-width: 450px) {
 
   .mat-card {
-    background-color: rgba(245,245,245,1);
+    background-color: rgba(245, 245, 245, 1);
   }
 
   .mat-card-header {
-    background-color: rgba(245,245,245,1);
+    background-color: rgba(245, 245, 245, 1);
   }
 
   .content-card {
@@ -101,6 +101,7 @@
 
   .mat-header-cell, .mat-footer-cell, .mat-cell {
     min-width: 250px;
+    text-align: -webkit-center;
     box-sizing: border-box;
   }
 
@@ -109,6 +110,7 @@
     font-size: 18px;
     color: rgba(62, 91, 147, 0.9);
   }
+
 
   .table-container {
     height: 45vh;
