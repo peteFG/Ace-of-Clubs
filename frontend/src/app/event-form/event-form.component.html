@@ -1,71 +1,91 @@
-<div class="container" *ngIf="userService.hasPermission('aceofclubs.add_event') || userService.hasPermission('aceofclubs.change_event')">
+<div class="container-bg-light"
+     *ngIf="userService.hasPermission('aceofclubs.add_event') || userService.hasPermission('aceofclubs.change_event')">
 
-  <p style="margin: 0 !important;" class="title-bg">Create or Update an Event</p>
-  <form [formGroup]="eventFormGroup" (ngSubmit)="createOrUpdateEvent()" class="event-form__form">
+  <div>
+    <div class="card-bg position">
+      <form [formGroup]="eventFormGroup" (ngSubmit)="createOrUpdateEvent()" class="event-form__form">
 
-    <!-- Name -->
-    <mat-form-field>
-      <input matInput type="text" placeholder="Name" formControlName="name">
-      <mat-hint align="end">The name of the event</mat-hint>
-      <mat-error *ngIf="eventFormGroup.controls.name.hasError('required')">Name is required</mat-error>
-    </mat-form-field>
+        <mat-card class="form-card">
+          <mat-card-header class="card-container" style="margin-bottom: 5px">
+            <mat-card-title *ngIf="!eventFormGroup.controls.pk.value" class="mat-h3">CREATE A NEW EVENT</mat-card-title>
+            <mat-card-title *ngIf="eventFormGroup.controls.pk.value" class="mat-h3">CHANGE AN EVENT</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <!-- Name -->
+            <mat-form-field>
+              <input matInput type="text" placeholder="Name" formControlName="name">
+              <mat-hint align="end">The name of the event</mat-hint>
+              <mat-error *ngIf="eventFormGroup.controls.name.hasError('required')">Name is required</mat-error>
+            </mat-form-field>
+            <br>
+            <!-- Event Type -->
+            <mat-form-field>
+              <mat-select placeholder="Event Type" formControlName="ev_type">
+                <mat-option [value]="null">Unknown</mat-option>
+                <mat-option [value]="eventTypeOption.pk"
+                            *ngFor="let eventTypeOption of eventTypeOptions">{{eventTypeOption.description}}</mat-option>
+              </mat-select>
+              <mat-hint align="end">What kind of Event is it?</mat-hint>
+              <mat-error *ngIf="eventFormGroup.controls.ev_type.hasError('required')">Event Type is required</mat-error>
+            </mat-form-field>
 
-    <!-- Event Type -->
-    <mat-form-field>
-      <mat-select placeholder="Event Type" formControlName="ev_type">
-        <mat-option [value]="null">Unknown</mat-option>
-        <mat-option [value]="eventTypeOption.pk"
-                    *ngFor="let eventTypeOption of eventTypeOptions">{{eventTypeOption.description}}</mat-option>
-      </mat-select>
-      <mat-hint align="end">What kind of Event is it?</mat-hint>
-      <mat-error *ngIf="eventFormGroup.controls.ev_type.hasError('required')">Event Type is required</mat-error>
-    </mat-form-field>
+            <!-- Start Date -->
+            <div class="date">
+              <app-date placeholder="Start Date" formControlName="start_date" hint="The start date of this event"
+                        [required]="true"></app-date>
+            </div>
 
-    <!-- Start Date -->
-    <app-date placeholder="Start Date" formControlName="start_date" hint="The start date of this event"
-              [required]="true"></app-date>
+            <!-- Start Time -->
+            <mat-form-field>
+              <input matInput type="time" placeholder="Start Time" formControlName="start_time">
+              <mat-hint align="end">Start Time</mat-hint>
+              <mat-error *ngIf="eventFormGroup.controls.start_time.hasError('required')">Start Time is required
+              </mat-error>
+            </mat-form-field>
 
-    <!-- Start Time -->
-    <mat-form-field>
-      <input matInput type="time" placeholder="Start Time" formControlName="start_time">
-      <mat-hint align="end">Start Time</mat-hint>
-      <mat-error *ngIf="eventFormGroup.controls.start_time.hasError('required')">Start Time is required</mat-error>
-    </mat-form-field>
+            <!-- End Date -->
+            <div class="date">
+              <app-date placeholder="End Date" formControlName="end_date" hint="The end date of this event"
+                        [required]="true"></app-date>
+            </div>
 
-    <!-- End Date -->
-    <app-date placeholder="End Date" formControlName="end_date" hint="The end date of this event"
-              [required]="true"></app-date>
+            <!-- End Time -->
+            <mat-form-field>
+              <input matInput type="time" placeholder="End Time" formControlName="end_time">
+              <mat-hint align="end">End Time</mat-hint>
+              <mat-error *ngIf="eventFormGroup.controls.end_time.hasError('required')">End Time is required</mat-error>
+            </mat-form-field>
+            <br>
 
-    <!-- End Time -->
-    <mat-form-field>
-      <input matInput type="time" placeholder="End Time" formControlName="end_time">
-      <mat-hint align="end">End Time</mat-hint>
-      <mat-error *ngIf="eventFormGroup.controls.end_time.hasError('required')">End Time is required</mat-error>
-    </mat-form-field>
+            <!-- Active -->
+            <mat-checkbox formControlName="active">Active</mat-checkbox>
+            <br>
 
-    <!-- Active -->
-    <mat-checkbox formControlName="active">Active</mat-checkbox>
+            <!-- Groups -->
+            <mat-form-field>
+              <mat-select placeholder="Groups" formControlName="group" multiple required>
+                <mat-option [value]="groupOption.pk"
+                            *ngFor="let groupOption of groupOptions">{{groupOption.name}}</mat-option>
+              </mat-select>
+              <mat-hint align="end">The groups involved in this event</mat-hint>
+            </mat-form-field>
 
-    <!-- Groups -->
-    <mat-form-field>
-      <mat-select placeholder="Groups" formControlName="group" multiple required>
-        <mat-option [value]="groupOption.pk"
-                    *ngFor="let groupOption of groupOptions">{{groupOption.name}}</mat-option>
-      </mat-select>
-      <mat-hint align="end">The groups involved in this event</mat-hint>
-    </mat-form-field>
-
-    <br/>
-    <mat-card-actions align="center">
-      <button mat-raised-button color="primary" [disabled]="!eventFormGroup.valid">
-        <span *ngIf="!eventFormGroup.controls.pk.value">Create</span>
-        <span *ngIf="eventFormGroup.controls.pk.value">Update</span>
-      </button>
-    </mat-card-actions>
-  </form>
+            <br/>
+            <mat-card-actions align="center" class="action-position">
+              <button mat-raised-button class="btn-standard" [disabled]="!eventFormGroup.valid">
+                <span *ngIf="!eventFormGroup.controls.pk.value">Create</span>
+                <span *ngIf="eventFormGroup.controls.pk.value">Update</span>
+              </button>
+            </mat-card-actions>
+          </mat-card-content>
+        </mat-card>
+      </form>
+    </div>
+  </div>
 </div>
 
-<div class="container" *ngIf="!userService.hasPermission('aceofclubs.add_event') && !userService.hasPermission('aceofclubs.change_event')">
+<div class="container"
+     *ngIf="!userService.hasPermission('aceofclubs.add_event') && !userService.hasPermission('aceofclubs.change_event')">
   <div class="vertical-center error-position">
     <div style="font-size: 800%; margin-bottom: 40px" class="error-title desktop-view anim-right">OH NO!</div>
     <div class="error-title mobile-view anim-right">OH<br>NO!</div>
