@@ -1,8 +1,9 @@
+from datetime import timedelta
+
+from django.utils.datetime_safe import datetime
 from rest_framework import serializers
 from . import models
 from .models import Media
-from django.contrib.auth.hashers import make_password
-
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -25,13 +26,11 @@ class UserSerializer(serializers.ModelSerializer):
         )
         password = self.validated_data['password']
         password2 = self.validated_data['password2']
-        if len(password) < 8:
-            raise serializers.ValidationError({'password': 'Password is not secure! (At least, 8 Characters!)'})
         if password != password2:
             raise serializers.ValidationError({'password': 'Passwords do not match!'})
         user.set_password(password)
         user.save()
-        user.groups.add(2)
+        user.groups.set(validated_data['groups'])
         user.save()
         userGroup = models.UserGroup(
             user=user,
@@ -40,11 +39,14 @@ class UserSerializer(serializers.ModelSerializer):
         userGroup.save()
         return user
 
+    def validate_password(self, data):
+        if len(data) < 8:
+            raise serializers.ValidationError({'password': 'Password is not secure! (At least, 8 Characters!)'})
+        return data
+
     def update(self, instance, validated_data):
         password = validated_data['password']
         password2 = validated_data['password2']
-        if len(password) < 8:
-            raise serializers.ValidationError({'password': 'Password is not secure! (At least, 8 Characters!)'})
         if not "pbkdf2_sha256$216000$" in password:
             if password != password2:
                 raise serializers.ValidationError({'password': 'Passwords do not match!'})
@@ -53,11 +55,14 @@ class UserSerializer(serializers.ModelSerializer):
         instance.first_name = validated_data['first_name']
         instance.last_name = validated_data['last_name']
         instance.email = validated_data['email']
+        instance.pictures.set(validated_data['pictures'])
         instance.is_active = validated_data['is_active']
+        instance.is_staff = validated_data['is_staff']
         instance.save()
         return instance
 
-#class AdminUserSerializer(serializers.ModelSerializer):
+
+# class AdminUserSerializer(serializers.ModelSerializer):
 #    class Meta:
 #        model = models.User
 #        fields = ['pk', 'username', 'email', 'first_name', 'last_name', 'is_active', 'is_staff', 'pictures',
@@ -95,7 +100,16 @@ class EventSerializer(serializers.ModelSerializer):
         return ", ".join([str(i["user__username"]) for i in
                           obj.user_relations.filter(state__pk=3).values("user__username")])
 
+    def validate_start_date(self, data):
+        if data < datetime.now().date():
+            raise serializers.ValidationError(
+                "Start date can not be in the past. Unless you are a magician. \n But we all know there is no magic in programming!")
+        return data
 
+    def validate_end_date(self, data):
+        if data > datetime.now().date() + timedelta(weeks=5):
+            raise serializers.ValidationError("Please choose a realistic end date!")
+        return data
 
     def validate(self, value):
         if (value['start_date'] > value['end_date']) | (
@@ -160,14 +174,13 @@ class UserGroupSerializer(serializers.ModelSerializer):
         return obj.group.name if obj.group else ""
 
 
-
 class AllUserGroupSerializer(serializers.ModelSerializer):
     group_name = serializers.SerializerMethodField()
     user_name = serializers.SerializerMethodField()
 
     class Meta:
         model = models.UserGroup
-        fields = ['pk', 'user', 'group', 'is_leader',  'group_name', 'user_name']
+        fields = ['pk', 'user', 'group', 'is_leader', 'group_name', 'user_name']
 
     def get_group_name(self, obj):
         return obj.group.name if obj.group else ""
@@ -182,37 +195,36 @@ class AllUserGroupSerializer(serializers.ModelSerializer):
             is_leader=self.validated_data['is_leader'],
         )
         userGroup.save()
-        if userGroup.is_leader ==True:
+        if userGroup.is_leader:
             model = self.validated_data['user']
             user = models.User.objects.get(email=str(model))
-            user.groups.add(1)
+            user.groups.set([1])
             user.save()
         return userGroup
 
-
-    def update(self, instance, validated_data):
+    """def update(self, instance, validated_data):
         instance.is_leader = validated_data['is_leader']
         instance.save()
-        if instance.is_leader == True:
+        if instance.is_leader:
             model = self.validated_data['user']
             user = models.User.objects.get(email=str(model))
-            user.groups.add(1)
+            user.groups.set(validated_data['groups'])
             user.save()
-        return instance
+        return instance"""
 
 
 class UserEventSerializer(serializers.ModelSerializer):
-    #event_name = serializers.SerializerMethodField()
-    #user_name = serializers.SerializerMethodField()
+    # event_name = serializers.SerializerMethodField()
+    # user_name = serializers.SerializerMethodField()
 
     class Meta:
         model = models.UserEvent
         fields = ['pk', 'user', 'event', 'state']
 
-    #def get_event_name(self, obj):
+    # def get_event_name(self, obj):
     #    return obj.event.name if obj.event else ""
 
-    #def get_user_name(self, obj):
+    # def get_user_name(self, obj):
     #    return obj.user.username if obj.event else ""
 
 
@@ -231,5 +243,5 @@ class AllUserEventSerializer(serializers.ModelSerializer):
     def get_user_name(self, obj):
         return obj.user.username if obj.event else ""
 
-    def get_state_name(self,obj):
-        return  obj.state.description if obj.event else ""
+    def get_state_name(self, obj):
+        return obj.state.description if obj.event else ""
