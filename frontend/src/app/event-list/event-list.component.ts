@@ -3,13 +3,13 @@ import {Event, EventService} from '../services/event.service';
 import {HttpClient} from '@angular/common/http';
 import {EventType, EventTypeService} from '../services/event-type.service';
 import {User, UserEvent, UserService} from '../services/user.service';
-import {ActivatedRoute, Router} from "@angular/router";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {filter} from "rxjs/operators";
-import {StateService} from "../services/state.service";
+import {ActivatedRoute, Router} from '@angular/router';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {filter} from 'rxjs/operators';
+import {StateService} from '../services/state.service';
 import jsPDF from 'jspdf';
 import {CdkTableExporterModule} from 'cdk-table-exporter';
-import {Group, GroupService} from "../services/group.service";
+import {Group, GroupService} from '../services/group.service';
 
 
 @Component({
@@ -20,10 +20,10 @@ import {Group, GroupService} from "../services/group.service";
 
 export class EventListComponent extends CdkTableExporterModule implements OnInit {
   events: Event[];
-  //currentUserID: number;
+  // currentUserID: number;
   currentUserID: number;
   clickedEvent: number;
-  //isActive: boolean;
+  // isActive: boolean;
   panelOpen = false;
   stateOneName: string;
   stateTwoName: string;
@@ -32,6 +32,7 @@ export class EventListComponent extends CdkTableExporterModule implements OnInit
   eventFilterFormGroup: FormGroup;
   eventTypeOptions: EventType[];
   groupOptions: Group[];
+  str: string;
 
   displayedColumns = ['pk', 'name', 'start_date', 'start_time', 'end_date', 'end_time', 'active', 'state_one', 'state_two', 'state_three', 'actions'];
 
@@ -42,7 +43,7 @@ export class EventListComponent extends CdkTableExporterModule implements OnInit
     const doc = new jsPDF('l', 'mm', 'a1');
 
     const specialElementHandlers = {
-      '#editor': function (element, renderer) {
+      '#editor'(element, renderer) {
         return true;
       }
     };
@@ -50,8 +51,8 @@ export class EventListComponent extends CdkTableExporterModule implements OnInit
     const desktopView = this.pdfView.nativeElement;
 
     doc.fromHTML(desktopView.innerHTML, 15, {
-      //width: 200,
-      'elementHandlers': specialElementHandlers
+      // width: 200,
+      elementHandlers: specialElementHandlers
     });
 
     doc.save('MyEvents.pdf');
@@ -70,7 +71,6 @@ export class EventListComponent extends CdkTableExporterModule implements OnInit
   }
 
   ngOnInit(): void {
-
     this.retrieveEvents();
     this.retrieveStates();
     this.retrieveGroups();
@@ -113,10 +113,10 @@ export class EventListComponent extends CdkTableExporterModule implements OnInit
 
   private retrieveStates(): void {
     this.stateService.getStates().subscribe((states) => {
-      this.stateOneName = states[0].description
-      this.stateTwoName = states[1].description
-      this.stateThreeName = states[2].description
-    })
+      this.stateOneName = states[0].description;
+      this.stateTwoName = states[1].description;
+      this.stateThreeName = states[2].description;
+    });
   }
 
 
@@ -140,8 +140,20 @@ export class EventListComponent extends CdkTableExporterModule implements OnInit
       this.eventFilterFormGroup.value.ev_type,
       this.eventFilterFormGroup.value.start_date,
       this.eventFilterFormGroup.value.end_date).subscribe((events) => {
-        this.events = events;
-        this.router.navigateByUrl('/event-list');
+      this.events = events;
+      this.router.navigateByUrl('/event-list');
+    });
+  }
+
+  sortData(str: string): void {
+    if (this.str === str){
+      this.str = '!' + str;
+    }else {
+      this.str = str;
+    }
+    this.eventService.sortEventCustom(this.str).subscribe((events) => {
+      this.events = events;
+      this.router.navigateByUrl('/event-list');
     });
   }
 

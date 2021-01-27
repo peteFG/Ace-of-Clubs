@@ -64,8 +64,15 @@ export class EventService {
   }
 
   filterEventCustom(group?: string, evtype?: string, sdate?: string, edate?: string): Observable<Event[]> {
+    return this.http.get<Event[]>('/api/events/?group=' + group + '&evtype=' + evtype + '&sdate=' + sdate + '&edate=' + edate);
+  }
 
-    return this.http.get<Event[]>('/api/events/?group=' + group  +'&evtype=' + evtype  +'&sdate=' + sdate +'&edate=' + edate );
+  sortEventCustom(str: string): Observable<Event[]> {
+    return this.http.get<Event[]>('/api/events/?sort=' + str);
+  }
+
+  sortAllEventCustom(str: string): Observable<Event[]> {
+    return this.http.get<Event[]>('/api/allEvents/?sort=' + str);
   }
 
   //-------------------- Section  for ADMIN ----------------------
@@ -101,12 +108,16 @@ export class EventService {
 
   filterAllEventsCustom(group?: string, evtype?: string, sdate?: string, edate?: string): Observable<Event[]> {
 
-    return this.http.get<Event[]>('/api/allEvents/?group=' + group  +'&evtype=' + evtype  +'&sdate=' + sdate +'&edate=' + edate );
+    return this.http.get<Event[]>('/api/allEvents/?group=' + group + '&evtype=' + evtype + '&sdate=' + sdate + '&edate=' + edate);
   }
 
   /*
 
   RIP - My lovely function - 27.01.2021
+
+  sortEventCustom(sort: string): Observable<Event[]> {
+    return this.http.get<Event[]>('/api/events/?sort=' + sort);
+  }
 
   personalEventsFunction(): Observable<Event[]> {
     let personalEventsPK = [];

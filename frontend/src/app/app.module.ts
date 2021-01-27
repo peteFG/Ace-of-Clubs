@@ -52,6 +52,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { AllEventsListComponent } from './all-events-list/all-events-list.component';
 // @ts-ignore
 import {MatTableExporterModule } from 'mat-table-exporter';
+import {MatSortModule} from '@angular/material/sort';
 
 
 /*export function initializeApp(appInitService: AppInitService){
@@ -91,42 +92,43 @@ import {MatTableExporterModule } from 'mat-table-exporter';
     DeleteConfirmation,
     AllEventsListComponent
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        HttpClientModule,
-        ReactiveFormsModule,
-        BrowserAnimationsModule,
-        MatTableModule,
-        MatTableExporterModule,
-        MatButtonModule,
-        MatToolbarModule,
-        MatMenuModule,
-        MatFormFieldModule,
-        MatSelectModule,
-        MatInputModule,
-        MatCardModule,
-        MatDatepickerModule,
-        MatNativeDateModule,
-        MatCheckboxModule,
-        MatDividerModule,
-        MatExpansionModule,
-        MatIconModule,
-        MatSidenavModule,
-        MatButtonToggleModule,
-        JwtModule.forRoot({
-            config: {
-                tokenGetter: () => {
-                    return localStorage.getItem('access_token');
-                },
-                allowedDomains: ['localhost:4200']
-            }
-        }),
-        FileUploadModule,
-        MatTooltipModule,
-        MatDialogModule,
-        FormsModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MatTableModule,
+    MatTableExporterModule,
+    MatButtonModule,
+    MatToolbarModule,
+    MatMenuModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatInputModule,
+    MatCardModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatCheckboxModule,
+    MatDividerModule,
+    MatExpansionModule,
+    MatIconModule,
+    MatSidenavModule,
+    MatButtonToggleModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => {
+          return localStorage.getItem('access_token');
+        },
+        allowedDomains: ['localhost:4200']
+      }
+    }),
+    FileUploadModule,
+    MatTooltipModule,
+    MatDialogModule,
+    FormsModule,
+    MatSortModule
+  ],
   providers: [/*
     AppInitService,
     {provide: APP_INITIALIZER, useFactory: initializeApp, deps:[AppInitService], multi:true}

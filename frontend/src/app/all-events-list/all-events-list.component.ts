@@ -26,6 +26,7 @@ export class AllEventsListComponent implements OnInit {
   eventFilterFormGroup: FormGroup;
   eventTypeOptions: EventType[];
   groupOptions: Group[];
+  str: string;
 
   displayedColumns = ['pk', 'name', 'start_date', 'start_time', 'end_date', 'end_time', 'active', 'state_one', 'state_two', 'state_three', 'actions'];
 
@@ -132,6 +133,18 @@ export class AllEventsListComponent implements OnInit {
       this.eventFilterFormGroup.value.end_date).subscribe((events) => {
       this.allEvents = events;
       this.router.navigateByUrl('/all-events-list');
+    });
+  }
+
+  sortData(str: string): void {
+    if (this.str === str){
+      this.str = '!' + str;
+    }else {
+      this.str = str;
+    }
+    this.eventService.sortAllEventCustom(this.str).subscribe((allEvents) => {
+      this.allEvents = allEvents;
+      this.router.navigateByUrl('/all-event-list');
     });
   }
 
