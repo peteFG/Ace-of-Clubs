@@ -49,6 +49,7 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatDialogModule } from '@angular/material/dialog';
+import {MatTableExporterModule } from 'mat-table-exporter';
 
 
 /*export function initializeApp(appInitService: AppInitService){
@@ -94,6 +95,7 @@ import { MatDialogModule } from '@angular/material/dialog';
         ReactiveFormsModule,
         BrowserAnimationsModule,
         MatTableModule,
+        MatTableExporterModule,
         MatButtonModule,
         MatToolbarModule,
         MatMenuModule,

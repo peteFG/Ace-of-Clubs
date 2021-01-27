@@ -1,10 +1,3 @@
-.container {
-  display: block;
-  width: 100%;
-  height: 93.4vh;
-  background: url('../../assets/image/mountain-range3.png') no-repeat center center fixed;
-}
-
 .manage-card {
   padding: 3vh;
   width: fit-content;
@@ -37,6 +30,8 @@
 @media only screen and (max-width: 450px) {
   .manage-card {
     height: 88vh;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 0;
   }
 
   .mat-form-field {
@@ -49,10 +44,6 @@
 
   .mat-card-content {
     padding-top: 5vh;
-  }
-
-  .manage-card {
-    background-color: rgba(255, 255, 255, 0.7);
   }
 }
 

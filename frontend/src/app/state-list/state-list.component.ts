@@ -12,7 +12,7 @@ import {UserService} from '../services/user.service';
 export class StateListComponent implements OnInit {
 
   states: State[];
-  displayedColumns = ['description', 'edit', 'delete'];
+  displayedColumns = ['description', 'actions'];
 
   constructor(private http: HttpClient,
               private stateService: StateService,

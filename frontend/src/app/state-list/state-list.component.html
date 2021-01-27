@@ -1,39 +1,85 @@
-<div class="container">
+<div class="container-bg" *ngIf="userService.hasPermission('aceofclubs.view_state')">
 
-  <div class="horiz-center" *ngIf="userService.hasPermission('aceofclubs.view_state')">
+  <h1 style="padding-top: 5vh; padding-bottom: 5vh" class="title-regular desktop-view">CLUB MANAGEMENT</h1>
+  <h1 style="padding-top: 5vh; padding-bottom: 5vh" class="title-regular mobile-view">MANAGE YOUR CLUB</h1>
 
-    <table mat-table [dataSource]="states" matSort class="mat-elevation-z8">
+  <!-- Club Management -->
+  <div class="actions horiz-space-around">
+    <mat-button-toggle-group class="anim-right">
+      <mat-button-toggle class="inactive-manage" matTooltip="Manage Users" matTooltipClass="tooltips"
+                         [routerLink]="'/user-form'">
+        <mat-icon>person</mat-icon>
+      </mat-button-toggle>
 
-      <!-- Genre -->
-      <ng-container matColumnDef="description" class="state_column">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>States</th>
-        <td mat-cell *matCellDef="let element"> {{element.description}} </td>
-      </ng-container>
+      <mat-button-toggle class="active-manage" *ngIf="userService.hasPermission('aceofclubs.delete_user')"
+                         [routerLink]="'/state-list'" matTooltip="Manage States"
+                         matTooltipClass="tooltips">
+        <mat-icon>sms</mat-icon>
+      </mat-button-toggle>
 
-      <!-- Edit Column -->
-      <ng-container matColumnDef="edit">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
-        <td mat-cell *matCellDef="let element">
-          <button mat-button color="primary" [routerLink]="'/state-form/' + element.pk">Edit</button>
-        </td>
-      </ng-container>
+      <mat-button-toggle class="inactive-manage" matTooltip="Manage Groups" matTooltipClass="tooltips"
+                         [routerLink]="'/group-list'">
+        <mat-icon>groups</mat-icon>
+      </mat-button-toggle>
 
-      <!-- Delete Column -->
-      <ng-container matColumnDef="delete">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
-        <td mat-cell *matCellDef="let element">
-          <button mat-button color="warn" (click)="deleteState(element)">Delete</button>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
-    </table>
-
+      <mat-button-toggle class="inactive-manage" matTooltip="Manage Events" matTooltipClass="tooltips"
+                         [routerLink]="'/event-type-list'">
+        <mat-icon>event</mat-icon>
+      </mat-button-toggle>
+    </mat-button-toggle-group>
   </div>
 
-  <!-- Error Handling -->
-  <div *ngIf="!userService.hasPermission('aceofclubs.view_state')">
+  <!-- List States -->
+  <div class="horiz-center" style="padding-top: 6vh">
+    <mat-card class="content-card anim-right">
+      <mat-card-header style="display: flex; flex-direction: row; justify-content: space-between">
+
+        <mat-card-title class="mat-h3">ALL STATES</mat-card-title>
+
+      </mat-card-header>
+      <mat-divider [inset]="true"></mat-divider>
+      <mat-card-content>
+        <div class="horiz-center position">
+          <div class="table-container">
+            <table mat-table [dataSource]="states" matSort class="card-table">
+
+              <!-- Genre -->
+              <ng-container matColumnDef="description" class="state_column">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>States</th>
+                <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+              </ng-container>
+
+              <!-- Actions Column -->
+              <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+                <td mat-cell *matCellDef="let element">
+                  <button matTooltip="Edit" matTooltipClass="tooltips" mat-icon-button color="standard"
+                          [routerLink]="'/state-form/' + element.pk">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                  <button matTooltip="Delete" matTooltipClass="tooltips" mat-icon-button color="light"
+                          (click)="deleteState(element)">
+                    <mat-icon>delete_outline</mat-icon>
+                  </button>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+            </table>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+
+</div>
+
+<!-- Error Handling -->
+<div *ngIf="!userService.hasPermission('aceofclubs.view_state')">
+  <div class="container">
     <div class="vertical-center error-position">
       <div style="font-size: 800%; margin-bottom: 40px" class="error-title desktop-view anim-right">OH NO!</div>
       <div class="error-title mobile-view anim-right">OH<br>NO!</div>

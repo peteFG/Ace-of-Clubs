@@ -1,8 +1,8 @@
-<div class="container">
+<div class="container-bg"
+     *ngIf="userService.hasPermission('aceofclubs.add_group') || userService.hasPermission('aceofclubs.change_group')">
 
   <!-- Desktop Ansicht -->
-  <div class="desktop-view"
-       *ngIf="userService.hasPermission('aceofclubs.add_group') || userService.hasPermission('aceofclubs.change_group')">
+  <div class="desktop-view">
     <div class="manage-container card-bg"
          style="height: 100%; display: flex; flex-direction: column; justify-content: center">
 
@@ -51,8 +51,7 @@
   </div>
 
   <!-- Mobile Ansicht -->
-  <div class="mobile-view"
-       *ngIf="userService.hasPermission('aceofclubs.add_group') || userService.hasPermission('aceofclubs.change_group')">
+  <div class="mobile-view">
     <div class="card-bg">
 
       <form [formGroup]="groupFormGroup" (ngSubmit)="createGroup()" class="group-form__form">
@@ -95,10 +94,12 @@
 
     </div>
   </div>
+</div>
 
 
-  <div
-    *ngIf="!userService.hasPermission('aceofclubs.add_group') && !userService.hasPermission('aceofclubs.change_group')">
+<div
+  *ngIf="!userService.hasPermission('aceofclubs.add_group') && !userService.hasPermission('aceofclubs.change_group')">
+  <div class="container">
     <div class="vertical-center error-position">
       <div style="font-size: 800%; margin-bottom: 40px" class="error-title desktop-view anim-right">OH NO!</div>
       <div class="error-title mobile-view anim-right">OH<br>NO!</div>

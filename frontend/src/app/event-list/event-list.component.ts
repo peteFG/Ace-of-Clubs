@@ -8,6 +8,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {filter} from "rxjs/operators";
 import {StateService} from "../services/state.service";
 import jsPDF from 'jspdf';
+import {CdkTableExporterModule} from 'cdk-table-exporter';
 import {Group, GroupService} from "../services/group.service";
 
 
@@ -17,7 +18,7 @@ import {Group, GroupService} from "../services/group.service";
   styleUrls: ['./event-list.component.scss']
 })
 
-export class EventListComponent implements OnInit {
+export class EventListComponent extends CdkTableExporterModule implements OnInit {
   events: Event[];
   //currentUserID: number;
   currentUserID: number;
@@ -65,6 +66,7 @@ export class EventListComponent implements OnInit {
               public eventTypeService: EventTypeService,
               public userService: UserService,
               public stateService: StateService) {
+    super();
   }
 
   ngOnInit(): void {

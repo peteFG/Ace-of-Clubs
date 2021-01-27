@@ -17,7 +17,12 @@ body {
 
   .container {
     height: fit-content;
-    min-height: 92vh;
+    min-height: 88vh;
+  }
+
+  .container-bg {
+    height: fit-content;
+    min-height: 88vh;
   }
 }
 
@@ -31,6 +36,10 @@ body {
     min-height: 93.5vh;
   }
 
+  .container-bg {
+    height: fit-content;
+    min-height: 93.5vh;
+  }
 }
 
 /* Input */
@@ -45,6 +54,12 @@ body {
 .container {
   background: rgba(245, 245, 245, 1);
   width: 100%;
+}
+
+.container-bg {
+  display: block;
+  width: 100%;
+  background: url('./assets/image/mountain-range3.png') no-repeat center center fixed;
 }
 
 .default-container {
@@ -274,7 +289,7 @@ body {
 /* Tooltips */
 .tooltips {
   font-size: 14px;
-  background-color: darkgray;
+  background-color: #3a3b3f;
 }
 
 /* Accordion */
