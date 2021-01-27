@@ -55,7 +55,7 @@ class UserSerializer(serializers.ModelSerializer):
         instance.first_name = validated_data['first_name']
         instance.last_name = validated_data['last_name']
         instance.email = validated_data['email']
-        if instance.pictures.count() < 2:
+        if instance.pictures.count() > 1:
             raise serializers.ValidationError({'You can have only one picture at time!'})
         instance.pictures.set(validated_data['pictures'])
         instance.is_active = validated_data['is_active']
@@ -102,16 +102,17 @@ class EventSerializer(serializers.ModelSerializer):
         return ", ".join([str(i["user__username"]) for i in
                           obj.user_relations.filter(state__pk=3).values("user__username")])
 
-    def validate_start_date(self, data):
+    """def validate_start_date(self, data):
         if data < datetime.now().date():
             raise serializers.ValidationError(
                 "Start date can not be in the past. Unless you are a magician. \n But we all know there is no magic in programming!")
         return data
 
     def validate_end_date(self, data):
+        print(data > datetime.now().date() + timedelta(weeks=5))
         if data > datetime.now().date() + timedelta(weeks=5):
-            raise serializers.ValidationError("Please choose a realistic end date!")
-        return data
+            raise serializers.ValidationError("Please choose a realistic end date! Event can not last longer than 5 weeks!")
+        return data"""
 
     def validate(self, value):
         if (value['start_date'] > value['end_date']) | (
