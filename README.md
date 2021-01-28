@@ -7,10 +7,10 @@ Ace of Clubs is a web application for planning events for clubs of all sorts. It
 
 ### Team Members:
 
-    Martin Schweighofer
-    Christoph Tripolt
-    Sophia Druckenthaner
-    Peter Feldgrill
+* Martin Schweighofer
+* Christoph Tripolt
+* Sophia Druckenthaner
+* Peter Feldgrill
 
 ### Workload distribution:
 
