@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
   isLoggedIn = false;
   isStaff = false;
   userProfile: User[];
-  currentUser: any;
+  //currentUser: any;
 
   currentUserName: any;
   currentUserFN: any;
@@ -35,9 +35,9 @@ export class AppComponent implements OnInit {
       this.isLoggedIn = response;
     });
 
-    this.retrieveUser();
+    //this.retrieveUser();
 
-    this.currentUser = this.userService.retrieveCurrentUser();
+    //this.currentUser = this.userService.retrieveCurrentUser();
     this.userService.getPreviousSite(this.router);
   }
 

@@ -31,12 +31,30 @@ class CustomPermissionAdmin(DjangoModelPermissions):
             permission = True
         return permission
 
+class CustomPermissionRegister(DjangoModelPermissions):
+
+    def has_permission(self, request, view, *args, **kwargs):
+        permission = True
+        return permission
+
 
 class AllUserViewSet(viewsets.ModelViewSet):
     queryset = models.User.objects.all().order_by('pk')
+    permission_classes = (CustomPermission, )
     serializer_class = serializers.UserSerializer
 
     def list(self, request):
+        search = request.GET.get("search")
+        queryset = self.queryset.all()
+        if search is not None:
+            queryset = self.queryset.filter(email__contains=search)
+            queryset |= self.queryset.filter(username__contains=search)
+            queryset |= self.queryset.filter(first_name__contains=search)
+            queryset |= self.queryset.filter(last_name__contains=search)
+        return Response(self.serializer_class(queryset, many=True).data)
+
+
+    """def list(self, request):
         search = request.GET.get("search")
         reg = request.GET.get("reg")
         regemail = request.GET.get("regemail")
@@ -46,11 +64,11 @@ class AllUserViewSet(viewsets.ModelViewSet):
             queryset |= self.queryset.filter(username__contains=search)
             queryset |= self.queryset.filter(first_name__contains=search)
             queryset |= self.queryset.filter(last_name__contains=search)
-        elif reg is not None:
+        elif reg is not None and reg != 'undefined':
             queryset = self.queryset.filter(username=reg)
-        elif regemail is not None:
+        elif regemail is not None and regemail != 'undefined':
             queryset = self.queryset.filter(email=regemail)
-        return Response(self.serializer_class(queryset, many=True).data)
+        return Response(self.serializer_class(queryset, many=True).data)"""
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -135,6 +153,27 @@ class EventViewSet(viewsets.ModelViewSet):
         if edate is not None and edate != null:
             queryset = queryset.filter(end_date__lte=edate)
         return Response(self.serializer_class(list(dict.fromkeys(queryset)), many=True).data)
+
+
+        """def list(self, request):
+        queryset = models.Event.objects.all()
+        group = request.GET.get("group")
+        ev_type = request.GET.get("evtype")
+        sdate = request.GET.get("sdate")
+        edate = request.GET.get("edate")
+        if group is not None:
+            queryset = queryset.filter(group=int(group))
+        if ev_type is not None:
+            queryset = queryset.filter(ev_type=int(ev_type))
+        if sdate is not None:
+            queryset = queryset.filter(start_date__gte=sdate)
+        if edate is not None:
+            queryset = queryset.filter(end_date__lte=edate)
+        return Response(self.serializer_class(queryset), many=True).data)"""
+
+
+
+
 
     def create(self, request, *args, **kwargs):
         group = request.data['group'][0]

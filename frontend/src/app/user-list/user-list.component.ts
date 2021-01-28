@@ -33,7 +33,6 @@ export class UserListComponent extends CdkTableExporterModule implements OnInit 
     this.userService.getUsers()
       .subscribe((users) => {
         this.users = users;
-        console.log('lul')
       });
   }
 
