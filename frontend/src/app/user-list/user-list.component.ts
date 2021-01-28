@@ -13,7 +13,7 @@ import {CdkTableExporterModule} from 'cdk-table-exporter';
 export class UserListComponent extends CdkTableExporterModule implements OnInit {
 
   users: User[];
-  displayedColumns = ['pictures', 'username', 'email', 'first_name', 'last_name', 'is_active', 'is_staff', 'actions'];
+  displayedColumns = ['pictures', 'username', 'email', 'first_name', 'last_name', 'is_active', 'is_staff', 'group_names', 'actions'];
   search: '';
 
   constructor(public userService: UserService, private route: Router) {
