@@ -120,7 +120,7 @@ class EventViewSet(viewsets.ModelViewSet):
         sort = request.GET.get("sort")
         null = 'null'
         groupsOfUser = models.UserGroup.objects.filter(user=request.user.pk).values_list('group_id', flat=True)
-        queryset = self.queryset.filter(group__in=groupsOfUser).distinct()
+        queryset = self.queryset.filter(group__in=groupsOfUser)
         fields = self.fields
         if fields.__contains__(sort):
             queryset = queryset.order_by(sort)
@@ -134,7 +134,7 @@ class EventViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(start_date__gte=sdate)
         if edate is not None and edate != null:
             queryset = queryset.filter(end_date__lte=edate)
-        return Response(self.serializer_class(queryset, many=True).data)
+        return Response(self.serializer_class(list(dict.fromkeys(queryset)), many=True).data)
 
     def create(self, request, *args, **kwargs):
         group = request.data['group'][0]
@@ -204,7 +204,7 @@ class NewEventsViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(start_date__gte=sdate)
         if edate is not None and edate != null:
             queryset = queryset.filter(end_date__lte=edate)
-        return Response(self.serializer_class(queryset, many=True).data)
+        return Response(self.serializer_class(list(dict.fromkeys(queryset)), many=True).data)
 
 
 class AllEventsViewSet(viewsets.ModelViewSet):
@@ -226,7 +226,7 @@ class AllEventsViewSet(viewsets.ModelViewSet):
         search = request.GET.get("search")
         sort = request.GET.get("sort")
         null = 'null'
-        queryset = self.queryset.all()
+        queryset = self.queryset
         fields = self.fields
         if fields.__contains__(sort):
             queryset = queryset.order_by(sort)
@@ -240,7 +240,7 @@ class AllEventsViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(start_date__gte=sdate)
         if edate is not None and edate != null:
             queryset = queryset.filter(end_date__lte=edate)
-        return Response(self.serializer_class(queryset, many=True).data)
+        return Response(self.serializer_class(list(dict.fromkeys(queryset)), many=True).data)
 
 
 class GroupViewSet(viewsets.ModelViewSet):
