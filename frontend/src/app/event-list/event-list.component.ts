@@ -21,6 +21,8 @@ import {Group, GroupService} from '../services/group.service';
 export class EventListComponent extends CdkTableExporterModule implements OnInit {
   events: Event[];
   panelOpen = false;
+  tableView = false;
+  pks: number[];
   stateOneName: string;
   stateTwoName: string;
   stateThreeName: string;

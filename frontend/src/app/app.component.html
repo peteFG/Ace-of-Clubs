@@ -110,6 +110,10 @@
             <span>Manage Events</span>
           </button>
           <mat-menu #eventTypeMenu="matMenu">
+            <button mat-menu-item routerLink="all-events-list"
+                    *ngIf="userService.hasPermission('aceofclubs.delete_user')">
+              All Events
+            </button>
             <button mat-menu-item routerLink="event-type-list"
                     *ngIf="userService.hasPermission('aceofclubs.view_eventtype')">
               List Event Types
@@ -224,6 +228,10 @@
             <span>Manage Events</span>
           </button>
           <mat-menu #eventTypeMenu="matMenu">
+            <button mat-menu-item routerLink="all-events-list"
+                    *ngIf="userService.hasPermission('aceofclubs.delete_user')">
+              All Events
+            </button>
             <button mat-menu-item routerLink="event-type-list"
                     *ngIf="userService.hasPermission('aceofclubs.view_eventtype')">
               List Event Types
