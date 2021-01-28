@@ -20,10 +20,6 @@ export class RegisterComponent implements OnInit {
   }
 
   registerFormGroup: FormGroup;
-  //username: '';
-  //email: '';
-  //check: User[];
-  //checkE: User[];
 
   ngOnInit(): void {
     this.registerFormGroup = this.fb.group({
@@ -49,14 +45,6 @@ export class RegisterComponent implements OnInit {
   get password2() {
     return this.registerFormGroup.get('password2');
   }
-/*
-  get usernameEx() {
-    return this.registerFormGroup.get('username');
-  }
-
-  get emailEx() {
-    return this.registerFormGroup.get('email');
-  }*/
 
   /* Called on each input in either password field */
   onPasswordInput() {
@@ -93,25 +81,4 @@ export class RegisterComponent implements OnInit {
           });
     }
   }
-
-  /*
-  searchUserCustom(str: string): void {
-    this.userService.searchRegisterUserCustom(str).subscribe((users) => {
-      this.check = [];
-      this.check = users;
-      if (this.check.length !== 0){
-      this.usernameEx.setErrors([{exists: true}]);
-      }
-    });
-  }
-
-  searchEmailCustom(str: string): void {
-    this.userService.searchRegisterEmailCustom(str).subscribe((users) => {
-      this.checkE = [];
-      this.checkE = users;
-      if (this.checkE.length !== 0){
-        this.emailEx.setErrors([{exists: true}]);
-      }
-    });
-  }*/
 }

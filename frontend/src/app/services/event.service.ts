@@ -1,9 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {forkJoin, Observable} from 'rxjs';
-import {User, UserService} from './user.service';
-import {flatMap} from 'rxjs/internal/operators';
-import {map} from 'rxjs/operators';
+import { Observable} from 'rxjs';
+import { UserService} from './user.service';
 
 export interface Event {
   pk?: number;
@@ -55,33 +53,16 @@ export class EventService {
   createEvent(event: Event): Observable<Event> {
     return this.http.post<Event>('/api/events/', event);
   }
-/*
-  searchEventCustom(str: string, sort: string): Observable<Event[]> {
-    return this.http.get<Event[]>('/api/events/?search=' + str + '&sort=' + sort);
-  }
-
-  filterEventCustom(group?: string, evtype?: string, sdate?: string, edate?: string, sort?: string): Observable<Event[]> {
-    return this.http.get<Event[]>('/api/events/?group=' + group + '&evtype=' + evtype + '&sdate=' + sdate + '&edate=' + edate + '&sort=' + sort);
-  }*/
 
   filterSortSearchEventCustom(search?: string, group?: string, evtype?: string, sdate?: string, edate?: string, sort?: string): Observable<Event[]> {
     return this.http.get<Event[]>('/api/events/?search=' + search + '&group=' + group + '&evtype=' + evtype + '&sdate=' + sdate + '&edate=' + edate + '&sort=' + sort);
   }
-/*
-  sortEventCustom(str: string): Observable<Event[]> {
-    return this.http.get<Event[]>('/api/events/?sort=' + str);
-  }
-
-  sortAllEventCustom(str: string): Observable<Event[]> {
-    return this.http.get<Event[]>('/api/allEvents/?sort=' + str);
-  }*/
 
   filterSortSearchAllEventCustom(search?: string, group?: string, evtype?: string, sdate?: string, edate?: string, sort?: string): Observable<Event[]> {
     return this.http.get<Event[]>('/api/allEvents/?search=' + search + '&group=' + group + '&evtype=' + evtype + '&sdate=' + sdate + '&edate=' + edate + '&sort=' + sort);
   }
 
   //-------------------- Section  for Unresponded Event ----------------------
-
 
   getNewEvents(): Observable<Event[]> {
     return this.http.get<Event[]>('/api/newEvents/');
@@ -90,19 +71,6 @@ export class EventService {
   filterSortSearchNewEventCustom(search?: string, group?: string, evtype?: string, sdate?: string, edate?: string, sort?: string): Observable<Event[]> {
     return this.http.get<Event[]>('/api/newEvents/?search=' + search + '&group=' + group + '&evtype=' + evtype + '&sdate=' + sdate + '&edate=' + edate + '&sort=' + sort);
   }
-/*
-  searchNewEventCustom(str: string): Observable<Event[]> {
-    return this.http.get<Event[]>('/api/newEvents/?search=' + str);
-  }
-
-  filterNewEventCustom(group?: string, evtype?: string, sdate?: string, edate?: string): Observable<Event[]> {
-    return this.http.get<Event[]>('/api/newEvents/?group=' + group + '&evtype=' + evtype + '&sdate=' + sdate + '&edate=' + edate);
-  }
-
-  sortNewEventCustom(str: string): Observable<Event[]> {
-    return this.http.get<Event[]>('/api/newEvents/?sort=' + str);
-  }*/
-
 
   //-------------------- Section  for ADMIN ----------------------
 
@@ -129,10 +97,6 @@ export class EventService {
   // Filter Events nach Gruppen des aktuellen User
   filtEvents(groupID: number): Observable<Event[]> {
     return this.http.get<Event[]>('api/events/?group=' + groupID);
-  }
-
-  searchAllEventsCustom(str: string): Observable<Event[]> {
-    return this.http.get<Event[]>('/api/allEvents/?search=' + str);
   }
 
   filterAllEventsCustom(group?: string, evtype?: string, sdate?: string, edate?: string): Observable<Event[]> {

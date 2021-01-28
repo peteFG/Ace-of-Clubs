@@ -10,7 +10,6 @@ from . import serializers
 from . import models
 
 
-
 # AdminUserViewset  --> admin should be able to see all users
 class CustomPermission(DjangoModelPermissions):
 
@@ -21,7 +20,6 @@ class CustomPermission(DjangoModelPermissions):
         elif request.user.is_authenticated:
             permission = True
         return permission
-
 
 class CustomPermissionAdmin(DjangoModelPermissions):
 
@@ -37,7 +35,6 @@ class CustomPermissionRegister(DjangoModelPermissions):
         permission = True
         return permission
 
-
 class AllUserViewSet(viewsets.ModelViewSet):
     queryset = models.User.objects.all().order_by('pk')
     permission_classes = (CustomPermission, )
@@ -52,24 +49,6 @@ class AllUserViewSet(viewsets.ModelViewSet):
             queryset |= self.queryset.filter(first_name__contains=search)
             queryset |= self.queryset.filter(last_name__contains=search)
         return Response(self.serializer_class(queryset, many=True).data)
-
-
-    """def list(self, request):
-        search = request.GET.get("search")
-        reg = request.GET.get("reg")
-        regemail = request.GET.get("regemail")
-        queryset = self.queryset
-        if search is not None:
-            queryset = self.queryset.filter(email__contains=search)
-            queryset |= self.queryset.filter(username__contains=search)
-            queryset |= self.queryset.filter(first_name__contains=search)
-            queryset |= self.queryset.filter(last_name__contains=search)
-        elif reg is not None and reg != 'undefined':
-            queryset = self.queryset.filter(username=reg)
-        elif regemail is not None and regemail != 'undefined':
-            queryset = self.queryset.filter(email=regemail)
-        return Response(self.serializer_class(queryset, many=True).data)"""
-
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = models.User.objects.all().order_by('pk')
@@ -153,27 +132,6 @@ class EventViewSet(viewsets.ModelViewSet):
         if edate is not None and edate != null:
             queryset = queryset.filter(end_date__lte=edate)
         return Response(self.serializer_class(list(dict.fromkeys(queryset)), many=True).data)
-
-
-        """def list(self, request):
-        queryset = models.Event.objects.all()
-        group = request.GET.get("group")
-        ev_type = request.GET.get("evtype")
-        sdate = request.GET.get("sdate")
-        edate = request.GET.get("edate")
-        if group is not None:
-            queryset = queryset.filter(group=int(group))
-        if ev_type is not None:
-            queryset = queryset.filter(ev_type=int(ev_type))
-        if sdate is not None:
-            queryset = queryset.filter(start_date__gte=sdate)
-        if edate is not None:
-            queryset = queryset.filter(end_date__lte=edate)
-        return Response(self.serializer_class(queryset), many=True).data)"""
-
-
-
-
 
     def create(self, request, *args, **kwargs):
         group = request.data['group'][0]
@@ -367,7 +325,6 @@ class AllUserGroupViewSet(viewsets.ModelViewSet):
 
     def list(self, request):
         user = request.GET.get("user")
-        #user = request.user.pk
         if user is None:
             serializer = self.serializer_class(self.queryset.all(), many=True)
         else:
