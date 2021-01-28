@@ -2,7 +2,7 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Event, EventService} from '../services/event.service';
 import {HttpClient} from '@angular/common/http';
 import {EventType, EventTypeService} from '../services/event-type.service';
-import { UserService} from '../services/user.service';
+import {UserEvent, UserService} from '../services/user.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {StateService} from '../services/state.service';
@@ -111,6 +111,7 @@ export class EventListComponent extends CdkTableExporterModule implements OnInit
       this.events = events;
     });
   }
+
 
   private retrieveStates(): void {
     this.stateService.getStates().subscribe((states) => {
