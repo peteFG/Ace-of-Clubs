@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {User, UserService} from '../services/user.service';
-import {Router} from "@angular/router";
-import {CdkTableExporterModule} from "cdk-table-exporter";
+import {Router} from '@angular/router';
+import {CdkTableExporterModule} from 'cdk-table-exporter';
 
 @Component({
   selector: 'app-user-list',
@@ -13,7 +13,7 @@ import {CdkTableExporterModule} from "cdk-table-exporter";
 export class UserListComponent extends CdkTableExporterModule implements OnInit {
 
   users: User[];
-  displayedColumns = ['pictures', 'username', 'email', 'first_name', 'last_name', 'is_active', 'is_staff', 'edit', 'delete'];
+  displayedColumns = ['pictures', 'username', 'email', 'first_name', 'last_name', 'is_active', 'is_staff', 'actions'];
   search: '';
 
   constructor(public userService: UserService, private route: Router) {

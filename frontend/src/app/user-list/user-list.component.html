@@ -1,9 +1,177 @@
-<div class="container">
+<!-- Ansicht Admin -->
+<div class="container-bg" *ngIf="this.userService.hasPermission('aceofclubs.delete_user')">
+
+  <h1 style="padding-top: 5vh; padding-bottom: 5vh" class="title-regular desktop-view">CLUB MANAGEMENT</h1>
+  <h1 style="padding-top: 5vh; padding-bottom: 5vh" class="title-regular mobile-view">MANAGE YOUR CLUB</h1>
+
+  <!-- Club Management -->
+  <div class="actions horiz-space-around">
+    <mat-button-toggle-group>
+      <mat-button-toggle class="active-manage" matTooltip="Manage Users" matTooltipClass="tooltips"
+                         [routerLink]="'/user-list'">
+        <mat-icon>person</mat-icon>
+      </mat-button-toggle>
+
+      <mat-button-toggle class="inactive-manage" *ngIf="userService.hasPermission('aceofclubs.delete_user')"
+                         [routerLink]="'/state-list'" matTooltip="Manage States"
+                         matTooltipClass="tooltips">
+        <mat-icon>sms</mat-icon>
+      </mat-button-toggle>
+
+      <mat-button-toggle class="inactive-manage" matTooltip="Manage Groups" matTooltipClass="tooltips"
+                         [routerLink]="'/group-list'">
+        <mat-icon>groups</mat-icon>
+      </mat-button-toggle>
+
+      <mat-button-toggle class="inactive-manage" matTooltip="Manage Events" matTooltipClass="tooltips"
+                         [routerLink]="'/all-events-list'">
+        <mat-icon>event</mat-icon>
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+
+  <!-- Admin Desktop Ansicht -->
+  <div class="desktop-view">
+    <div class="horiz-center" style="padding-top: 6vh">
+      <mat-card class="content-card">
+        <mat-card-header style="display: flex; flex-direction: row; justify-content: space-between">
+
+          <mat-card-title class="mat-h3 mobile-view">ALL USERS</mat-card-title>
+          <div>
+            <input class="form-control mr-sm-2" type="text" placeholder="Search" [(ngModel)]="search"
+                   (ngModelChange)="searchCustom(search)">
+            <button class="menu-button" [matMenuTriggerFor]="exportMenu" style="margin-bottom: 12px" mat-button
+                    color="standard"
+                    matTooltip="Export Options"
+                    matTooltipClass="tooltips">
+              <mat-icon>get_app</mat-icon>
+            </button>
+
+            <mat-menu #exportMenu="matMenu">
+              <button mat-menu-item (click)="exporter.exportTable('xlsx',{fileName:'My_Users_data'})">
+                <span>Export to EXCEL</span>
+              </button>
+              <button mat-menu-item (click)="exporter.exportTable('csv',{fileName:'My_Users_data'})">
+                <span>Export to CSV</span>
+              </button>
+              <button mat-menu-item (click)="exporter.exportTable('json',{fileName:'My_Users_data'})">
+                <span>Export to JSON</span>
+              </button>
+              <button mat-menu-item (click)="exporter.exportTable('txt',{fileName:'My_Users_data'})">
+                <span>Export to TXT</span>
+              </button>
+            </mat-menu>
+
+            <button class="menu-button" style="margin-bottom: 12px" mat-button routerLink="/user-form"
+                    color="standard"
+                    matTooltip="Create a new User"
+                    matTooltipClass="tooltips">
+              <mat-icon>person_add</mat-icon>
+            </button>
+          </div>
+
+        </mat-card-header>
+        <mat-divider [inset]="true"></mat-divider>
+        <mat-card-content>
+
+          <!-- List All Users -->
+          <div class="horiz-center position">
+            <div class="table-container">
+              <div id="pdfView" #pdfView>
+                <table mat-table matTableExporter [dataSource]="users" #exporter="matTableExporter" matSort
+                       class="mat-elevation-z8">
+
+
+                  <ng-container matColumnDef="pictures">
+                    <th mat-header-cell *matHeaderCellDef></th>
+                    <td mat-cell *matCellDef="let element">
+
+                      <img class="profile-picture-md" [src]="'/api/media/download/' + element.pictures + '/'"
+                           height=30px
+                           *ngIf="element.pictures.length>0; else alt">
+                      <ng-template #alt><img class="profile-picture-md" src="./assets/image/user.png" height=30px>
+                      </ng-template>
+                    </td>
+
+                  </ng-container>
+
+                  <ng-container matColumnDef="username">
+                    <th mat-header-cell *matHeaderCellDef>Username</th>
+                    <td mat-cell *matCellDef="let element"> {{element.username}}</td>
+                  </ng-container>
+
+
+                  <ng-container matColumnDef="first_name">
+                    <th mat-header-cell *matHeaderCellDef>First Name</th>
+                    <td mat-cell *matCellDef="let element"> {{element.first_name}}</td>
+                  </ng-container>
+
+
+                  <ng-container matColumnDef="last_name">
+                    <th mat-header-cell *matHeaderCellDef>Last Name</th>
+                    <td mat-cell *matCellDef="let element"> {{element.last_name}}</td>
+                  </ng-container>
+
+
+                  <ng-container matColumnDef="email">
+                    <th mat-header-cell *matHeaderCellDef>E-Mail Address</th>
+                    <td mat-cell *matCellDef="let element"> {{element.email}}</td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="is_active">
+                    <th mat-header-cell *matHeaderCellDef>Active User?</th>
+                    <td mat-cell *matCellDef="let element"> {{element.is_active ? 'Yes' : 'No'}}</td>
+                  </ng-container>
+
+
+                  <ng-container matColumnDef="is_staff">
+                    <th mat-header-cell *matHeaderCellDef>Admin User?</th>
+                    <td mat-cell *matCellDef="let element"> {{element.is_staff ? 'Yes' : 'No'}}</td>
+                  </ng-container>
+
+
+                  <!-- Actions Column -->
+                  <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef></th>
+                    <td mat-cell *matCellDef="let element">
+                      <button matTooltip="Edit" matTooltipClass="tooltips" mat-icon-button color="standard"
+                              [routerLink]="'/user-form/' + element.pk"
+                              *ngIf="userService.hasPermission('aceofclubs.change_user')">
+                        <mat-icon>edit</mat-icon>
+                      </button>
+                      <button matTooltip="Delete" matTooltipClass="tooltips" mat-icon-button color="light"
+                              (click)="deleteUser(element)"
+                              *ngIf="userService.hasPermission('aceofclubs.delete_user')">
+                        <mat-icon>delete_outline</mat-icon>
+                      </button>
+                    </td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+
+
+</div>
+
+
+<!-- Ansicht normaler User -->
+<div class="container"
+     *ngIf="userService.hasPermission('aceofclubs.view_user') && !this.userService.hasPermission('aceofclubs.delete_user')">
   <!-- Desktop Ansicht -->
-  <div class="desktop-view" *ngIf="userService.hasPermission('aceofclubs.view_user')">
+  <div class="desktop-view">
     <div>
 
-      <input class="form-control mr-sm-2" type="text" placeholder="Search" [(ngModel)]="search" (ngModelChange)="searchCustom(search)">
+      <input class="form-control mr-sm-2" type="text" placeholder="Search" [(ngModel)]="search"
+             (ngModelChange)="searchCustom(search)">
 
 
       <div>
@@ -13,85 +181,12 @@
         <button mat-raised-button (click)="exporter.exportTable('txt',{fileName:'My_Users_data'})">TEXT</button>
       </div>
 
-      <table mat-table matTableExporter [dataSource]="users" #exporter="matTableExporter" matSort class="mat-elevation-z8">
-
-
-        <ng-container matColumnDef="pictures">
-          <th mat-header-cell *matHeaderCellDef></th>
-          <td mat-cell *matCellDef="let element">
-
-            <img [src]="'/api/media/download/' + element.pictures + '/'" height=30px
-                 *ngIf="element.pictures.length>0; else alt">
-            <ng-template #alt><img src="./assets/image/user.png" height=30px></ng-template>
-          </td>
-
-        </ng-container>
-
-        <ng-container matColumnDef="username">
-          <th mat-header-cell *matHeaderCellDef>Username</th>
-          <td mat-cell *matCellDef="let element"> {{element.username}}</td>
-        </ng-container>
-
-
-        <ng-container matColumnDef="first_name">
-          <th mat-header-cell *matHeaderCellDef>First Name</th>
-          <td mat-cell *matCellDef="let element"> {{element.first_name}}</td>
-        </ng-container>
-
-
-        <ng-container matColumnDef="last_name">
-          <th mat-header-cell *matHeaderCellDef>Last Name</th>
-          <td mat-cell *matCellDef="let element"> {{element.last_name}}</td>
-        </ng-container>
-
-
-        <ng-container matColumnDef="email">
-          <th mat-header-cell *matHeaderCellDef>E-Mail Address</th>
-          <td mat-cell *matCellDef="let element"> {{element.email}}</td>
-        </ng-container>
-
-
-        <ng-container matColumnDef="is_active">
-          <th mat-header-cell *matHeaderCellDef>Active User?</th>
-          <td mat-cell *matCellDef="let element"> {{element.is_active ? 'Yes' : 'No'}}</td>
-        </ng-container>
-
-
-        <ng-container matColumnDef="is_staff">
-          <th mat-header-cell *matHeaderCellDef>Admin User?</th>
-          <td mat-cell *matCellDef="let element"> {{element.is_staff ? 'Yes' : 'No'}}</td>
-        </ng-container>
-
-
-        <!-- Edit Column -->
-        <ng-container matColumnDef="edit">
-          <th mat-header-cell *matHeaderCellDef></th>
-          <td mat-cell *matCellDef="let element">
-            <button mat-button color="primary" [routerLink]="'/user-form/' + element.pk"
-                    *ngIf="userService.hasPermission('aceofclubs.change_user')">Edit
-            </button>
-          </td>
-        </ng-container>
-
-        <!-- Delete Column -->
-        <ng-container matColumnDef="delete">
-          <th mat-header-cell *matHeaderCellDef></th>
-          <td mat-cell *matCellDef="let element">
-            <button mat-button color="warn" (click)="deleteUser(element)"
-                    *ngIf="userService.hasPermission('aceofclubs.delete_user')">Delete
-            </button>
-          </td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
 
     </div>
   </div>
 
   <!-- Mobile Ansicht -->
-  <div class="mobile-view" *ngIf="userService.hasPermission('aceofclubs.view_user')">
+  <div class="mobile-view">
 
     <div class="mobile-header">
       <div class="mobile-title anim-left">ALL <br> MEMBERS</div>
@@ -99,15 +194,31 @@
 
       <!-- Filtern -->
       <div class="anim-right">
-        <mat-accordion class="m-filter-acc">
-          <mat-expansion-panel hideToggle class="m-filter-elem-acc">
-            <mat-expansion-panel-header class="m-filter-header">
-              <div>
-                <mat-panel-title class="m-filter-title">FILTER MEMBERS</mat-panel-title>
-              </div>
-            </mat-expansion-panel-header>
-          </mat-expansion-panel>
-        </mat-accordion>
+        <mat-card class="m-filter-acc">
+          <input class="form-control mr-sm-2" type="text" placeholder="Search" [(ngModel)]="search"
+                 (ngModelChange)="searchCustom(search)">
+          <button class="menu-button" [matMenuTriggerFor]="exportMenu1" style="margin-bottom: 12px" mat-button
+                  color="standard"
+                  matTooltip="Export Options"
+                  matTooltipClass="tooltips">
+            <mat-icon>get_app</mat-icon>
+          </button>
+
+          <mat-menu #exportMenu1="matMenu">
+            <button mat-menu-item (click)="exporter.exportTable('xlsx',{fileName:'My_Users_data'})">
+              <span>Export to EXCEL</span>
+            </button>
+            <button mat-menu-item (click)="exporter.exportTable('csv',{fileName:'My_Users_data'})">
+              <span>Export to CSV</span>
+            </button>
+            <button mat-menu-item (click)="exporter.exportTable('json',{fileName:'My_Users_data'})">
+              <span>Export to JSON</span>
+            </button>
+            <button mat-menu-item (click)="exporter.exportTable('txt',{fileName:'My_Users_data'})">
+              <span>Export to TXT</span>
+            </button>
+          </mat-menu>
+        </mat-card>
       </div>
       <mat-divider style="margin-top: 15px"></mat-divider>
     </div>
@@ -164,9 +275,11 @@
       </mat-accordion>
     </div>
   </div>
+</div>
 
-  <!-- Error Handling -->
-  <div *ngIf="!userService.hasPermission('aceofclubs.view_user')">
+<!-- Error Handling -->
+<div *ngIf="!userService.hasPermission('aceofclubs.view_user')">
+  <div class="container">
     <div class="vertical-center error-position">
       <div style="font-size: 800%; margin-bottom: 40px" class="error-title desktop-view anim-right">OH NO!</div>
       <div class="error-title mobile-view anim-right">OH<br>NO!</div>
