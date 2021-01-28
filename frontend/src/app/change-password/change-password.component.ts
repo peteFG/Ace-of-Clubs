@@ -27,13 +27,16 @@ export class ChangePasswordComponent implements OnInit {
 
   ngOnInit(): void {
     this.changePasswordFormGroup = this.fb.group({
-      pk: ['',],
+      pk: [''],
       username: ['', ],
       first_name: ['', ],
       last_name: ['', ],
       email: ['', ],
       password: ['', Validators.required],
       password2: ['', Validators.required],
+      pictures:  [''],
+      is_active:  [''],
+      is_staff:  ['']
     }, {validators: this.passwordMatchValidator});
     const pk = this.route.snapshot.paramMap.get('pk');
     if (pk) {
