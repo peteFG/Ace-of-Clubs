@@ -30,6 +30,7 @@ export class RegisterComponent implements OnInit {
       email: ['', Validators.required],
       password: ['', Validators.required],
       password2: ['', Validators.required],
+      pictures: new FormControl([]),
       is_active: new FormControl(false),
       is_staff: new FormControl(false),
       groups: new FormControl([2]),

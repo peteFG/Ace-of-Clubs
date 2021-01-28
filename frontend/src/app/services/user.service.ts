@@ -110,7 +110,7 @@ export class UserService {
         this.getPreviousSite(this.router);
         alert('Logged in as: ' + localStorage.getItem('currentUser'));
       }, () => {
-        alert('wrong username or password');
+        alert('Username or Password is wrong!');
       });
   }
 
