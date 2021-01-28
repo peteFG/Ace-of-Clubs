@@ -37,11 +37,7 @@ export class UserGroupFormComponent implements OnInit {
 
 
     // Get Group Options
-
-    console.log(this.userService.availableGroups);
     this.readAvailableGroups();
-    //console.log(this.groupOptions)
-
     this.userService.getUsers().subscribe((users)=>{
       this.userOptions = users;
     });

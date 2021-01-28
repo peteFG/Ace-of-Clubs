@@ -164,8 +164,7 @@ export class EventListComponent extends CdkTableExporterModule implements OnInit
       this.eventFilterFormGroup.value.group,
       this.eventFilterFormGroup.value.ev_type,
       this.eventFilterFormGroup.value.start_date,
-      this.eventFilterFormGroup.value.end_date,
-      this.str).subscribe((events) => {
+      this.eventFilterFormGroup.value.end_date).subscribe((events) => {
       this.events = events;
       this.router.navigateByUrl('/event-list');
     });

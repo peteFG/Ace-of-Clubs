@@ -50,8 +50,6 @@ export class ChangePasswordComponent implements OnInit {
       this.currentUserIsStaff = user.is_staff;
       this.currentUserPK = 0;
       this.currentUserPK = user.pk;
-
-      console.log(this.currentUserIsStaff === true || parseInt(pk, 10) === this.currentUserPK);
       if (!(this.currentUserIsStaff === true || parseInt(pk, 10) === this.currentUserPK)) {
         this.router.navigateByUrl('/user-profile');
       }

@@ -55,7 +55,6 @@ export class EventFormComponent implements OnInit {
       this.isStaff = false;
       this.isStaff = user.is_staff;
 
-      console.log(this.isStaff);
       if (this.isStaff === true) {
         this.groupService.retrieveGroups().subscribe((groupOptions) => {
           this.groupOptions = groupOptions;

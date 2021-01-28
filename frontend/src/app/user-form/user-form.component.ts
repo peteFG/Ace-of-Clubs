@@ -55,7 +55,6 @@ export class UserFormComponent implements OnInit {
       this.currentUserPK = 0;
       this.currentUserPK = user.pk;
 
-      //console.log(this.currentUserIsStaff === true || parseInt(pk, 10) === this.currentUserPK);
       if (!(this.currentUserIsStaff === true || parseInt(pk, 10) === this.currentUserPK)) {
         this.router.navigateByUrl('/event-list');
       }

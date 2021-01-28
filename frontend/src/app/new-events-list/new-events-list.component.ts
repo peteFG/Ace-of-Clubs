@@ -143,8 +143,7 @@ export class NewEventsListComponent extends CdkTableExporterModule implements On
       this.eventFilterFormGroup.value.group,
       this.eventFilterFormGroup.value.ev_type,
       this.eventFilterFormGroup.value.start_date,
-      this.eventFilterFormGroup.value.end_date,
-      this.str).subscribe((newEvents) => {
+      this.eventFilterFormGroup.value.end_date).subscribe((newEvents) => {
       this.newEvents = newEvents;
       this.router.navigateByUrl('/new-events-list');
     });

@@ -96,15 +96,10 @@ class MediaDownloadView(View):
 
 
 class EventViewSet(viewsets.ModelViewSet):
-    queryset = models.Event.objects.all()
+    queryset = models.Event.objects.all().order_by('start_date')
     userGroups = models.UserGroup.objects.all()
     serializer_classUG = serializers.UserGroupSerializer
     serializer_class = serializers.EventSerializer
-    fields = ['pk', 'name', 'start_date', 'start_time',
-              'end_date', 'end_time', 'active', '-pk',
-              '-name', '-start_date', '-start_time',
-              '-end_date', '-end_time', '-active',
-              'group', '-group', 'ev_type','-ev_type' ]
 
     def list(self, request):
         if request.user.pk is None:
@@ -114,13 +109,9 @@ class EventViewSet(viewsets.ModelViewSet):
         sdate = request.GET.get("sdate")
         edate = request.GET.get("edate")
         search = request.GET.get("search")
-        sort = request.GET.get("sort")
         null = 'null'
         groupsOfUser = models.UserGroup.objects.filter(user=request.user.pk).values_list('group_id', flat=True)
         queryset = self.queryset.filter(group__in=groupsOfUser)
-        fields = self.fields
-        if fields.__contains__(sort):
-            queryset = queryset.order_by(sort)
         if search is not None and search != null:
             queryset = queryset.filter(name__contains=search)
         if group is not None and group != null:
@@ -169,11 +160,6 @@ class NewEventsViewSet(viewsets.ModelViewSet):
     queryset = models.Event.objects.all()
     permission_classes = (CustomPermissionAdmin, )
     serializer_class = serializers.EventSerializer
-    fields = ['pk', 'name', 'start_date', 'start_time',
-              'end_date', 'end_time', 'active', '-pk',
-              '-name', '-start_date', '-start_time',
-              '-end_date', '-end_time', '-active',
-              'group', '-group', 'ev_type','-ev_type']
 
     def list(self, request):
         groupsOfUser = models.UserGroup.objects.filter(user=request.user.pk).values_list('group_id', flat=True)
@@ -186,11 +172,7 @@ class NewEventsViewSet(viewsets.ModelViewSet):
         sdate = request.GET.get("sdate")
         edate = request.GET.get("edate")
         search = request.GET.get("search")
-        sort = request.GET.get("sort")
         null = 'null'
-        fields = self.fields
-        if fields.__contains__(sort):
-            queryset = queryset.order_by(sort)
         if search is not None and search != null:
             queryset = queryset.filter(name__contains=search)
         if group is not None and group != null:

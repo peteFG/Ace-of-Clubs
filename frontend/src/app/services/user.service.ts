@@ -62,7 +62,6 @@ export class UserService {
               private jwtHelperService: JwtHelperService) {
     const token = localStorage.getItem(this.accessTokenLocalStorageKey);
     if (token) {
-      console.log('Token expiration date: ' + this.jwtHelperService.getTokenExpirationDate(token));
       const tokenValid = !this.jwtHelperService.isTokenExpired(token);
       this.isLoggedIn.next(tokenValid);
     }

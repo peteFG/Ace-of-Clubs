@@ -33,7 +33,6 @@ export class GroupListComponent implements OnInit {
     const dialogRef = this.dialog.open(GroupFormComponent);
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('Dialog result ${result');
     });
   }
 

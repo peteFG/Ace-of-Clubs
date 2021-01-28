@@ -126,8 +126,6 @@ export class VacationForm implements OnInit {
 
       const vacationStart = vac_start_date;
       const vacationEnd = vac_end_date;
-      console.log(vac_start_date);
-      console.log(vac_end_date);
 
       events.filter(event => event.start_date.toString() >= vacationStart
         && event.end_date.toString() < vacationEnd).forEach((entry) => {
