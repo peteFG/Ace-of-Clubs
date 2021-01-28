@@ -29,4 +29,9 @@ export class LoginComponent implements OnInit {
     this.userService.login(this.loginFormGroup.value);
   }
 
+  alertPassword(): void {
+    alert('Please contact the administrator under the following e-mail to receive a new password:\n' +
+      'admin@aoc.com');
+  }
+
 }
