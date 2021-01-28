@@ -2,11 +2,10 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Event, EventService} from '../services/event.service';
 import {HttpClient} from '@angular/common/http';
 import {EventType, EventTypeService} from '../services/event-type.service';
-import {User, UserEvent, UserService} from '../services/user.service';
-import {ActivatedRoute, Router} from "@angular/router";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {filter} from 'rxjs/operators';
-import {StateService} from "../services/state.service";
+import { UserService} from '../services/user.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {StateService} from '../services/state.service';
 import jsPDF from 'jspdf';
 import {CdkTableExporterModule} from 'cdk-table-exporter';
 import {Group, GroupService} from '../services/group.service';
@@ -49,7 +48,7 @@ export class EventListComponent extends CdkTableExporterModule implements OnInit
     const desktopView = this.pdfView.nativeElement;
 
     doc.fromHTML(desktopView.innerHTML, 15, {
-      'elementHandlers': specialElementHandlers
+      elementHandlers: specialElementHandlers
     });
 
     doc.save('MyEvents.pdf');

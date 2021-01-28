@@ -3,17 +3,12 @@ import os
 from django.http import HttpResponse
 from django.views import View
 from rest_framework import viewsets, status
-from rest_framework.authentication import BasicAuthentication
-from rest_framework.decorators import api_view
 from rest_framework.exceptions import NotFound
 from rest_framework.response import Response
-from rest_framework.permissions import DjangoModelPermissions, AllowAny
-from rest_framework.views import APIView
-from rest_framework.permissions import DjangoModelPermissions, AllowAny, BasePermission
+from rest_framework.permissions import DjangoModelPermissions
 from . import serializers
 from . import models
-from .models import CsrfExemptSessionAuthentication
-from .serializers import UserSerializer
+
 
 
 # AdminUserViewset  --> admin should be able to see all users
@@ -39,13 +34,13 @@ class CustomPermissionAdmin(DjangoModelPermissions):
 
 class AllUserViewSet(viewsets.ModelViewSet):
     queryset = models.User.objects.all().order_by('pk')
-    permission_classes = (CustomPermission,)
     serializer_class = serializers.UserSerializer
 
     def list(self, request):
         search = request.GET.get("search")
         reg = request.GET.get("reg")
         regemail = request.GET.get("regemail")
+        queryset = self.queryset
         if search is not None:
             queryset = self.queryset.filter(email__contains=search)
             queryset |= self.queryset.filter(username__contains=search)
@@ -55,8 +50,6 @@ class AllUserViewSet(viewsets.ModelViewSet):
             queryset = self.queryset.filter(username=reg)
         elif regemail is not None:
             queryset = self.queryset.filter(email=regemail)
-        else:
-            queryset = self.queryset
         return Response(self.serializer_class(queryset, many=True).data)
 
 
@@ -71,7 +64,7 @@ class UserViewSet(viewsets.ModelViewSet):
             serializer = self.serializer_class(self.queryset.all(), many=True)
         else:
             serializer = self.serializer_class(self.queryset.filter(pk=user), many=True)
-        return Response(serializer.data)  # Response(self.serializer_class(queryset, many=True).data) #
+        return Response(serializer.data)
 
     # holt user der im backend angemeldet ist
     def partial_update(self, request, *args, **kwargs):
