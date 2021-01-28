@@ -72,13 +72,6 @@ class UserSerializer(serializers.ModelSerializer):
         return instance
 
 
-# class AdminUserSerializer(serializers.ModelSerializer):
-#    class Meta:
-#        model = models.User
-#        fields = ['pk', 'username', 'email', 'first_name', 'last_name', 'is_active', 'is_staff', 'pictures',
-#                  'password', 'groups']
-
-
 class MediaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Media
@@ -223,30 +216,12 @@ class AllUserGroupSerializer(serializers.ModelSerializer):
             user.save()
         return userGroup
 
-    """def update(self, instance, validated_data):
-        instance.is_leader = validated_data['is_leader']
-        instance.save()
-        if instance.is_leader:
-            model = self.validated_data['user']
-            user = models.User.objects.get(email=str(model))
-            user.groups.set(validated_data['groups'])
-            user.save()
-        return instance"""
-
 
 class UserEventSerializer(serializers.ModelSerializer):
-    # event_name = serializers.SerializerMethodField()
-    # user_name = serializers.SerializerMethodField()
 
     class Meta:
         model = models.UserEvent
         fields = ['pk', 'user', 'event', 'state']
-
-    # def get_event_name(self, obj):
-    #    return obj.event.name if obj.event else ""
-
-    # def get_user_name(self, obj):
-    #    return obj.user.username if obj.event else ""
 
 
 class AllUserEventSerializer(serializers.ModelSerializer):

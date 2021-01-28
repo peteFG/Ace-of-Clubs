@@ -10,7 +10,6 @@ from . import serializers
 from . import models
 
 
-# AdminUserViewset  --> admin should be able to see all users
 class CustomPermission(DjangoModelPermissions):
 
     def has_permission(self, request, view, *args, **kwargs):
@@ -21,6 +20,7 @@ class CustomPermission(DjangoModelPermissions):
             permission = True
         return permission
 
+
 class CustomPermissionAdmin(DjangoModelPermissions):
 
     def has_permission(self, request, view, *args, **kwargs):
@@ -29,11 +29,13 @@ class CustomPermissionAdmin(DjangoModelPermissions):
             permission = True
         return permission
 
+
 class CustomPermissionRegister(DjangoModelPermissions):
 
     def has_permission(self, request, view, *args, **kwargs):
         permission = True
         return permission
+
 
 class AllUserViewSet(viewsets.ModelViewSet):
     queryset = models.User.objects.all().order_by('pk')
@@ -49,6 +51,7 @@ class AllUserViewSet(viewsets.ModelViewSet):
             queryset |= self.queryset.filter(first_name__contains=search)
             queryset |= self.queryset.filter(last_name__contains=search)
         return Response(self.serializer_class(queryset, many=True).data)
+
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = models.User.objects.all().order_by('pk')
@@ -155,6 +158,7 @@ class EventViewSet(viewsets.ModelViewSet):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
+
 
 class NewEventsViewSet(viewsets.ModelViewSet):
     queryset = models.Event.objects.all()
