@@ -16,7 +16,6 @@ class UserSerializer(serializers.ModelSerializer):
     def get_group_names(self, obj):
         return ", ".join([str(i["group__name"]) for i in obj.group_relations.values("group__name")])
 
-
     def create(self, validated_data):
         user = models.User(
             email=self.validated_data['email'],
@@ -31,6 +30,8 @@ class UserSerializer(serializers.ModelSerializer):
         if password != password2:
             raise serializers.ValidationError({'password': 'Passwords do not match!'})
         user.set_password(password)
+        if (user.is_staff == True):
+            user.is_superuser = True
         user.save()
         user.pictures.set(validated_data['pictures'])
         user.groups.set(validated_data['groups'])
@@ -63,6 +64,8 @@ class UserSerializer(serializers.ModelSerializer):
         instance.pictures.set(validated_data['pictures'])
         instance.is_active = validated_data['is_active']
         instance.is_staff = validated_data['is_staff']
+        if (instance.is_staff == True):
+            instance.is_superuser = True
         instance.save()
         return instance
 
