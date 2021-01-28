@@ -270,7 +270,7 @@
     "model": "aceofclubs.event",
     "pk": 2,
     "fields": {
-      "name": "Probe",
+      "name": "Probe Graz",
       "start_date": "2021-01-15",
       "start_time": "19:00:00",
       "end_date": "2021-01-15",
@@ -286,7 +286,7 @@
     "model": "aceofclubs.event",
     "pk": 3,
     "fields": {
-      "name": "Probe",
+      "name": "Probe Wien",
       "start_date": "2021-01-06",
       "start_time": "19:00:00",
       "end_date": "2021-01-06",
@@ -305,7 +305,7 @@
     "model": "aceofclubs.event",
     "pk": 4,
     "fields": {
-      "name": "Probe",
+      "name": "Probe Salzburg",
       "start_date": "2021-01-13",
       "start_time": "19:00:00",
       "end_date": "2021-01-13",
@@ -321,7 +321,7 @@
     "model": "aceofclubs.event",
     "pk": 5,
     "fields": {
-      "name": "Probe",
+      "name": "Probe Oberösterreich",
       "start_date": "2021-01-20",
       "start_time": "19:00:00",
       "end_date": "2021-01-20",
@@ -339,7 +339,7 @@
     "model": "aceofclubs.event",
     "pk": 6,
     "fields": {
-      "name": "Probe",
+      "name": "Probe Tirol",
       "start_date": "2021-01-22",
       "start_time": "19:00:00",
       "end_date": "2021-01-22",
@@ -355,7 +355,7 @@
     "model": "aceofclubs.event",
     "pk": 7,
     "fields": {
-      "name": "Probe",
+      "name": "Probe Graz 2",
       "start_date": "2021-01-27",
       "start_time": "19:00:00",
       "end_date": "2021-01-27",
@@ -371,149 +371,6 @@
     "model": "aceofclubs.event",
     "pk": 8,
     "fields": {
-      "name": "Probe",
-      "start_date": "2021-01-28",
-      "start_time": "19:00:00",
-      "end_date": "2021-01-28",
-      "end_time": "21:00:00",
-      "active": true,
-      "group": [
-        2,
-        3,
-        4,
-        5
-      ],
-      "ev_type": 1
-    }
-  },
-  {
-    "model": "aceofclubs.event",
-    "pk": 9,
-    "fields": {
-      "name": "Probe",
-      "start_date": "2021-01-30",
-      "start_time": "19:00:00",
-      "end_date": "2021-01-30",
-      "end_time": "21:00:00",
-      "active": true,
-      "group": [
-        1
-      ],
-      "ev_type": 1
-    }
-  },
-  {
-    "model": "aceofclubs.event",
-    "pk": 10,
-    "fields": {
-      "name": "Probe",
-      "start_date": "2021-02-02",
-      "start_time": "19:00:00",
-      "end_date": "2021-02-02",
-      "end_time": "21:00:00",
-      "active": true,
-      "group": [
-        2,
-        3,
-        4
-      ],
-      "ev_type": 1
-    }
-  },
-  {
-    "model": "aceofclubs.event",
-    "pk": 11,
-    "fields": {
-      "name": "Probe",
-      "start_date": "2021-02-04",
-      "start_time": "19:00:00",
-      "end_date": "2021-02-04",
-      "end_time": "21:00:00",
-      "active": true,
-      "group": [
-        3,
-        4,
-        5
-      ],
-      "ev_type": 1
-    }
-  },
-  {
-    "model": "aceofclubs.event",
-    "pk": 12,
-    "fields": {
-      "name": "Probe",
-      "start_date": "2021-02-06",
-      "start_time": "19:00:00",
-      "end_date": "2021-02-06",
-      "end_time": "21:00:00",
-      "active": true,
-      "group": [
-        4,
-        5,
-        6
-      ],
-      "ev_type": 1
-    }
-  },
-  {
-    "model": "aceofclubs.event",
-    "pk": 13,
-    "fields": {
-      "name": "Probe",
-      "start_date": "2021-02-08",
-      "start_time": "19:00:00",
-      "end_date": "2021-02-08",
-      "end_time": "21:00:00",
-      "active": true,
-      "group": [
-        2,
-        5,
-        6
-      ],
-      "ev_type": 1
-    }
-  },
-  {
-    "model": "aceofclubs.event",
-    "pk": 14,
-    "fields": {
-      "name": "Probe",
-      "start_date": "2021-02-15",
-      "start_time": "19:00:00",
-      "end_date": "2021-02-15",
-      "end_time": "21:00:00",
-      "active": true,
-      "group": [
-        2,
-        3,
-        6
-      ],
-      "ev_type": 1
-    }
-  },
-  {
-    "model": "aceofclubs.event",
-    "pk": 15,
-    "fields": {
-      "name": "Auftritt Graz",
-      "start_date": "2021-02-15",
-      "start_time": "19:00:00",
-      "end_date": "2021-02-15",
-      "end_time": "21:00:00",
-      "active": true,
-      "group": [
-        2,
-        3,
-        6
-      ],
-      "ev_type": 1
-    }
-  },
-  {
-    "model": "aceofclubs.event",
-    "pk": 16,
-    "fields": {
       "name": "Auftritt Wien",
       "start_date": "2021-01-08",
       "start_time": "14:00:00",
@@ -528,7 +385,7 @@
   },
   {
     "model": "aceofclubs.event",
-    "pk": 17,
+    "pk": 9,
     "fields": {
       "name": "Auftritt Linz",
       "start_date": "2021-01-11",
@@ -544,7 +401,7 @@
   },
   {
     "model": "aceofclubs.event",
-    "pk": 18,
+    "pk": 10,
     "fields": {
       "name": "Auftritt Innsbruck",
       "start_date": "2021-01-14",
@@ -563,7 +420,7 @@
   },
   {
     "model": "aceofclubs.event",
-    "pk": 19,
+    "pk": 11,
     "fields": {
       "name": "Konzert Graz",
       "start_date": "2021-01-15",
@@ -582,7 +439,7 @@
   },
   {
     "model": "aceofclubs.event",
-    "pk": 20,
+    "pk": 12,
     "fields": {
       "name": "Konzert Wien",
       "start_date": "2021-01-31",
@@ -598,7 +455,7 @@
   },
   {
     "model": "aceofclubs.event",
-    "pk": 21,
+    "pk": 13,
     "fields": {
       "name": "Konzert Klagenfurt",
       "start_date": "2021-01-20",
@@ -614,7 +471,7 @@
   },
   {
     "model": "aceofclubs.event",
-    "pk": 22,
+    "pk": 14,
     "fields": {
       "name": "Konzert Salzburg",
       "start_date": "2021-02-05",
@@ -630,7 +487,7 @@
   },
   {
     "model": "aceofclubs.event",
-    "pk": 23,
+    "pk": 15,
     "fields": {
       "name": "Auftritt Wels",
       "start_date": "2021-02-10",
@@ -646,7 +503,7 @@
   },
   {
     "model": "aceofclubs.event",
-    "pk": 24,
+    "pk": 16,
     "fields": {
       "name": "Probe",
       "start_date": "2021-02-10",
@@ -662,7 +519,7 @@
   },
   {
     "model": "aceofclubs.event",
-    "pk": 25,
+    "pk": 17,
     "fields": {
       "name": "Wettbewerb",
       "start_date": "2021-02-26",
@@ -678,7 +535,7 @@
   },
   {
     "model": "aceofclubs.event",
-    "pk": 26,
+    "pk": 18,
     "fields": {
       "name": "Marschwertung",
       "start_date": "2021-03-26",
@@ -694,9 +551,9 @@
   },
   {
     "model": "aceofclubs.event",
-    "pk": 27,
+    "pk": 19,
     "fields": {
-      "name": "Wettbewerb",
+      "name": "Wettbewerb Graz",
       "start_date": "2021-04-26",
       "start_time": "10:00:00",
       "end_date": "2021-04-26",
@@ -712,7 +569,7 @@
   },
   {
     "model": "aceofclubs.event",
-    "pk": 28,
+    "pk": 20,
     "fields": {
       "name": "Besprechung 01.2021",
       "start_date": "2021-01-31",
@@ -728,7 +585,7 @@
   },
   {
     "model": "aceofclubs.event",
-    "pk": 29,
+    "pk": 21,
     "fields": {
       "name": "Gruppenbesprechung Posaune",
       "start_date": "2021-01-15",
@@ -744,7 +601,7 @@
   },
   {
     "model": "aceofclubs.event",
-    "pk": 30,
+    "pk": 22,
     "fields": {
       "name": "Gruppenbesprechung Trompete",
       "start_date": "2021-01-16",
@@ -760,7 +617,7 @@
   },
   {
     "model": "aceofclubs.event",
-    "pk": 31,
+    "pk": 23,
     "fields": {
       "name": "Gruppenbesprechung Klarinetten",
       "start_date": "2021-01-17",
@@ -776,7 +633,7 @@
   },
   {
     "model": "aceofclubs.event",
-    "pk": 32,
+    "pk": 24,
     "fields": {
       "name": "Gruppenbesprechung Tubas",
       "start_date": "2021-01-18",
@@ -792,7 +649,7 @@
   },
   {
     "model": "aceofclubs.event",
-    "pk": 33,
+    "pk": 25,
     "fields": {
       "name": "Gruppenbesprechung Querflöten",
       "start_date": "2021-01-19",
@@ -808,7 +665,7 @@
   },
   {
     "model": "aceofclubs.event",
-    "pk": 34,
+    "pk": 26,
     "fields": {
       "name": "Bezirksmusikfest",
       "start_date": "2021-03-30",
@@ -824,7 +681,7 @@
   },
   {
     "model": "aceofclubs.event",
-    "pk": 35,
+    "pk": 27,
     "fields": {
       "name": "Nacht der Blasmusik",
       "start_date": "2021-02-28",
