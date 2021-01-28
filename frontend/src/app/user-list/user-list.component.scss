@@ -104,6 +104,13 @@
 
 @media only screen and (max-width: 450px) {
 
+  .search {
+    width: 80vw;
+    padding: 10px;
+    border: white;
+    font-size: 14px;
+  }
+
   .mat-card {
     background-color: rgba(245, 245, 245, 1);
   }

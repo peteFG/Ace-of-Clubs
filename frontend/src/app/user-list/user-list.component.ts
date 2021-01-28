@@ -15,6 +15,7 @@ export class UserListComponent extends CdkTableExporterModule implements OnInit 
   users: User[];
   displayedColumns = ['pictures', 'username', 'email', 'first_name', 'last_name', 'is_active', 'is_staff', 'group_names', 'actions'];
   search: '';
+  showSearch: boolean;
 
   constructor(public userService: UserService, private route: Router) {
     super();
@@ -23,7 +24,9 @@ export class UserListComponent extends CdkTableExporterModule implements OnInit 
   ngOnInit(): void {
     this.retrieveUsers();
     this.userService.previousSite = this.userService.previousUrl;
-    //console.log(this.userService.currentUserPK)
+    // console.log(this.userService.currentUserPK)
+
+    this.showSearch = false;
   }
 
   private retrieveUsers(): void {
@@ -47,6 +50,14 @@ export class UserListComponent extends CdkTableExporterModule implements OnInit 
       this.users = users;
       this.route.navigateByUrl('/user-list');
     });
+  }
+
+  showSearchbar(): void {
+    if ( this.showSearch === false) {
+      this.showSearch = true;
+    } else {
+      this.showSearch = false;
+    }
   }
 
 }
