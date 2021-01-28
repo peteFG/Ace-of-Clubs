@@ -66,6 +66,8 @@ class UserSerializer(serializers.ModelSerializer):
         instance.is_staff = validated_data['is_staff']
         if (instance.is_staff == True):
             instance.is_superuser = True
+        else:
+            instance.is_superuser = False
         instance.save()
         return instance
 
