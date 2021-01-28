@@ -19,6 +19,7 @@ export class StateListComponent implements OnInit {
               public userService: UserService) { }
 
   ngOnInit(): void {
+    this.userService.retrieveCurrentUser();
     this.retrieveStates();
   }
 

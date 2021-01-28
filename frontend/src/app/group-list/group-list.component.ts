@@ -26,6 +26,7 @@ export class GroupListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.userService.retrieveCurrentUser();
     this.retrieveGroups();
   }
 

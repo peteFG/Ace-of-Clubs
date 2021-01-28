@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Event, EventService} from "../services/event.service";
 import {FormGroup} from "@angular/forms";
+import {User, UserService} from "../services/user.service";
 
 @Component({
   selector: 'app-overview',
@@ -15,9 +16,11 @@ export class OverviewComponent implements OnInit {
 
 
   constructor(private eventService: EventService,
+              private userService: UserService
               ) { }
 
   ngOnInit(): void {
+    this.userService.retrieveCurrentUser();
     this.retrieveEvents()
   }
 

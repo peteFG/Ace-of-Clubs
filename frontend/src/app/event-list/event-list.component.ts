@@ -70,7 +70,7 @@ export class EventListComponent extends CdkTableExporterModule implements OnInit
   }
 
   ngOnInit(): void {
-
+    this.userService.retrieveCurrentUser();
     this.showFilter = false;
     this.showSearch = false;
 

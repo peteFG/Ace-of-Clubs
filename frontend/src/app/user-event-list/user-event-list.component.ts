@@ -22,6 +22,7 @@ export class UserEventListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.userService.retrieveCurrentUser();
 
     const pkFromUrl = this.route.snapshot.paramMap.get('pk');
     if(pkFromUrl) {

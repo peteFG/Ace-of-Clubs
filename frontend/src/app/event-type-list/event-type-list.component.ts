@@ -25,6 +25,7 @@ export class EventTypeListComponent implements OnInit {
               private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.userService.retrieveCurrentUser();
     this.retrieveEventTypes()
   }
 
