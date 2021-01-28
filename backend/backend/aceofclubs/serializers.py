@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from . import models
 from .models import Media
+from rest_framework.fields import CurrentUserDefault
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -87,6 +88,7 @@ class EventSerializer(serializers.ModelSerializer):
     count_state_three = serializers.SerializerMethodField()
     group_names = serializers.SerializerMethodField()
     event_type_name = serializers.SerializerMethodField()
+    response = serializers.SerializerMethodField()
 
     def get_count_state_one(self, obj):
         listofstateone = []
@@ -136,7 +138,7 @@ class EventSerializer(serializers.ModelSerializer):
                   'end_date', 'end_time', 'active', 'group',
                   'group_names', 'ev_type', 'event_type_name',
                   'state_one', 'state_two', 'state_three',
-                  'count_state_one', 'count_state_two', 'count_state_three']
+                  'count_state_one', 'count_state_two', 'count_state_three', 'response']
 
     def get_group_names(self, obj):
         listofnames = []
@@ -146,6 +148,11 @@ class EventSerializer(serializers.ModelSerializer):
 
     def get_event_type_name(self, obj):
         return obj.ev_type.description if obj.ev_type else ""
+
+    def get_response(self, obj):
+        user = self.context['request'].user.pk
+        return ", ".join([str(i["state__description"]) for i in
+                          obj.user_relations.filter(event=obj.pk, user=user).values("state__description")])
 
 
 class GroupSerializer(serializers.ModelSerializer):
@@ -218,7 +225,6 @@ class AllUserGroupSerializer(serializers.ModelSerializer):
 
 
 class UserEventSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = models.UserEvent
         fields = ['pk', 'user', 'event', 'state']

@@ -39,7 +39,7 @@ class CustomPermissionRegister(DjangoModelPermissions):
 
 class AllUserViewSet(viewsets.ModelViewSet):
     queryset = models.User.objects.all().order_by('pk')
-    permission_classes = (CustomPermission, )
+    permission_classes = (CustomPermission,)
     serializer_class = serializers.UserSerializer
 
     def list(self, request):
@@ -99,6 +99,7 @@ class MediaDownloadView(View):
 
 
 class EventViewSet(viewsets.ModelViewSet):
+    permission_classes = (CustomPermission,)
     queryset = models.Event.objects.all().order_by('start_date')
     userGroups = models.UserGroup.objects.all()
     serializer_classUG = serializers.UserGroupSerializer
@@ -125,7 +126,7 @@ class EventViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(start_date__gte=sdate)
         if edate is not None and edate != null:
             queryset = queryset.filter(end_date__lte=edate)
-        return Response(self.serializer_class(list(dict.fromkeys(queryset)), many=True).data)
+        return Response(self.serializer_class(list(dict.fromkeys(queryset)), context= {'request': self.request},  many=True).data)
 
     def create(self, request, *args, **kwargs):
         group = request.data['group'][0]
@@ -162,7 +163,7 @@ class EventViewSet(viewsets.ModelViewSet):
 
 class NewEventsViewSet(viewsets.ModelViewSet):
     queryset = models.Event.objects.all()
-    permission_classes = (CustomPermissionAdmin, )
+    permission_classes = (CustomPermissionAdmin,)
     serializer_class = serializers.EventSerializer
 
     def list(self, request):
@@ -197,7 +198,7 @@ class AllEventsViewSet(viewsets.ModelViewSet):
               'end_date', 'end_time', 'active', '-pk',
               '-name', '-start_date', '-start_time',
               '-end_date', '-end_time', '-active',
-              'group', '-group', 'ev_type','-ev_type']
+              'group', '-group', 'ev_type', '-ev_type']
 
     def list(self, request):
         if not request.user.is_staff:
