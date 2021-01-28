@@ -7,7 +7,7 @@
       "username": "admin",
       "first_name": "",
       "last_name": "",
-      "email": "admin@aceofclubs.at",
+      "email": "admin@aoc.at",
       "is_staff": true,
       "is_active": true,
       "date_joined": "2020-12-05T10:37:03.966Z",
@@ -20,7 +20,7 @@
     "fields": {
       "password": "pbkdf2_sha256$216000$CRsyKxCGtvZW$bMxOoVgU9fkFc8cXcNTEnERq/b2XiPgvykAmxrIv4DE=",
       "username": "maddns",
-      "email": "martin.schweighofer@aceofclubs.at",
+      "email": "martin.schweighofer@aoc.at",
       "first_name": "Martin",
       "last_name": "Schweighofer",
       "is_active": true,
@@ -34,7 +34,7 @@
     "fields": {
       "password": "pbkdf2_sha256$216000$CRsyKxCGtvZW$bMxOoVgU9fkFc8cXcNTEnERq/b2XiPgvykAmxrIv4DE=",
       "username": "pete",
-      "email": "peter.feldgrill@muaceofclubs.at",
+      "email": "peter.feldgrill@aoc.at",
       "first_name": "Peter",
       "last_name": "Feldgrill",
       "is_active": true,
@@ -48,7 +48,7 @@
     "fields": {
       "password": "pbkdf2_sha256$216000$CRsyKxCGtvZW$bMxOoVgU9fkFc8cXcNTEnERq/b2XiPgvykAmxrIv4DE=",
       "username": "sophia",
-      "email": "sophia.druckenthaner@aceofclubs.at",
+      "email": "sophia.druckenthaner@aoc.at",
       "first_name": "Sophia",
       "last_name": "Druckenthaner",
       "is_active": true,
@@ -62,7 +62,7 @@
     "fields": {
       "password": "pbkdf2_sha256$216000$CRsyKxCGtvZW$bMxOoVgU9fkFc8cXcNTEnERq/b2XiPgvykAmxrIv4DE=",
       "username": "trippi",
-      "email": "christoph.tripolt@aceofclubs.at",
+      "email": "christoph.tripolt@aoc.at",
       "first_name": "Christoph",
       "last_name": "Tripolt",
       "is_active": true,
@@ -76,7 +76,7 @@
     "fields": {
       "password": "pbkdf2_sha256$216000$CRsyKxCGtvZW$bMxOoVgU9fkFc8cXcNTEnERq/b2XiPgvykAmxrIv4DE=",
       "username": "tom",
-      "email": "thomas.kristan@aceofclubs.at",
+      "email": "thomas.kristan@aoc.at",
       "first_name": "Thomas",
       "last_name": "Kristan",
       "is_active": true,
@@ -1294,5 +1294,5 @@
       "name": "user",
       "permissions": [40,44]
     }
-  },
+  }
 ]
