@@ -68,6 +68,7 @@ export class EventListComponent extends CdkTableExporterModule implements OnInit
   }
 
   ngOnInit(): void {
+    this.userService.previousSite = this.userService.previousUrl;
     this.retrieveEvents();
     this.retrieveStates();
     this.retrieveGroups();
