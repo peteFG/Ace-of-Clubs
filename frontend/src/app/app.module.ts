@@ -35,7 +35,7 @@ import { MatInputModule } from '@angular/material/input';
 import { LoginComponent } from './login/login.component';
 import { LogoutComponent } from './logout/logout.component';
 import { JwtModule } from '@auth0/angular-jwt';
-import {DeleteConfirmation, UserProfileComponent, VacationForm} from './user-profile/user-profile.component';
+import { DeleteConfirmation, UserProfileComponent, VacationForm } from './user-profile/user-profile.component';
 import { RegisterComponent } from './register/register.component';
 import { MatDividerModule } from '@angular/material/divider';
 import { OverviewComponent } from './overview/overview.component';
@@ -49,9 +49,10 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatDialogModule } from '@angular/material/dialog';
 import { AllEventsListComponent } from './all-events-list/all-events-list.component';
-import {MatTableExporterModule } from 'mat-table-exporter';
-import {MatSortModule} from '@angular/material/sort';
+import { MatTableExporterModule } from 'mat-table-exporter';
+import { MatSortModule } from '@angular/material/sort';
 import { NewEventsListComponent } from './new-events-list/new-events-list.component';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 @NgModule({
   declarations: [
@@ -120,7 +121,8 @@ import { NewEventsListComponent } from './new-events-list/new-events-list.compon
     MatTooltipModule,
     MatDialogModule,
     FormsModule,
-    MatSortModule
+    MatSortModule,
+    MatGridListModule
   ],
   providers: [],
   bootstrap: [AppComponent]

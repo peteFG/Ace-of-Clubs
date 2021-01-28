@@ -75,7 +75,7 @@
           <br/>
 
       <mat-card-actions align="center">
-        <button mat-raised-button color="primary" class="btn-standard" [disabled]="userFormGroup.invalid">
+        <button mat-raised-button class="btn-standard" [disabled]="userFormGroup.invalid">
           <span *ngIf="!userFormGroup.controls.pk.value">Create</span>
           <span *ngIf="userFormGroup.controls.pk.value">Update</span>
         </button>

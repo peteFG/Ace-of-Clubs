@@ -11,7 +11,7 @@
 }
 
 .m-sidenav-container {
-  background-color: rgba(62, 91, 147, 1);
+  background-color: rgba(245, 245, 245, 1);
 }
 
 .mat-drawer {
@@ -22,8 +22,46 @@
 
 .sidenav-title {
   font-size: 25px;
-  color: white;
+  color: rgba(62, 91, 147, 0.9);
   margin: 0 40px 0 40px;
+  font-weight: lighter;
+  margin: 20px !important;
+}
+
+.sidenav-subtitle {
+  color: rgba(62, 91, 147, 0.9);
+  font-size: 18px;
+}
+
+.sidenav-heading {
+  padding: 20px;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  margin-left: 5px;
+  color: rgba(62, 91, 147, 0.9);
+  font-weight: bold;
+  font-size: 22px;
+}
+
+.sidenav-subheading {
+  padding: 0 10px 10px 10px;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  margin-left: 5px;
+  color: rgba(62, 91, 147, 0.9);
+  font-weight: bold;
+  font-size: 18px;
+}
+
+
+.sidenav-button {
+  font-size: 17px;
+  color: rgba(62, 91, 147, 0.9);
+}
+
+.sidenav-button:hover {
+  background-color: rgba(62, 91, 147, 0.6);
+  color: white;
 }
 
 .h4 {
@@ -82,6 +120,11 @@
     height: 8vh;
   }
 
+  .m-sidenav-container {
+    height: 93.4vh;
+    width: 70vw;
+  }
+
   .menu {
     width: 97vw !important;
   }
@@ -129,6 +172,13 @@
   color: rgba(62, 91, 147, 0.9);
   border: 1px white !important;
   font-size: 22px;
+  padding-top: 4px;
+}
+
+.toolbar-text {
+  min-width: auto;
+  color: rgba(62, 91, 147, 0.9);
+  font-size: 18px;
   padding-top: 4px;
 }
 
