@@ -262,7 +262,7 @@ class StateViewSet(viewsets.ModelViewSet):
 
 
 class UserEventViewSet(viewsets.ModelViewSet):
-    permission_classes = (CustomPermissionAdmin,)
+    permission_classes = (CustomPermission,)
     queryset = models.UserEvent.objects.all()
     serializer_class = serializers.UserEventSerializer
 
