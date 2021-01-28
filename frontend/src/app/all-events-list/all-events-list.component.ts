@@ -35,7 +35,7 @@ export class AllEventsListComponent implements OnInit {
 
   @ViewChild('pdfView', {static: false}) pdfView: ElementRef;
 
-  public downloadAsPDF(): void {
+  public downloadAsPDF() {
     const doc = new jsPDF('l', 'mm', 'a1');
 
     const specialElementHandlers = {
@@ -47,7 +47,6 @@ export class AllEventsListComponent implements OnInit {
     const desktopView = this.pdfView.nativeElement;
 
     doc.fromHTML(desktopView.innerHTML, 15, {
-      // width: 200,
       elementHandlers: specialElementHandlers
     });
 
@@ -66,7 +65,7 @@ export class AllEventsListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.userService.retrieveCurrentUser();
     this.showFilter = false;
 
     this.retrieveEvents();
@@ -88,7 +87,6 @@ export class AllEventsListComponent implements OnInit {
     this.userService.getCurrentUser().subscribe((user) => {
       this.currentUserIsStaff = false;
       this.currentUserIsStaff = user.is_staff;
-      //console.log(this.currentUserIsStaff === true || parseInt(pk, 10) === this.currentUserPK);
       if ((this.currentUserIsStaff === false)) {
         this.router.navigateByUrl('/event-list');
       }

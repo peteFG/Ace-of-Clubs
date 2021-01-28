@@ -30,9 +30,9 @@ class UserSerializer(serializers.ModelSerializer):
         password2 = self.validated_data['password2']
         if password != password2:
             raise serializers.ValidationError({'password': 'Passwords do not match!'})
-        user.pictures.set(validated_data['pictures'])
         user.set_password(password)
         user.save()
+        user.pictures.set(validated_data['pictures'])
         user.groups.set(validated_data['groups'])
         user.save()
         userGroup = models.UserGroup(

@@ -27,7 +27,6 @@ export interface UserEvent {
   event: number;
   state: number;
   state_name:string;
-  // profile_picture: Media;
 }
 
 export interface UserGroup {
@@ -121,18 +120,6 @@ export class UserService {
     this.isLoggedIn.next(false);
     this.router.navigate(['/login']);
   }
-
-
-  // Aktuell angemeldeten User mittels username ermitteln
-  /*
-  getCurrentUser(): Observable<User> {
-    return this.http.get<User[]>('/api/users/?username=' + localStorage.getItem('currentUser'))
-      .pipe(map((users) => {
-        return users[0];
-      }));
-  }
-
-   */
 
   getCurrentUser(): Observable<User> {
     return this.http.get<User>('/api/user/').pipe(map((user)=>{
@@ -256,9 +243,7 @@ export class UserService {
   setUserGroupEntry() {
     this.groupService.getGroupPKs();
     const userID = this.clickedUser;
-    //const entriesOfClickedUser = ;
     this.availableGroups = [];
-    //this.existingGroupEntry = 0;
     const checkIfEmpty = [];
     const attendedGroups = []; // die Gruppen PKs, in denen sich der angeklickte User bereits befindet
 
@@ -289,9 +274,6 @@ export class UserService {
       }
 
     });
-
-    //console.log(this.availableGroups);
-    //console.log(this.clickedUser);
   }
 
 

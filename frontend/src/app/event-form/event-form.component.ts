@@ -3,11 +3,9 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {EventService} from '../services/event.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Group, GroupService} from '../services/group.service';
-import {HttpClient} from '@angular/common/http';
 import {EventType, EventTypeService} from '../services/event-type.service';
 import {UserService} from '../services/user.service';
 
-/*import {User, UserService} from "../services/user.service";*/
 
 @Component({
   selector: 'app-event-form',
@@ -23,7 +21,6 @@ export class EventFormComponent implements OnInit {
   groupOptionsForLeader: Group[];
   currentUserIsStaff: boolean;
 
-  /*personOptions: User[];*/
 
   constructor(private eventService: EventService,
               private route: ActivatedRoute,
@@ -75,10 +72,6 @@ export class EventFormComponent implements OnInit {
       }
     });
 
-    /*this.userService.getUsers()
-      .subscribe((personOptions)=>{
-        this.personOptions =personOptions
-      })*/
 
     const pkFromUrl = this.route.snapshot.paramMap.get('pk');
     if (pkFromUrl) {

@@ -1,9 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {UserService} from "./user.service";
-import {map} from "rxjs/operators";
-import {flatMap} from "rxjs/internal/operators";
 
 export interface Group {
   pk?: number;

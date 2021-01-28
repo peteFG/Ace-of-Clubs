@@ -78,7 +78,7 @@ export class ChangePasswordComponent implements OnInit {
     } else {
       return {passwordMismatch: true};
     }
-  }
+  };
 
   changePassword(): void {
     if (this.changePasswordFormGroup.value.password === this.changePasswordFormGroup.value.password2) {
