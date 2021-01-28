@@ -29,6 +29,7 @@ export class NewEventsListComponent extends CdkTableExporterModule implements On
   eventTypeOptions: EventType[];
   groupOptions: Group[];
   str: string;
+  showFilter: boolean;
 
   displayedColumns = ['name', 'group_name', 'event_type', 'start_date', 'start_time', 'end_date', 'end_time', 'active', 'state_one', 'state_two', 'state_three', 'actions'];
 
@@ -66,6 +67,8 @@ export class NewEventsListComponent extends CdkTableExporterModule implements On
   }
 
   ngOnInit(): void {
+
+    this.showFilter = false;
 
     this.userService.previousSite = this.userService.previousUrl;
     this.retrieveEvents();
@@ -141,6 +144,14 @@ export class NewEventsListComponent extends CdkTableExporterModule implements On
       this.newEvents = newEvents;
       this.router.navigateByUrl('/new-events-list');
     });
+  }
+
+  showFilterOptions(): void {
+    if (this.showFilter === false) {
+      this.showFilter = true;
+    } else {
+      this.showFilter = false;
+    }
   }
 
 }

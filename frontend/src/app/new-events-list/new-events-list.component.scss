@@ -1,0 +1,48 @@
+@media only screen and (min-width: 450px) {
+
+  .position {
+    padding-top: 10px
+  }
+
+  .date, .mat-form-field {
+    width: 15vw;
+    padding: 0 10px;
+  }
+
+  .title-bg {
+    text-align: -webkit-center;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    font-size: 600%;
+  }
+
+}
+
+.event-card {
+  vertical-align: top;
+  width: 20%;
+  min-height: fit-content;
+  height: 300px;
+  margin: 1%;
+  display: inline-block;
+}
+
+.event-list {
+  flex-direction: column;
+  height: 60vh;
+  width: 100%;
+  margin-left: 55px;
+  overflow-y: auto;
+}
+
+.event-title {
+  margin-left: 1.3vw;
+  margin-top: 0.8vw;
+  margin-bottom: 0 !important;
+  padding-bottom: 5px !important;
+}
+
+.mat-button-toggle {
+  min-width: 70px;
+  width: 5vw !important;
+}

@@ -149,8 +149,8 @@
 
 
   .mat-header-cell, .mat-footer-cell, .mat-cell {
-    min-width: 120px;
-    max-width: 300px;
+    min-width: 100px;
+    max-width: 200px;
     padding: 8px 0 !important;
     text-align: -webkit-center;
     box-sizing: border-box;
@@ -162,6 +162,7 @@
     padding: 0 !important;
     font-size: 18px;
     text-align: center;
+    overflow: hidden;
     color: rgba(62, 91, 147, 0.9);
   }
 
