@@ -275,17 +275,88 @@
   <div class="desktop-view">
     <div>
 
-      <h1 style="padding-top: 5vh; padding-bottom: 5vh" class="title-bg desktop-view">ALL USERS</h1>
+      <h1 style="padding-top: 5vh; padding-bottom: 5vh" class="title-bg desktop-view">ALL MEMBERS</h1>
 
-      <input class="form-control mr-sm-2" type="text" placeholder="Search" [(ngModel)]="search"
-             (ngModelChange)="searchCustom(search)">
+      <!-- Profile Actions: Edit & Delete Profile -->
+      <div class="actions horiz-space-around">
+        <mat-button-toggle-group style="margin-bottom: 3vh">
+          <mat-button-toggle mat-icon-button style="width: 19vw !important;"
+                  color="standard"
+                  matTooltip="Show Searchbar"
+                  matTooltipClass="tooltips">
+            <input style="width: 13vw" class="form-control mr-sm-2 search" type="text" placeholder="Search" [(ngModel)]="search"
+                   (ngModelChange)="searchCustom(search)">
+            <mat-icon color="standard" style="padding-left: 20px">search</mat-icon>
+          </mat-button-toggle>
 
+          <mat-button-toggle [matMenuTriggerFor]="exportMenu1"
+                             mat-icon-button
+                             color="standard"
+                             matTooltip="Export Options"
+                             matTooltipClass="tooltips">
+            <mat-icon color="standard">get_app</mat-icon>
+          </mat-button-toggle>
 
-      <div>
-        <button mat-raised-button (click)="exporter.exportTable('xlsx',{fileName:'My_Users_data'})">Excel</button>
-        <button mat-raised-button (click)="exporter.exportTable('csv',{fileName:'My_Users_data'})">CSV</button>
-        <button mat-raised-button (click)="exporter.exportTable('json',{fileName:'My_Users_data'})">JSON</button>
-        <button mat-raised-button (click)="exporter.exportTable('txt',{fileName:'My_Users_data'})">TEXT</button>
+          <mat-menu #exportMenu1="matMenu">
+            <button mat-menu-item (click)="exporter.exportTable('xlsx',{fileName:'My_Users_data'})">
+              <span>Export to EXCEL</span>
+            </button>
+            <button mat-menu-item (click)="exporter.exportTable('csv',{fileName:'My_Users_data'})">
+              <span>Export to CSV</span>
+            </button>
+            <button mat-menu-item (click)="exporter.exportTable('json',{fileName:'My_Users_data'})">
+              <span>Export to JSON</span>
+            </button>
+            <button mat-menu-item (click)="exporter.exportTable('txt',{fileName:'My_Users_data'})">
+              <span>Export to TXT</span>
+            </button>
+          </mat-menu>
+        </mat-button-toggle-group>
+      </div>
+
+      <div class="user-list">
+        <mat-card class="users-card" *ngFor="let user of users">
+          <mat-card-header style="margin-bottom: 2vh">
+            <div mat-card-avatar class="profile-picture-md2" style="padding: 0.7vw">
+              <img class="profile-picture-md2"
+                   [src]="'/api/media/download/' + user.pictures + '/'"
+                   height=30px
+                   *ngIf="user.pictures.length>0; else alt">
+              <ng-template #alt><img class="profile-picture-md2" src="./assets/image/user.png" height=30px>
+              </ng-template>
+            </div>
+            <mat-card-title class="user-title"><b>{{user.last_name}}</b></mat-card-title>
+            <mat-card-title class="user-title">{{user.first_name}}</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div style="padding: 0.7vw">
+              <div class="content-m-row ul">
+                <div class="content-m-hd" style="font-size: 18px">Username:</div>
+                <div class="content-m-data">{{user.username}}</div>
+              </div>
+              <div class="content-m-row ul">
+                <div class="content-m-hd">E-Mail:</div>
+                <div class="content-m-data">
+                  {{user.email}}
+                </div>
+              </div>
+              <div class="content-m-row ul">
+                <div class="content-m-hd">Groups:</div>
+                <div class="content-m-data">
+                  Gruppe einfügen!
+                </div>
+              </div>
+              <div class="content-m-row ul">
+                <div class="content-m-hd">Active:</div>
+                <div class="content-m-data">{{user.is_active}}</div>
+              </div>
+              <div class="content-m-row ul">
+                <div class="content-m-hd">Admin:</div>
+                <div class="content-m-data">{{user.is_staff}}</div>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
       </div>
 
 
@@ -352,9 +423,6 @@
                 <b>Gruppe:</b> {{user.group_names}}
               </div>
             </mat-panel-title>
-            <mat-panel-description class="acc-m-description">
-              Gruppenleiter?
-            </mat-panel-description>
           </mat-expansion-panel-header>
           <div class="acc-content" style="margin-top: 15px">
             <div class="content-m-row">
