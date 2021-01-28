@@ -26,6 +26,9 @@
           <button mat-menu-item routerLink="all-events-list" *ngIf="userService.hasPermission('aceofclubs.add_event')">All
             Events
           </button>
+          <button mat-menu-item routerLink="new-events-list" *ngIf="userService.hasPermission('aceofclubs.add_event')">New
+            Events
+          </button>
           <button mat-menu-item routerLink="event-form" *ngIf="userService.hasPermission('aceofclubs.add_event')">Create
             Event
           </button>
@@ -309,7 +312,7 @@
                 *ngIf="userService.hasPermission('aceofclubs.view_event')">
           All Events
         </button>
-        <button class="sidenav-button" mat-button routerLink="event-list"
+        <button class="sidenav-button" mat-button routerLink="new-events-list"
                 *ngIf="userService.hasPermission('aceofclubs.view_event')">
           New Events
         </button>

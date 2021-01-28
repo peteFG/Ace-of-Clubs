@@ -53,6 +53,7 @@ import { AllEventsListComponent } from './all-events-list/all-events-list.compon
 // @ts-ignore
 import {MatTableExporterModule } from 'mat-table-exporter';
 import {MatSortModule} from '@angular/material/sort';
+import { NewEventsListComponent } from './new-events-list/new-events-list.component';
 
 @NgModule({
   declarations: [
@@ -83,7 +84,8 @@ import {MatSortModule} from '@angular/material/sort';
     MediainputComponent,
     VacationForm,
     DeleteConfirmation,
-    AllEventsListComponent
+    AllEventsListComponent,
+    NewEventsListComponent
   ],
   imports: [
     BrowserModule,

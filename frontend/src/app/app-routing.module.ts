@@ -22,6 +22,7 @@ import {OverviewComponent} from './overview/overview.component';
 import {RegisterComponent} from './register/register.component';
 import {ChangePasswordComponent} from './change-password/change-password.component';
 import {AllEventsListComponent} from "./all-events-list/all-events-list.component";
+import {NewEventsListComponent} from "./new-events-list/new-events-list.component";
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -34,6 +35,7 @@ const routes: Routes = [
   {path: 'user-form/:pk', component: UserFormComponent, canActivate: [AuthGuard]},
   {path: 'event-list', component: EventListComponent, canActivate: [AuthGuard]},
   {path: 'all-events-list', component: AllEventsListComponent, canActivate: [AuthGuard]},
+  {path: 'new-events-list', component: NewEventsListComponent, canActivate: [AuthGuard]},
   {path: 'event-form', component: EventFormComponent, canActivate: [AuthGuard]},
   {path: 'event-form/:pk', component: EventFormComponent, canActivate: [AuthGuard]},
   {path: 'group-list', component: GroupListComponent, canActivate: [AuthGuard]},
