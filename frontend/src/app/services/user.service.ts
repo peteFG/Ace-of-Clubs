@@ -26,7 +26,7 @@ export interface UserEvent {
   user: number;
   event: number;
   state: number;
-  state_name:string;
+  state_name: string;
 }
 
 export interface UserGroup {
@@ -95,18 +95,23 @@ export class UserService {
   }
 
   login(userData: { username: string, password: string }): void {
-    this.http.post('/api/api-token-auth/', userData)
-      .subscribe((res: any) => {
-        this.isLoggedIn.next(true);
-        localStorage.setItem('currentUser', userData.username);
-        localStorage.setItem('access_token', res.token);
-        this.router.navigate(['event-list']);
-        this.retrieveCurrentUser();
-        this.getPreviousSite(this.router);
-        alert('Logged in as: ' + localStorage.getItem('currentUser'));
-      }, () => {
-        alert('Username or Password is wrong!');
-      });
+    if (localStorage.getItem('currentUser') !== null) {
+      alert('You are already logged in!');
+      this.router.navigate(['/user-profile']);
+    } else {
+      this.http.post('/api/api-token-auth/', userData)
+        .subscribe((res: any) => {
+          this.isLoggedIn.next(true);
+          localStorage.setItem('currentUser', userData.username);
+          localStorage.setItem('access_token', res.token);
+          this.router.navigate(['event-list']);
+          this.retrieveCurrentUser();
+          this.getPreviousSite(this.router);
+          alert('Logged in as: ' + localStorage.getItem('currentUser'));
+        }, () => {
+          alert('Username or Password is wrong!');
+        });
+    }
   }
 
   logout(): void {
@@ -117,7 +122,7 @@ export class UserService {
   }
 
   getCurrentUser(): Observable<User> {
-    return this.http.get<User>('/api/user/').pipe(map((user)=>{
+    return this.http.get<User>('/api/user/').pipe(map((user) => {
       return user[0];
     }));
   }
@@ -233,7 +238,7 @@ export class UserService {
         attendedGroups.push(userGroup.group);
       });
 
-      if (attendedGroups.length==0) {
+      if (attendedGroups.length == 0) {
 
         this.availableGroups = this.groupService.existingGroupsPK;
 
@@ -246,9 +251,9 @@ export class UserService {
         }
       }
 
-      if (this.availableGroups.length != 0){
+      if (this.availableGroups.length != 0) {
         this.router.navigateByUrl('/user-group-form');
-      }else{
+      } else {
         this.availableGroups = this.groupService.existingGroupsPK;
         this.router.navigateByUrl('/user-group-form');
       }
