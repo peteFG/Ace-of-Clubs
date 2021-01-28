@@ -28,6 +28,7 @@ export class AllEventsListComponent implements OnInit {
   groupOptions: Group[];
   str: string;
   showFilter: boolean;
+  showSearch: boolean;
 
   displayedColumns = ['name', 'group_name', 'event_type', 'start_date', 'start_time', 'end_date', 'end_time', 'active', 'state_one', 'state_two', 'state_three', 'actions'];
 
@@ -67,6 +68,7 @@ export class AllEventsListComponent implements OnInit {
   ngOnInit(): void {
 
     this.showFilter = false;
+    this.showSearch = false;
 
     this.retrieveEvents();
     this.retrieveStates();
@@ -144,4 +146,11 @@ export class AllEventsListComponent implements OnInit {
     }
   }
 
+  showSearchbar(): void {
+    if (this.showSearch === false) {
+      this.showSearch = true;
+    } else {
+      this.showSearch = false;
+    }
+  }
 }

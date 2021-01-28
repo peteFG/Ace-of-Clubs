@@ -29,6 +29,13 @@ body {
     height: fit-content;
     min-height: 88vh;
   }
+
+  .search {
+    width: 80vw;
+    padding: 10px;
+    border: white;
+    font-size: 14px;
+  }
 }
 
 @media only screen and (min-width: 450px) {
@@ -49,6 +56,12 @@ body {
   .container-bg-light {
     height: fit-content;
     min-height: 93.5vh;
+  }
+
+  .search {
+    padding: 10px;
+    border: white;
+    font-size: 14px;
   }
 }
 
