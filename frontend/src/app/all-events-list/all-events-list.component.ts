@@ -29,7 +29,7 @@ export class AllEventsListComponent implements OnInit {
   str: string;
   showFilter: boolean;
 
-  displayedColumns = ['name','group_name' ,'event_type' ,'start_date', 'start_time', 'end_date', 'end_time', 'active', 'state_one', 'state_two', 'state_three', 'actions'];
+  displayedColumns = ['name', 'group_name', 'event_type', 'start_date', 'start_time', 'end_date', 'end_time', 'active', 'state_one', 'state_two', 'state_three', 'actions'];
 
 
   @ViewChild('pdfView', {static: false}) pdfView: ElementRef;
@@ -86,18 +86,10 @@ export class AllEventsListComponent implements OnInit {
   }
 
   private retrieveGroups(): void {
-    this.userService.getCurrentUser().subscribe((user) => {
-      this.userService.getUserGroupsByUsersPK(user.pk).subscribe((userGroups) => {
-        userGroups.forEach((userGroup) => {
-          this.groupOptions = [];
-          this.groupService.getGroup(userGroup.group).subscribe((group) => {
-            this.groupOptions.push(group);
-          });
-        });
-      });
+    this.groupService.retrieveGroups().subscribe((groups) => {
+      this.groupOptions = groups;
     });
   }
-
 
   private retrieveEvents(): void {
     this.eventService.getAllEvents().subscribe((events) => {
@@ -121,38 +113,31 @@ export class AllEventsListComponent implements OnInit {
     });
   }
 
-  searchCustom(str: string): void {
-    this.eventService.searchAllEventsCustom(str).subscribe((events) => {
-      this.allEvents = events;
-      this.router.navigateByUrl('/all-events-list');
-    });
-  }
-
-  filterEvents(): void {
-    this.eventService.filterAllEventsCustom(
-      this.eventFilterFormGroup.value.group,
-      this.eventFilterFormGroup.value.ev_type,
-      this.eventFilterFormGroup.value.start_date,
-      this.eventFilterFormGroup.value.end_date).subscribe((events) => {
-      this.allEvents = events;
-      this.router.navigateByUrl('/all-events-list');
-    });
-  }
-
-  sortData(str: string): void {
-    if (this.str === str){
+  filterSortSearchEvents(search: string, str: string): void {
+    if (search === undefined){
+      search = null;
+    }
+    if (this.str === ''){
+      this.str = null;
+    }else if (this.str === str){
       this.str = '-' + str;
     }else {
       this.str = str;
     }
-    this.eventService.sortAllEventCustom(this.str).subscribe((allEvents) => {
+    this.eventService.filterSortSearchAllEventCustom(
+      search,
+      this.eventFilterFormGroup.value.group,
+      this.eventFilterFormGroup.value.ev_type,
+      this.eventFilterFormGroup.value.start_date,
+      this.eventFilterFormGroup.value.end_date,
+      this.str).subscribe((allEvents) => {
       this.allEvents = allEvents;
       this.router.navigateByUrl('/all-events-list');
     });
   }
 
   showFilterOptions(): void {
-    if ( this.showFilter === false) {
+    if (this.showFilter === false) {
       this.showFilter = true;
     } else {
       this.showFilter = false;

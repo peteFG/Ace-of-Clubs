@@ -106,14 +106,15 @@ class MediaDownloadView(View):
 
 
 class EventViewSet(viewsets.ModelViewSet):
-    queryset = models.Event.objects.all().order_by('start_date')
-    userGroups = models.UserGroup.objects.all().order_by('user')
+    queryset = models.Event.objects.all()
+    userGroups = models.UserGroup.objects.all()
     serializer_classUG = serializers.UserGroupSerializer
     serializer_class = serializers.EventSerializer
     fields = ['pk', 'name', 'start_date', 'start_time',
               'end_date', 'end_time', 'active', '-pk',
               '-name', '-start_date', '-start_time',
-              '-end_date', '-end_time', '-active', 'group', '-group']
+              '-end_date', '-end_time', '-active',
+              'group', '-group', 'ev_type','-ev_type' ]
 
     def list(self, request):
         if request.user.pk is None:
@@ -125,12 +126,12 @@ class EventViewSet(viewsets.ModelViewSet):
         search = request.GET.get("search")
         sort = request.GET.get("sort")
         null = 'null'
-        fields = self.fields
-        if not fields.__contains__(sort):
-            sort = 'pk'
         groupsOfUser = models.UserGroup.objects.filter(user=request.user.pk).values_list('group_id', flat=True)
-        queryset = self.queryset.filter(group__in=groupsOfUser).order_by(sort)
-        if search is not None:
+        queryset = self.queryset.filter(group__in=groupsOfUser)
+        fields = self.fields
+        if fields.__contains__(sort):
+            queryset = queryset.order_by(sort)
+        if search is not None and search != null:
             queryset = queryset.filter(name__contains=search)
         if group is not None and group != null:
             queryset = queryset.filter(group=int(group))
@@ -175,12 +176,13 @@ class EventViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 class NewEventsViewSet(viewsets.ModelViewSet):
-    queryset = models.Event.objects.all().order_by('start_date')
+    queryset = models.Event.objects.all()
     serializer_class = serializers.EventSerializer
     fields = ['pk', 'name', 'start_date', 'start_time',
               'end_date', 'end_time', 'active', '-pk',
               '-name', '-start_date', '-start_time',
-              '-end_date', '-end_time', '-active', 'group', '-group']
+              '-end_date', '-end_time', '-active',
+              'group', '-group', 'ev_type','-ev_type']
 
     def list(self, request):
         groupsOfUser = models.UserGroup.objects.filter(user=request.user.pk).values_list('group_id', flat=True)
@@ -188,18 +190,6 @@ class NewEventsViewSet(viewsets.ModelViewSet):
         allEventsOfUser = models.Event.objects.filter(group__in=groupsOfUser).values_list('pk', flat=True)
         difference = set(allEventsOfUser).difference(set(evetnsOfUser))
         queryset = self.queryset.filter(pk__in=difference)
-        return Response(self.serializer_class(queryset, many=True).data)
-
-
-class AllEventsViewSet(viewsets.ModelViewSet):
-    queryset = models.Event.objects.all().order_by('start_date')
-    serializer_class = serializers.EventSerializer
-    fields = ['pk', 'name', 'start_date', 'start_time',
-              'end_date', 'end_time', 'active', '-pk',
-              '-name', '-start_date', '-start_time',
-              '-end_date', '-end_time', '-active', 'group', '-group']
-
-    def list(self, request):
         group = request.GET.get("group")
         ev_type = request.GET.get("evtype")
         sdate = request.GET.get("sdate")
@@ -208,9 +198,8 @@ class AllEventsViewSet(viewsets.ModelViewSet):
         sort = request.GET.get("sort")
         null = 'null'
         fields = self.fields
-        if not fields.__contains__(sort):
-            sort = 'pk'
-        queryset = self.queryset.all().order_by(sort)
+        if fields.__contains__(sort):
+            queryset = queryset.order_by(sort)
         if search is not None:
             queryset = queryset.filter(name__contains=search)
         if group is not None and group != null:
@@ -221,7 +210,40 @@ class AllEventsViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(start_date__gte=sdate)
         if edate is not None and edate != null:
             queryset = queryset.filter(end_date__lte=edate)
-        queryset = queryset.order_by(sort)
+        return Response(self.serializer_class(queryset, many=True).data)
+
+
+class AllEventsViewSet(viewsets.ModelViewSet):
+    queryset = models.Event.objects.all()
+    serializer_class = serializers.EventSerializer
+    fields = ['pk', 'name', 'start_date', 'start_time',
+              'end_date', 'end_time', 'active', '-pk',
+              '-name', '-start_date', '-start_time',
+              '-end_date', '-end_time', '-active',
+              'group', '-group', 'ev_type','-ev_type']
+
+    def list(self, request):
+        queryset = self.queryset.all()
+        group = request.GET.get("group")
+        ev_type = request.GET.get("evtype")
+        sdate = request.GET.get("sdate")
+        edate = request.GET.get("edate")
+        search = request.GET.get("search")
+        sort = request.GET.get("sort")
+        null = 'null'
+        fields = self.fields
+        if fields.__contains__(sort):
+            queryset = queryset.all().order_by(sort)
+        if search is not None:
+            queryset = queryset.filter(name__contains=search)
+        if group is not None and group != null:
+            queryset = queryset.filter(group=int(group))
+        if ev_type is not None and ev_type != null:
+            queryset = queryset.filter(ev_type=int(ev_type))
+        if sdate is not None and sdate != null:
+            queryset = queryset.filter(start_date__gte=sdate)
+        if edate is not None and edate != null:
+            queryset = queryset.filter(end_date__lte=edate)
         return Response(self.serializer_class(queryset, many=True).data)
 
 

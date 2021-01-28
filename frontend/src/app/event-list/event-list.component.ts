@@ -26,7 +26,7 @@ export class EventListComponent extends CdkTableExporterModule implements OnInit
   stateOneName: string;
   stateTwoName: string;
   stateThreeName: string;
-  search: string;
+  search: null;
   eventFilterFormGroup: FormGroup;
   eventTypeOptions: EventType[];
   groupOptions: Group[];
@@ -121,25 +121,50 @@ export class EventListComponent extends CdkTableExporterModule implements OnInit
     });
   }
 
+  /*
   searchCustom(str: string): void {
-    this.eventService.searchEventCustom(str).subscribe((events) => {
+    this.eventService.searchEventCustom(str, this.str).subscribe((events) => {
       this.events = events;
       this.router.navigateByUrl('/event-list');
     });
-  }
+  }*/
 
-  filterEvents(): void {
+  /*filterEvents(): void {
     this.eventService.filterEventCustom(
       this.eventFilterFormGroup.value.group,
       this.eventFilterFormGroup.value.ev_type,
       this.eventFilterFormGroup.value.start_date,
-      this.eventFilterFormGroup.value.end_date).subscribe((events) => {
+      this.eventFilterFormGroup.value.end_date,
+      this.str).subscribe((events) => {
+      this.events = events;
+      this.router.navigateByUrl('/event-list');
+    });
+  }*/
+
+  filterSortSearchEvents(search: string, str: string): void {
+    if (search === undefined){
+      search = null;
+    }
+    if (this.str === ''){
+      this.str = null;
+    }else if (this.str === str){
+      this.str = '-' + str;
+    }else {
+      this.str = str;
+    }
+    this.eventService.filterSortSearchEventCustom(
+      search,
+      this.eventFilterFormGroup.value.group,
+      this.eventFilterFormGroup.value.ev_type,
+      this.eventFilterFormGroup.value.start_date,
+      this.eventFilterFormGroup.value.end_date,
+      this.str).subscribe((events) => {
       this.events = events;
       this.router.navigateByUrl('/event-list');
     });
   }
 
-  sortData(str: string): void {
+  /*sortData(str: string): void {
     if (this.str === str){
       this.str = '-' + str;
     }else {
@@ -149,5 +174,5 @@ export class EventListComponent extends CdkTableExporterModule implements OnInit
       this.events = events;
       this.router.navigateByUrl('/event-list');
     });
-  }
+  }*/
 }

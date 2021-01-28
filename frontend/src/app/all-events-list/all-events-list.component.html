@@ -37,8 +37,8 @@
 
           <mat-card-title class="mat-h3 mobile-view">ALL EVENTS</mat-card-title>
           <div>
-            <input class="form-control mr-sm-2" type="text" placeholder="Search" [(ngModel)]="search"
-                   (ngModelChange)="searchCustom(search)">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search Event Name" [(ngModel)]="search"
+                   (ngModelChange)="filterSortSearchEvents(search, '')">
             <button class="menu-button" style="margin-bottom: 12px" mat-button (click)="showFilterOptions()"
                     color="standard"
                     matTooltip="Filter Events"
@@ -71,7 +71,7 @@
 
           <!-- Filtern -->
           <div *ngIf="showFilter">
-            <form [formGroup]="eventFilterFormGroup" (ngSubmit)="filterEvents()">
+            <form [formGroup]="eventFilterFormGroup" (ngSubmit)="filterSortSearchEvents(search, '')">
               <div class="horiz-space-around position">
                 <mat-form-field>
                   <mat-select placeholder="Event Type" formControlName="ev_type">
@@ -120,7 +120,7 @@
                 <table mat-table [dataSource]="allEvents" matSort>
 
                   <!-- Name Column -->
-                  <ng-container matColumnDef="name" matSort (matSortChange)="sortData('name')" matSortActive="name"
+                  <ng-container matColumnDef="name" matSort (matSortChange)="filterSortSearchEvents(search,'name')" matSortActive="name"
                                 matSortDirection="asc" matSortDisableClear>
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
                     <td (click)="userService.setUserEventEntry(element.pk)" mat-cell
@@ -129,7 +129,7 @@
                   </ng-container>
 
                   <!-- Group Column -->
-                  <ng-container matColumnDef="group_name" matSort (matSortChange)="sortData('group')" matSortActive="group"
+                  <ng-container matColumnDef="group_name" matSort (matSortChange)="filterSortSearchEvents(search,'group')" matSortActive="group"
                                 matSortDirection="asc" matSortDisableClear>
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Groups</th>
                     <td mat-cell *matCellDef="let element"> {{element.group_names}} </td>
@@ -137,7 +137,7 @@
                   </ng-container>
 
                   <!-- EventType Column -->
-                  <ng-container matColumnDef="event_type" matSort (matSortChange)="sortData('event_type')" matSortActive="event_type"
+                  <ng-container matColumnDef="event_type" matSort (matSortChange)="filterSortSearchEvents(search,'ev_type')" matSortActive="ev_type"
                                 matSortDirection="asc" matSortDisableClear>
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Event Type</th>
                     <td mat-cell *matCellDef="let element"> {{element.event_type_name}} </td>
@@ -145,7 +145,7 @@
                   </ng-container>
 
                   <!-- Start date Column -->
-                  <ng-container matColumnDef="start_date" matSort (matSortChange)="sortData('start_date')"
+                  <ng-container matColumnDef="start_date" matSort (matSortChange)="filterSortSearchEvents(search,'start_date')"
                                 matSortActive="start_date" matSortDirection="asc" matSortDisableClear>
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Start Date</th>
                     <td mat-cell *matCellDef="let element">
@@ -154,7 +154,7 @@
                   </ng-container>
 
                   <!-- Start time Column -->
-                  <ng-container matColumnDef="start_time" matSort (matSortChange)="sortData('start_time')"
+                  <ng-container matColumnDef="start_time" matSort (matSortChange)="filterSortSearchEvents(search,'start_time')"
                                 matSortActive="start_time" matSortDirection="asc" matSortDisableClear>
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Start Time</th>
                     <td mat-cell *matCellDef="let element">
@@ -162,7 +162,7 @@
                     </td>
                   </ng-container>
 
-                  <ng-container matColumnDef="end_date" matSort (matSortChange)="sortData('end_date')"
+                  <ng-container matColumnDef="end_date" matSort (matSortChange)="filterSortSearchEvents(search,'end_date')"
                                 matSortActive="end_date" matSortDirection="asc" matSortDisableClear>
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>End Date</th>
                     <td mat-cell *matCellDef="let element">
@@ -170,7 +170,7 @@
                     </td>
                   </ng-container>
 
-                  <ng-container matColumnDef="end_time" matSort (matSortChange)="sortData('end_time')"
+                  <ng-container matColumnDef="end_time" matSort (matSortChange)="filterSortSearchEvents(search,'end_time')"
                                 matSortActive="end_time" matSortDirection="asc" matSortDisableClear>
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>End Time</th>
                     <td mat-cell *matCellDef="let element">
@@ -179,7 +179,7 @@
                   </ng-container>
 
                   <!-- Active Column -->
-                  <ng-container matColumnDef="active" matSort (matSortChange)="sortData('active')"
+                  <ng-container matColumnDef="active" matSort (matSortChange)="filterSortSearchEvents(search,'active')"
                                 matSortActive="active"
                                 matSortDirection="asc" matSortDisableClear>
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Active</th>

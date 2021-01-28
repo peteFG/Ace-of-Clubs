@@ -3,10 +3,10 @@ import {Event, EventService} from '../services/event.service';
 import {HttpClient} from '@angular/common/http';
 import {EventType, EventTypeService} from '../services/event-type.service';
 import {User, UserEvent, UserService} from '../services/user.service';
-import {ActivatedRoute, Router} from "@angular/router";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {ActivatedRoute, Router} from '@angular/router';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {filter} from 'rxjs/operators';
-import {StateService} from "../services/state.service";
+import {StateService} from '../services/state.service';
 import jsPDF from 'jspdf';
 import {CdkTableExporterModule} from 'cdk-table-exporter';
 import {Group, GroupService} from '../services/group.service';
@@ -24,7 +24,7 @@ export class NewEventsListComponent extends CdkTableExporterModule implements On
   stateOneName: string;
   stateTwoName: string;
   stateThreeName: string;
-  search: string;
+  search: null;
   eventFilterFormGroup: FormGroup;
   eventTypeOptions: EventType[];
   groupOptions: Group[];
@@ -120,33 +120,27 @@ export class NewEventsListComponent extends CdkTableExporterModule implements On
     });
   }
 
-  searchCustom(str: string): void {
-    this.eventService.searchEventCustom(str).subscribe((events) => {
-      this.newEvents = events;
-      this.router.navigateByUrl('/event-list');
-    });
-  }
-
-  filterEvents(): void {
-    this.eventService.filterEventCustom(
+  filterSortSearchEvents(search: string, str: string): void {
+    if (search === undefined) {
+      search = null;
+    }
+    if (this.str === '') {
+      this.str = null;
+    } else if (this.str === str) {
+      this.str = '-' + str;
+    } else {
+      this.str = str;
+    }
+    this.eventService.filterSortSearchNewEventCustom(
+      search,
       this.eventFilterFormGroup.value.group,
       this.eventFilterFormGroup.value.ev_type,
       this.eventFilterFormGroup.value.start_date,
-      this.eventFilterFormGroup.value.end_date).subscribe((events) => {
-      this.newEvents = events;
-      this.router.navigateByUrl('/event-list');
+      this.eventFilterFormGroup.value.end_date,
+      this.str).subscribe((newEvents) => {
+      this.newEvents = newEvents;
+      this.router.navigateByUrl('/new-events-list');
     });
   }
 
-  sortData(str: string): void {
-    if (this.str === str){
-      this.str = '!' + str;
-    }else {
-      this.str = str;
-    }
-    this.eventService.sortEventCustom(this.str).subscribe((events) => {
-      this.newEvents = events;
-      this.router.navigateByUrl('/event-list');
-    });
-  }
 }

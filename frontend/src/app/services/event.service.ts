@@ -55,29 +55,53 @@ export class EventService {
   createEvent(event: Event): Observable<Event> {
     return this.http.post<Event>('/api/events/', event);
   }
-
-  searchEventCustom(str: string): Observable<Event[]> {
-    return this.http.get<Event[]>('/api/events/?search=' + str);
+/*
+  searchEventCustom(str: string, sort: string): Observable<Event[]> {
+    return this.http.get<Event[]>('/api/events/?search=' + str + '&sort=' + sort);
   }
 
-  filterEventCustom(group?: string, evtype?: string, sdate?: string, edate?: string): Observable<Event[]> {
-    return this.http.get<Event[]>('/api/events/?group=' + group + '&evtype=' + evtype + '&sdate=' + sdate + '&edate=' + edate);
-  }
+  filterEventCustom(group?: string, evtype?: string, sdate?: string, edate?: string, sort?: string): Observable<Event[]> {
+    return this.http.get<Event[]>('/api/events/?group=' + group + '&evtype=' + evtype + '&sdate=' + sdate + '&edate=' + edate + '&sort=' + sort);
+  }*/
 
+  filterSortSearchEventCustom(search?: string, group?: string, evtype?: string, sdate?: string, edate?: string, sort?: string): Observable<Event[]> {
+    return this.http.get<Event[]>('/api/events/?search=' + search + '&group=' + group + '&evtype=' + evtype + '&sdate=' + sdate + '&edate=' + edate + '&sort=' + sort);
+  }
+/*
   sortEventCustom(str: string): Observable<Event[]> {
     return this.http.get<Event[]>('/api/events/?sort=' + str);
   }
 
   sortAllEventCustom(str: string): Observable<Event[]> {
     return this.http.get<Event[]>('/api/allEvents/?sort=' + str);
+  }*/
+
+  filterSortSearchAllEventCustom(search?: string, group?: string, evtype?: string, sdate?: string, edate?: string, sort?: string): Observable<Event[]> {
+    return this.http.get<Event[]>('/api/allEvents/?search=' + search + '&group=' + group + '&evtype=' + evtype + '&sdate=' + sdate + '&edate=' + edate + '&sort=' + sort);
   }
 
-    //-------------------- Section  for Unresponded Event ----------------------
+  //-------------------- Section  for Unresponded Event ----------------------
 
 
   getNewEvents(): Observable<Event[]> {
     return this.http.get<Event[]>('/api/newEvents/');
   }
+
+  filterSortSearchNewEventCustom(search?: string, group?: string, evtype?: string, sdate?: string, edate?: string, sort?: string): Observable<Event[]> {
+    return this.http.get<Event[]>('/api/newEvents/?search=' + search + '&group=' + group + '&evtype=' + evtype + '&sdate=' + sdate + '&edate=' + edate + '&sort=' + sort);
+  }
+/*
+  searchNewEventCustom(str: string): Observable<Event[]> {
+    return this.http.get<Event[]>('/api/newEvents/?search=' + str);
+  }
+
+  filterNewEventCustom(group?: string, evtype?: string, sdate?: string, edate?: string): Observable<Event[]> {
+    return this.http.get<Event[]>('/api/newEvents/?group=' + group + '&evtype=' + evtype + '&sdate=' + sdate + '&edate=' + edate);
+  }
+
+  sortNewEventCustom(str: string): Observable<Event[]> {
+    return this.http.get<Event[]>('/api/newEvents/?sort=' + str);
+  }*/
 
 
   //-------------------- Section  for ADMIN ----------------------
