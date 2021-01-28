@@ -54,6 +54,18 @@
             *matCellDef="let element"> {{element.name}} </td>
       </ng-container>
 
+      <!-- Group Column -->
+      <ng-container matColumnDef="group_name" matSort (matSortChange)="sortData('group')" matSortActive="group" matSortDirection="asc" matSortDisableClear>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Groups</th>
+        <td mat-cell *matCellDef="let element"> {{element.group_names}} </td>
+      </ng-container>
+
+      <!-- Event Type Column -->
+      <ng-container matColumnDef="event_type" matSort (matSortChange)="sortData('event_type')" matSortActive="event_type" matSortDirection="asc" matSortDisableClear>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Event Type</th>
+        <td mat-cell *matCellDef="let element"> {{element.event_type_name}} </td>
+      </ng-container>
+
       <!-- Start date Column -->
       <ng-container matColumnDef="start_date" matSort (matSortChange)="sortData('start_date')" matSortActive="start_date" matSortDirection="asc" matSortDisableClear>
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Start Date</th>

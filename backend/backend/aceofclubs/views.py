@@ -283,8 +283,8 @@ class AllUserGroupViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.AllUserGroupSerializer
 
     def list(self, request):
-        # user = request.GET.get("user")
-        user = request.user.pk
+        user = request.GET.get("user")
+        #user = request.user.pk
         if user is None:
             serializer = self.serializer_class(self.queryset.all(), many=True)
         else:

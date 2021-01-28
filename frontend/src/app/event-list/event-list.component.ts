@@ -32,7 +32,7 @@ export class EventListComponent extends CdkTableExporterModule implements OnInit
   groupOptions: Group[];
   str: string;
 
-  displayedColumns = ['name', 'start_date', 'start_time', 'end_date', 'end_time', 'active', 'state_one', 'state_two', 'state_three', 'actions'];
+  displayedColumns = ['name', 'group_name', 'event_type', 'start_date', 'start_time', 'end_date', 'end_time', 'active', 'state_one', 'state_two', 'state_three', 'actions'];
 
 
   @ViewChild('pdfView', {static: false}) pdfView: ElementRef;

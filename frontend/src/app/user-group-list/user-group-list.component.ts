@@ -23,6 +23,7 @@ export class UserGroupListComponent implements OnInit {
     if(pkFromUrl) {
       this.userService.getUserGroupsByUsersPK(parseInt(pkFromUrl,10))
         .subscribe((groups) => {
+          this.userGroups  =  [];
           this.userGroups = groups;
         });
     }

@@ -29,7 +29,7 @@ export class AllEventsListComponent implements OnInit {
   str: string;
   showFilter: boolean;
 
-  displayedColumns = ['name', 'start_date', 'start_time', 'end_date', 'end_time', 'active', 'state_one', 'state_two', 'state_three', 'actions'];
+  displayedColumns = ['name','group_name' ,'event_type' ,'start_date', 'start_time', 'end_date', 'end_time', 'active', 'state_one', 'state_two', 'state_three', 'actions'];
 
 
   @ViewChild('pdfView', {static: false}) pdfView: ElementRef;
@@ -147,7 +147,7 @@ export class AllEventsListComponent implements OnInit {
     }
     this.eventService.sortAllEventCustom(this.str).subscribe((allEvents) => {
       this.allEvents = allEvents;
-      this.router.navigateByUrl('/all-event-list');
+      this.router.navigateByUrl('/all-events-list');
     });
   }
 

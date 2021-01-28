@@ -255,22 +255,18 @@ export class UserService {
   setUserGroupEntry() {
     this.groupService.getGroupPKs();
     const userID = this.clickedUser;
-    const entriesOfClickedUser = this.getUserGroupsByUsersPK(userID);
+    //const entriesOfClickedUser = ;
     this.availableGroups = [];
-    this.existingGroupEntry = 0;
+    //this.existingGroupEntry = 0;
     const checkIfEmpty = [];
     const attendedGroups = []; // die Gruppen PKs, in denen sich der angeklickte User bereits befindet
 
-    entriesOfClickedUser.subscribe((userGroups) => {
+    this.getUserGroupsByUsersPK(userID).subscribe((userGroups) => {
       userGroups.forEach((userGroup) => {
         checkIfEmpty.push(userGroup);
         attendedGroups.push(userGroup.group);
       });
 
-
-      console.log(attendedGroups);
-      // dapasst noch was nicht --> wenn  attended leer --> dann bekommt er iwie keine existing  Groups
-      // eig net so tragisch, da jede/r in der ALL Gruppe sein sollte
       if (attendedGroups.length==0) {
 
         this.availableGroups = this.groupService.existingGroupsPK;
@@ -284,12 +280,17 @@ export class UserService {
         }
       }
 
+      if (this.availableGroups.length != 0){
+        this.router.navigateByUrl('/user-group-form');
+      }else{
+        this.availableGroups = this.groupService.existingGroupsPK;
+        this.router.navigateByUrl('/user-group-form');
+      }
+
     });
 
-    this.router.navigateByUrl('/user-group-form');
-
-    console.log(this.availableGroups);
-    console.log(this.clickedUser);
+    //console.log(this.availableGroups);
+    //console.log(this.clickedUser);
   }
 
 

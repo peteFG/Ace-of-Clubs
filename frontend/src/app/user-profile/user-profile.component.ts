@@ -100,6 +100,8 @@ export class VacationForm implements OnInit {
   }
 
   ngOnInit(): void {
+    this.userService.retrieveCurrentUser();
+
     this.vacationDateForm = new FormGroup({
       vac_start_date: new FormControl(new Date().getDate(), Validators.required),
       vac_end_date: new FormControl(new Date().getDate(), Validators.required)
