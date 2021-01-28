@@ -188,7 +188,7 @@ class NewEventsViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(start_date__gte=sdate)
         if edate is not None and edate != null:
             queryset = queryset.filter(end_date__lte=edate)
-        return Response(self.serializer_class(list(dict.fromkeys(queryset)), many=True).data)
+        return Response(self.serializer_class(list(dict.fromkeys(queryset)),context= {'request': self.request}, many=True).data)
 
 
 class AllEventsViewSet(viewsets.ModelViewSet):
@@ -224,7 +224,7 @@ class AllEventsViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(start_date__gte=sdate)
         if edate is not None and edate != null:
             queryset = queryset.filter(end_date__lte=edate)
-        return Response(self.serializer_class(list(dict.fromkeys(queryset)), many=True).data)
+        return Response(self.serializer_class(list(dict.fromkeys(queryset)), context= {'request': self.request},many=True).data)
 
 
 class GroupViewSet(viewsets.ModelViewSet):
