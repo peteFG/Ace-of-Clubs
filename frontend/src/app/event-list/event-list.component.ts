@@ -68,6 +68,7 @@ export class EventListComponent extends CdkTableExporterModule implements OnInit
   }
 
   ngOnInit(): void {
+    this.userService.previousSite = this.userService.previousUrl;
     this.retrieveEvents();
     this.retrieveStates();
     this.retrieveGroups();
@@ -140,7 +141,7 @@ export class EventListComponent extends CdkTableExporterModule implements OnInit
 
   sortData(str: string): void {
     if (this.str === str){
-      this.str = '!' + str;
+      this.str = '-' + str;
     }else {
       this.str = str;
     }

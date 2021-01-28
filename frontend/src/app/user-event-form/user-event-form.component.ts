@@ -98,7 +98,12 @@ export class UserEventFormComponent implements OnInit {
             this.http.put('/api/userEvent/' + pk + '/', this.userEventFormGroup.value)
                 .subscribe(() => {
                     alert('updated successfully!');
-                    this.router.navigateByUrl('/event-list');
+                    if(this.userService.previousSite == '/new-events-list'){
+                      this.router.navigateByUrl('/new-events-list');
+                    }else{
+                      this.router.navigateByUrl('/event-list');
+                    }
+
                 });
 
 
@@ -106,7 +111,11 @@ export class UserEventFormComponent implements OnInit {
             this.http.post('/api/userEvent/', this.userEventFormGroup.value)
                 .subscribe(() => {
                     alert('created successfully!');
+                  if(this.userService.previousSite == '/new-events-list'){
+                    this.router.navigateByUrl('/new-events-list');
+                  }else{
                     this.router.navigateByUrl('/event-list');
+                  }
                 });
 
         }
