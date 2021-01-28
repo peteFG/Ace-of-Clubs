@@ -105,67 +105,69 @@
 
       <div class="event-list anim-right">
         <div id="pdfView" #pdfView>
-        <mat-card class="event-card" *ngFor="let event of newEvents" [routerLink]="'/event-form/' + event.pk">
-          <mat-card-header style="margin-bottom: 1vh">
-            <mat-card-title class="event-title"><b>{{event.name}}</b></mat-card-title>
-          </mat-card-header>
-          <mat-card-content>
-            <div style="padding: 0.7vw">
-              <div class="content-m-row ul">
-                <div class="content-m-hd">Event Type:</div>
-                <div class="content-m-data">{{event.event_type_name}}</div>
-              </div>
-              <div class="content-m-row">
-                <div class="content-m-hd ul">Start:</div>
-                <div class="content-m-data">{{event.start_date | date: 'dd.MM.yyyy'}}
-                  - {{event.start_time.substring(0, 5)}}</div>
-              </div>
-              <div class="content-m-row ul">
-                <div class="content-m-hd ul">End:</div>
-                <div class="content-m-data">
-                  {{event.end_date | date: 'dd.MM.yyyy'}} - {{event.end_time.substring(0, 5)}}
+          <mat-card class="event-card" *ngFor="let event of newEvents">
+            <mat-card-header style="margin-bottom: 1vh">
+              <mat-card-title class="event-title"><b>{{event.name}}</b></mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <div style="padding: 0.7vw">
+                <div class="content-m-row ul">
+                  <div class="content-m-hd">Event Type:</div>
+                  <div class="content-m-data">{{event.event_type_name}}</div>
+                </div>
+                <div class="content-m-row">
+                  <div class="content-m-hd ul">Start:</div>
+                  <div class="content-m-data">{{event.start_date | date: 'dd.MM.yyyy'}}
+                    - {{event.start_time.substring(0, 5)}}</div>
+                </div>
+                <div class="content-m-row ul">
+                  <div class="content-m-hd ul">End:</div>
+                  <div class="content-m-data">
+                    {{event.end_date | date: 'dd.MM.yyyy'}} - {{event.end_time.substring(0, 5)}}
+                  </div>
+                </div>
+                <div class="content-m-row ul">
+                  <div class="content-m-hd">Groups:</div>
+                  <div class="content-m-data">{{event.group_names}}</div>
+                </div>
+                <div class="content-m-row ul">
+                  <div class="content-m-hd">{{stateOneName}}:</div>
+                  <div class="content-m-data">{{event.count_state_one}}</div>
+                </div>
+                <div class="content-m-row ul">
+                  <div class="content-m-hd">{{stateTwoName}}:</div>
+                  <div class="content-m-data">{{event.count_state_two}}</div>
+                </div>
+                <div class="content-m-row ul">
+                  <div class="content-m-hd">{{stateThreeName}}:</div>
+                  <div class="content-m-data">{{event.count_state_three}}</div>
+                </div>
+                <div class="content-m-row ul">
+                  <div class="content-m-hd">Active Event:</div>
+                  <div class="content-m-data">{{event.active}}</div>
                 </div>
               </div>
-              <div class="content-m-row ul">
-                <div class="content-m-hd">Groups:</div>
-                <div class="content-m-data">{{event.group_names}}</div>
-              </div>
-              <div class="content-m-row ul">
-                <div class="content-m-hd">{{stateOneName}}:</div>
-                <div class="content-m-data">{{event.count_state_one}}</div>
-              </div>
-              <div class="content-m-row ul">
-                <div class="content-m-hd">{{stateTwoName}}:</div>
-                <div class="content-m-data">{{event.count_state_two}}</div>
-              </div>
-              <div class="content-m-row ul">
-                <div class="content-m-hd">{{stateThreeName}}:</div>
-                <div class="content-m-data">{{event.count_state_three}}</div>
-              </div>
-              <div class="content-m-row ul">
-                <div class="content-m-hd">Active Event:</div>
-                <div class="content-m-data">{{event.active}}</div>
-              </div>
-            </div>
-            <mat-card-actions align="center" style="padding: 10px">
-              <div class="m-acc-actions">
-                <div class="m-event-btn">
-                  <button mat-icon-button color="standard" (click)="userService.setUserEventEntry(event.pk)">
-                    <mat-icon>sms_failed</mat-icon>
-                  </button>
+              <mat-card-actions align="center" style="padding: 10px">
+                <div class="m-acc-actions">
+                  <div class="m-event-btn">
+                    <button mat-icon-button color="standard" (click)="userService.setUserEventEntry(event.pk)">
+                      <mat-icon>sms_failed</mat-icon>
+                    </button>
+                  </div>
+                  <div class="m-general-btn" style="margin-right: 12px">
+                    <button *ngIf="this.userService.hasPermission('aceofclubs.change_event')" mat-icon-button
+                            color="standard" [routerLink]="'/event-form/' + event.pk">
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-icon-button color="light" (click)="deleteEvent(event)"
+                            *ngIf="this.userService.hasPermission('aceofclubs.delete_event')">
+                      <mat-icon>delete_outline</mat-icon>
+                    </button>
+                  </div>
                 </div>
-                <div class="m-general-btn" style="margin-right: 12px">
-                  <button *ngIf="this.userService.hasPermission('aceofclubs.change_event')" mat-icon-button color="standard" [routerLink]="'/event-form/' + event.pk">
-                    <mat-icon>edit</mat-icon>
-                  </button>
-                  <button mat-icon-button color="light" (click)="deleteEvent(event)" *ngIf="this.userService.hasPermission('aceofclubs.delete_event')" >
-                    <mat-icon>delete_outline</mat-icon>
-                  </button>
-                </div>
-              </div>
-            </mat-card-actions>
-          </mat-card-content>
-        </mat-card>
+              </mat-card-actions>
+            </mat-card-content>
+          </mat-card>
         </div>
       </div>
 
@@ -273,175 +275,177 @@
 
         </mat-card>
         <mat-divider style="margin-top: 15px"></mat-divider>
-    </div>
+      </div>
 
-    <div class="anim-right">
-      <mat-accordion class="event-view-acc">
-        <mat-expansion-panel *ngFor="let event of newEvents" (opened)="panelOpen = true" (closed)="panelOpen = false">
-          <mat-expansion-panel-header class="acc-m-header">
-            <mat-panel-title class="acc-m-title">
-              <div class="event-name"> {{event.name}} </div>
-              <br>
-              <div *ngIf="!panelOpen" class="event-date">
-                {{event.start_date | date: 'dd MMM yyyy'}} - {{event.start_time.substring(0, 5)}}
+      <div class="anim-right">
+        <mat-accordion class="event-view-acc">
+          <mat-expansion-panel *ngFor="let event of newEvents" (opened)="panelOpen = true" (closed)="panelOpen = false">
+            <mat-expansion-panel-header class="acc-m-header">
+              <mat-panel-title class="acc-m-title">
+                <div class="event-name"> {{event.name}} </div>
+                <br>
+                <div *ngIf="!panelOpen" class="event-date">
+                  {{event.start_date | date: 'dd MMM yyyy'}} - {{event.start_time.substring(0, 5)}}
+                </div>
+              </mat-panel-title>
+              <mat-panel-description class="acc-m-description">
+                {{event.event_type_name}}
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <div class="acc-content">
+              <div class="content-m-row">
+                <div class="content-m-hd">Start:</div>
+                <div class="content-m-data">{{event.start_date | date: 'dd.MM.yyyy'}}
+                  - {{event.start_time.substring(0, 5)}}</div>
               </div>
-            </mat-panel-title>
-            <mat-panel-description class="acc-m-description">
-              {{event.event_type_name}}
-            </mat-panel-description>
-          </mat-expansion-panel-header>
-          <div class="acc-content">
-            <div class="content-m-row">
-              <div class="content-m-hd">Start:</div>
-              <div class="content-m-data">{{event.start_date | date: 'dd.MM.yyyy'}}
-                - {{event.start_time.substring(0, 5)}}</div>
-            </div>
-            <div class="content-m-row">
-              <div class="content-m-hd">End:</div>
-              <div class="content-m-data">
-                {{event.end_date | date: 'dd.MM.yyyy'}} - {{event.end_time.substring(0, 5)}}
+              <div class="content-m-row">
+                <div class="content-m-hd">End:</div>
+                <div class="content-m-data">
+                  {{event.end_date | date: 'dd.MM.yyyy'}} - {{event.end_time.substring(0, 5)}}
+                </div>
+              </div>
+              <div class="content-m-row">
+                <div class="content-m-hd">Groups:</div>
+                <div class="content-m-data">{{event.group_names}}</div>
+              </div>
+              <div class="content-m-row">
+                <div class="content-m-hd">{{stateOneName}}:</div>
+                <div class="content-m-data">{{event.count_state_one}}</div>
+              </div>
+              <div class="content-m-row">
+                <div class="content-m-hd">{{stateTwoName}}:</div>
+                <div class="content-m-data">{{event.count_state_two}}</div>
+              </div>
+              <div class="content-m-row">
+                <div class="content-m-hd">{{stateThreeName}}:</div>
+                <div class="content-m-data">{{event.count_state_three}}</div>
+              </div>
+              <div class="content-m-row">
+                <div class="content-m-hd">Active Event:</div>
+                <div class="content-m-data">{{event.active}}</div>
               </div>
             </div>
-            <div class="content-m-row">
-              <div class="content-m-hd">Groups:</div>
-              <div class="content-m-data">{{event.group_names}}</div>
-            </div>
-            <div class="content-m-row">
-              <div class="content-m-hd">{{stateOneName}}:</div>
-              <div class="content-m-data">{{event.count_state_one}}</div>
-            </div>
-            <div class="content-m-row">
-              <div class="content-m-hd">{{stateTwoName}}:</div>
-              <div class="content-m-data">{{event.count_state_two}}</div>
-            </div>
-            <div class="content-m-row">
-              <div class="content-m-hd">{{stateThreeName}}:</div>
-              <div class="content-m-data">{{event.count_state_three}}</div>
-            </div>
-            <div class="content-m-row">
-              <div class="content-m-hd">Active Event:</div>
-              <div class="content-m-data">{{event.active}}</div>
-            </div>
-          </div>
-          <mat-action-row class="m-acc-actions">
-            <div class="m-event-btn">
-              <button mat-icon-button color="standard" (click)="userService.setUserEventEntry(event.pk)">
-                <mat-icon>sms_failed</mat-icon>
-              </button>
-            </div>
-            <div class="m-general-btn" style="margin-right: 12px">
-              <button mat-icon-button color="standard" [routerLink]="'/event-form/' + event.pk">
-                <mat-icon>edit</mat-icon>
-              </button>
-              <button mat-icon-button color="light" (click)="deleteEvent(event)">
-                <mat-icon>delete_outline</mat-icon>
-              </button>
-            </div>
-          </mat-action-row>
-        </mat-expansion-panel>
-      </mat-accordion>
+            <mat-action-row class="m-acc-actions">
+              <div class="m-event-btn">
+                <button mat-icon-button color="standard" (click)="userService.setUserEventEntry(event.pk)">
+                  <mat-icon>sms_failed</mat-icon>
+                </button>
+              </div>
+              <div class="m-general-btn" style="margin-right: 12px">
+                <button mat-icon-button color="standard" [routerLink]="'/event-form/' + event.pk">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button color="light" (click)="deleteEvent(event)">
+                  <mat-icon>delete_outline</mat-icon>
+                </button>
+              </div>
+            </mat-action-row>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
     </div>
   </div>
+
 </div>
 
 <div>
-    <table style="display: none" mat-table matTableExporter [dataSource]="newEvents" #exporter="matTableExporter"
-           matSort>
+  <table style="display: none" mat-table matTableExporter [dataSource]="newEvents" #exporter="matTableExporter"
+         matSort>
 
-      <!-- Name Column -->
-      <ng-container matColumnDef="name" matSort (matSortChange)="filterSortSearchEvents(search,'name')"
-                    matSortActive="name" matSortDirection="asc" matSortDisableClear>
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
-        <td (click)="userService.setUserEventEntry(element.pk)" mat-cell
-            *matCellDef="let element"> {{element.name}} </td>
-      </ng-container>
+    <!-- Name Column -->
+    <ng-container matColumnDef="name" matSort (matSortChange)="filterSortSearchEvents(search,'name')"
+                  matSortActive="name" matSortDirection="asc" matSortDisableClear>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+      <td (click)="userService.setUserEventEntry(element.pk)" mat-cell
+          *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
 
-      <!-- Group Column -->
-      <ng-container matColumnDef="group_name" matSort (matSortChange)="filterSortSearchEvents(search,'group')"
-                    matSortActive="group" matSortDirection="asc" matSortDisableClear>
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Groups</th>
-        <td mat-cell *matCellDef="let element"> {{element.group_names}} </td>
-      </ng-container>
+    <!-- Group Column -->
+    <ng-container matColumnDef="group_name" matSort (matSortChange)="filterSortSearchEvents(search,'group')"
+                  matSortActive="group" matSortDirection="asc" matSortDisableClear>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Groups</th>
+      <td mat-cell *matCellDef="let element"> {{element.group_names}} </td>
+    </ng-container>
 
-      <!-- Event Type Column -->
-      <ng-container matColumnDef="event_type" matSort (matSortChange)="filterSortSearchEvents(search,'ev_type')"
-                    matSortActive="ev_type" matSortDirection="asc" matSortDisableClear>
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Event Type</th>
-        <td mat-cell *matCellDef="let element"> {{element.event_type_name}} </td>
-      </ng-container>
+    <!-- Event Type Column -->
+    <ng-container matColumnDef="event_type" matSort (matSortChange)="filterSortSearchEvents(search,'ev_type')"
+                  matSortActive="ev_type" matSortDirection="asc" matSortDisableClear>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Event Type</th>
+      <td mat-cell *matCellDef="let element"> {{element.event_type_name}} </td>
+    </ng-container>
 
-      <!-- Start date Column -->
-      <ng-container matColumnDef="start_date" matSort (matSortChange)="filterSortSearchEvents(search,'start_date')"
-                    matSortActive="start_date" matSortDirection="asc" matSortDisableClear>
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Start Date</th>
-        <td mat-cell *matCellDef="let element">
-          {{element.start_date | date : 'dd.MM.yyyy'}}
-        </td>
-      </ng-container>
+    <!-- Start date Column -->
+    <ng-container matColumnDef="start_date" matSort (matSortChange)="filterSortSearchEvents(search,'start_date')"
+                  matSortActive="start_date" matSortDirection="asc" matSortDisableClear>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Start Date</th>
+      <td mat-cell *matCellDef="let element">
+        {{element.start_date | date : 'dd.MM.yyyy'}}
+      </td>
+    </ng-container>
 
-      <!-- Start time Column -->
-      <ng-container matColumnDef="start_time" matSort (matSortChange)="filterSortSearchEvents(search,'start_time')"
-                    matSortActive="start_time" matSortDirection="asc" matSortDisableClear>
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Start Time</th>
-        <td mat-cell *matCellDef="let element">
-          {{element.start_time}}
-        </td>
-      </ng-container>
+    <!-- Start time Column -->
+    <ng-container matColumnDef="start_time" matSort (matSortChange)="filterSortSearchEvents(search,'start_time')"
+                  matSortActive="start_time" matSortDirection="asc" matSortDisableClear>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Start Time</th>
+      <td mat-cell *matCellDef="let element">
+        {{element.start_time}}
+      </td>
+    </ng-container>
 
-      <!-- End date Column -->
-      <ng-container matColumnDef="end_date" matSort (matSortChange)="filterSortSearchEvents(search,'end_date')"
-                    matSortActive="end_date" matSortDirection="asc" matSortDisableClear>
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>End Date</th>
-        <td mat-cell *matCellDef="let element">
-          {{element.end_date | date : 'dd.MM.yyyy'}}
-        </td>
-      </ng-container>
+    <!-- End date Column -->
+    <ng-container matColumnDef="end_date" matSort (matSortChange)="filterSortSearchEvents(search,'end_date')"
+                  matSortActive="end_date" matSortDirection="asc" matSortDisableClear>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>End Date</th>
+      <td mat-cell *matCellDef="let element">
+        {{element.end_date | date : 'dd.MM.yyyy'}}
+      </td>
+    </ng-container>
 
-      <!-- End time Column -->
-      <ng-container matColumnDef="end_time" matSort (matSortChange)="filterSortSearchEvents(search,'end_time')"
-                    matSortActive="end_time" matSortDirection="asc" matSortDisableClear>
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>End Time</th>
-        <td mat-cell *matCellDef="let element">
-          {{element.end_time}}
-        </td>
-      </ng-container>
+    <!-- End time Column -->
+    <ng-container matColumnDef="end_time" matSort (matSortChange)="filterSortSearchEvents(search,'end_time')"
+                  matSortActive="end_time" matSortDirection="asc" matSortDisableClear>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>End Time</th>
+      <td mat-cell *matCellDef="let element">
+        {{element.end_time}}
+      </td>
+    </ng-container>
 
-      <!-- Active Column -->
-      <ng-container matColumnDef="active" matSort (matSortChange)="filterSortSearchEvents(search,'active')"
-                    matSortActive="active" matSortDirection="asc" matSortDisableClear>
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Active</th>
-        <td mat-cell *matCellDef="let element"> {{element.active}} </td>
-      </ng-container>
+    <!-- Active Column -->
+    <ng-container matColumnDef="active" matSort (matSortChange)="filterSortSearchEvents(search,'active')"
+                  matSortActive="active" matSortDirection="asc" matSortDisableClear>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Active</th>
+      <td mat-cell *matCellDef="let element"> {{element.active}} </td>
+    </ng-container>
 
-      <!-- Status mit Index 1 -->
-      <ng-container matColumnDef="state_one">
-        <th mat-header-cell *matHeaderCellDef="let element">{{this.stateOneName}}</th>
-        <td mat-cell *matCellDef="let element"> {{element.state_one}} </td>
-      </ng-container>
+    <!-- Status mit Index 1 -->
+    <ng-container matColumnDef="state_one">
+      <th mat-header-cell *matHeaderCellDef="let element">{{this.stateOneName}}</th>
+      <td mat-cell *matCellDef="let element"> {{element.state_one}} </td>
+    </ng-container>
 
-      <!-- Status mit Index 2 -->
-      <ng-container matColumnDef="state_two">
-        <th mat-header-cell *matHeaderCellDef="let element">{{this.stateTwoName}}</th>
-        <td mat-cell *matCellDef="let element"> {{element.state_two}} </td>
-      </ng-container>
+    <!-- Status mit Index 2 -->
+    <ng-container matColumnDef="state_two">
+      <th mat-header-cell *matHeaderCellDef="let element">{{this.stateTwoName}}</th>
+      <td mat-cell *matCellDef="let element"> {{element.state_two}} </td>
+    </ng-container>
 
-      <!-- Status mit Index 3 -->
-      <ng-container matColumnDef="state_three">
-        <th mat-header-cell *matHeaderCellDef="let element">{{this.stateThreeName}}</th>
-        <td mat-cell *matCellDef="let element"> {{element.state_three}} </td>
-      </ng-container>
+    <!-- Status mit Index 3 -->
+    <ng-container matColumnDef="state_three">
+      <th mat-header-cell *matHeaderCellDef="let element">{{this.stateThreeName}}</th>
+      <td mat-cell *matCellDef="let element"> {{element.state_three}} </td>
+    </ng-container>
 
-      <!-- Edit Column -->
-      <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Actions</th>
-        <td mat-cell *matCellDef="let element">
-          <button mat-button color="primary" [routerLink]="'/event-form/' + element.pk">Edit</button>
-          <button mat-button color="warn" (click)="deleteEvent(element)">Delete</button>
-        </td>
-      </ng-container>
+    <!-- Edit Column -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Actions</th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-button color="primary" [routerLink]="'/event-form/' + element.pk">Edit</button>
+        <button mat-button color="warn" (click)="deleteEvent(element)">Delete</button>
+      </td>
+    </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
-    </table>
+  </table>
 </div>
