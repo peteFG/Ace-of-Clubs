@@ -2686,7 +2686,7 @@
     "id": 2,
     "fields": {
       "name": "user",
-      "permissions": [40]
+      "permissions": [40,44]
     }
   }
 ]
