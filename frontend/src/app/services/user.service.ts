@@ -91,6 +91,14 @@ export class UserService {
     return this.http.get<User[]>('/api/users/?search=' + str);
   }
 
+  searchRegisterUserCustom(str: string): Observable<User[]> {
+    return this.http.get<User[]>('/api/users/?reg=' + str);
+  }
+
+  searchRegisterEmailCustom(str: string): Observable<User[]> {
+    return this.http.get<User[]>('/api/users/?regemail=' + str);
+  }
+
   updateUser(user: User): Observable<any> {
     return this.http.patch('/api/users/' + user.pk + '/', user);
   }

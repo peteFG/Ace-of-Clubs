@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
-import {UserService} from '../services/user.service';
+import {User, UserService} from '../services/user.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {first} from 'rxjs/operators';
 
@@ -20,10 +20,14 @@ export class RegisterComponent implements OnInit {
   }
 
   registerFormGroup: FormGroup;
+  username: '';
+  email: '';
+  check: User[];
+  checkE: User[];
 
   ngOnInit(): void {
     this.registerFormGroup = this.fb.group({
-      pk: ['', Validators.required],
+      pk: [''],
       username: ['', Validators.required],
       first_name: ['', Validators.required],
       last_name: ['', Validators.required],
@@ -44,6 +48,14 @@ export class RegisterComponent implements OnInit {
 
   get password2() {
     return this.registerFormGroup.get('password2');
+  }
+
+  get usernameEx() {
+    return this.registerFormGroup.get('username');
+  }
+
+  get emailEx() {
+    return this.registerFormGroup.get('email');
   }
 
   /* Called on each input in either password field */
@@ -80,5 +92,25 @@ export class RegisterComponent implements OnInit {
             alert('Something went wrong, please check your login credentials!');
           });
     }
+  }
+
+  searchUserCustom(str: string): void {
+    this.userService.searchRegisterUserCustom(str).subscribe((users) => {
+      this.check = [];
+      this.check = users;
+      if (this.check.length !== 0){
+      this.usernameEx.setErrors([{exists: true}]);
+      }
+    });
+  }
+
+  searchEmailCustom(str: string): void {
+    this.userService.searchRegisterEmailCustom(str).subscribe((users) => {
+      this.checkE = [];
+      this.checkE = users;
+      if (this.checkE.length !== 0){
+        this.emailEx.setErrors([{exists: true}]);
+      }
+    });
   }
 }

@@ -141,7 +141,7 @@ export class AllEventsListComponent implements OnInit {
 
   sortData(str: string): void {
     if (this.str === str){
-      this.str = '!' + str;
+      this.str = '-' + str;
     }else {
       this.str = str;
     }

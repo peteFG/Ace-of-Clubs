@@ -72,6 +72,14 @@ export class EventService {
     return this.http.get<Event[]>('/api/allEvents/?sort=' + str);
   }
 
+    //-------------------- Section  for Unresponded Event ----------------------
+
+
+  getNewEvents(): Observable<Event[]> {
+    return this.http.get<Event[]>('/api/newEvents/');
+  }
+
+
   //-------------------- Section  for ADMIN ----------------------
 
   getAllEvents(): Observable<Event[]> {

@@ -34,7 +34,7 @@ export class UserFormComponent implements OnInit {
       email: ['', Validators.required],
       pictures: new FormControl([]),
       password: ['', Validators.required],
-      password2: ['', Validators.required],
+      password2: [''],
       is_active: new FormControl(false),
       is_staff: new FormControl(false),
       groups: new FormControl([2]),
