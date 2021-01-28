@@ -7,7 +7,7 @@
       "username": "admin",
       "first_name": "",
       "last_name": "",
-      "email": "admin@aceofclubs.com",
+      "email": "admin@aceofclubs.at",
       "is_staff": true,
       "is_active": true,
       "date_joined": "2020-12-05T10:37:03.966Z",
@@ -19,10 +19,10 @@
     "pk": 2,
     "fields": {
       "password": "pbkdf2_sha256$216000$CRsyKxCGtvZW$bMxOoVgU9fkFc8cXcNTEnERq/b2XiPgvykAmxrIv4DE=",
-      "username": "musik1",
-      "email": "andreas.reiter@musik.at",
-      "first_name": "Andreas",
-      "last_name": "Reiter",
+      "username": "maddns",
+      "email": "martin.schweighofer@aceofclubs.at",
+      "first_name": "Martin",
+      "last_name": "Schweighofer",
       "is_active": true,
       "is_staff": false,
       "groups": [1]
@@ -33,10 +33,10 @@
     "pk": 3,
     "fields": {
       "password": "pbkdf2_sha256$216000$CRsyKxCGtvZW$bMxOoVgU9fkFc8cXcNTEnERq/b2XiPgvykAmxrIv4DE=",
-      "username": "musik2",
-      "email": "lukas.huber@musik.at",
-      "first_name": "Lukas",
-      "last_name": "Huber",
+      "username": "pete",
+      "email": "peter.feldgrill@muaceofclubs.at",
+      "first_name": "Peter",
+      "last_name": "Feldgrill",
       "is_active": true,
       "is_staff": false,
       "groups": [1]
@@ -46,11 +46,11 @@
     "model": "aceofclubs.user",
     "pk": 4,
     "fields": {
-      "password": "",
-      "username": "musik3",
-      "email": "anna.maier@musik.at",
-      "first_name": "Anna",
-      "last_name": "Maier",
+      "password": "pbkdf2_sha256$216000$CRsyKxCGtvZW$bMxOoVgU9fkFc8cXcNTEnERq/b2XiPgvykAmxrIv4DE=",
+      "username": "sophia",
+      "email": "sophia.druckenthaner@aceofclubs.at",
+      "first_name": "Sophia",
+      "last_name": "Druckenthaner",
       "is_active": true,
       "is_staff": false,
       "groups": [2]
@@ -61,10 +61,10 @@
     "pk": 5,
     "fields": {
       "password": "pbkdf2_sha256$216000$CRsyKxCGtvZW$bMxOoVgU9fkFc8cXcNTEnERq/b2XiPgvykAmxrIv4DE=",
-      "username": "musik4",
-      "email": "thomas.pichler@musik.at",
-      "first_name": "Thomas",
-      "last_name": "Pichler",
+      "username": "trippi",
+      "email": "christoph.tripolt@aceofclubs.at",
+      "first_name": "Christoph",
+      "last_name": "Tripolt",
       "is_active": true,
       "is_staff": false,
       "groups": [2]
@@ -75,10 +75,10 @@
     "pk": 6,
     "fields": {
       "password": "pbkdf2_sha256$216000$CRsyKxCGtvZW$bMxOoVgU9fkFc8cXcNTEnERq/b2XiPgvykAmxrIv4DE=",
-      "username": "musik5",
-      "email": "lisa.winkler@musik.at",
-      "first_name": "Lisa",
-      "last_name": "Winkler",
+      "username": "tom",
+      "email": "thomas.kristan@aceofclubs.at",
+      "first_name": "Thomas",
+      "last_name": "Kristan",
       "is_active": true,
       "is_staff": false,
       "groups": [2]
@@ -1294,5 +1294,5 @@
       "name": "user",
       "permissions": [40,44]
     }
-  }
+  },
 ]
