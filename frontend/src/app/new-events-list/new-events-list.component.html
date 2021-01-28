@@ -5,10 +5,10 @@
 
     <div>
 
-      <h1 style="padding-top: 5vh; padding-bottom: 5vh" class="title-bg desktop-view">NEW EVENTS</h1>
+      <h1 style="padding-top: 5vh; padding-bottom: 5vh" class="title-bg desktop-view anim-right">NEW EVENTS</h1>
 
       <!-- Actions -->
-      <div class="actions horiz-space-around">
+      <div class="actions horiz-space-around anim-right">
         <mat-button-toggle-group style="margin-bottom: 3vh">
           <mat-button-toggle mat-icon-button style="width: 19vw !important;"
                              color="standard"
@@ -103,48 +103,70 @@
         </div>
       </div>
 
-      <div class="event-list">
+      <div class="event-list anim-right">
+        <div id="pdfView" #pdfView>
         <mat-card class="event-card" *ngFor="let event of newEvents" [routerLink]="'/event-form/' + event.pk">
-          <mat-card-header style="margin-bottom: 2vh">
+          <mat-card-header style="margin-bottom: 1vh">
             <mat-card-title class="event-title"><b>{{event.name}}</b></mat-card-title>
-            <mat-card-subtitle class="event-subtitle"><b>Event Type: </b> {{event.event_type_name}}</mat-card-subtitle>
           </mat-card-header>
           <mat-card-content>
             <div style="padding: 0.7vw">
+              <div class="content-m-row ul">
+                <div class="content-m-hd">Event Type:</div>
+                <div class="content-m-data">{{event.event_type_name}}</div>
+              </div>
               <div class="content-m-row">
-                <div class="content-m-hd">Start:</div>
+                <div class="content-m-hd ul">Start:</div>
                 <div class="content-m-data">{{event.start_date | date: 'dd.MM.yyyy'}}
                   - {{event.start_time.substring(0, 5)}}</div>
               </div>
-              <div class="content-m-row">
-                <div class="content-m-hd">End:</div>
+              <div class="content-m-row ul">
+                <div class="content-m-hd ul">End:</div>
                 <div class="content-m-data">
                   {{event.end_date | date: 'dd.MM.yyyy'}} - {{event.end_time.substring(0, 5)}}
                 </div>
               </div>
-              <div class="content-m-row">
+              <div class="content-m-row ul">
                 <div class="content-m-hd">Groups:</div>
                 <div class="content-m-data">{{event.group_names}}</div>
               </div>
-              <div class="content-m-row">
+              <div class="content-m-row ul">
                 <div class="content-m-hd">{{stateOneName}}:</div>
                 <div class="content-m-data">{{event.count_state_one}}</div>
               </div>
-              <div class="content-m-row">
+              <div class="content-m-row ul">
                 <div class="content-m-hd">{{stateTwoName}}:</div>
                 <div class="content-m-data">{{event.count_state_two}}</div>
               </div>
-              <div class="content-m-row">
+              <div class="content-m-row ul">
                 <div class="content-m-hd">{{stateThreeName}}:</div>
                 <div class="content-m-data">{{event.count_state_three}}</div>
               </div>
-              <div class="content-m-row">
+              <div class="content-m-row ul">
                 <div class="content-m-hd">Active Event:</div>
                 <div class="content-m-data">{{event.active}}</div>
               </div>
             </div>
+            <mat-card-actions align="center" style="padding: 10px">
+              <div class="m-acc-actions">
+                <div class="m-event-btn">
+                  <button mat-icon-button color="standard" (click)="userService.setUserEventEntry(event.pk)">
+                    <mat-icon>sms_failed</mat-icon>
+                  </button>
+                </div>
+                <div class="m-general-btn" style="margin-right: 12px">
+                  <button *ngIf="this.userService.hasPermission('aceofclubs.change_event')" mat-icon-button color="standard" [routerLink]="'/event-form/' + event.pk">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                  <button mat-icon-button color="light" (click)="deleteEvent(event)" *ngIf="this.userService.hasPermission('aceofclubs.delete_event')" >
+                    <mat-icon>delete_outline</mat-icon>
+                  </button>
+                </div>
+              </div>
+            </mat-card-actions>
           </mat-card-content>
         </mat-card>
+        </div>
       </div>
 
     </div>
@@ -155,19 +177,102 @@
 
     <div class="mobile-header">
       <div class="mobile-title anim-left">NEW <br> EVENTS</div>
-      <mat-divider style="margin-bottom: 15px"></mat-divider>
+
+      <!-- Actions -->
       <div class="anim-right">
-        <mat-accordion class="m-filter-acc anim-right">
-          <mat-expansion-panel hideToggle class="m-filter-elem-acc">
-            <mat-expansion-panel-header class="m-filter-header">
-              <div>
-                <mat-panel-title class="m-filter-title">FILTER EVENTS</mat-panel-title>
-              </div>
-            </mat-expansion-panel-header>
-          </mat-expansion-panel>
-        </mat-accordion>
-      </div>
-      <mat-divider style="margin-top: 15px"></mat-divider>
+        <mat-card>
+          <div class="horiz-space-around">
+            <button class="menu-button" mat-button (click)="showSearchbar()"
+                    color="standard"
+                    matTooltip="Show Searchbar"
+                    matTooltipClass="tooltips">
+              <mat-icon>search</mat-icon>
+            </button>
+
+            <button class="menu-button" mat-button (click)="showFilterOptions()"
+                    color="standard"
+                    matTooltip="Show Filter Options"
+                    matTooltipClass="tooltips">
+              <mat-icon>filter_alt</mat-icon>
+            </button>
+
+            <button class="menu-button" [matMenuTriggerFor]="exportMenu1" mat-button
+                    color="standard"
+                    matTooltip="Export Options"
+                    matTooltipClass="tooltips">
+              <mat-icon>get_app</mat-icon>
+            </button>
+
+            <mat-menu #exportMenu1="matMenu">
+              <button mat-menu-item (click)="exporter.exportTable('xlsx',{fileName:'My_Users_data'})">
+                <span>Export to EXCEL</span>
+              </button>
+              <button mat-menu-item (click)="exporter.exportTable('csv',{fileName:'My_Users_data'})">
+                <span>Export to CSV</span>
+              </button>
+              <button mat-menu-item (click)="exporter.exportTable('json',{fileName:'My_Users_data'})">
+                <span>Export to JSON</span>
+              </button>
+              <button mat-menu-item (click)="exporter.exportTable('txt',{fileName:'My_Users_data'})">
+                <span>Export to TXT</span>
+              </button>
+            </mat-menu>
+          </div>
+
+          <div class="horiz-center" style="padding: 10px" *ngIf="showSearch">
+            <input class="form-control mr-sm-2 search" type="text"
+                   placeholder="Search Event Name" [(ngModel)]="search"
+                   (ngModelChange)="filterSortSearchEvents(search,'')">
+          </div>
+
+          <!-- Filtern -->
+          <div class="horiz-center" *ngIf="showFilter">
+            <div *ngIf="showFilter">
+              <form [formGroup]="eventFilterFormGroup" (ngSubmit)="filterSortSearchEvents(search, '')">
+                <div class="position">
+                  <mat-form-field align="center">
+                    <mat-select placeholder="Event Type" formControlName="ev_type">
+                      <mat-option [value]="null">Unknown</mat-option>
+                      <mat-option [value]="eventTypeOption.pk"
+                                  *ngFor="let eventTypeOption of eventTypeOptions">{{eventTypeOption.description}}</mat-option>
+                    </mat-select>
+                    <mat-hint align="end">What kind of Event is it?</mat-hint>
+                    <mat-error *ngIf="eventFilterFormGroup.controls.ev_type.hasError('required')">Event Type is required
+                    </mat-error>
+                  </mat-form-field>
+                  <br>
+
+                  <mat-form-field>
+                    <mat-select placeholder="Group" formControlName="group">
+                      <mat-option [value]="null">Unknown</mat-option>
+                      <mat-option [value]="groupOption.pk"
+                                  *ngFor="let groupOption of groupOptions">{{groupOption.name}}</mat-option>
+                    </mat-select>
+                    <mat-hint align="end">What kind of Group is it?</mat-hint>
+                    <mat-error *ngIf="eventFilterFormGroup.controls.ev_type.hasError('required')">Event Type is required
+                    </mat-error>
+                  </mat-form-field>
+                  <br>
+
+                  <div class="date">
+                    <app-date placeholder="Start Date" formControlName="start_date"
+                              hint="The start date of this event"></app-date>
+                  </div>
+                  <div class="date">
+                    <app-date placeholder="End Date" formControlName="end_date"
+                              hint="The end date of this event"></app-date>
+                  </div>
+                  <mat-card-actions align="center">
+                    <button mat-raised-button class="btn-standard">Filter</button>
+                  </mat-card-actions>
+                </div>
+              </form>
+              <mat-divider [inset]="true"></mat-divider>
+            </div>
+          </div>
+
+        </mat-card>
+        <mat-divider style="margin-top: 15px"></mat-divider>
     </div>
 
     <div class="anim-right">
@@ -240,7 +345,6 @@
 </div>
 
 <div>
-  <div id="pdfView" #pdfView>
     <table style="display: none" mat-table matTableExporter [dataSource]="newEvents" #exporter="matTableExporter"
            matSort>
 
@@ -340,5 +444,4 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
     </table>
-  </div>
 </div>

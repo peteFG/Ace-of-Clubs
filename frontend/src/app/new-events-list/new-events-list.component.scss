@@ -16,13 +16,27 @@
     font-size: 600%;
   }
 
+  .content-m-data {
+    max-width: 220px;
+    text-align: -webkit-right;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    direction: ltr;
+  }
+}
+
+@media only screen and (max-width: 450px) {
+
+  .date, .mat-form-field {
+    width: 80vw;
+  }
 }
 
 .event-card {
   vertical-align: top;
   width: 20%;
-  min-height: fit-content;
-  height: 300px;
+  height: fit-content;
+  min-heigt: 325px;
   margin: 1%;
   display: inline-block;
 }
@@ -40,9 +54,28 @@
   margin-top: 0.8vw;
   margin-bottom: 0 !important;
   padding-bottom: 5px !important;
+  font-size: 25px;
+  text-align: -webkit-center;
+  color: rgba(62, 91, 147, 0.9);
 }
 
 .mat-button-toggle {
   min-width: 70px;
   width: 5vw !important;
+}
+
+.m-acc-actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.mobile-title {
+  text-align: -webkit-right;
+  margin-right: 15px;
+}
+
+.event-name {
+  font-size: larger;
+  font-weight: bold;
 }
