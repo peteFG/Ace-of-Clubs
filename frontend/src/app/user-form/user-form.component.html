@@ -1,102 +1,116 @@
-<div class="container">
+<div class="container-bg-light">
 
-  <div class="horiz-center">
+  <div class="card-bg position">
+    <mat-card class="form-card">
 
-    <form [formGroup]="userFormGroup" (ngSubmit)="createOrUpdateUser()" class="user-form__form">
+      <form [formGroup]="userFormGroup" (ngSubmit)="createOrUpdateUser()" class="user-form__form">
 
-      <!--<div><img [src]="'api/media/download/' + userFormGroup.controls.pictures[0].pk + '/'" *ngIf="userFormGroup.controls.pictures[0].pk"/></div>-->
+        <mat-card-header class="card-container" style="margin-bottom: 5px">
+          <mat-card-title *ngIf="!userFormGroup.controls.pk.value" class="mat-h3">CREATE A NEW USER</mat-card-title>
+          <mat-card-title
+            *ngIf="userFormGroup.controls.pk.value && this.userService.hasPermission('aceofclubs.delete_user')"
+            class="mat-h3">EDIT A USER'S PROFILE
+          </mat-card-title>
+          <mat-card-title
+            *ngIf="userFormGroup.controls.pk.value && !this.userService.hasPermission('aceofclubs.delete_user')"
+            class="mat-h3">EDIT YOUR PROFILE
+          </mat-card-title>
+        </mat-card-header>
 
-      <!--<span>
-          <span *ngFor="let picture of pictures">
-            <button class="grow" [matMenuTriggerFor]="menu">
-              <img src="api/media/{{picture}}" height="30px"><br>
+        <mat-card-content>
+          <mat-form-field>
+            <input matInput type="text" placeholder="Username" formControlName="username" required>
+            <mat-hint align="end">Username</mat-hint>
+            <mat-error *ngIf="userFormGroup.controls.username.hasError('required')">Username is required</mat-error>
+          </mat-form-field>
+          <br>
+
+          <mat-form-field>
+            <input matInput type="text" placeholder="First Name" formControlName="first_name" required>
+            <mat-hint align="end">First Name</mat-hint>
+            <mat-error *ngIf="userFormGroup.controls.first_name.hasError('required')">First Name is required</mat-error>
+          </mat-form-field>
+          <br>
+
+          <mat-form-field>
+            <input matInput type="text" placeholder="Last Name" formControlName="last_name" required>
+            <mat-hint align="end">Last Name</mat-hint>
+            <mat-error *ngIf="userFormGroup.controls.last_name.hasError('required')">Last Name is required</mat-error>
+          </mat-form-field>
+          <br>
+
+          <mat-form-field>
+            <input matInput type="email" placeholder="Email" formControlName="email" ngModel [email]="true" required>
+            <mat-hint align="end">E-Mail</mat-hint>
+            <mat-error *ngIf="userFormGroup.controls.email.hasError('required')">Email is required</mat-error>
+            <mat-error *ngIf="userFormGroup.controls.email.hasError('email')">Enter a valid Email address</mat-error>
+          </mat-form-field>
+          <br>
+
+          <mat-form-field>
+            <input matInput type="password" placeholder="Enter Password" formControlName="password" required
+                   minlength="6">
+            <mat-hint align="end">Password</mat-hint>
+            <mat-error *ngIf="userFormGroup.controls.password.hasError('required') ">Password is required</mat-error>
+            <mat-error *ngIf="userFormGroup.controls.password.hasError('minlength') ">Password is not secure!
+            </mat-error>
+          </mat-form-field>
+          <br>
+
+          <div style="display: flex; flex-direction: row; justify-content: space-around">
+            <mat-checkbox formControlName="is_active" *ngIf="userService.hasPermission('aceofclubs.delete_user')">Is
+              Active?
+            </mat-checkbox>
+            <!--*ngIf="userService.hasPermission('aceofclubs.change_user')"-->
+
+            <mat-checkbox formControlName="is_staff" *ngIf="userService.hasPermission('aceofclubs.delete_user')">Is
+              Admin?
+            </mat-checkbox>
+          </div>
+          <br>
+
+          <div>
+            <app-mediainput formControlName="pictures"></app-mediainput>
+          </div>
+
+          <br/>
+
+          <mat-card-actions align="center">
+            <!-- <button mat-raised-button color="primary" [disabled]="!userFormGroup.valid"> -->
+            <button mat-raised-button class="btn-standard">
+              <span *ngIf="!userFormGroup.controls.pk.value">Create</span>
+              <span *ngIf="userFormGroup.controls.pk.value">Update</span>
             </button>
-          </span>
-        </span>-->
-
-      <!--<ng-container>
-        <img src="/assets/image/user.png" height=30px *ngIf="!userFormGroup.controls.pictures">
-        <tr mat-cell *matCellDef="let element"> <img [src]="'/api/media/download/' + element.pictures + '/'" height=30px *ngIf="userService.hasProfilePic"></tr>
-
-      </ng-container>-->
-      <!--<img [src]="'api/media/' + userFormGroup.controls.pictures[0].pk" >
-      <mat-hint align="end">pictures</mat-hint>-->
-
-      <!--{{userFormGroup.value.pictures[0].pk}}-->
-
-      <mat-form-field>
-        <input matInput type="text" placeholder="Username" formControlName="username" required>
-        <mat-hint align="end">Username</mat-hint>
-        <mat-error *ngIf="userFormGroup.controls.username.hasError('required')">Username is required</mat-error>
-      </mat-form-field>
+          </mat-card-actions>
+        </mat-card-content>
+      </form>
 
 
-      <mat-form-field>
-        <input matInput type="text" placeholder="First Name" formControlName="first_name" required>
-        <mat-hint align="end">First Name</mat-hint>
-        <mat-error *ngIf="userFormGroup.controls.first_name.hasError('required')">First Name is required</mat-error>
-      </mat-form-field>
+      <!-- nicht  im Form, sonst kommt ein  Fehler bzw eine Warnung -->
 
-      <mat-form-field>
-        <input matInput type="text" placeholder="Last Name" formControlName="last_name" required>
-        <mat-hint align="end">Last Name</mat-hint>
-        <mat-error *ngIf="userFormGroup.controls.last_name.hasError('required')">Last Name is required</mat-error>
-      </mat-form-field>
-
-      <mat-form-field>
-        <input matInput type="email" placeholder="Email" formControlName="email" ngModel [email]="true" required>
-        <mat-hint align="end">E-Mail</mat-hint>
-        <mat-error *ngIf="userFormGroup.controls.email.hasError('required')">Email is required</mat-error>
-        <mat-error *ngIf="userFormGroup.controls.email.hasError('email')">Enter a valid Email address</mat-error>
-      </mat-form-field>
-
-      <mat-form-field>
-        <input matInput type="password" placeholder="Enter Password" formControlName="password" required minlength="6">
-        <mat-hint align="end">Password</mat-hint>
-        <mat-error *ngIf="userFormGroup.controls.password.hasError('required') ">Password is required</mat-error>
-        <mat-error *ngIf="userFormGroup.controls.password.hasError('minlength') ">Password is not secure!</mat-error>
-      </mat-form-field>
-
-      <mat-checkbox formControlName="is_active" *ngIf="userService.hasPermission('aceofclubs.change_user')">Is Active?
-      </mat-checkbox>
-      <!--*ngIf="userService.hasPermission('aceofclubs.change_user')"-->
-
-      <mat-checkbox formControlName="is_staff" *ngIf="userService.hasPermission('aceofclubs.change_user')">Is Admin?
-      </mat-checkbox>
-
-      <div>
-        <app-mediainput formControlName="pictures"></app-mediainput>
+      <!-- Profile Actions: Edit & Delete Profile -->
+      <div class="subtitle">Additional Options</div>
+      <div class="actions horiz-space-around">
+        <mat-button-toggle-group>
+          <mat-button-toggle class="anim-right" matTooltip="Add User To Group" matTooltipClass="tooltips"
+                             (click)="userService.setUserGroupEntry()">
+            <mat-icon>edit</mat-icon>
+          </mat-button-toggle>
+          <mat-button-toggle
+            class="anim-right" [routerLink]="'/user-group-list/' + this.userService.clickedUser"
+            matTooltip="View or Delete Group"
+            matTooltipClass="tooltips">
+            <mat-icon>delete_outline</mat-icon>
+          </mat-button-toggle>
+          <mat-button-toggle class="anim-right" [routerLink]="'/user-event-list/' + this.userService.clickedUser"
+                             matTooltip="View or Delete Event Entries"
+                             matTooltipClass="tooltips">
+            <mat-icon>person_remove</mat-icon>
+          </mat-button-toggle>
+        </mat-button-toggle-group>
       </div>
 
-      <br/>
-
-      <mat-card-actions align="center">
-        <!-- <button mat-raised-button color="primary" [disabled]="!userFormGroup.valid"> -->
-        <button mat-raised-button color="primary">
-          <span *ngIf="!userFormGroup.controls.pk.value">Create</span>
-          <span *ngIf="userFormGroup.controls.pk.value">Update</span>
-        </button>
-      </mat-card-actions>
-    </form>
-  </div>
-
-
-  <!-- nicht  im Form, sonst kommt ein  Fehler bzw eine Warnung -->
-
-  <div class="group-add">
-    <button (click)="userService.setUserGroupEntry()" mat-raised-button color="primary">Add to Group
-    </button>
-  </div>
-
-
-  <div class="group-editOrDelete">
-    <button mat-raised-button color="primary" [routerLink]="'/user-group-list/' + this.userService.clickedUser">View/Delete Group
-    </button>
-  </div>
-
-  <div class="userEvent-editOrDelete">
-    <button mat-raised-button color="primary" [routerLink]="'/user-event-list/' + this.userService.clickedUser">View/Delete Event Entries
-    </button>
+    </mat-card>
   </div>
 </div>
 

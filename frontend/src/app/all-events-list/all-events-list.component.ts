@@ -3,12 +3,12 @@ import {Event, EventService} from '../services/event.service';
 import {HttpClient} from '@angular/common/http';
 import {EventType, EventTypeService} from '../services/event-type.service';
 import {User, UserEvent, UserService} from '../services/user.service';
-import {ActivatedRoute, Router} from "@angular/router";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {filter} from "rxjs/operators";
-import {StateService} from "../services/state.service";
+import {ActivatedRoute, Router} from '@angular/router';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {filter} from 'rxjs/operators';
+import {StateService} from '../services/state.service';
 import jsPDF from 'jspdf';
-import {Group, GroupService} from "../services/group.service";
+import {Group, GroupService} from '../services/group.service';
 
 @Component({
   selector: 'app-all-events-list',
@@ -27,17 +27,18 @@ export class AllEventsListComponent implements OnInit {
   eventTypeOptions: EventType[];
   groupOptions: Group[];
   str: string;
+  showFilter: boolean;
 
-  displayedColumns = ['pk', 'name', 'start_date', 'start_time', 'end_date', 'end_time', 'active', 'state_one', 'state_two', 'state_three', 'actions'];
+  displayedColumns = ['name', 'start_date', 'start_time', 'end_date', 'end_time', 'active', 'state_one', 'state_two', 'state_three', 'actions'];
 
 
   @ViewChild('pdfView', {static: false}) pdfView: ElementRef;
 
-  public downloadAsPDF() {
+  public downloadAsPDF(): void {
     const doc = new jsPDF('l', 'mm', 'a1');
 
     const specialElementHandlers = {
-      '#editor': function (element, renderer) {
+      '#editor'(element, renderer) {
         return true;
       }
     };
@@ -45,8 +46,8 @@ export class AllEventsListComponent implements OnInit {
     const desktopView = this.pdfView.nativeElement;
 
     doc.fromHTML(desktopView.innerHTML, 15, {
-      //width: 200,
-      'elementHandlers': specialElementHandlers
+      // width: 200,
+      elementHandlers: specialElementHandlers
     });
 
     doc.save('AllEvents.pdf');
@@ -64,6 +65,8 @@ export class AllEventsListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    this.showFilter = false;
 
     this.retrieveEvents();
     this.retrieveStates();
@@ -104,10 +107,10 @@ export class AllEventsListComponent implements OnInit {
 
   private retrieveStates(): void {
     this.stateService.getStates().subscribe((states) => {
-      this.stateOneName = states[0].description
-      this.stateTwoName = states[1].description
-      this.stateThreeName = states[2].description
-    })
+      this.stateOneName = states[0].description;
+      this.stateTwoName = states[1].description;
+      this.stateThreeName = states[2].description;
+    });
   }
 
 
@@ -146,6 +149,14 @@ export class AllEventsListComponent implements OnInit {
       this.allEvents = allEvents;
       this.router.navigateByUrl('/all-event-list');
     });
+  }
+
+  showFilterOptions(): void {
+    if ( this.showFilter === false) {
+      this.showFilter = true;
+    } else {
+      this.showFilter = false;
+    }
   }
 
 }

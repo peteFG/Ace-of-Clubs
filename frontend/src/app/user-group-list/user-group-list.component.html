@@ -23,7 +23,7 @@
       </mat-button-toggle>
 
       <mat-button-toggle class="inactive-manage" matTooltip="Manage Events" matTooltipClass="tooltips"
-                         [routerLink]="'/event-type-list'">
+                         [routerLink]="'/all-events-list'">
         <mat-icon>event</mat-icon>
       </mat-button-toggle>
     </mat-button-toggle-group>
@@ -52,7 +52,7 @@
       <mat-card-content>
         <div class="horiz-center position">
           <div class="table-container">
-            <table mat-table [dataSource]="userGroups" matSort class="mat-elevation-z8">
+            <table mat-table [dataSource]="userGroups" matSort class="card-table">
 
               <!-- User -->
 
