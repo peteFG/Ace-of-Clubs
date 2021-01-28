@@ -1,6 +1,70 @@
-.user-group-form__form{
+.manage-card {
+  padding: 3vh;
+  width: fit-content;
+  text-align: -webkit-center;
+  background-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0px 11px 15px -7px rgb(0 0 0 / 20%), 0px 24px 38px 3px rgb(0 0 0 / 14%), 0px 9px 46px 8px rgb(0 0 0 / 12%);
+}
+
+.card-bg {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  vertical-align: center;
+}
+
+.card-bg {
+  height: 100%;
   display: flex;
   flex-direction: column;
-  width: 20rem;
-  margin: 3rem auto;
+  justify-content: center;
+}
+
+.mat-card-title {
+  padding: 10px;
+  font-size: 200%;
+  font-weight: lighter;
+}
+
+@media only screen and (max-width: 450px) {
+  .manage-card {
+    height: 88vh;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 0;
+  }
+
+  .mat-form-field {
+    width: 70vw;
+  }
+
+  .mat-card-header {
+    padding-top: 11vh;
+  }
+
+  .mat-card-content {
+    padding-top: 5vh;
+  }
+
+  .mat-card-title {
+    line-height: 35px;
+  }
+}
+
+@media only screen and (min-width: 450px) and (max-width: 1280px) {
+  .state-form__form, .form-heading, .form-subtitle {
+    width: 30vw;
+  }
+}
+
+@media only screen and (min-width: 1280px) {
+  .state-form__form, .form-heading, .form-subtitle {
+    width: 25vw;
+  }
+
+  .mat-form-field {
+    width: 20vw;
+  }
+
+
 }
