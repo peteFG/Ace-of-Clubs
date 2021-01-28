@@ -35,7 +35,7 @@ export class AppComponent implements OnInit {
       this.isLoggedIn = response;
     });
 
-    //this.retrieveUser();
+    //this.userService.retrieveCurrentUser();
 
     //this.currentUser = this.userService.retrieveCurrentUser();
     this.userService.getPreviousSite(this.router);
