@@ -34,7 +34,6 @@ export class MediainputComponent implements OnInit, ControlValueAccessor {
   uploader: FileUploader;
   url;
   onChange = (medias: number[]) => {
-    // empty default
   };
 
   selectFile(event) {

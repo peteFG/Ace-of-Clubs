@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {Time} from '@angular/common';
 import {HttpClient} from '@angular/common/http';
 import {State, StateService} from '../services/state.service';
 import {UserService} from '../services/user.service';
@@ -23,20 +22,10 @@ export class StateListComponent implements OnInit {
     this.retrieveStates();
   }
 
-
   private retrieveStates(): void {
     this.stateService.getStates()
       .subscribe((states) => {
         this.states = states;
     });
-  }
-
-  deleteState(state: State): void {
-    this.stateService.deleteState(state)
-      .subscribe(() => {
-        this.retrieveStates();
-        alert('deleted successfully!');
-      });
-
   }
 }

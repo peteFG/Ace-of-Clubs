@@ -47,10 +47,8 @@ export class UserService {
   currentUserName: string;
   clickedEvent: number;
   existingUserEntry: number;
-  goahead: boolean;
   currentUser: User[];
   clickedUser: number;
-  existingGroupEntry: number;
   availableGroups: number[];
   previousSite: string;
   previousUrl: string;
@@ -77,8 +75,6 @@ export class UserService {
       return this.http.delete('/api/users/' + user.pk + '/');
     } else {
       alert('Users may only be deleted by Administrators!');
-      /** TO DO: SONST ACCOUNT DEACTIVATEN UND
-       * MIT HAS_PERMISSION ABFRAGEN OB DERJENIGE ADMIN IST!**/
     }
   }
 
@@ -145,7 +141,6 @@ export class UserService {
   }
 
 // ------------------------------------------ USER EVENT ------------------------------------------
-  // alle UserEvents des aktuellen Users
 
   deleteUserEventEntry(userEvent: UserEvent): Observable<any> {
     return this.http.delete('/api/userEvent/' + userEvent.pk + '/');
@@ -189,15 +184,10 @@ export class UserService {
             if (this.existingUserEntry === 0) {
               this.router.navigateByUrl('/user-event-form/');
             }
-
           });
-
         });
-
       }
     });
-
-
   }
 
 
@@ -213,16 +203,11 @@ export class UserService {
 
 
   // --------------------------------------  USER GROUP SERVICES -------------------------------------------
-// User Groups for logged in user
-  getUserGroupsByUserID(): Observable<UserGroup[]> {
-    return this.http.get<UserGroup[]>('/api/userGroup/');
-  }
 
   getUserGroupsByLeader(userID: number): Observable<UserGroup[]> {
     return this.http.get<UserGroup[]>('/api/userGroup/?leader=' + userID);
   }
 
-// user Groups by user ID
   getUserGroupsByUsersPK(userID: number): Observable<UserGroup[]> {
     return this.http.get<UserGroup[]>('/api/allUserGroups/?user=' + userID);
   }
@@ -235,16 +220,12 @@ export class UserService {
     return this.http.delete('/api/allUserGroups/' + userGroup.pk + '/');
   }
 
-  // funktion die nur jene  Gruppen ausgeben, denen der User noch nicht  angehört
-  // diese Gruppen anschließend als input für userGroupForm
-  // das heißt beim Button im User muss die UserID ausgelesen werden und zum filtern verwendet werden
-
   setUserGroupEntry() {
     this.groupService.getGroupPKs();
     const userID = this.clickedUser;
     this.availableGroups = [];
     const checkIfEmpty = [];
-    const attendedGroups = []; // die Gruppen PKs, in denen sich der angeklickte User bereits befindet
+    const attendedGroups = [];
 
     this.getUserGroupsByUsersPK(userID).subscribe((userGroups) => {
       userGroups.forEach((userGroup) => {

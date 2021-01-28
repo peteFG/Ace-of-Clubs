@@ -36,9 +36,6 @@
           </mat-button-toggle>
 
           <mat-menu #exportMenu1="matMenu">
-            <button mat-menu-item (click)="downloadAsPDF()">
-              <span>Export to PDF</span>
-            </button>
             <button mat-menu-item (click)="exporter.exportTable('xlsx',{fileName:'My_Users_data'})">
               <span>Export to EXCEL</span>
             </button>

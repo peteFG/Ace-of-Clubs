@@ -61,7 +61,6 @@
             <mat-checkbox formControlName="is_active" *ngIf="userService.hasPermission('aceofclubs.delete_user')">Is
               Active?
             </mat-checkbox>
-            <!--*ngIf="userService.hasPermission('aceofclubs.change_user')"-->
 
             <mat-checkbox formControlName="is_staff" *ngIf="userService.hasPermission('aceofclubs.delete_user')">Is
               Admin?
@@ -84,8 +83,6 @@
         </mat-card-content>
     </form>
 
-
-      <!-- nicht  im Form, sonst kommt ein  Fehler bzw eine Warnung -->
 
 
       <div class="subtitle" style="font-size: larger; font-weight: lighter; margin-bottom: 5px">ADDITIONAL OPTIONS</div>
@@ -112,8 +109,3 @@
     </mat-card>
   </div>
 </div>
-
-<!-- nicht  im Form, sonst kommt ein  Fehler bzw eine Warnung -->
-
-
-

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
-import {User, UserService} from '../services/user.service';
+import {UserService} from '../services/user.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {first} from 'rxjs/operators';
 
@@ -15,8 +15,7 @@ export class RegisterComponent implements OnInit {
               private router: Router,
               private formBuilder: FormBuilder,
               private route: ActivatedRoute,
-              private fb: FormBuilder
-  ) {
+              private fb: FormBuilder) {
   }
 
   registerFormGroup: FormGroup;
@@ -62,7 +61,7 @@ export class RegisterComponent implements OnInit {
     } else {
       return {passwordMismatch: true};
     }
-  }
+  };
 
   createOrUpdateUser(): void {
     if (this.registerFormGroup.value.password !== this.registerFormGroup.value.password2) {

@@ -1,10 +1,9 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {User, UserService} from '../services/user.service';
-import {Observable} from 'rxjs';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {EventService} from '../services/event.service';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-user-profile',
@@ -13,17 +12,12 @@ import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog
 })
 export class UserProfileComponent implements OnInit {
 
-  pks: number[];
   userProfile: User[];
   isStaff: boolean;
-  backToProfile: string;
   displayedColumns = ['pictures', 'username', 'email', 'first_name', 'last_name', 'edit', 'changePW', 'delete'];
 
-  constructor(private http: HttpClient,
-              public userService: UserService,
-              private eventService: EventService,
-              public dialog: MatDialog,
-              private fb: FormBuilder) {
+  constructor(public userService: UserService,
+              public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -61,17 +55,6 @@ export class UserProfileComponent implements OnInit {
       this.isStaff = user.is_staff;
     });
   }
-
-  /** VERWENDEN WENN BACKEND PROBLEM BESEITIGT */
-
-  /*private retrieveUser(): void {
-
-    this.userService.getCurrentUser().subscribe((user)=>{
-
-      this.userProfile = user;
-    });
-  }*/
-
 }
 
 @Component(
@@ -87,8 +70,6 @@ export class VacationForm implements OnInit {
   vacationFormGroup: FormGroup;
   vacationDateForm: FormGroup;
   pks: number[];
-  userProfile: User[];
-  isStaff: boolean;
 
   constructor(private http: HttpClient,
               public userService: UserService,
@@ -162,8 +143,6 @@ export class VacationForm implements OnInit {
             }
           });
           this.postForEveryUserEvent();
-
-
         }
         alert('Your vacation has been set!');
 

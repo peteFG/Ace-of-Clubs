@@ -29,7 +29,6 @@ export class UserGroupListComponent implements OnInit {
         });
     }
     else {
-      /** Überprüfung ob ADMIN!!! */
       this.retrieveUserGroupEntries();
 
     }
@@ -56,9 +55,6 @@ export class UserGroupListComponent implements OnInit {
         this.retrieveUserGroupEntries();
         alert('deleted successfully!');
       }
-
     })
   }
-
-
 }

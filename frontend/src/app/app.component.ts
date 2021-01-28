@@ -18,7 +18,6 @@ export class AppComponent implements OnInit {
   isLoggedIn = false;
   isStaff = false;
   userProfile: User[];
-  //currentUser: any;
 
   currentUserName: any;
   currentUserFN: any;
@@ -29,15 +28,10 @@ export class AppComponent implements OnInit {
               private router: Router) {
   }
 
-  // tslint:disable-next-line:typedef
   ngOnInit() {
     this.userService.isLoggedIn.subscribe(response => {
       this.isLoggedIn = response;
     });
-
-    //this.userService.retrieveCurrentUser();
-
-    //this.currentUser = this.userService.retrieveCurrentUser();
     this.userService.getPreviousSite(this.router);
   }
 

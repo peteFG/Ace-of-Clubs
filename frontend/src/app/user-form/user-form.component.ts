@@ -1,8 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
-// import {Group, GroupService} from '../services/group.service';
-import {HttpClient} from '@angular/common/http';
 import {UserService} from '../services/user.service';
 
 @Component({
@@ -14,7 +12,6 @@ export class UserFormComponent implements OnInit {
   @Input()
   hasProfilePic = false;
   userFormGroup: FormGroup;
-  currentUser: number;
   currentUserIsStaff: boolean;
   currentUserPK: number;
 

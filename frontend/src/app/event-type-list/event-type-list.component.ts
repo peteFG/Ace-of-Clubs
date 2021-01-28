@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {UserGroup, UserService} from '../services/user.service';
+import {UserService} from '../services/user.service';
 import {EventTypeService} from "../services/event-type.service";
 import {ActivatedRoute} from "@angular/router";
 

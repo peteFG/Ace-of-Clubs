@@ -1,13 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import {Event, EventService} from '../services/event.service';
-import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
-import {Group, GroupService} from '../services/group.service';
+import {ActivatedRoute, Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
-import {User, UserEvent, UserService} from '../services/user.service';
+import {UserService} from '../services/user.service';
 import {State, StateService} from '../services/state.service';
-import {filter, map} from 'rxjs/operators';
-import {EventType, EventTypeService} from '../services/event-type.service';
 
 @Component({
     selector: 'app-user-event-form',
@@ -28,7 +25,6 @@ export class UserEventFormComponent implements OnInit {
     currentEventET: any;
     currentEventType: any;
     activeEvent: boolean;
-    eventType: EventType;
     event: Event;
     eventOptions: Event[];
     stateOptions: State[];
@@ -117,7 +113,6 @@ export class UserEventFormComponent implements OnInit {
                     this.router.navigateByUrl('/event-list');
                   }
                 });
-
         }
     }
 }

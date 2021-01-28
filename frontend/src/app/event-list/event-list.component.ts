@@ -40,7 +40,7 @@ export class EventListComponent extends CdkTableExporterModule implements OnInit
   @ViewChild('pdfView', {static: false}) pdfView: ElementRef;
 
   public downloadAsPDF() {
-    const doc = new jsPDF('l', 'mm', 'a1');
+    const doc = new jsPDF('p','mm', [297,210]);
 
     const specialElementHandlers = {
       '#editor'(element, renderer) {

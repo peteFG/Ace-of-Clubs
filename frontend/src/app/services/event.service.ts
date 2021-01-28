@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import { Observable} from 'rxjs';
-import { UserService} from './user.service';
 
 export interface Event {
   pk?: number;
@@ -28,10 +27,7 @@ export interface Event {
 })
 export class EventService {
 
-  personalEvents: Event[];
-
-  constructor(private http: HttpClient,
-              private userService: UserService) {
+  constructor(private http: HttpClient) {
   }
 
   getEvents(): Observable<Event[]> {
@@ -78,32 +74,6 @@ export class EventService {
     return this.http.get<Event[]>('/api/allEvents/');
   }
 
-  deleteEntryAllEvents(event: Event): Observable<any> {
-    return this.http.delete('/api/allEvents/' + event.pk + '/');
-  }
-
-  getEntryAllEvents(pk: number): Observable<Event> {
-    return this.http.get<Event>('/api/allEvents/' + pk + '/');
-  }
-
-  updateEntryAllEvents(event: Event): Observable<any> {
-    return this.http.patch('/api/allEvents/' + event.pk + '/', event);
-  }
-
-  createEntryAllEvents(event: Event): Observable<Event> {
-    return this.http.post<Event>('/api/allEvents/', event);
-  }
-
-  // Filter Events nach Gruppen des aktuellen User
-  filtEvents(groupID: number): Observable<Event[]> {
-    return this.http.get<Event[]>('api/events/?group=' + groupID);
-  }
-
-  filterAllEventsCustom(group?: string, evtype?: string, sdate?: string, edate?: string): Observable<Event[]> {
-
-    return this.http.get<Event[]>('/api/allEvents/?group=' + group + '&evtype=' + evtype + '&sdate=' + sdate + '&edate=' + edate);
-  }
-
   /*
 
   RIP - My lovely function - 27.01.2021
@@ -137,4 +107,3 @@ export class EventService {
   */
 
 }
-

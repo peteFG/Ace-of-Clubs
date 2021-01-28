@@ -1,6 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {EventService} from "../services/event.service";
-import {Time} from "@angular/common";
 import {HttpClient} from '@angular/common/http';
 import {UserEvent, UserService} from "../services/user.service";
 import {ActivatedRoute} from "@angular/router";
@@ -29,11 +27,9 @@ export class UserEventListComponent implements OnInit {
       this.retrieveUserEventsFromClickedUser(pkFromUrl);
     }
     else {
-      /** Überprüfung ob ADMIN!!! */
+
       this.retrieveAllUserEvents();
-
     }
-
   }
 
 
