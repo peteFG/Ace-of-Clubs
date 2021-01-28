@@ -45,7 +45,6 @@ export class UserFormComponent implements OnInit {
       this.userService.getUser(parseInt(pk, 10))
         .subscribe((user) => {
           this.userService.clickedUser = parseInt(pk, 10);
-          //console.log(this.userService.clickedUser)
           this.userFormGroup.patchValue(user);
         });
     }

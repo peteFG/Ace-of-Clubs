@@ -15,10 +15,8 @@ export class UserProfileComponent implements OnInit {
 
   pks: number[];
   userProfile: User[];
-  // disableFormGroup: FormGroup;
   isStaff: boolean;
   backToProfile: string;
-  // isActive: boolean;
   displayedColumns = ['pictures', 'username', 'email', 'first_name', 'last_name', 'edit', 'changePW', 'delete'];
 
   constructor(private http: HttpClient,
@@ -31,7 +29,6 @@ export class UserProfileComponent implements OnInit {
   ngOnInit(): void {
 
     this.userService.previousSite = this.userService.previousUrl;
-    //console.log(this.userService.previousSite);
     this.retrieveUser();
 
   }
