@@ -27,6 +27,7 @@ export class AllEventsListComponent implements OnInit {
   groupOptions: Group[];
   str: string;
   showFilter: boolean;
+  currentUserIsStaff: boolean;
   showSearch: boolean;
 
   displayedColumns = ['name', 'group_name', 'event_type', 'start_date', 'start_time', 'end_date', 'end_time', 'active', 'state_one', 'state_two', 'state_three', 'actions'];
@@ -67,7 +68,6 @@ export class AllEventsListComponent implements OnInit {
   ngOnInit(): void {
 
     this.showFilter = false;
-    this.showSearch = false;
 
     this.retrieveEvents();
     this.retrieveStates();
@@ -83,6 +83,15 @@ export class AllEventsListComponent implements OnInit {
       ev_type: new FormControl(null),
       start_date: new FormControl(null),
       end_date: new FormControl(null),
+    });
+
+    this.userService.getCurrentUser().subscribe((user) => {
+      this.currentUserIsStaff = false;
+      this.currentUserIsStaff = user.is_staff;
+      //console.log(this.currentUserIsStaff === true || parseInt(pk, 10) === this.currentUserPK);
+      if ((this.currentUserIsStaff === false)) {
+        this.router.navigateByUrl('/event-list');
+      }
     });
   }
 
@@ -118,8 +127,8 @@ export class AllEventsListComponent implements OnInit {
     if (search === undefined){
       search = null;
     }
-    if (this.str === ''){
-      this.str = null;
+    if (str === ''){
+      str = null;
     }else if (this.str === str){
       this.str = '-' + str;
     }else {

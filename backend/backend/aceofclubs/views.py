@@ -120,7 +120,7 @@ class EventViewSet(viewsets.ModelViewSet):
         sort = request.GET.get("sort")
         null = 'null'
         groupsOfUser = models.UserGroup.objects.filter(user=request.user.pk).values_list('group_id', flat=True)
-        queryset = self.queryset.filter(group__in=groupsOfUser)
+        queryset = self.queryset.filter(group__in=groupsOfUser).distinct()
         fields = self.fields
         if fields.__contains__(sort):
             queryset = queryset.order_by(sort)
@@ -170,6 +170,7 @@ class EventViewSet(viewsets.ModelViewSet):
 
 class NewEventsViewSet(viewsets.ModelViewSet):
     queryset = models.Event.objects.all()
+    permission_classes = (CustomPermissionAdmin, )
     serializer_class = serializers.EventSerializer
     fields = ['pk', 'name', 'start_date', 'start_time',
               'end_date', 'end_time', 'active', '-pk',
@@ -193,7 +194,7 @@ class NewEventsViewSet(viewsets.ModelViewSet):
         fields = self.fields
         if fields.__contains__(sort):
             queryset = queryset.order_by(sort)
-        if search is not None:
+        if search is not None and search != null:
             queryset = queryset.filter(name__contains=search)
         if group is not None and group != null:
             queryset = queryset.filter(group=int(group))
@@ -216,7 +217,8 @@ class AllEventsViewSet(viewsets.ModelViewSet):
               'group', '-group', 'ev_type','-ev_type']
 
     def list(self, request):
-        queryset = self.queryset.all()
+        if not request.user.is_staff:
+            raise NotFound('You are not allowed to see this page')
         group = request.GET.get("group")
         ev_type = request.GET.get("evtype")
         sdate = request.GET.get("sdate")
@@ -224,10 +226,11 @@ class AllEventsViewSet(viewsets.ModelViewSet):
         search = request.GET.get("search")
         sort = request.GET.get("sort")
         null = 'null'
+        queryset = self.queryset.all()
         fields = self.fields
         if fields.__contains__(sort):
-            queryset = queryset.all().order_by(sort)
-        if search is not None:
+            queryset = queryset.order_by(sort)
+        if search is not None and search != null:
             queryset = queryset.filter(name__contains=search)
         if group is not None and group != null:
             queryset = queryset.filter(group=int(group))

@@ -144,8 +144,8 @@ export class EventListComponent extends CdkTableExporterModule implements OnInit
     if (search === undefined){
       search = null;
     }
-    if (this.str === ''){
-      this.str = null;
+    if (str === ''){
+      str = null;
     }else if (this.str === str){
       this.str = '-' + str;
     }else {

@@ -121,14 +121,14 @@ export class NewEventsListComponent extends CdkTableExporterModule implements On
   }
 
   filterSortSearchEvents(search: string, str: string): void {
-    if (search === undefined) {
+    if (search === undefined){
       search = null;
     }
-    if (this.str === '') {
-      this.str = null;
-    } else if (this.str === str) {
+    if (str === ''){
+      str = null;
+    }else if (this.str === str){
       this.str = '-' + str;
-    } else {
+    }else {
       this.str = str;
     }
     this.eventService.filterSortSearchNewEventCustom(
