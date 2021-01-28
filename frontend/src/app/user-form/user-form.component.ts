@@ -83,6 +83,7 @@ export class UserFormComponent implements OnInit {
       this.userService.createUser(this.userFormGroup.value)
         .subscribe(() => {
           alert('created successfully!');
+          this.router.navigateByUrl('/user-list');
         });
     }
 

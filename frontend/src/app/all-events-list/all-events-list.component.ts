@@ -65,7 +65,7 @@ export class AllEventsListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.userService.retrieveCurrentUser();
     this.showFilter = false;
 
     this.retrieveEvents();

@@ -49,7 +49,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatDialogModule } from '@angular/material/dialog';
 import { AllEventsListComponent } from './all-events-list/all-events-list.component';
-// @ts-ignore
 import {MatTableExporterModule } from 'mat-table-exporter';
 import {MatSortModule} from '@angular/material/sort';
 import { NewEventsListComponent } from './new-events-list/new-events-list.component';
