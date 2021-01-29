@@ -139,7 +139,7 @@ class EventViewSet(viewsets.ModelViewSet):
         if not request.user.is_staff:
             if not serializerCustom.data:
                 raise NotFound('Not enough Permissions')
-        serializer = self.get_serializer(data=request.data)
+        serializer = self.get_serializer(data=request.data, context= {'request': self.request})
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
         return Response(serializer.data)
@@ -155,7 +155,7 @@ class EventViewSet(viewsets.ModelViewSet):
         if not request.user.is_staff:
             if not serializerCustom.data:
                 raise NotFound('Not enough Permissions')
-        serializer = self.serializer_class(instance, data=request.data, partial=True)
+        serializer = self.serializer_class(instance, data=request.data, context= {'request': self.request}, partial=True)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
