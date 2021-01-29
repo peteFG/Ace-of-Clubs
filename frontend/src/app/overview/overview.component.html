@@ -7,28 +7,28 @@
     <div class="actions horiz-space-around anim-right" style="margin-bottom: 8vh; margin-top: 3vh">
       <mat-button-toggle-group>
         <mat-button-toggle class=" anim-right" matTooltip="My Profile" matTooltipClass="tooltips"
-                           [routerLink]="'user-profile'">
+                           [routerLink]="'/user-profile'">
           <mat-icon color="standard">account_circle</mat-icon>
         </mat-button-toggle>
-        <mat-button-toggle class="anim-right" [routerLink]="'event-list'" matTooltip="My Events"
+        <mat-button-toggle class="anim-right" [routerLink]="'/event-list'" matTooltip="My Events"
                            matTooltipClass="tooltips">
           <mat-icon color="standard">event</mat-icon>
         </mat-button-toggle>
 
         <mat-button-toggle *ngIf="userService.hasPermission('aceofclubs.view_user')"
-                           class="anim-right" [routerLink]="'user-list'" matTooltip="Club Members"
+                           class="anim-right" [routerLink]="'/user-list'" matTooltip="Club Members"
                            matTooltipClass="tooltips">
           <mat-icon color="standard">groups</mat-icon>
         </mat-button-toggle>
 
         <mat-button-toggle *ngIf="userService.hasPermission('aceofclubs.delete_user')" class="anim-right"
                            matTooltip="All Events" matTooltipClass="tooltips"
-                           [routerLink]="'all-events-list'">
+                           [routerLink]="'/all-events-list'">
           <mat-icon color="standard">calendar_today</mat-icon>
         </mat-button-toggle>
         <mat-button-toggle *ngIf="userService.hasPermission('aceofclubs.delete_user')" class="anim-right"
                            matTooltip="All Groups" matTooltipClass="tooltips"
-                           [routerLink]="'group-list'">
+                           [routerLink]="'/group-list'">
           <mat-icon color="standard">group</mat-icon>
         </mat-button-toggle>
       </mat-button-toggle-group>
@@ -42,13 +42,13 @@
           <mat-card-header style="display: flex; flex-direction: row; justify-content: space-between">
             <mat-card-title class="mat-h3">MY UPCOMING EVENTS</mat-card-title>
             <div>
-              <button class="menu-button" style="margin-bottom: 12px" mat-button routerLink="/list-events"
+              <button class="menu-button" style="margin-bottom: 12px" mat-button [routerLink]="'/event-list'"
                       color="standard"
                       matTooltip="View my Events"
                       matTooltipClass="tooltips">
                 <mat-icon>launch</mat-icon>
               </button>
-              <button style="margin-bottom: 12px" mat-button routerLink="/event-type-form" color="standard"
+              <button style="margin-bottom: 12px" mat-button [routerLink]="'/event-type-form'" color="standard"
                       matTooltip="View new Events"
                       matTooltipClass="tooltips">
                 <mat-icon>book_online</mat-icon>
@@ -125,13 +125,13 @@
         <mat-card-header style="display: flex; flex-direction: row; justify-content: space-between">
           <mat-card-title>UPCOMING EVENTS</mat-card-title>
           <div>
-            <button class="menu-button" style="margin-bottom: 12px" mat-icon-button routerLink="/list-events"
+            <button class="menu-button" style="margin-bottom: 12px" mat-icon-button [routerLink]="'/event-list'"
                     color="standard"
                     matTooltip="View my Events"
                     matTooltipClass="tooltips">
               <mat-icon>launch</mat-icon>
             </button>
-            <button style="margin-bottom: 12px" mat-icon-button routerLink="/event-type-form" color="standard"
+            <button style="margin-bottom: 12px" mat-icon-button [routerLink]="'/event-type-form'" color="standard"
                     matTooltip="View new Events"
                     matTooltipClass="tooltips">
               <mat-icon>book_online</mat-icon>
