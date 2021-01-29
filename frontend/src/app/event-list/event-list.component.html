@@ -144,7 +144,7 @@
                 </div>
                 <div class="content-m-row ul">
                   <div class="content-m-hd">Active Event:</div>
-                  <div class="content-m-data">{{event.active}}</div>
+                  <div class="content-m-data">{{event.active ? 'Yes' : 'No'}}</div>
                 </div>
                 <div class="content-m-row ul" data-target="userEvents">
                   <div class="content-m-hd">Response: </div>
@@ -326,7 +326,7 @@
               </div>
               <div class="content-m-row">
                 <div class="content-m-hd">Active Event:</div>
-                <div class="content-m-data">{{event.active}}</div>
+                <div class="content-m-data">{{event.active ? 'Yes' : 'No'}}</div>
               </div>
               <div class="content-m-row ul" data-target="userEvents">
                 <div class="content-m-hd">Response: </div>
@@ -358,9 +358,6 @@
 
 <div>
   <div class="mat-elevation-z8">
-
-    <div id="pdfView" #pdfView>
-
 
       <table style="display: none" mat-table matTableExporter [dataSource]="events" #exporter="matTableExporter" matSort>
 
@@ -418,7 +415,7 @@
         <!-- Active Column -->
         <ng-container matColumnDef="active">
           <th mat-header-cell *matHeaderCellDef>Active</th>
-          <td mat-cell *matCellDef="let element"> {{element.active}} </td>
+          <td mat-cell *matCellDef="let element"> {{element.active ? 'Yes' : 'No'}} </td>
         </ng-container>
 
         <!-- Status mit Index 1 -->
@@ -456,7 +453,5 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
       </table>
-
-    </div>
   </div>
 </div>
