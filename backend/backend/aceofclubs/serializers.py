@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from . import models
 from .models import Media
-from rest_framework.fields import CurrentUserDefault
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -56,7 +55,6 @@ class UserSerializer(serializers.ModelSerializer):
             if password != password2:
                 raise serializers.ValidationError({'password': 'Passwords do not match!'})
             instance.set_password(validated_data['password'])
-        instance.username = validated_data['username']
         instance.first_name = validated_data['first_name']
         instance.last_name = validated_data['last_name']
         instance.email = validated_data['email']
