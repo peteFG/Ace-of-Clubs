@@ -159,7 +159,7 @@
                     </button>
                   </div>
                   <div class="m-general-btn" style="margin-right: 12px">
-                    <button *ngIf="this.userService.hasPermission('aceofclubs.change_event')" mat-icon-button
+                    <button *ngIf="this.userService.hasPermission('aceofclubs.delete_event')" mat-icon-button
                             color="standard" [routerLink]="'/event-form/' + event.pk">
                       <mat-icon>edit</mat-icon>
                     </button>
@@ -340,10 +340,12 @@
                 </button>
               </div>
               <div class="m-general-btn" style="margin-right: 12px">
-                <button mat-icon-button color="standard" [routerLink]="'/event-form/' + event.pk">
+                <button mat-icon-button color="standard" [routerLink]="'/event-form/' + event.pk"
+                        *ngIf="this.userService.hasPermission('aceofclubs.delete_event')">
                   <mat-icon>edit</mat-icon>
                 </button>
-                <button mat-icon-button color="light" (click)="deleteEvent(event)">
+                <button mat-icon-button color="light" (click)="deleteEvent(event)"
+                        *ngIf="this.userService.hasPermission('aceofclubs.delete_event')">
                   <mat-icon>delete_outline</mat-icon>
                 </button>
               </div>
