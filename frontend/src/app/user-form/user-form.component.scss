@@ -59,13 +59,22 @@
 
   .form-card{
     padding: 30px;
+    min-height: fit-content;
     height: 84vh;
     border-radius: 0 !important;
     background-color: rgba(255, 255, 255, 0.8);
+    overflow: hidden;
+    overflow-y: auto;
   }
 
   .container {
+    padding-bottom: 10px;
+    min-height: fit-content;
     height: 92vh;
+  }
+
+  .card-bg {
+    min-height: fit-content;
   }
 
   .action-position {

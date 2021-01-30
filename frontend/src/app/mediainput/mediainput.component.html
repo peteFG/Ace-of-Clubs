@@ -8,24 +8,24 @@
     </tr>
     </thead>
     <tbody>
-      <td><strong>{{ getFilename(medias[0]) }}</strong></td>
-      <td>
+      <td style="max-width: 150px; overflow:hidden; text-overflow: ellipsis; direction: ltr" matTooltip="{{getFilename(medias[0])}}" matTooltipClass="tooltips"><strong>{{ getFilename(medias[0]) }}</strong></td>
+      <td style="min-width: fit-content; width: 7vw; text-align: -webkit-center">
         <span *ngIf="!medias[0].pk">Files is being uploaded...</span>
         <span *ngIf="medias[0].pk">Uploaded</span>
       </td>
       <td>
-        <div class="btn-group">
-          <button type="button" class="btn btn-primary" (click)="downloadMedia(medias[0])">
-            Download
+        <div class="btn-group" align="right">
+          <button matTooltip="Download Picture" matTooltipClass="tooltips" mat-icon-button color="standard" (click)="downloadMedia(medias[0])">
+            <mat-icon>get_app</mat-icon>
           </button>
-          <button type="button" class="btn btn-danger" (click)="deleteMedia(0)">
-            Entfernen
+          <button matTooltip="Remove Picture" matTooltipClass="tooltips" mat-icon-button color="standard" (click)="deleteMedia(0)">
+            <mat-icon>remove</mat-icon>
           </button>
         </div>
       </td>
     </tbody>
   </table>
 
-  <input type="file" [accept]="accept" *ngIf="!hasProfilePic" ng2FileSelect [uploader]="uploader" [multiple]="false" (change)="selectFile($event)"/>
+  <input matTooltip="Upload Profile Picture" matTooltipClass="tooltips" type="file" [accept]="accept" *ngIf="!hasProfilePic" ng2FileSelect [uploader]="uploader" [multiple]="false" (change)="selectFile($event)"/>
 
 </div>

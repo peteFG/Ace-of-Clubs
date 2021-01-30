@@ -92,9 +92,11 @@
   }
 
   .event-list {
-    flex-direction: column;
-    height: 60vh;
-    width: 100%;
-    overflow-y: auto;
+    overflow-x: auto;
   }
+}
+
+.table {
+  width: fit-content;
+  overflow: auto;
 }

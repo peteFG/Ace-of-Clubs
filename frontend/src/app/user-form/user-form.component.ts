@@ -14,6 +14,7 @@ export class UserFormComponent implements OnInit {
   userFormGroup: FormGroup;
   currentUserIsStaff: boolean;
   currentUserPK: number;
+  showUpload: boolean;
 
   constructor(public userService: UserService,
               private route: ActivatedRoute,
@@ -23,6 +24,8 @@ export class UserFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.showUpload = false;
+
     this.userFormGroup = this.fb.group({
       pk: new FormControl(null),
       username: ['', Validators.required],
@@ -85,5 +88,12 @@ export class UserFormComponent implements OnInit {
 
   }
 
+  showFileupload(): void {
+    if (this.showUpload === false) {
+      this.showUpload = true;
+    } else {
+      this.showUpload = false;
+    }
+  }
 
 }

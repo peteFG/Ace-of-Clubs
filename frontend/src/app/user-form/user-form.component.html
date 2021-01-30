@@ -68,21 +68,28 @@
           </div>
           <br>
 
-          <div>
+          <div style="display: flex; flex-direction: row; justify-content: center; margin-bottom: 10px">
+            <div matTooltip="Upload Profile Picture" matTooltipClass="tooltips" (click)="showFileupload()"
+                 class="subtitle" style="display: flex; margin-top: 4px; flex-direction: row; font-size: larger; font-weight: lighter; cursor: pointer; line-height: 24px">
+              <mat-icon style="padding-right: 10px" color="standard">add_photo_alternate</mat-icon>
+              <span>Add or Change your Profile Picture</span>
+            </div>
+          </div>
+
+          <div *ngIf="showUpload">
             <app-mediainput formControlName="pictures"></app-mediainput>
           </div>
 
           <br/>
 
-      <mat-card-actions align="center">
-        <button mat-raised-button class="btn-standard" [disabled]="userFormGroup.invalid">
-          <span *ngIf="!userFormGroup.controls.pk.value">Create</span>
-          <span *ngIf="userFormGroup.controls.pk.value">Update</span>
-        </button>
-      </mat-card-actions>
+          <mat-card-actions align="center">
+            <button mat-raised-button class="btn-standard" [disabled]="userFormGroup.invalid">
+              <span *ngIf="!userFormGroup.controls.pk.value">Create</span>
+              <span *ngIf="userFormGroup.controls.pk.value">Update</span>
+            </button>
+          </mat-card-actions>
         </mat-card-content>
-    </form>
-
+      </form>
 
 
       <div class="subtitle" style="font-size: larger; font-weight: lighter; margin-bottom: 5px">ADDITIONAL OPTIONS</div>

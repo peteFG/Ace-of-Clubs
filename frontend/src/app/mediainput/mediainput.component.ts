@@ -14,7 +14,7 @@ export interface IMedia {
 @Component({
   selector: 'app-mediainput',
   templateUrl: './mediainput.component.html',
-  styles: [],
+  styles: ['./mediainput.component.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -34,10 +34,10 @@ export class MediainputComponent implements OnInit, ControlValueAccessor {
   uploader: FileUploader;
   url;
   onChange = (medias: number[]) => {
-  };
+  }
 
   selectFile(event) {
-    if(!event.target.files[0] || event.target.files[0].length == 0) {
+    if (!event.target.files[0] || event.target.files[0].length == 0) {
       alert('Please select an image');
       return;
     }
@@ -54,7 +54,7 @@ export class MediainputComponent implements OnInit, ControlValueAccessor {
 
     reader.onload = (_event) => {
       this.url = reader.result;
-    }
+    };
   }
 
   constructor(private userService: UserService, private http: HttpClient, elm: ElementRef) {
@@ -70,15 +70,15 @@ export class MediainputComponent implements OnInit, ControlValueAccessor {
       autoUpload: true,
     });
     this.uploader.onBeforeUploadItem = (item: FileItem) => {
-        if (!this.medias) {
-          this.medias = [];
-          this.hasProfilePic = false;
-        }
+      if (!this.medias) {
+        this.medias = [];
+        this.hasProfilePic = false;
+      }
       this.hasProfilePic = true;
-        this.medias.push({
-          pk: null,
-          file: item.file.name,
-        });
+      this.medias.push({
+        pk: null,
+        file: item.file.name,
+      });
       this.hasProfilePic = true;
     };
     this.uploader.onSuccessItem = (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
@@ -96,7 +96,6 @@ export class MediainputComponent implements OnInit, ControlValueAccessor {
       this.hasProfilePic = true;
     };
   }
-
 
 
   deleteMedia(index: number): void {
