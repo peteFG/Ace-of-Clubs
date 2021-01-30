@@ -105,8 +105,8 @@
 .users-card {
   vertical-align: top;
   width: 20%;
-  min-height: fit-content;
-  height: 300px;
+  height: fit-content;
+  min-heigt: 300px;
   margin: 1%;
   display: inline-block;
 }
@@ -167,7 +167,7 @@
   }
 
   .mat-cell {
-    padding: 8px 0 !important;
+    padding: 8px 5px !important;
     text-align: -webkit-center;
     font-size: 14px;
   }
@@ -185,9 +185,6 @@
 
 
 @media only screen and (min-width: 450px) {
-  .mat-card-content {
-    height: 50vh;
-  }
 
   .title-bg {
     text-align: -webkit-center;

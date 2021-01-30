@@ -329,6 +329,15 @@ body {
 .tooltips {
   font-size: 14px;
   background-color: #3a3b3f;
+
+  @media only screen and (max-width: 450px) {
+
+  }
+
+  @media only screen and (min-width: 450px) {
+    width: fit-content !important;
+    overflow: visible;
+  }
 }
 
 /* Accordion */
@@ -395,7 +404,16 @@ body {
   .content-m-data {
     width: 65%;
     min-height: fit-content;
-    overflow: visible;
+    text-align: -webkit-right;
+    text-overflow: ellipsis;
+    direction: ltr;
+    overflow: hidden;
+  }
+}
+
+@media only screen and (min-width: 450px) {
+  .content-m-data {
+    width: 10vw;
     text-align: -webkit-right;
     text-overflow: ellipsis;
     direction: ltr;

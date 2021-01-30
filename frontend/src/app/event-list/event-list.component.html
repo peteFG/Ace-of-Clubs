@@ -11,7 +11,6 @@
       <div class="actions horiz-space-around anim-right">
         <mat-button-toggle-group style="margin-bottom: 3vh">
           <mat-button-toggle mat-icon-button style="width: 19vw !important;"
-                             color="standard"
                              matTooltip="Search for Events"
                              matTooltipClass="tooltips">
             <input style="width: 13vw" class="form-control mr-sm-2 search" type="text"
@@ -21,7 +20,6 @@
           </mat-button-toggle>
 
           <mat-button-toggle mat-icon-button
-                             color="standard"
                              matTooltip="Show Filter Options"
                              matTooltipClass="tooltips" (click)="showFilterOptions()">
             <mat-icon color="standard">filter_alt</mat-icon>
@@ -29,7 +27,6 @@
 
           <mat-button-toggle [matMenuTriggerFor]="exportMenu1"
                              mat-icon-button
-                             color="standard"
                              matTooltip="Export Options"
                              matTooltipClass="tooltips">
             <mat-icon color="standard">get_app</mat-icon>
@@ -289,7 +286,7 @@
           <mat-expansion-panel *ngFor="let event of events" (opened)="panelOpen = true" (closed)="panelOpen = false">
             <mat-expansion-panel-header class="acc-m-header">
               <mat-panel-title class="acc-m-title">
-                <div class="event-name"> {{event.name}} </div>
+                <div class="event-name" style="width:48vw; overflow: hidden; text-overflow: ellipsis; direction: ltr"> {{event.name}} </div>
                 <br>
                 <div *ngIf="!panelOpen" class="event-date">
                   {{event.start_date | date: 'dd MMM yyyy'}} - {{event.start_time.substring(0, 5)}}

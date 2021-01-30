@@ -281,7 +281,7 @@
           <mat-expansion-panel *ngFor="let event of newEvents" (opened)="panelOpen = true" (closed)="panelOpen = false">
             <mat-expansion-panel-header class="acc-m-header">
               <mat-panel-title class="acc-m-title">
-                <div class="event-name"> {{event.name}} </div>
+                <div class="event-name" style="width:48vw; overflow: hidden; text-overflow: ellipsis; direction: ltr"> {{event.name}} </div>
                 <br>
                 <div *ngIf="!panelOpen" class="event-date">
                   {{event.start_date | date: 'dd MMM yyyy'}} - {{event.start_time.substring(0, 5)}}
