@@ -62,6 +62,7 @@
 
   .mat-header-cell, .mat-footer-cell, .mat-cell {
     min-width: 150px;
+    max-width: 280px;
     text-align: -webkit-center;
     box-sizing: border-box;
   }

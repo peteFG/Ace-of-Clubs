@@ -62,20 +62,20 @@
                 <table mat-table [dataSource]="events">
 
                   <ng-container matColumnDef="name">
-                    <th mat-header-cell *matHeaderCellDef>Name</th>
-                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                    <th mat-header-cell style="overflow: hidden; text-overflow: ellipsis; direction: ltr" *matHeaderCellDef>Name</th>
+                    <td mat-cell style="overflow: hidden; text-overflow: ellipsis; direction: ltr" *matCellDef="let element"> {{element.name}} </td>
                   </ng-container>
 
                   <!-- Group Column -->
                   <ng-container matColumnDef="group_name">
-                    <th mat-header-cell *matHeaderCellDef>Groups</th>
-                    <td mat-cell *matCellDef="let element"> {{element.group_names}} </td>
+                    <th mat-header-cell style="overflow: hidden; text-overflow: ellipsis; direction: ltr"*matHeaderCellDef>Groups</th>
+                    <td mat-cell style="overflow: hidden; text-overflow: ellipsis; direction: ltr" *matCellDef="let element"> {{element.group_names}} </td>
                   </ng-container>
 
                   <!-- Event Type Column -->
                   <ng-container matColumnDef="event_type">
-                    <th mat-header-cell *matHeaderCellDef>Event Type</th>
-                    <td mat-cell *matCellDef="let element"> {{element.event_type_name}} </td>
+                    <th mat-header-cell style="overflow: hidden; text-overflow: ellipsis; direction: ltr" *matHeaderCellDef>Event Type</th>
+                    <td mat-cell style="overflow: hidden; text-overflow: ellipsis; direction: ltr" *matCellDef="let element"> {{element.event_type_name}} </td>
                   </ng-container>
 
                   <!-- Start date Column -->
