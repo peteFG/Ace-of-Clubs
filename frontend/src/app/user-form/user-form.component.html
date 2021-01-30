@@ -92,8 +92,8 @@
       </form>
 
 
-      <div class="subtitle" style="font-size: larger; font-weight: lighter; margin-bottom: 5px">ADDITIONAL OPTIONS</div>
-      <div class="actions horiz-space-around">
+      <div class="subtitle" *ngIf="userService.hasPermission('aceofclubs.delete_user')" style="font-size: larger; font-weight: lighter; margin-bottom: 5px">ADDITIONAL OPTIONS</div>
+      <div class="actions horiz-space-around" *ngIf="userService.hasPermission('aceofclubs.delete_user')">
         <mat-button-toggle-group>
           <mat-button-toggle class="anim-right" matTooltip="Add User To Group" matTooltipClass="tooltips"
                              (click)="userService.setUserGroupEntry()">
