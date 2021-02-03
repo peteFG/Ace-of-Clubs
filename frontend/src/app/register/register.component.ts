@@ -1,8 +1,19 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ValidationErrors,
+  ValidatorFn,
+  Validators,
+  AsyncValidatorFn,
+  AbstractControl
+} from '@angular/forms';
 import {UserService} from '../services/user.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {first} from 'rxjs/operators';
+import {first, map} from 'rxjs/operators';
+import {Observable} from "rxjs";
+
 
 
 @Component({
@@ -23,10 +34,10 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
     this.registerFormGroup = this.fb.group({
       pk: new FormControl(null),
-      username: ['', Validators.required],
+      username: ['', Validators.required, this.uniqueUsernameValidator()],
       first_name: ['', Validators.required],
       last_name: ['', Validators.required],
-      email: ['', Validators.required],
+      email: ['', Validators.required, this.uniqueEmailValidator()],
       password: ['', Validators.required],
       password2: ['', Validators.required],
       pictures: new FormControl([]),
@@ -81,4 +92,45 @@ export class RegisterComponent implements OnInit {
           });
     }
   }
+
+  private uniqueUsernameValidator(): AsyncValidatorFn {
+    return (control: AbstractControl): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> => {
+
+      const currentPk = this.registerFormGroup.controls.pk.value;
+      const currentUsername = control.value;
+
+      return this.userService.getUsers()
+        .pipe(
+          map((user) => {
+
+            const userWithSameName = user.find((m) => {
+              return m.username === currentUsername && m.pk !== currentPk;
+            });
+
+            return userWithSameName ? {usernameAlreadyExists: true} : null;
+          })
+        );
+    };
+  }
+
+  private uniqueEmailValidator(): AsyncValidatorFn {
+    return (control: AbstractControl): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> => {
+
+      const currentPk = this.registerFormGroup.controls.pk.value;
+      const currentEmail = control.value;
+
+      return this.userService.getUsers()
+        .pipe(
+          map((user) => {
+
+            const userWithSameEmail = user.find((m) => {
+              return m.email === currentEmail && m.pk !== currentPk;
+            });
+
+            return userWithSameEmail ? {emailAlreadyExists: true} : null;
+          })
+        );
+    };
+  }
+
 }

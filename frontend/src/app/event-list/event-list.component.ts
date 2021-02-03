@@ -32,6 +32,7 @@ export class EventListComponent extends CdkTableExporterModule implements OnInit
   str: string;
   showFilter: boolean;
   showSearch: boolean;
+  leaderEventPk: number[];
 
 
   displayedColumns = ['name', 'group_name', 'event_type', 'start_date', 'start_time', 'end_date', 'end_time', 'active', 'state_one', 'state_two', 'state_three', 'actions'];
@@ -40,7 +41,7 @@ export class EventListComponent extends CdkTableExporterModule implements OnInit
   @ViewChild('pdfView', {static: false}) pdfView: ElementRef;
 
   public downloadAsPDF() {
-    const doc = new jsPDF('p','mm', [297,210]);
+    const doc = new jsPDF('p', 'mm', [297, 210]);
 
     const specialElementHandlers = {
       '#editor'(element, renderer) {
@@ -103,6 +104,13 @@ export class EventListComponent extends CdkTableExporterModule implements OnInit
         });
       });
     });
+
+    this.eventService.getLeaderEvents().subscribe((events) => {
+      this.leaderEventPk = [];
+      events.forEach((event) => {
+        this.leaderEventPk.push(event.pk);
+      });
+    });
   }
 
 
@@ -150,14 +158,14 @@ export class EventListComponent extends CdkTableExporterModule implements OnInit
   }*/
 
   filterSortSearchEvents(search: string, str: string): void {
-    if (search === undefined){
+    if (search === undefined) {
       search = null;
     }
-    if (str === ''){
+    if (str === '') {
       str = null;
-    }else if (this.str === str){
+    } else if (this.str === str) {
       this.str = '-' + str;
-    }else {
+    } else {
       this.str = str;
     }
     this.eventService.filterSortSearchEventCustom(

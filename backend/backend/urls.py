@@ -28,6 +28,7 @@ router.register(r'users', views.AllUserViewSet)
 router.register(r'events', views.EventViewSet) #Events für angemeldeten User, abhängig von den Gruppen
 router.register(r'allEvents', views.AllEventsViewSet) #Events für angemeldeten User, abhängig von den Gruppen
 router.register(r'newEvents', views.NewEventsViewSet) #Events für angemeldeten User, abhängig von den Gruppen
+router.register(r'leaderEvents', views.LeaderEventsViewSet) #Events für angemeldeten User, abhängig von den Gruppen
 router.register(r'groups', views.GroupViewSet)
 router.register(r'eventTypes', views.EventTypeViewSet)
 router.register(r'states', views.StateViewSet)

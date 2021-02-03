@@ -13,6 +13,7 @@
             <input matInput type="text" placeholder="Username" formControlName="username" required>
             <mat-hint align="end">Username</mat-hint>
             <mat-error *ngIf="registerFormGroup.controls.username.hasError('required')">Username is required</mat-error>
+            <mat-error *ngIf="registerFormGroup.controls.username.hasError('usernameAlreadyExists')">Username already exists</mat-error>
 
           </mat-form-field>
           <br>
@@ -36,6 +37,7 @@
             <mat-error *ngIf="registerFormGroup.controls.email.hasError('required')">Email is required</mat-error>
             <mat-error *ngIf="registerFormGroup.controls.email.hasError('email')">Enter a valid Email address
             </mat-error>
+            <mat-error *ngIf="registerFormGroup.controls.email.hasError('emailAlreadyExists')">Email address already exists</mat-error>
 
           </mat-form-field>
           <br>

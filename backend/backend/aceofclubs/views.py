@@ -18,6 +18,8 @@ class CustomPermission(DjangoModelPermissions):
             permission = True
         elif request.user.is_authenticated:
             permission = True
+        elif request.method == 'GET':
+            permission = True
         return permission
 
 
@@ -27,13 +29,6 @@ class CustomPermissionAdmin(DjangoModelPermissions):
         permission = super(CustomPermissionAdmin, self).has_permission(request, view)
         if request.method == 'POST':
             permission = True
-        return permission
-
-
-class CustomPermissionRegister(DjangoModelPermissions):
-
-    def has_permission(self, request, view, *args, **kwargs):
-        permission = True
         return permission
 
 
@@ -51,6 +46,13 @@ class AllUserViewSet(viewsets.ModelViewSet):
             queryset |= self.queryset.filter(first_name__contains=search)
             queryset |= self.queryset.filter(last_name__contains=search)
         return Response(self.serializer_class(queryset, many=True).data)
+
+    def destroy(self, request, *args, **kwargs):
+        if not request.user.is_staff:
+            raise NotFound("Not enough Permissions")
+        instance = self.get_object()
+        self.perform_destroy(instance)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -129,15 +131,14 @@ class EventViewSet(viewsets.ModelViewSet):
         return Response(self.serializer_class(list(dict.fromkeys(queryset)), context= {'request': self.request},  many=True).data)
 
     def create(self, request, *args, **kwargs):
-        group = request.data['group'][0]
+        group = request.data['group']
         # checks if no group was selected
         if group == 0:
             raise NotFound('No Group was selected!')
-        serializerCustom = self.serializer_classUG(
-            self.userGroups.filter(user=request.user.pk, group=group, is_leader=True), many=True)
+        groupsOfUserLeader = models.UserGroup.objects.filter(user=request.user.pk, group__in=group, is_leader=True).values_list('group_id', flat=True)
         # checks if user has permissions to create the event
         if not request.user.is_staff:
-            if not serializerCustom.data:
+            if not groupsOfUserLeader:
                 raise NotFound('Not enough Permissions')
         serializer = self.get_serializer(data=request.data, context= {'request': self.request})
         serializer.is_valid(raise_exception=True)
@@ -147,13 +148,13 @@ class EventViewSet(viewsets.ModelViewSet):
     def partial_update(self, request, *args, **kwargs):
         instance = models.Event.objects.get(pk=kwargs.get('pk'))
         user = request.user.pk
-        group = request.data['group'][0]
+        group = request.data['group']
         if group == 0:
             raise NotFound('No Group was selected!')
-        serializerCustom = self.serializer_classUG(self.userGroups.filter(user=user, group=group, is_leader=True),
-                                                   many=True)
+        groupsOfUserLeader = models.UserGroup.objects.filter(user=user, group__in=group, is_leader=True).values_list('group_id', flat=True)
+        eventsOfUser = self.queryset.filter(group__in=groupsOfUserLeader).values_list('pk', flat=True)
         if not request.user.is_staff:
-            if not serializerCustom.data:
+            if not instance.pk in eventsOfUser:
                 raise NotFound('Not enough Permissions')
         serializer = self.serializer_class(instance, data=request.data, context= {'request': self.request}, partial=True)
         serializer.is_valid(raise_exception=True)
@@ -226,18 +227,60 @@ class AllEventsViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(end_date__lte=edate)
         return Response(self.serializer_class(list(dict.fromkeys(queryset)), context= {'request': self.request},many=True).data)
 
+    def destroy(self, request, *args, **kwargs):
+        if not request.user.is_staff:
+            raise NotFound("Not enough Permissions")
+        instance = self.get_object()
+        self.perform_destroy(instance)
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+class LeaderEventsViewSet(viewsets.ModelViewSet):
+    queryset = models.Event.objects.all()
+    serializer_class = serializers.EventSerializer
+
+
+    def list(self, request):
+        user = request.user.pk
+        groupsOfLeader= models.UserGroup.objects.filter(user = user, is_leader = True).values_list('group_id', flat=True)
+        eventsOfLeader = self.queryset.filter(group__in=groupsOfLeader).values_list('pk', flat=True)
+        queryset = self.queryset.filter(pk__in = eventsOfLeader)
+        return Response(self.serializer_class(list(dict.fromkeys(queryset)), context= {'request': self.request},many=True).data)
+
 
 class GroupViewSet(viewsets.ModelViewSet):
     permission_classes = (CustomPermissionAdmin,)
     queryset = models.Group.objects.all()
     serializer_class = serializers.GroupSerializer
 
+    def partial_update(self, request, *args, **kwargs):
+        instance = models.Group.objects.get(pk=kwargs.get('pk'))
+        # checks permissions of current user
+        if not request.user.is_staff:
+            raise NotFound('Not enough Permissions')
+        serializer = self.serializer_class(instance, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
+
+
+    def destroy(self, request, *args, **kwargs):
+        if not request.user.is_staff:
+            raise NotFound("Not enough Permissions")
+        instance = self.get_object()
+        self.perform_destroy(instance)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 class EventTypeViewSet(viewsets.ModelViewSet):
     permission_classes = (CustomPermissionAdmin,)
     queryset = models.EventType.objects.all()
     serializer_class = serializers.EventTypeSerializer
 
+    def destroy(self, request, *args, **kwargs):
+        if not request.user.is_staff:
+            raise NotFound("Not enough Permissions")
+        instance = self.get_object()
+        self.perform_destroy(instance)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 class StateViewSet(viewsets.ModelViewSet):
     permission_classes = (CustomPermissionAdmin,)
@@ -266,6 +309,7 @@ class UserEventViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 
+
 class AllUserEventViewSet(viewsets.ModelViewSet):
     permission_classes = (CustomPermissionAdmin,)
     queryset = models.UserEvent.objects.all().order_by('user')
@@ -278,6 +322,13 @@ class AllUserEventViewSet(viewsets.ModelViewSet):
         else:
             serializer = self.serializer_class(self.queryset.filter(user=user), many=True)
         return Response(serializer.data)
+
+    def destroy(self, request, *args, **kwargs):
+        if not request.user.is_staff:
+            raise NotFound("Not enough Permissions")
+        instance = self.get_object()
+        self.perform_destroy(instance)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class UserGroupViewSet(viewsets.ModelViewSet):
@@ -317,3 +368,10 @@ class AllUserGroupViewSet(viewsets.ModelViewSet):
         else:
             serializer = self.serializer_class(self.queryset.filter(user=user), many=True)
         return Response(serializer.data)
+
+    def destroy(self, request, *args, **kwargs):
+        if not request.user.is_staff:
+            raise NotFound("Not enough Permissions")
+        instance = self.get_object()
+        self.perform_destroy(instance)
+        return Response(status=status.HTTP_204_NO_CONTENT)

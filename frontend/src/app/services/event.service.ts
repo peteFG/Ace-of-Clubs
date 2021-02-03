@@ -74,6 +74,11 @@ export class EventService {
     return this.http.get<Event[]>('/api/allEvents/');
   }
 
+  //-------------------- Section  for LEADER ----------------------
+
+  getLeaderEvents(): Observable<Event[]> {
+    return this.http.get<Event[]>('/api/leaderEvents/');
+  }
   /*
 
   RIP - My lovely function - 27.01.2021

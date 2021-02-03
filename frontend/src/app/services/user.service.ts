@@ -148,7 +148,7 @@ export class UserService {
 // ------------------------------------------ USER EVENT ------------------------------------------
 
   deleteUserEventEntry(userEvent: UserEvent): Observable<any> {
-    return this.http.delete('/api/userEvent/' + userEvent.pk + '/');
+    return this.http.delete('/api/allUserEvents/' + userEvent.pk + '/');
   }
 
   getUserEventsOfCurrentUser(): Observable<UserEvent[]> {
